@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+class UserInfoAuthEntity extends Equatable {
   final String? username;
   final String? password;
 
-  const User({required this.username, required this.password});
+  const UserInfoAuthEntity({required this.username, required this.password});
 
   @override
   // TODO: implement props

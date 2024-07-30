@@ -1,7 +1,7 @@
-import 'package:era_pro_applicationlication/src/features/auth/data/models/device_info.dart';
-import 'package:era_pro_applicationlication/src/features/auth/data/models/token.dart';
-import 'package:era_pro_applicationlication/src/features/auth/data/models/user.dart';
-import 'package:era_pro_applicationlication/src/features/auth/domain/entities/auth.dart';
+import 'package:era_pro_applicationlication/src/features/auth/data/models/device_info_modle.dart';
+import 'package:era_pro_applicationlication/src/features/auth/data/models/token_model.dart';
+import 'package:era_pro_applicationlication/src/features/auth/data/models/user_info_auth_model.dart';
+import 'package:era_pro_applicationlication/src/features/auth/domain/entities/auth_entity.dart';
 
 class AuthModel extends AuthEntity {
   const AuthModel(
@@ -10,7 +10,7 @@ class AuthModel extends AuthEntity {
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(
         token: TokenModel.fromJson(json['token']),
-        user: UserModel.fromJson(json['user']),
+        user: UserInfoAuthModel.fromJson(json['user']),
         deviceInfo: DeviceInfoModel.fromJson(json['deviceInfo']));
   }
 

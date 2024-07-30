@@ -1,6 +1,6 @@
-import 'package:era_pro_applicationlication/src/features/auth/domain/entities/token.dart';
+import 'package:era_pro_applicationlication/src/features/auth/domain/entities/token_entity.dart';
 
-class TokenModel extends Token {
+class TokenModel extends TokenEntity {
   const TokenModel({
     super.token,
     super.refreshToken,

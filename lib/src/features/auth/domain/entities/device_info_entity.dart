@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class DeviceInfo extends Equatable {
+class DeviceInfoEntity extends Equatable {
   final String? deviceid;
   final String? devicemodel;
   final String? devicetype;
   final String? devicename;
   final int? userid;
 
-  const DeviceInfo(
+  const DeviceInfoEntity(
       {this.deviceid,
       this.devicemodel,
       this.devicetype,

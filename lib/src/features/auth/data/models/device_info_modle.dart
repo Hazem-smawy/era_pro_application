@@ -1,6 +1,6 @@
-import 'package:era_pro_applicationlication/src/features/auth/domain/entities/device_info.dart';
+import 'package:era_pro_applicationlication/src/features/auth/domain/entities/device_info_entity.dart';
 
-class DeviceInfoModel extends DeviceInfo {
+class DeviceInfoModel extends DeviceInfoEntity {
   const DeviceInfoModel(
       {super.deviceid,
       super.devicemodel,
