@@ -16,9 +16,9 @@ extension BuildContextEntension<T> on BuildContext {
 
   bool get isSmall => MediaQuery.of(this).size.width < 850.0;
 
-  double get width => MediaQuery.of(this).size.width;
+  // double get width => MediaQuery.of(this).size.width;
 
-  double get height => MediaQuery.of(this).size.height;
+  // double get height => MediaQuery.of(this).size.height;
 
   Size get size => MediaQuery.of(this).size;
 
@@ -77,7 +77,9 @@ extension BuildContextEntension<T> on BuildContext {
   Color get surfaceColor => Theme.of(this).colorScheme.surface;
   Color get containerColor => AppColors.containerColor;
   Color get secondaryTextColor => AppColors.secondaryTextColor;
+  Color get wightColor => Colors.white;
 
+  Color get blackColor => Colors.black;
   // Future<T?> showBottomSheet(
   //   Widget child, {
   //   bool isScrollControlled = true,

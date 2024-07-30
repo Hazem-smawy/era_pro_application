@@ -1,48 +1,59 @@
 library text_style;
 
+import 'package:era_pro_applicationlication/src/core/constants/assets.dart';
 import 'package:era_pro_applicationlication/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //
 class AppTextStyle extends TextStyle {
-  static TextStyle get displayLarge => const TextStyle(
-        fontSize: 20,
+  static TextStyle get displayLarge => TextStyle(
+        fontSize: 20.sp,
         color: AppColors.blackColor,
         fontWeight: FontWeight.bold,
+        fontFamily: Assets.fontFamily,
       );
-  static TextStyle get displayMedium => const TextStyle(
-        fontSize: 18,
+  static TextStyle get displayMedium => TextStyle(
+        fontSize: 18.sp,
         color: AppColors.blackColor,
+        fontFamily: Assets.fontFamily,
         fontWeight: FontWeight.normal,
       );
-  static TextStyle get displaySmall => const TextStyle(
-        fontSize: 17,
+  static TextStyle get displaySmall => TextStyle(
+        fontSize: 17.sp,
+        fontFamily: Assets.fontFamily,
         color: AppColors.blackColor,
       );
-  static TextStyle get titleLarge => const TextStyle(
-        fontSize: 16,
+  static TextStyle get titleLarge => TextStyle(
+        fontSize: 16.sp,
         color: AppColors.blackColor,
+        fontFamily: Assets.fontFamily,
         fontWeight: FontWeight.bold,
       );
-  static TextStyle get titleMedium => const TextStyle(
-        fontSize: 16,
+  static TextStyle get titleMedium => TextStyle(
+        fontSize: 16.sp,
+        fontFamily: Assets.fontFamily,
         color: AppColors.secondaryTextColor,
       );
-  static TextStyle get titleSmall => const TextStyle(
-        fontSize: 15,
+  static TextStyle get titleSmall => TextStyle(
+        fontSize: 15.sp,
+        fontFamily: Assets.fontFamily,
         color: AppColors.secondaryTextColor,
       );
-  static TextStyle get bodyLarge => const TextStyle(
-        fontSize: 12,
+  static TextStyle get bodyLarge => TextStyle(
+        fontSize: 12.sp,
+        fontFamily: Assets.fontFamily,
         color: AppColors.secondaryTextColor,
         fontWeight: FontWeight.bold,
       );
-  static TextStyle get bodyMedium => const TextStyle(
-        fontSize: 12,
+  static TextStyle get bodyMedium => TextStyle(
+        fontSize: 12.sp,
+        fontFamily: Assets.fontFamily,
         color: AppColors.secondaryTextColor,
       );
-  static TextStyle get bodySmall => const TextStyle(
-        fontSize: 11,
+  static TextStyle get bodySmall => TextStyle(
+        fontSize: 11.sp,
+        fontFamily: Assets.fontFamily,
         color: AppColors.secondaryTextColor,
       );
 }

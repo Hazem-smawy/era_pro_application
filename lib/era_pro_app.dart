@@ -1,6 +1,4 @@
-import 'package:era_pro_applicationlication/src/core/routes/pages.dart';
 import 'package:era_pro_applicationlication/src/core/theme/theme_data.dart';
-import 'package:era_pro_applicationlication/src/features/auth/presentation/getX/auth_binding.dart';
 import 'package:get/get.dart';
 
 import 'src/core/config/config.dart';

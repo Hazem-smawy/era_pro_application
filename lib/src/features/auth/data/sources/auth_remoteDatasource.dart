@@ -1,4 +1,5 @@
-import 'dart:convert';
+import 'package:era_pro_applicationlication/src/core/api/methods.dart';
+import 'package:era_pro_applicationlication/src/core/error/failures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:era_pro_applicationlication/src/core/api/api.dart';
 import 'package:era_pro_applicationlication/src/core/utils/encryptAndDecryptUtils.dart';
@@ -39,15 +40,8 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
         "userid": 5
       }
     };
-
-    final response = await client.post(
-      Uri.parse(apiConnection.authUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(body),
-    );
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
+    try {
+      final data = await HttpMethod.post(body, apiConnection.authUrl);
 
       final authResponseModel = AuthResponseModel(
         refreshToken: data['token']['refreshToken'],
@@ -60,8 +54,10 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
       await sharedPreferences.setString('userId', authResponseModel.userId);
 
       return authResponseModel;
-    } else {
-      throw ServerExeption();
+    } on ServerExeption {
+      throw const ServerFailures(message: "error from the servier");
+    } catch (e) {
+      throw const ServerFailures(message: "error handling data");
     }
   }
 }

@@ -18,6 +18,23 @@ class AppThemData {
       focusColor: colorScheme.primary,
       useMaterial3: true,
       fontFamily: Assets.fontFamily,
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.secondaryTextColor.withOpacity(0.2),
+            width: 0,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        enabledBorder: OutlineInputBorder(
+          // width: 0.0 produces a thin "hairline" border
+          borderSide: BorderSide(
+            color: AppColors.secondaryTextColor.withOpacity(0.2),
+            width: 0,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
       textTheme: TextTheme(
         displayLarge: AppTextStyle.displayLarge,
         displayMedium: AppTextStyle.displayMedium,

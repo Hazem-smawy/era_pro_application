@@ -1,41 +1,55 @@
-import 'package:encrypt/encrypt.dart';
-import 'package:era_pro_applicationlication/src/core/api/api.dart';
-import 'package:era_pro_applicationlication/src/core/utils/encryptAndDecryptUtils.dart';
-import 'package:era_pro_applicationlication/src/features/auth/presentation/getX/auth_getx.dart';
+import 'package:era_pro_applicationlication/src/core/constants/spaces.dart';
+import 'package:era_pro_applicationlication/src/core/constants/strings.dart';
+import 'package:era_pro_applicationlication/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_applicationlication/src/core/extensions/elvated_btn_extension.dart';
+import 'package:era_pro_applicationlication/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_applicationlication/src/features/auth/presentation/pages/login_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthPage extends StatelessWidget {
-  AuthPage({super.key});
-  final AuthController authController = Get.find();
-  final ApiConnection apiConnection = Get.find();
+  const AuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GestureDetector(
-          child: const Text('Auth Page'),
-        ),
-      ),
+      backgroundColor: context.primary,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              apiConnection.setIp = "192.168.2.29";
-              apiConnection.setPort = "10222";
-              authController.username.value = "dd";
-              authController.password.value = "d";
-
-              authController.auth();
-            },
-            child: const Center(
-              child: Text("helo"),
+          const Spacer(),
+          const Icon(
+            Icons.ac_unit_sharp,
+            size: 60,
+            color: Colors.white,
+          ),
+          Gaps.g8,
+          Text(
+            intoAppNameString,
+            style: context.titleLarge?.copyWith(color: context.wightColor),
+          ),
+          Gaps.g4,
+          Text(
+            intoAppDescriptionString,
+            style: context.titleSmall?.copyWith(
+              color: context.containerColor,
             ),
-          )
+          ),
+          const Spacer(),
+          Column(
+            children: [
+              ElevatedButtonExtension.secondary(
+                label: intoBtnString,
+                onPressed: () {
+                  Get.bottomSheet(
+                    LoginSheet(),
+                    isScrollControlled: true,
+                  );
+                },
+              )
+            ],
+          ),
         ],
-      ),
+      ).p(40).pb(50),
     );
   }
 }
