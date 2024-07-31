@@ -1,28 +1,39 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 library api;
 
-import 'package:era_pro_applicationlication/src/core/api/end_points.dart';
+import 'package:era_pro_applicationlication/src/core/services/shared_pref.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:era_pro_applicationlication/src/core/api/end_points.dart';
 
 class ApiConnection extends GetxController {
-  final ip = "".obs;
-  final port = "".obs;
+  // SharedPreferences sharedPreferences;
+  // ApiConnection({
+  //   required this.sharedPreferences,
+  // });
+  final SharedPreferencesService _sharedPreferencesService = Get.find();
 
-  String get authUrl => 'http://$ip:$port/api/{endpoints}'
+  String get getBaseUrl => 'http://$getIp:$getPort';
+
+  String get authUrl => '$getBaseUrl/api/{endpoints}'
       .replaceFirst('{endpoints}', EndPoints.authUrl);
+  String get userUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.userUrl);
 
-  String get getIp {
-    return ip.value;
+  String? get getIp {
+    return _sharedPreferencesService.getString('ip');
   }
 
   set setIp(String newIp) {
-    ip.value = newIp;
+    _sharedPreferencesService.setString('ip', newIp);
   }
 
-  String get getPort {
-    return port.value;
+  String? get getPort {
+    return _sharedPreferencesService.getString('port');
   }
 
   set setPort(String newPort) {
-    port.value = newPort;
+    _sharedPreferencesService.setString('port', newPort);
   }
 }

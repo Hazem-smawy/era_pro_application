@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:era_pro_applicationlication/src/core/services/db/tables/user_table.dart';
+import 'package:era_pro_applicationlication/src/features/user/data/models/user_model.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
@@ -11,7 +13,7 @@ import 'package:drift_dev/api/migrations.dart';
 part 'db.g.dart';
 
 @DriftDatabase(
-  tables: [],
+  tables: [UserTable],
 )
 class AppDatabase extends _$AppDatabase {
   static final AppDatabase _instance = AppDatabase();

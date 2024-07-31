@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 
 import 'package:era_pro_applicationlication/src/features/auth/data/models/auth_response_model.dart';
-import 'package:era_pro_applicationlication/src/features/auth/data/sources/auth_remoteDatasource.dart';
+import 'package:era_pro_applicationlication/src/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:era_pro_applicationlication/src/features/auth/domain/repositories/repositories.dart';
 import '../../../../core/error/error.dart';
 

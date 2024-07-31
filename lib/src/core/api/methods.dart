@@ -1,18 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:era_pro_applicationlication/src/core/error/exception.dart';
-import 'package:http/http.dart' as client;
+import 'package:era_pro_applicationlication/src/core/services/shared_pref.dart';
 
 typedef ReturnData = Future<Map<String, dynamic>>;
 
-class HttpMethod {
-  static Future<T> post<T>(Map<String, dynamic> body, String url) async {
+class HttpMethod extends GetxController {
+  final http.Client client;
+  HttpMethod({
+    required this.client,
+  });
+  // SharedPreferences sharedPreferences;
+  // HttpMethod({
+  //   // required this.sharedPreferences,
+  // });
+  final SharedPreferencesService _sharedPreferencesService = Get.find();
+
+  Future<T> post<T>(Map<String, dynamic> body, String url) async {
     try {
       final response = await client
           .post(
         Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Authorization':
+              'Bearer ${_sharedPreferencesService.getString('token')}',
+          'Content-Type': 'application/json'
+        },
         body: jsonEncode(body),
       )
           .timeout(
@@ -28,12 +46,10 @@ class HttpMethod {
       } else {
         throw ServerExeption(message: 'from server statatus not 200');
       }
-    } on client.ClientException catch (e) {
-      print('ClientException: $e');
-      throw ServerExeption(message: 'client exception');
+    } on http.ClientException catch (e) {
+      throw ServerExeption(message: 'client exception : $e');
     } catch (e) {
-      print('Exception: $e');
-      throw ServerExeption(message: 'another exception');
+      throw ServerExeption(message: 'another exception $e');
     }
   }
 }

@@ -1,14 +1,18 @@
 import 'package:drift/drift.dart';
+import 'package:era_pro_applicationlication/src/features/user/data/models/user_model.dart';
 
-// @UseRowClass()
-class User extends Table {
+@UseRowClass(UserModel)
+class UserTable extends Table {
   IntColumn get id => integer()();
 
-  TextColumn get username => text()();
+  TextColumn get userName => text()();
 
-  TextColumn get musicStyle => text()();
+  TextColumn get password => text()();
+  IntColumn get userAcctype => integer()();
+  IntColumn get branchId => integer()();
+  IntColumn get groupId => integer()();
 
-  TextColumn get favoriteSongName => text()();
+  TextColumn get note => text()();
 
   ///Specifying which from the field above is the primary key
   @override

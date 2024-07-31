@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   TextEditingController portController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   ApiConnection apiConnection = Get.find();
-  final authState = RequestStatus.LOADING.obs;
+  final authState = RequestStatus.NOTHING.obs;
 
   void setRxRequestStatus(RequestStatus value) => authState.value = value;
 
@@ -25,6 +25,7 @@ class AuthController extends GetxController {
 
   void auth() async {
     if (formKey.currentState!.validate()) {
+      setRxRequestStatus(RequestStatus.LOADING);
       apiConnection.setIp = ipController.text.trim();
       apiConnection.setPort = portController.text.trim();
       var result = await authUseCase(
@@ -33,9 +34,10 @@ class AuthController extends GetxController {
       );
       result.fold((l) {
         print(l.message);
+        setRxRequestStatus(RequestStatus.ERROR);
       }, (r) {
         Get.toNamed(AppRouteName.home.name);
-        print('success');
+        setRxRequestStatus(RequestStatus.SUCESS);
       });
     }
   }

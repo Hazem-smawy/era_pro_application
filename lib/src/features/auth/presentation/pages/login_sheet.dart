@@ -2,6 +2,7 @@ import 'package:era_pro_applicationlication/src/core/constants/spaces.dart';
 import 'package:era_pro_applicationlication/src/core/constants/strings.dart';
 import 'package:era_pro_applicationlication/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_applicationlication/src/core/extensions/elvated_btn_extension.dart';
+import 'package:era_pro_applicationlication/src/core/types/status_types.dart';
 import 'package:era_pro_applicationlication/src/core/widgets/custom_text_filed_widget.dart';
 import 'package:era_pro_applicationlication/src/features/auth/presentation/getX/auth_getx.dart';
 import 'package:flutter/material.dart';
@@ -60,11 +61,25 @@ class LoginSheet extends StatelessWidget {
                   label: 'رقم المنفذ',
                 ),
                 Gaps.g16,
-                ElevatedButtonExtension.primary(
-                    label: loginSheetTitle,
-                    onPressed: () {
-                      authController.auth();
-                    }),
+                Obx(
+                  () => Column(
+                    children: [
+                      ElevatedButtonExtension.primary(
+                        label: loginSheetTitle,
+                        onPressed: () {
+                          authController.auth();
+                        },
+                      ),
+                      Gaps.g16,
+                      if (authController.authState.value ==
+                          RequestStatus.LOADING)
+                        const SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CircularProgressIndicator()),
+                    ],
+                  ),
+                ),
                 Gaps.g36,
               ],
             ),

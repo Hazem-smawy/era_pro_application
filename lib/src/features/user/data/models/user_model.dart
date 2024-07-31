@@ -1,3 +1,5 @@
+import 'package:drift/drift.dart';
+import 'package:era_pro_applicationlication/src/core/services/db/db.dart';
 import 'package:era_pro_applicationlication/src/features/user/domain/entities/user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,4 +20,15 @@ class UserModel extends UserEntity {
       _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  UserTableCompanion toCompanion() {
+    return UserTableCompanion(
+        id: Value(id ?? -1),
+        userName: Value(userName),
+        password: Value(password),
+        userAcctype: Value(userAcctype),
+        branchId: Value(branchId),
+        groupId: Value(groupId),
+        note: Value(note));
+  }
 }
