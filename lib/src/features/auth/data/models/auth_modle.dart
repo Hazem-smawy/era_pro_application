@@ -1,7 +1,7 @@
-import 'package:era_pro_applicationlication/src/features/auth/data/models/device_info_modle.dart';
-import 'package:era_pro_applicationlication/src/features/auth/data/models/token_model.dart';
-import 'package:era_pro_applicationlication/src/features/auth/data/models/user_info_auth_model.dart';
-import 'package:era_pro_applicationlication/src/features/auth/domain/entities/auth_entity.dart';
+import 'package:era_pro_application/src/features/auth/data/models/device_info_modle.dart';
+import 'package:era_pro_application/src/features/auth/data/models/token_model.dart';
+import 'package:era_pro_application/src/features/auth/data/models/user_info_auth_model.dart';
+import 'package:era_pro_application/src/features/auth/domain/entities/auth_entity.dart';
 
 class AuthModel extends AuthEntity {
   const AuthModel(

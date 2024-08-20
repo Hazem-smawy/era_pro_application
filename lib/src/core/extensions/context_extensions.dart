@@ -1,5 +1,8 @@
-import 'package:era_pro_applicationlication/src/core/constants/colors.dart';
+import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../constants/text_style.dart';
 
 extension BuildContextEntension<T> on BuildContext {
   bool get de => MediaQuery.of(this).size.width <= 500.0;
@@ -24,35 +27,23 @@ extension BuildContextEntension<T> on BuildContext {
 
   // text styles
 
-  TextStyle? get displayLarge => Theme.of(this).textTheme.displayLarge;
+  TextStyle? get displayLarge => AppTextStyle.displayLarge;
 
-  TextStyle? get displayMeduim => Theme.of(this).textTheme.displayMedium;
+  TextStyle? get displayMeduim => AppTextStyle.displayMedium;
 
-  TextStyle? get displaySmall => Theme.of(this).textTheme.displaySmall;
+  TextStyle? get displaySmall => AppTextStyle.displaySmall;
 
-  TextStyle? get titleLarge => Theme.of(this).textTheme.titleLarge;
+  TextStyle? get titleLarge => AppTextStyle.titleLarge;
 
-  TextStyle? get titleMedium => Theme.of(this).textTheme.titleMedium;
+  TextStyle? get titleMedium => AppTextStyle.titleMedium;
 
-  TextStyle? get titleSmall => Theme.of(this).textTheme.titleSmall;
+  TextStyle? get titleSmall => AppTextStyle.titleSmall;
 
-  TextStyle? get bodyLarg => Theme.of(this).textTheme.labelLarge;
+  TextStyle? get bodySmall => AppTextStyle.bodySmall;
 
-  TextStyle? get bodySmall => Theme.of(this).textTheme.bodySmall;
+  TextStyle? get bodyMeduim => AppTextStyle.bodyMedium;
 
-  TextStyle? get bodyMeduim => Theme.of(this).textTheme.bodyMedium;
-
-  TextStyle? get bodyLarge => Theme.of(this).textTheme.bodyLarge;
-
-  TextStyle? get dividerTextSmall => bodySmall?.copyWith(
-      letterSpacing: 0.5, fontWeight: FontWeight.w700, fontSize: 12.0);
-
-  TextStyle? get dividerTextLarge => bodySmall?.copyWith(
-        letterSpacing: 1.5,
-        fontWeight: FontWeight.w700,
-        fontSize: 13.0,
-        height: 1.23,
-      );
+  TextStyle? get bodyLarge => AppTextStyle.bodyLarge;
 
   // colors
 
@@ -80,29 +71,53 @@ extension BuildContextEntension<T> on BuildContext {
   Color get wightColor => Colors.white;
 
   Color get blackColor => Colors.black;
-  // Future<T?> showBottomSheet(
-  //   Widget child, {
-  //   bool isScrollControlled = true,
-  //   Color? backgroundColor,
-  //   Color? barrierColor,
-  // }) {
-  //   return showModalBottomSheet(
-  //     context: this,
-  //     barrierColor: barrierColor,
-  //     isScrollControlled: isScrollControlled,
-  //     backgroundColor: backgroundColor,
-  //     builder: (context) => Wrap(children: [child]),
-  //   );
-  // }
 
-  // ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
-  //     String message) {
-  //   return ScaffoldMessenger.of(this).showSnackBar(
-  //     SnackBar(
-  //       content: Text(message),
-  //       behavior: SnackBarBehavior.floating,
-  //       // backgroundColor: primary,
-  //     ),
-  //   );
-  // }
+  //gaps
+  Widget get g4 => SizedBox(
+        width: 4.w,
+        height: 4.h,
+      );
+  Widget get g8 => SizedBox(
+        width: 8.w,
+        height: 8.h,
+      );
+
+  Widget get g12 => SizedBox(
+        width: 12.w,
+        height: 12.h,
+      );
+
+  Widget get g16 => SizedBox(
+        width: 16.w,
+        height: 16.h,
+      );
+
+  Widget get g20 => SizedBox(
+        width: 20.w,
+        height: 20.h,
+      );
+  Widget get g28 => SizedBox(
+        width: 28.w,
+        height: 28.h,
+      );
+  Widget get g36 => SizedBox(
+        width: 36.w,
+        height: 36.h,
+      );
+  Widget get g44 => SizedBox(
+        width: 44.w,
+        height: 44.h,
+      );
+  Widget get g56 => SizedBox(
+        width: 56.w,
+        height: 56.h,
+      );
+
+  //spaces
+  double get sp4 => 4;
+  double get sp8 => 8;
+  double get sp12 => 12;
+  double get sp16 => 16;
+  double get sp20 => 20;
+  double get sp28 => 28;
 }

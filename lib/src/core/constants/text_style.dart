@@ -1,12 +1,12 @@
 library text_style;
 
-import 'package:era_pro_applicationlication/src/core/constants/assets.dart';
-import 'package:era_pro_applicationlication/src/core/constants/colors.dart';
+import 'package:era_pro_application/src/core/constants/assets.dart';
+import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //
-class AppTextStyle extends TextStyle {
+class AppTextStyle {
   static TextStyle get displayLarge => TextStyle(
         fontSize: 20.sp,
         color: AppColors.blackColor,
@@ -33,7 +33,7 @@ class AppTextStyle extends TextStyle {
   static TextStyle get titleMedium => TextStyle(
         fontSize: 16.sp,
         fontFamily: Assets.fontFamily,
-        color: AppColors.secondaryTextColor,
+        color: AppColors.blackColor,
       );
   static TextStyle get titleSmall => TextStyle(
         fontSize: 15.sp,

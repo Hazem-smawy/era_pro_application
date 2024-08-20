@@ -1,10 +1,10 @@
-import 'package:era_pro_applicationlication/src/core/constants/spaces.dart';
-import 'package:era_pro_applicationlication/src/core/constants/strings.dart';
-import 'package:era_pro_applicationlication/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_applicationlication/src/core/extensions/elvated_btn_extension.dart';
-import 'package:era_pro_applicationlication/src/core/types/status_types.dart';
-import 'package:era_pro_applicationlication/src/core/widgets/custom_text_filed_widget.dart';
-import 'package:era_pro_applicationlication/src/features/auth/presentation/getX/auth_getx.dart';
+import 'package:era_pro_application/src/core/constants/spaces_sizes.dart';
+import 'package:era_pro_application/src/core/constants/strings.dart';
+import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/extensions/elvated_btn_extension.dart';
+import 'package:era_pro_application/src/core/types/status_types.dart';
+import 'package:era_pro_application/src/core/widgets/custom_text_filed_widget.dart';
+import 'package:era_pro_application/src/features/auth/presentation/getX/auth_getx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,11 +54,13 @@ class LoginSheet extends StatelessWidget {
                 CustomTextFieldWidget(
                   controller: authController.ipController,
                   label: 'عنوان الاتصال',
+                  isNumber: true,
                 ),
                 Gaps.g16,
                 CustomTextFieldWidget(
                   controller: authController.portController,
                   label: 'رقم المنفذ',
+                  isNumber: true,
                 ),
                 Gaps.g16,
                 Obx(
@@ -71,12 +73,14 @@ class LoginSheet extends StatelessWidget {
                         },
                       ),
                       Gaps.g16,
-                      if (authController.authState.value ==
-                          RequestStatus.LOADING)
+                      if (authController.authState.value.isLoading())
                         const SizedBox(
-                            height: 50,
-                            width: 50,
-                            child: CircularProgressIndicator()),
+                          height: 50,
+                          width: 50,
+                          child: CircularProgressIndicator(),
+                        ),
+                      if (authController.errorMessage.value != '')
+                        Text(authController.errorMessage.value),
                     ],
                   ),
                 ),

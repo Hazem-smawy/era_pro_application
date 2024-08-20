@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:era_pro_applicationlication/src/core/error/exception.dart';
-import 'package:era_pro_applicationlication/src/core/services/shared_pref.dart';
+import 'package:era_pro_application/src/core/error/exception.dart';
+import 'package:era_pro_application/src/core/services/shared_preferences.dart';
 
 typedef ReturnData = Future<Map<String, dynamic>>;
 
@@ -22,6 +22,7 @@ class HttpMethod extends GetxController {
   final SharedPreferencesService _sharedPreferencesService = Get.find();
 
   Future<T> post<T>(Map<String, dynamic> body, String url) async {
+    print(url);
     try {
       final response = await client
           .post(
@@ -41,15 +42,20 @@ class HttpMethod extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
-        return data as T;
+        final data = jsonDecode(response.body);
+
+        if (data.length > 1) {
+          return data as T;
+        } else {
+          return data[0] as T;
+        }
       } else {
-        throw ServerExeption(message: 'from server statatus not 200');
+        throw ServerException(message: 'from server statatus not 200');
       }
     } on http.ClientException catch (e) {
-      throw ServerExeption(message: 'client exception : $e');
+      throw ServerException(message: 'client exception : $e');
     } catch (e) {
-      throw ServerExeption(message: 'another exception $e');
+      throw ServerException(message: 'another exception $e');
     }
   }
 }

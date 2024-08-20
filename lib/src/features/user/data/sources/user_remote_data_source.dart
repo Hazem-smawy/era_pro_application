@@ -2,26 +2,31 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
-import 'package:era_pro_applicationlication/src/core/api/api.dart';
-import 'package:era_pro_applicationlication/src/core/api/methods.dart';
-import 'package:era_pro_applicationlication/src/core/error/failures.dart';
-import 'package:era_pro_applicationlication/src/features/user/data/models/user_model.dart';
+import 'package:era_pro_application/src/core/api/api.dart';
+import 'package:era_pro_application/src/core/api/methods.dart';
+import 'package:era_pro_application/src/core/error/failures.dart';
+import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
 
-import '../../../../core/services/shared_pref.dart';
+import '../../../../core/services/shared_preferences.dart';
 
 abstract class UserRemoteDataSource {
   Future<UserModel> getUser();
 }
 
 class UserRemoteDataSourceImp implements UserRemoteDataSource {
-  ApiConnection apiConnection = Get.find();
-  HttpMethod httpMethod = Get.find();
-  final SharedPreferencesService _sharedPreferencesService = Get.find();
+  ApiConnection apiConnection;
+  HttpMethod httpMethod;
+  SharedPreferencesService sharedPreferencesService;
+  UserRemoteDataSourceImp({
+    required this.apiConnection,
+    required this.httpMethod,
+    required this.sharedPreferencesService,
+  });
 
   @override
   Future<UserModel> getUser() async {
     Map<String, dynamic> body = {
-      "userid": _sharedPreferencesService.getString('userId'),
+      "userid": sharedPreferencesService.getString('userId'),
       "branchid": null,
       "dateTime": null
     };

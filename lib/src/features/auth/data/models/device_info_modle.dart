@@ -1,4 +1,4 @@
-import 'package:era_pro_applicationlication/src/features/auth/domain/entities/device_info_entity.dart';
+import 'package:era_pro_application/src/features/auth/domain/entities/device_info_entity.dart';
 
 class DeviceInfoModel extends DeviceInfoEntity {
   const DeviceInfoModel(

@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:typed_data';
+
 import 'package:json_annotation/json_annotation.dart';
+import '../../../../core/utils/image_converter.dart';
 
 class UserEntity {
   final int? id;
@@ -13,6 +16,8 @@ class UserEntity {
   @JsonKey(name: "group_id")
   final int groupId;
   final String note;
+  @Uint8ListConverter()
+  final Uint8List? image;
   UserEntity({
     required this.id,
     required this.userName,
@@ -21,5 +26,6 @@ class UserEntity {
     required this.branchId,
     required this.groupId,
     required this.note,
+    required this.image,
   });
 }

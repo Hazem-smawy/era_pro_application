@@ -1,12 +1,9 @@
-import 'package:era_pro_applicationlication/src/core/api/methods.dart';
-import 'package:era_pro_applicationlication/src/core/error/failures.dart';
-import 'package:era_pro_applicationlication/src/core/services/shared_pref.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:era_pro_applicationlication/src/core/api/api.dart';
-import 'package:era_pro_applicationlication/src/core/utils/encryptAndDecryptUtils.dart';
-import 'package:era_pro_applicationlication/src/features/auth/data/models/auth_response_model.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:era_pro_application/src/core/api/methods.dart';
+import 'package:era_pro_application/src/core/error/failures.dart';
+import 'package:era_pro_application/src/core/services/shared_preferences.dart';
+import 'package:era_pro_application/src/core/api/api.dart';
+import 'package:era_pro_application/src/core/utils/encryptAndDecryptUtils.dart';
+import 'package:era_pro_application/src/features/auth/data/models/auth_response_model.dart';
 
 import '../../../../core/error/exception.dart';
 
@@ -18,12 +15,15 @@ abstract class AuthRemoteDatasource {
 }
 
 class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
-  final http.Client client;
-  final SharedPreferencesService _sharedPreferencesService = Get.find();
+  final SharedPreferencesService sharedPreferencesService;
 
-  final ApiConnection apiConnection = Get.find();
-  final HttpMethod httpMethod = Get.find();
-  AuthRemoteDatasourceImp({required this.client});
+  final ApiConnection apiConnection;
+  final HttpMethod httpMethod;
+
+  AuthRemoteDatasourceImp(
+      {required this.sharedPreferencesService,
+      required this.apiConnection,
+      required this.httpMethod});
 
   @override
   Future<AuthResponseModel> auth(
@@ -49,17 +49,17 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
         token: data['token']['token'],
         userId: EncrypterUtils.decrypt(plainText: data['userid']),
       );
-      await _sharedPreferencesService.setString(
+      await sharedPreferencesService.setString(
           'token', authResponseModel.token);
-      await _sharedPreferencesService.setString(
+      await sharedPreferencesService.setString(
           'refreshToken', authResponseModel.refreshToken);
-      await _sharedPreferencesService.setString(
+      await sharedPreferencesService.setString(
         'userId',
         authResponseModel.userId,
       );
 
       return authResponseModel;
-    } on ServerExeption {
+    } on ServerException {
       throw const ServerFailures(message: "error from the servier");
     } catch (e) {
       throw const ServerFailures(message: "error handling data");

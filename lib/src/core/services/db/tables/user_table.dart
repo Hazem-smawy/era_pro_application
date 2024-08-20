@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:era_pro_applicationlication/src/features/user/data/models/user_model.dart';
+import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
 
 @UseRowClass(UserModel)
 class UserTable extends Table {
@@ -13,6 +13,7 @@ class UserTable extends Table {
   IntColumn get groupId => integer()();
 
   TextColumn get note => text()();
+  BlobColumn get image => blob()();
 
   ///Specifying which from the field above is the primary key
   @override

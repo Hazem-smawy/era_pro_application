@@ -2,18 +2,42 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:era_pro_applicationlication/src/core/services/db/tables/user_table.dart';
-import 'package:era_pro_applicationlication/src/features/user/data/models/user_model.dart';
+import 'package:era_pro_application/src/core/services/db/tables/branch_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/company_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/curency_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/item_group_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/item_unit_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/unit_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/user_store_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/user_table.dart';
+import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:drift_dev/api/migrations.dart';
 
+import '../../../features/main_info/data/models/branch_model.dart';
+import '../../../features/main_info/data/models/company_model.dart';
+import '../../../features/main_info/data/models/curency_model.dart';
+import '../../../core/error/error.dart';
+import '../../../features/main_info/data/models/item_group_model.dart';
+import '../../../features/main_info/data/models/item_units_model.dart';
+import '../../../features/main_info/data/models/unit_model.dart';
+import '../../../features/main_info/data/models/user_store_model.dart';
 part 'db.g.dart';
 
 @DriftDatabase(
-  tables: [UserTable],
+  tables: [
+    UserTable,
+    CompanyTable,
+    BranchTable,
+    CurencyTable,
+    UserStoreTable,
+    UnitTable,
+    ItemGroupTable,
+    ItemUnitTable,
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   static final AppDatabase _instance = AppDatabase();
@@ -24,6 +48,42 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 2;
+
+  Future<D?> getSingle<T extends Table, D>(TableInfo<T, D> table,
+      Expression<int> Function(T) idSelector, int id) async {
+    D? model = await (select(table)..where((tbl) => idSelector(tbl).equals(id)))
+        .getSingleOrNull();
+    return model;
+  }
+
+  Future<void> saveSingle<T extends Table, D>(
+      TableInfo<T, D> table, Insertable<D> model) async {
+    try {
+      AppDatabase db = AppDatabase.instance();
+      await db.into(table).insertOnConflictUpdate(model);
+    } catch (e) {
+      throw LocalStorageException();
+    }
+  }
+
+  Future<void> saveAll<T extends Table, D>(
+    TableInfo<T, D> table,
+    List<Insertable<D>> models,
+  ) async {
+    try {
+      final db = AppDatabase.instance();
+      await db.batch((batch) {
+        batch.insertAllOnConflictUpdate(table, models);
+      });
+    } catch (e) {
+      throw LocalStorageException(message: e.toString());
+    }
+  }
+
+  Future<List<D>> getAll<T extends Table, D>(TableInfo<T, D> table) async {
+    final db = AppDatabase.instance();
+    return await db.select(table).get();
+  }
 
   @override
   MigrationStrategy get migration {

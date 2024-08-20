@@ -1,4 +1,4 @@
-name: era_pro_applicationlication
+name: era_pro_application
 description: "A new Flutter project."
 flutter_assets:
   assets_path: assets/
@@ -49,10 +49,13 @@ dependencies:
   http: any
   json_annotation: ^4.9.0
   shared_preferences: 
-  drift: ^2.14.0
+  drift: ^2.19.1+1
   sqlite3: ^2.1.0
   path_provider:
   font_awesome_flutter:
+  sqlite3_flutter_libs: any
+
+
 
 dev_dependencies:
   flutter_test:
@@ -145,3 +148,9 @@ flutter:
     fonts:
       - asset: assets/fonts/ntaqat.ttf
 
+  - family: Cairo
+    fonts:
+      - asset: assets/fonts/Cairo-Regular.ttf
+      - asset: assets/fonts/Cairo-Bold.ttf
+      - asset: assets/fonts/Cairo-Light.ttf
+      - asset: assets/fonts/Cairo-Medium.ttf

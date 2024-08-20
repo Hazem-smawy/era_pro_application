@@ -1,4 +1,4 @@
-import 'package:era_pro_applicationlication/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

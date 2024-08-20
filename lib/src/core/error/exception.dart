@@ -1,21 +1,28 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class ServerExeption implements Exception {
+class ServerException implements Exception {
   final String? message;
-  ServerExeption({
+  ServerException({
     this.message,
   });
 }
 
-class OfflineExeption implements Exception {
+class OfflineException implements Exception {
   final String? message;
-  OfflineExeption({
+  OfflineException({
     this.message,
   });
 }
 
-class EmptyCashExeption implements Exception {
+class EmptyCashException implements Exception {
   final String? message;
-  EmptyCashExeption({
+  EmptyCashException({
+    this.message,
+  });
+}
+
+class LocalStorageException implements Exception {
+  final String? message;
+  LocalStorageException({
     this.message,
   });
 }

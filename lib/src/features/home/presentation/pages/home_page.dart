@@ -1,6 +1,5 @@
-import 'package:era_pro_applicationlication/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_applicationlication/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_applicationlication/src/features/user/presentation/widgets/widgets.dart';
+import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/features/user/presentation/widgets/user_profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

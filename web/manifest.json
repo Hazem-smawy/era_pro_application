@@ -1,6 +1,6 @@
 {
-  "name": "era_pro_applicationlication",
-  "short_name": "era_pro_applicationlication",
+  "name": "era_pro_application",
+  "short_name": "era_pro_application",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0175C2",

@@ -19,8 +19,8 @@ class ServerFailures extends Failure {
   List<Object?> get props => [message];
 }
 
-class EmptyLocalStrorageFailures extends Failure {
-  const EmptyLocalStrorageFailures({required super.message});
+class LocalStorageFailures extends Failure {
+  const LocalStorageFailures({required super.message});
 
   @override
   List<Object?> get props => [message];

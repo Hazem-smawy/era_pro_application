@@ -1,7 +1,8 @@
+import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:get/get.dart';
 
-import 'package:era_pro_applicationlication/src/features/user/domain/entities/user_entity.dart';
-import 'package:era_pro_applicationlication/src/features/user/domain/usecases/usecases.dart';
+import 'package:era_pro_application/src/features/user/domain/entities/user_entity.dart';
+import 'package:era_pro_application/src/features/user/domain/usecases/usecases.dart';
 
 class UserController extends GetxController {
   GetUserUseCase getUserUseCase;
@@ -16,15 +17,16 @@ class UserController extends GetxController {
     required this.getUserUseCase,
   });
 
-  Rx<UserEntity> user = Rx(UserEntity(
-    id: 0,
-    userName: "",
-    password: "",
-    userAcctype: 0,
-    branchId: 0,
-    groupId: 0,
-    note: "",
-  ));
+  // Rx<UserEntity> user = Rx(UserEntity(
+  //   id: 0,
+  //   userName: "",
+  //   password: "",
+  //   userAcctype: 0,
+  //   branchId: 0,
+  //   groupId: 0,
+  //   note: "",
+  // ));
+  var user = Rx<UserEntity?>(null);
 
   Future<void> getUser() async {
     final res = await getUserUseCase();

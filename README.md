@@ -1,4 +1,4 @@
-# era_pro_applicationlication
+# era_pro_application
 
 A new Flutter project.
 

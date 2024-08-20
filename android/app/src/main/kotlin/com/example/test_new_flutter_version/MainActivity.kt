@@ -1,4 +1,4 @@
-package com.example.era_pro_applicationlication
+package com.example.era_pro_application
 
 import io.flutter.embedding.android.FlutterActivity
 

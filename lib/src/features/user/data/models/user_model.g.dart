@@ -14,6 +14,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       branchId: (json['branch_id'] as num).toInt(),
       groupId: (json['group_id'] as num).toInt(),
       note: json['note'] as String,
+      image: _$JsonConverterFromJson<String, Uint8List>(
+          json['image'], const Uint8ListConverter().fromJson),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -24,4 +26,18 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'branch_id': instance.branchId,
       'group_id': instance.groupId,
       'note': instance.note,
+      'image': _$JsonConverterToJson<String, Uint8List>(
+          instance.image, const Uint8ListConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

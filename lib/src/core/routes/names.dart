@@ -1,4 +1,4 @@
-enum AppRouteName { auth, home }
+enum AppRouteName { auth, home, bnp, companyInfo }
 
 extension AppRouteExtension on AppRouteName {
   String get name {
@@ -7,7 +7,10 @@ extension AppRouteExtension on AppRouteName {
         return "/auth";
       case AppRouteName.home:
         return "/home";
-
+      case AppRouteName.bnp:
+        return '/bnp';
+      case AppRouteName.companyInfo:
+        return '/companyInfo';
       default:
         return "/";
     }

@@ -1,19 +1,19 @@
-import 'package:era_pro_applicationlication/src/core/constants/assets.dart';
-import 'package:era_pro_applicationlication/src/core/constants/colors.dart';
-import 'package:era_pro_applicationlication/src/core/constants/text_style.dart';
+import 'package:era_pro_application/src/core/constants/assets.dart';
+import 'package:era_pro_application/src/core/constants/colors.dart';
+import 'package:era_pro_application/src/core/constants/text_style.dart';
 import 'package:flutter/material.dart';
 
 class AppThemData {
   static ThemeData lightThemeData = themeData(lightColorScheme);
 
-  static ThemeData darkThemeData = themeData(darkColorScheme);
+  static ThemeData darkThemeData = themeData(lightColorScheme);
   static ThemeData themeData(
     ColorScheme colorScheme,
   ) {
     return ThemeData(
       colorScheme: colorScheme,
-      canvasColor: colorScheme.surface,
-      scaffoldBackgroundColor: colorScheme.surface,
+      canvasColor: AppColors.bg,
+      scaffoldBackgroundColor: AppColors.whiteColor,
       highlightColor: Colors.transparent,
       focusColor: colorScheme.primary,
       useMaterial3: true,
@@ -34,18 +34,42 @@ class AppThemData {
           ),
           borderRadius: BorderRadius.circular(20),
         ),
+        focusedBorder: OutlineInputBorder(
+          // width: 0.0 produces a thin "hairline" border
+          borderSide: const BorderSide(
+            color: AppColors.primaryColor,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        errorBorder: OutlineInputBorder(
+          // width: 0.0 produces a thin "hairline" border
+          borderSide: const BorderSide(
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          // width: 0.0 produces a thin "hairline" border
+          borderSide: const BorderSide(
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
-      textTheme: TextTheme(
-        displayLarge: AppTextStyle.displayLarge,
-        displayMedium: AppTextStyle.displayMedium,
-        displaySmall: AppTextStyle.displaySmall,
-        titleLarge: AppTextStyle.titleLarge,
-        titleMedium: AppTextStyle.titleMedium,
-        titleSmall: AppTextStyle.titleSmall,
-        bodyLarge: AppTextStyle.bodyLarge,
-        bodySmall: AppTextStyle.bodySmall,
-        bodyMedium: AppTextStyle.bodyMedium,
-      ),
+      textTheme: TextTheme.lerp(
+          TextTheme(
+            displayLarge: AppTextStyle.displayLarge,
+            displayMedium: AppTextStyle.displayMedium,
+            displaySmall: AppTextStyle.displaySmall,
+            titleLarge: AppTextStyle.titleLarge,
+            titleMedium: AppTextStyle.titleMedium,
+            titleSmall: AppTextStyle.titleSmall,
+            bodyLarge: AppTextStyle.bodyLarge,
+            bodySmall: AppTextStyle.bodySmall,
+            bodyMedium: AppTextStyle.bodyMedium,
+          ),
+          const TextTheme(),
+          1),
     );
   }
 
@@ -59,16 +83,5 @@ class AppThemData {
     surface: AppColors.sheetBgColor,
     onSurface: Color(0xFF241E30),
     brightness: Brightness.light,
-  );
-  static const ColorScheme darkColorScheme = ColorScheme(
-    primary: Color(0xFFFF8383),
-    secondary: Color(0xFF4D1F7C),
-    surface: Color(0xFF1F1929),
-    error: Colors.redAccent,
-    onError: Colors.white,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    onSurface: Colors.white,
-    brightness: Brightness.dark,
   );
 }

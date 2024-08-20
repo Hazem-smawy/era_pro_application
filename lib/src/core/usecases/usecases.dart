@@ -1,11 +1,20 @@
-abstract class UseCase<Type, Params> {}
+import 'package:dartz/dartz.dart';
+import 'package:era_pro_application/src/core/error/failures.dart';
+
+abstract class ParamsUseCase<Type, Params> {
+  Future<Either<Failure, Type>> call(Params params);
+}
+
+abstract class NoParamUseCase<Type> {
+  Future<Either<Failure, Type>> call();
+}
 
 class Params<T> {
   final T data;
   const Params(this.data);
 }
 
-class NoParams<T> {
+class NoParams {
   final void data;
-  const NoParams(this.data);
+  NoParams(this.data);
 }

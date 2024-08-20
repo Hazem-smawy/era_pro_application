@@ -1,7 +1,11 @@
-import 'package:drift/drift.dart';
-import 'package:era_pro_applicationlication/src/core/services/db/db.dart';
-import 'package:era_pro_applicationlication/src/features/user/domain/entities/user_entity.dart';
+import 'dart:typed_data';
+
+import 'package:drift/drift.dart' as drift;
+import 'package:era_pro_application/src/core/services/db/db.dart';
+import 'package:era_pro_application/src/features/user/domain/entities/user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../../../core/utils/image_converter.dart';
 
 part 'user_model.g.dart';
 
@@ -15,7 +19,9 @@ class UserModel extends UserEntity {
     required super.branchId,
     required super.groupId,
     required super.note,
+    required super.image,
   });
+
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
@@ -23,12 +29,14 @@ class UserModel extends UserEntity {
 
   UserTableCompanion toCompanion() {
     return UserTableCompanion(
-        id: Value(id ?? -1),
-        userName: Value(userName),
-        password: Value(password),
-        userAcctype: Value(userAcctype),
-        branchId: Value(branchId),
-        groupId: Value(groupId),
-        note: Value(note));
+      id: drift.Value(id ?? -1),
+      userName: drift.Value(userName),
+      password: drift.Value(password),
+      userAcctype: drift.Value(userAcctype),
+      branchId: drift.Value(branchId),
+      groupId: drift.Value(groupId),
+      note: drift.Value(note),
+      image: drift.Value(image ?? Uint8List(0)),
+    );
   }
 }

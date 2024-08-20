@@ -3,7 +3,7 @@ class Assets {
 
   /// Assets for assetsFontsNtaqat
   /// assets/fonts/ntaqat.ttf
-  static const String fontFamily = "ntaqat";
+  static const String fontFamily = "Cairo";
 
   /// Assets for assetsImagesAvatar1
   /// assets/images/avatar1.jpg

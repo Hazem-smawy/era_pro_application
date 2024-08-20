@@ -1,9 +1,9 @@
-import 'package:era_pro_applicationlication/src/core/constants/spaces.dart';
-import 'package:era_pro_applicationlication/src/core/constants/strings.dart';
-import 'package:era_pro_applicationlication/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_applicationlication/src/core/extensions/elvated_btn_extension.dart';
-import 'package:era_pro_applicationlication/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_applicationlication/src/features/auth/presentation/pages/login_sheet.dart';
+import 'package:era_pro_application/src/core/constants/spaces_sizes.dart';
+import 'package:era_pro_application/src/core/constants/strings.dart';
+import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/extensions/elvated_btn_extension.dart';
+import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/features/auth/presentation/pages/login_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

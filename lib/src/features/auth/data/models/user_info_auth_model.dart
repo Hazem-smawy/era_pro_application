@@ -1,4 +1,4 @@
-import 'package:era_pro_applicationlication/src/features/auth/domain/entities/user_info_auth_entity.dart';
+import 'package:era_pro_application/src/features/auth/domain/entities/user_info_auth_entity.dart';
 
 class UserInfoAuthModel extends UserInfoAuthEntity {
   const UserInfoAuthModel({required super.username, required super.password});

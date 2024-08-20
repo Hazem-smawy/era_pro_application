@@ -1,6 +1,6 @@
-import 'package:era_pro_applicationlication/src/core/constants/colors.dart';
-import 'package:era_pro_applicationlication/src/core/constants/spaces.dart';
-import 'package:era_pro_applicationlication/src/core/constants/text_style.dart';
+import 'package:era_pro_application/src/core/constants/colors.dart';
+import 'package:era_pro_application/src/core/constants/spaces_sizes.dart';
+import 'package:era_pro_application/src/core/constants/text_style.dart';
 import 'package:flutter/material.dart';
 
 extension ElevatedButtonExtension on ElevatedButton {
