@@ -22,20 +22,12 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
     required this.httpMethod,
     required this.sharedPreferencesService,
   });
-
+  @override
   @override
   Future<UserModel> getUser() async {
-    Map<String, dynamic> body = {
-      "userid": sharedPreferencesService.getString('userId'),
-      "branchid": null,
-      "dateTime": null
-    };
-    try {
-      final data = await httpMethod.post(body, apiConnection.userUrl);
-
-      return UserModel.fromJson(data);
-    } catch (e) {
-      throw Left(ServerFailures(message: "server fuilrs : $e"));
-    }
+    return httpMethod.handleRequest(
+      apiConnection.userUrl,
+      (data) => UserModel.fromJson(data),
+    );
   }
 }

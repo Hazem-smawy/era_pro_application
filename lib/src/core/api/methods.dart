@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:era_pro_application/src/core/error/exception.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
 
+import '../error/error.dart';
+
 typedef ReturnData = Future<Map<String, dynamic>>;
 
 class HttpMethod extends GetxController {
@@ -22,7 +24,6 @@ class HttpMethod extends GetxController {
   final SharedPreferencesService _sharedPreferencesService = Get.find();
 
   Future<T> post<T>(Map<String, dynamic> body, String url) async {
-    print(url);
     try {
       final response = await client
           .post(
@@ -56,6 +57,28 @@ class HttpMethod extends GetxController {
       throw ServerException(message: 'client exception : $e');
     } catch (e) {
       throw ServerException(message: 'another exception $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> prepareRequestBody() async {
+    return {
+      "userid": _sharedPreferencesService.getString('userId'),
+      "branchid": 1,
+      "dateTime": null,
+    };
+  }
+
+  Future<T> handleRequest<T>(
+    String url,
+    T Function(dynamic) fromJson,
+  ) async {
+    final body = await prepareRequestBody();
+
+    try {
+      final responseData = await post(body, url);
+      return fromJson(responseData);
+    } catch (e) {
+      throw ServerFailures(message: "Server error: $e");
     }
   }
 }

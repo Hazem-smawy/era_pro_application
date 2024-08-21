@@ -21,128 +21,6 @@ abstract class MainInfoRemoteDatasource {
   Future<List<ItemUnitsModel>> getAllItemUnit();
 }
 
-// class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
-//   ApiConnection apiConnection;
-//   HttpMethod httpMethod;
-//   SharedPreferencesService sharedPreferencesService;
-//   MainInfoRemoteDatasourceImp({
-//     required this.apiConnection,
-//     required this.httpMethod,
-//     required this.sharedPreferencesService,
-//   });
-
-//   @override
-//   Future<BranchModel> getBranchInfo() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.branchUrl);
-//       return BranchModel.fromJson(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-
-//   @override
-//   Future<CompanyModel> getCompanyInfo() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.companUrl);
-
-//       return CompanyModel.fromJson(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-
-//   @override
-//   Future<List<CurencyModel>> getAllCurency() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.curencyUrl);
-
-//       return CurencyModel.fromJsonArray(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-
-//   @override
-//   Future<List<ItemGroupModel>> getAllItemGroups() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.itemGroupsUrl);
-
-//       return ItemGroupModel.fromJsonArray(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-
-//   @override
-//   Future<List<UnitModel>> getAllUnits() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.unitsUrl);
-
-//       return UnitModel.fromJsonArray(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-
-//   @override
-//   Future<UserStoreModel> getUserStoreInfo() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.userStoreUrl);
-
-//       return UserStoreModel.fromJson(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-
-//   @override
-//   Future<List<ItemUnitsModel>> getAllItemUnit() async {
-//     Map<String, dynamic> body = {
-//       "userid": sharedPreferencesService.getString('userId'),
-//       "branchid": 1,
-//       "dateTime": null
-//     };
-//     try {
-//       final data = await httpMethod.post(body, apiConnection.itemUnitsUrl);
-
-//       return ItemUnitsModel.fromJsonArray(data);
-//     } catch (e) {
-//       throw ServerFailures(message: "server error $e");
-//     }
-//   }
-// }
-
 class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
   final ApiConnection apiConnection;
   final HttpMethod httpMethod;
@@ -154,31 +32,9 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
     required this.sharedPreferencesService,
   });
 
-  Future<Map<String, dynamic>> _prepareRequestBody() async {
-    return {
-      "userid": sharedPreferencesService.getString('userId'),
-      "branchid": 1,
-      "dateTime": null,
-    };
-  }
-
-  Future<T> _handleRequest<T>(
-    String url,
-    T Function(dynamic) fromJson,
-  ) async {
-    final body = await _prepareRequestBody();
-
-    try {
-      final responseData = await httpMethod.post(body, url);
-      return fromJson(responseData);
-    } catch (e) {
-      throw ServerFailures(message: "Server error: $e");
-    }
-  }
-
   @override
   Future<BranchModel> getBranchInfo() async {
-    return _handleRequest(
+    return httpMethod.handleRequest(
       apiConnection.branchUrl,
       (data) => BranchModel.fromJson(data),
     );
@@ -186,7 +42,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
 
   @override
   Future<CompanyModel> getCompanyInfo() async {
-    return _handleRequest(
+    return httpMethod.handleRequest(
       apiConnection.companUrl,
       (data) => CompanyModel.fromJson(data),
     );
@@ -194,7 +50,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
 
   @override
   Future<List<ItemGroupModel>> getAllItemGroups() async {
-    return _handleRequest<List<ItemGroupModel>>(
+    return httpMethod.handleRequest<List<ItemGroupModel>>(
       apiConnection.itemGroupsUrl,
       (data) => ItemGroupModel.fromJsonArray(data),
     );
@@ -202,7 +58,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
 
   @override
   Future<List<UnitModel>> getAllUnits() async {
-    return _handleRequest<List<UnitModel>>(
+    return httpMethod.handleRequest<List<UnitModel>>(
       apiConnection.unitsUrl,
       (data) => UnitModel.fromJsonArray(data),
     );
@@ -210,7 +66,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
 
   @override
   Future<UserStoreModel> getUserStoreInfo() async {
-    return _handleRequest(
+    return httpMethod.handleRequest(
       apiConnection.userStoreUrl,
       (data) => UserStoreModel.fromJson(data),
     );
@@ -218,7 +74,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
 
   @override
   Future<List<ItemUnitsModel>> getAllItemUnit() async {
-    return _handleRequest<List<ItemUnitsModel>>(
+    return httpMethod.handleRequest<List<ItemUnitsModel>>(
       apiConnection.itemUnitsUrl,
       (data) => ItemUnitsModel.fromJsonArray(data),
     );
@@ -226,7 +82,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
 
   @override
   Future<List<CurencyModel>> getAllCurency() async {
-    return _handleRequest<List<CurencyModel>>(
+    return httpMethod.handleRequest<List<CurencyModel>>(
       apiConnection.curencyUrl,
       (data) => CurencyModel.fromJsonArray(data),
     );

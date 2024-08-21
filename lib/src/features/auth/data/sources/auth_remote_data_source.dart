@@ -20,35 +20,44 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
   final ApiConnection apiConnection;
   final HttpMethod httpMethod;
 
-  AuthRemoteDatasourceImp(
-      {required this.sharedPreferencesService,
-      required this.apiConnection,
-      required this.httpMethod});
+  AuthRemoteDatasourceImp({
+    required this.sharedPreferencesService,
+    required this.apiConnection,
+    required this.httpMethod,
+  });
 
   @override
-  Future<AuthResponseModel> auth(
-      {required String username, required String password}) async {
+  Future<AuthResponseModel> auth({
+    required String username,
+    required String password,
+  }) async {
     final body = {
-      "token": {"token": "", "refreshToken": ""},
+      "token": {
+        "token": "",
+        "refreshToken": "",
+      },
       "user": {
-        "username": EncrypterUtils.encrypt(plainText: 'hazem'),
-        "password": EncrypterUtils.encrypt(plainText: '123'),
+        "username": EncrypterUtils.encrypt(plainText: username),
+        "password": EncrypterUtils.encrypt(plainText: password),
       },
       "deviceInfo": {
         "deviceid": "209441",
         "devicename": "S23",
         "devicemodel": "ultra",
         "devicetype": "mobile",
-        "userid": 5
-      }
+        "userid": 5,
+      },
     };
+
     try {
       final data = await httpMethod.post(body, apiConnection.authUrl);
+
       final authResponseModel = AuthResponseModel(
         refreshToken: data['token']['refreshToken'],
         token: data['token']['token'],
         userId: EncrypterUtils.decrypt(plainText: data['userid']),
       );
+
       await sharedPreferencesService.setString(
           'token', authResponseModel.token);
       await sharedPreferencesService.setString(
@@ -60,9 +69,9 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
 
       return authResponseModel;
     } on ServerException {
-      throw const ServerFailures(message: "error from the servier");
+      throw const ServerFailures(message: "Error from the server");
     } catch (e) {
-      throw const ServerFailures(message: "error handling data");
+      throw ServerFailures(message: "Error handling data: $e");
     }
   }
 }

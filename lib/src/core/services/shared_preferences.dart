@@ -5,9 +5,6 @@ class SharedPreferencesService {
 
   SharedPreferencesService(this._preferences);
 
-  // static Future init() async =>
-  //     _preferences = await SharedPreferences.getInstance();
-
   Future setString(String key, String value) async =>
       await _preferences.setString(key, value);
 

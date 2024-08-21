@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:era_pro_application/src/core/constants/assets.dart';
+import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,12 +17,23 @@ extension CustomImage on Image {
               imageData,
               errorBuilder:
                   (BuildContext context, Object error, StackTrace? stackTrace) {
-                return Image.asset(Assets.assetsImagesAvatar1);
+                return Container(
+                  width: w,
+                  height: h,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.containerColor,
+                  ),
+                );
               },
             )
-          : Image.asset(
-              Assets.assetsImagesAvatar1,
-              fit: BoxFit.cover,
+          : Container(
+              width: w,
+              height: h,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.containerColor,
+              ),
             ),
     );
   }

@@ -96,9 +96,10 @@ class DependencyInjection {
         fenix: true);
     Get.lazyPut<MainInfoRemoteDatasource>(
         () => MainInfoRemoteDatasourceImp(
-            apiConnection: Get.find(),
-            httpMethod: Get.find(),
-            sharedPreferencesService: Get.find()),
+              apiConnection: Get.find(),
+              httpMethod: Get.find(),
+              sharedPreferencesService: Get.find(),
+            ),
         fenix: true);
 
     //! Features - user

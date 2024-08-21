@@ -30,7 +30,8 @@ class AuthController extends GetxController {
       apiConnection.setIp = ipController.text.trim();
       apiConnection.setPort = portController.text.trim();
       var result = await authUseCase(
-          Tuple2(nameController.text.trim(), passwordController.text.trim()));
+        Tuple2(nameController.text.trim(), passwordController.text.trim()),
+      );
       result.fold((l) {
         errorMessage.value = l.message;
         authState.value = Status.ERROR;
@@ -43,7 +44,6 @@ class AuthController extends GetxController {
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
     nameController.dispose();
     ipController.dispose();

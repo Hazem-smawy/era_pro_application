@@ -32,6 +32,8 @@ class ApiConnection extends GetxController {
     _sharedPreferencesService.setString('port', newPort);
   }
 
+  //set a request
+
   //end points
   String get authUrl => '$getBaseUrl/api/{endpoints}'
       .replaceFirst('{endpoints}', EndPoints.authUrl);

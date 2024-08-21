@@ -1,4 +1,3 @@
-import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/constants/spaces_sizes.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/image_with_error_extension.dart';
@@ -61,12 +60,10 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Gaps.g16,
-                    CustomImage.memoryWithErorrAndLoading(
-                      mainInfoController.company.value?.logo,
-                      fallbackImage:
-                          const AssetImage(Assets.assetsImagesAvatar1),
-                      w: 80,
-                      h: 80,
+                    CustomImage.memoryWithError(
+                      mainInfoController.branch.value?.logo,
+                      h: 100,
+                      w: 100,
                     ),
                     Text(
                       mainInfoController.company.value?.name ?? '',
@@ -97,7 +94,10 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                 ),
               ),
               if (mainInfoController.errorMessage.value != '')
-                Text(mainInfoController.errorMessage.value),
+                Text(
+                  mainInfoController.errorMessage.value,
+                  style: context.bodySmall,
+                ),
               Gaps.g28,
               Text(
                 'معلومات الفرع',

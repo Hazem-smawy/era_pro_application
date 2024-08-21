@@ -28,28 +28,17 @@ class CompanyModel extends CompanyEntity {
 
   CompanyTableCompanion toCompanion() {
     return CompanyTableCompanion(
-        id: Value(id),
-        name: Value(name),
-        enName: Value(enName),
-        shortName: Value(shortName),
-        enShortName: Value(enShortName),
-        address: Value(address ?? ''),
-        website: Value(website ?? ''),
-        note: Value(note ?? ''),
-        image: Value(logo ?? Uint8List(0)));
-  }
-
-  CompanyEntity toEntity() {
-    return CompanyEntity(
-      id: id,
-      name: name,
-      enName: enName,
-      shortName: shortName,
-      enShortName: enShortName,
-      address: address,
-      website: website,
-      note: note,
-      logo: logo,
+      id: Value(id),
+      name: Value(name),
+      enName: Value(enName),
+      shortName: Value(shortName),
+      enShortName: Value(enShortName),
+      address: Value(address ?? ''),
+      website: Value(website ?? ''),
+      note: Value(note ?? ''),
+      image: Value(
+        logo ?? Uint8List(0),
+      ),
     );
   }
 }

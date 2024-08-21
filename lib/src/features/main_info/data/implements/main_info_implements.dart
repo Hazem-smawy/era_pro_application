@@ -90,7 +90,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, BranchModel>> getBranchInfo() async {
-    return _fetchData(
+    return _fetchSingleData(
       fetchLocalData: () => mainInfoLocalDatasource.getBranchInfo(
           int.parse(sharedPreferencesService.getString('branchId') ?? '0')),
       fetchRemoteData: mainInfoRemoteDatasource.getBranchInfo,
@@ -101,7 +101,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, CompanyModel>> getCompnayInfo() async {
-    return _fetchData(
+    return _fetchSingleData(
       fetchLocalData: () => mainInfoLocalDatasource.getCompanyInfo(
           int.parse(sharedPreferencesService.getString('companyId') ?? '0')),
       fetchRemoteData: mainInfoRemoteDatasource.getCompanyInfo,
@@ -114,7 +114,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, List<CurencyModel>>> getAllCurencies() async {
-    return _fetchAndCacheData<CurencyModel>(
+    return _fetchAndCacheArrayData<CurencyModel>(
       cacheKey: 'curency',
       fetchFromLocal: mainInfoLocalDatasource.getAllCurency,
       fetchFromRemote: mainInfoRemoteDatasource.getAllCurency,
@@ -128,7 +128,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, UserStoreModel>> getUserStoreInfo() {
-    return _fetchData(
+    return _fetchSingleData(
       fetchLocalData: () => mainInfoLocalDatasource.getUserStoreInfo(int.parse(
           sharedPreferencesService.getString('userStoreInfo') ?? '0')),
       fetchRemoteData: mainInfoRemoteDatasource.getUserStoreInfo,
@@ -139,7 +139,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, List<ItemGroupModel>>> getItemGroups() async {
-    return _fetchAndCacheData<ItemGroupModel>(
+    return _fetchAndCacheArrayData<ItemGroupModel>(
       cacheKey: 'itemGroup',
       fetchFromLocal: mainInfoLocalDatasource.getAllItemGroups,
       fetchFromRemote: mainInfoRemoteDatasource.getAllItemGroups,
@@ -154,7 +154,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, List<UnitModel>>> getUnits() async {
-    return _fetchAndCacheData<UnitModel>(
+    return _fetchAndCacheArrayData<UnitModel>(
       cacheKey: 'units',
       fetchFromLocal: mainInfoLocalDatasource.getAllUnits,
       fetchFromRemote: mainInfoRemoteDatasource.getAllUnits,
@@ -168,7 +168,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
   @override
   Future<Either<Failure, List<ItemUnitsEntity>>> getItemUnits() async {
-    return _fetchAndCacheData<ItemUnitsModel>(
+    return _fetchAndCacheArrayData<ItemUnitsModel>(
       cacheKey: 'itemUnits',
       fetchFromLocal: mainInfoLocalDatasource.getAllItemUnits,
       fetchFromRemote: mainInfoRemoteDatasource.getAllItemUnit,
@@ -179,30 +179,59 @@ class MainInfoRepositoryImp implements MainInfoRepository {
     );
   }
 
-  Future<Either<Failure, T>> _fetchData<T>({
+  // Future<Either<Failure, T>> _fetchData<T>({
+  //   required Future<T?> Function() fetchLocalData,
+  //   required Future<T> Function() fetchRemoteData,
+  //   required Future<void> Function(T) saveLocalData,
+  //   required String sharedPrefKey,
+  // }) async {
+  //   try {
+  //     var id = sharedPreferencesService.getString(sharedPrefKey);
+  //     if (id != null) {
+  //       final data = await fetchLocalData();
+  //       if (data != null) {
+  //         return Right(data);
+  //       } else {
+  //         throw LocalStorageException();
+  //       }
+  //     } else {
+  //       final data = await fetchRemoteData();
+  //       if (data != null) {
+  //         // Assuming data has an id property, replace `data.id` with the actual way to access the id.
+  //         final String id = (data as dynamic).id?.toString() ??
+  //             ''; // Casting to dynamic to access id
+  //         await sharedPreferencesService.setString(sharedPrefKey, id);
+  //         await saveLocalData(data);
+  //         return Right(data);
+  //       } else {
+  //         return const Left(ServerFailures(message: "Server failure"));
+  //       }
+  //     }
+  //   } on LocalStorageException {
+  //     return const Left(
+  //         LocalStorageFailures(message: "Can't get data from local storage"));
+  //   } on ServerException {
+  //     return const Left(ServerFailures(message: "Can't get data from server"));
+  //   } catch (e) {
+  //     return const Left(ServerFailures(message: "Server failure"));
+  //   }
+  // }
+
+  Future<Either<Failure, T>> _fetchSingleData<T>({
     required Future<T?> Function() fetchLocalData,
     required Future<T> Function() fetchRemoteData,
     required Future<void> Function(T) saveLocalData,
     required String sharedPrefKey,
   }) async {
     try {
-      var id = sharedPreferencesService.getString(sharedPrefKey);
-      if (id != null) {
-        final data = await fetchLocalData();
-        if (data != null) {
-          return Right(data);
-        } else {
-          throw LocalStorageException();
-        }
+      final localData = await fetchLocalData();
+      if (localData != null) {
+        return Right(localData);
       } else {
-        final data = await fetchRemoteData();
-        if (data != null) {
-          // Assuming data has an id property, replace `data.id` with the actual way to access the id.
-          final String id = (data as dynamic).id?.toString() ??
-              ''; // Casting to dynamic to access id
-          await sharedPreferencesService.setString(sharedPrefKey, id);
-          await saveLocalData(data);
-          return Right(data);
+        final remoteData = await fetchRemoteData();
+        if (remoteData != null) {
+          await saveLocalData(remoteData);
+          return Right(remoteData);
         } else {
           return const Left(ServerFailures(message: "Server failure"));
         }
@@ -217,7 +246,7 @@ class MainInfoRepositoryImp implements MainInfoRepository {
     }
   }
 
-  Future<Either<Failure, List<T>>> _fetchAndCacheData<T>({
+  Future<Either<Failure, List<T>>> _fetchAndCacheArrayData<T>({
     required String cacheKey,
     required Future<List<T>> Function() fetchFromLocal,
     required Future<List<T>> Function() fetchFromRemote,
