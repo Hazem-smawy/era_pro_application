@@ -1,12 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/core/error/failures.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/branch_entity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/company_entity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/curency_entity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/item_group_entity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/item_units_entity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/unit_enitity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/user_store_entity.dart';
+import '../entities/main_info_entity.dart';
 
 abstract class MainInfoRepository {
   Future<Either<Failure, BranchEntity>> getBranchInfo();
@@ -17,4 +11,11 @@ abstract class MainInfoRepository {
   Future<Either<Failure, List<UnitEnitity>>> getUnits();
 
   Future<Either<Failure, List<ItemUnitsEntity>>> getItemUnits();
+
+  Future<Either<Failure, List<ItemEntity>>> getItems();
+  Future<Either<Failure, List<PaymentEntity>>> getPaymentMethods();
+  Future<Either<Failure, List<SystemDocEntity>>> getSystemDocs();
+  Future<Either<Failure, UserSettingEntity>> getUserSettings();
+  Future<Either<Failure, List<ItemAlterEntity>>> getItemAlter();
+  Future<Either<Failure, List<BarcodeEntity>>> getAllItemBarcodes();
 }

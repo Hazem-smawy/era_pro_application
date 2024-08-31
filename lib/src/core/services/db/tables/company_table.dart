@@ -13,7 +13,7 @@ class CompanyTable extends Table {
   TextColumn get website => text()();
 
   TextColumn get note => text()();
-  BlobColumn get image => blob()();
+  BlobColumn get logo => blob()();
 
   ///Specifying which from the field above is the primary key
   @override

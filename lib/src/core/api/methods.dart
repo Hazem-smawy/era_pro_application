@@ -5,14 +5,13 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:era_pro_application/src/core/error/exception.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
 
 import '../error/error.dart';
 
 typedef ReturnData = Future<Map<String, dynamic>>;
 
-class HttpMethod extends GetxController {
+class HttpMethod {
   final http.Client client;
   HttpMethod({
     required this.client,
@@ -36,7 +35,7 @@ class HttpMethod extends GetxController {
         body: jsonEncode(body),
       )
           .timeout(
-        const Duration(seconds: 5),
+        const Duration(seconds: 7),
         onTimeout: () {
           return throw TimeoutException("time out message");
         },
@@ -56,6 +55,7 @@ class HttpMethod extends GetxController {
     } on http.ClientException catch (e) {
       throw ServerException(message: 'client exception : $e');
     } catch (e) {
+      print(e);
       throw ServerException(message: 'another exception $e');
     }
   }
@@ -76,8 +76,10 @@ class HttpMethod extends GetxController {
 
     try {
       final responseData = await post(body, url);
+
       return fromJson(responseData);
     } catch (e) {
+      print(e);
       throw ServerFailures(message: "Server error: $e");
     }
   }

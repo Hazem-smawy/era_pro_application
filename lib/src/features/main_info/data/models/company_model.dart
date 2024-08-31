@@ -36,9 +36,21 @@ class CompanyModel extends CompanyEntity {
       address: Value(address ?? ''),
       website: Value(website ?? ''),
       note: Value(note ?? ''),
-      image: Value(
-        logo ?? Uint8List(0),
-      ),
+      logo: Value(logo ?? Uint8List(0)),
+    );
+  }
+
+  CompanyEntity toEntity() {
+    return CompanyEntity(
+      id: id,
+      name: name,
+      enName: enName,
+      shortName: shortName,
+      enShortName: enShortName,
+      address: address,
+      website: website,
+      note: note,
+      logo: logo,
     );
   }
 }

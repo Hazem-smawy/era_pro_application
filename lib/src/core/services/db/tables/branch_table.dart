@@ -12,7 +12,7 @@ class BranchTable extends Table {
   TextColumn get email => text()();
   TextColumn get arReportHeader => text()();
   TextColumn get enReportHeader => text()();
-  BlobColumn get image => blob()();
+  BlobColumn get logo => blob()();
 
   TextColumn get note => text()();
 

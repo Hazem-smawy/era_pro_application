@@ -4,8 +4,8 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class InfoItemWidget extends StatelessWidget {
-  const InfoItemWidget(
+class MainInfoItemWidget extends StatelessWidget {
+  const MainInfoItemWidget(
       {super.key,
       required this.color,
       required this.icon,

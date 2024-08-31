@@ -9,6 +9,5 @@ class AuthResponseEntity extends Equatable {
       {required this.userId, required this.refreshToken, required this.token});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [userId, refreshToken, token];
 }

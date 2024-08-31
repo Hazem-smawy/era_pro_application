@@ -11,6 +11,5 @@ class AuthEntity extends Equatable {
   const AuthEntity(
       {required this.token, required this.user, required this.deviceInfo});
   @override
-  // TODO: implement props
   List<Object?> get props => [token, user, deviceInfo];
 }

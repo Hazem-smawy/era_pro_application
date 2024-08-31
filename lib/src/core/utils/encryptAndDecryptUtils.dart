@@ -1,7 +1,10 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart';
+// ignore: depend_on_referenced_packages
 import 'package:crypto/crypto.dart';
 
 class EncrypterUtils {

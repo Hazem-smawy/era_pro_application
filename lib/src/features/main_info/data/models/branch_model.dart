@@ -65,7 +65,7 @@ class BranchModel extends BranchEntity {
       enReportHeader: Value(enReportHeader ?? ''),
       arReportHeader: Value(arReportHeader ?? ''),
       note: Value(note ?? ''),
-      image: Value(logo ?? Uint8List(0)),
+      logo: Value(logo ?? Uint8List(0)),
     );
   }
 }

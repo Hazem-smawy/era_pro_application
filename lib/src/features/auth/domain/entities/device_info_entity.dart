@@ -15,7 +15,6 @@ class DeviceInfoEntity extends Equatable {
       this.userid});
 
   @override
-  // TODO: implement props
   List<Object?> get props =>
       [deviceid, devicename, devicemodel, devicetype, userid];
 }

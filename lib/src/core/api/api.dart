@@ -3,7 +3,6 @@ library api;
 
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:era_pro_application/src/core/api/end_points.dart';
 
@@ -53,4 +52,24 @@ class ApiConnection extends GetxController {
       .replaceFirst('{endpoints}', EndPoints.userStore);
   String get itemUnitsUrl => '$getBaseUrl/api/{endpoints}'
       .replaceFirst('{endpoints}', EndPoints.itemUnitsUrl);
+  String get itemsUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.items);
+
+  String get paymentsUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.paymentsMethod);
+  String get userSettingsUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.userSettings);
+  String get systemDocsUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.systemDocs);
+
+  String get itemBarcodesUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.itembarcode);
+  String get itemAlterUrl => '$getBaseUrl/api/{endpoints}'
+      .replaceFirst('{endpoints}', EndPoints.itemAlter);
+
+//accounts
+  String get accountsUrl => '$getBaseUrl/api/{endpoints}'.replaceFirst(
+        '{endpoints}',
+        EndPoints.accounts,
+      );
 }

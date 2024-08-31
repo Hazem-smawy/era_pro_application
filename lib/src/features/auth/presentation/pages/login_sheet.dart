@@ -1,5 +1,6 @@
 import 'package:era_pro_application/src/core/constants/spaces_sizes.dart';
 import 'package:era_pro_application/src/core/constants/strings.dart';
+import 'package:era_pro_application/src/core/extensions/button_extension.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/elvated_btn_extension.dart';
 import 'package:era_pro_application/src/core/types/status_types.dart';
@@ -71,7 +72,7 @@ class LoginSheet extends StatelessWidget {
                         onPressed: () {
                           authController.auth();
                         },
-                      ),
+                      ).status(authController.authState.value.isLoading()),
                       Gaps.g16,
                       if (authController.authState.value.isLoading())
                         const SizedBox(

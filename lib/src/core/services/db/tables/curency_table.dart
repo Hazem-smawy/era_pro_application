@@ -11,7 +11,7 @@ class CurencyTable extends Table {
   RealColumn get value => real()();
   RealColumn get equivelant => real()();
   BoolColumn get localCurrency => boolean()();
-  BoolColumn get storeCurency => boolean()();
+  BoolColumn get storeCurrency => boolean()();
   RealColumn get maxValue => real()();
   RealColumn get minValue => real()();
   TextColumn get note => text()();

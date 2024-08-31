@@ -1,4 +1,3 @@
-import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/features/user/domain/entities/user_entity.dart';
@@ -8,7 +7,6 @@ class UserController extends GetxController {
   GetUserUseCase getUserUseCase;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getUser();
   }
@@ -31,7 +29,6 @@ class UserController extends GetxController {
   Future<void> getUser() async {
     final res = await getUserUseCase();
     res.fold((f) {
-      print("failures get user: ${f.message}");
     }, (r) {
       user.value = r;
     });

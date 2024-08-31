@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import 'src/core/config/config.dart';
 import 'package:flutter/material.dart';
 import 'src/core/routes/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -3,14 +3,17 @@ library dependency_injection;
 import 'package:era_pro_application/src/core/api/api.dart';
 import 'package:era_pro_application/src/core/api/methods.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
+import 'package:era_pro_application/src/features/accounts/data/implements/accounts_repository_imp.dart';
+import 'package:era_pro_application/src/features/accounts/data/sources/accounts_local_datasource.dart';
+import 'package:era_pro_application/src/features/accounts/data/sources/accounts_remote_datasource.dart';
+import 'package:era_pro_application/src/features/accounts/domain/repositories/repositories.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/usecases.dart';
+import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:era_pro_application/src/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/auth/presentation/getX/auth_controller.dart';
 import 'package:era_pro_application/src/features/main_info/data/implements/main_info_implements.dart';
 import 'package:era_pro_application/src/features/main_info/data/sources/main_info_local_datasource.dart';
-import 'package:era_pro_application/src/features/main_info/domain/usecases/get_all_curencies.dart';
-import 'package:era_pro_application/src/features/main_info/domain/usecases/get_all_units_usecase.dart';
-import 'package:era_pro_application/src/features/main_info/domain/usecases/get_branch_usecase.dart';
 import 'package:era_pro_application/src/features/user/data/implements/user_implements.dart';
 import 'package:era_pro_application/src/features/user/domain/repositories/repositories.dart';
 import 'package:era_pro_application/src/features/user/presentation/getX/user_controller.dart';
@@ -22,11 +25,12 @@ import '../../features/auth/data/implements/auth_implements.dart';
 import '../../features/auth/domain/repositories/repositories.dart';
 import '../../features/main_info/data/sources/main_info_remote_datasource.dart';
 import '../../features/main_info/domain/repositories/main_info_repository.dart';
-import '../../features/main_info/domain/usecases/get_company_usecase.dart';
 import '../../features/main_info/presentation/getX/main_info_controller.dart';
 import '../../features/user/data/sources/user_local_data_source.dart';
 import '../../features/user/data/sources/user_remote_data_source.dart';
 import '../../features/user/domain/usecases/usecases.dart';
+
+import '../../features/main_info/domain/usecases/main_info_usecase.dart';
 
 class DependencyInjection {
   static Future<void> init() async {
@@ -50,77 +54,208 @@ class DependencyInjection {
 
     //Repository
     Get.lazyPut<AuthRepository>(
-      () => AuthRepositoryImp(remoteDatasource: Get.find()),
+      () => AuthRepositoryImp(
+        remoteDatasource: Get.find(),
+      ),
       fenix: true,
     );
 
     //Datasources
 
     Get.lazyPut<AuthRemoteDatasource>(
-        () => AuthRemoteDatasourceImp(
-            httpMethod: Get.find(),
-            apiConnection: Get.find(),
-            sharedPreferencesService: Get.find()),
-        fenix: true);
-
-//! Features - main-info
-    //controller
-    Get.lazyPut(
-      () => MainInfoController(
-          getAllCurencies: Get.find(),
-          getBranchUsecase: Get.find(),
-          getCompanyUsecase: Get.find(),
-          getAllUnitsUsecase: Get.find()),
+      () => AuthRemoteDatasourceImp(
+        httpMethod: Get.find(),
+        apiConnection: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
       fenix: true,
     );
 
-    //usecase
-    Get.lazyPut(() => GetAllUnitsUsecase(mainInfoRepository: Get.find()),
-        fenix: true);
-    Get.lazyPut(() => GetBranchUsecase(mainInfoRepository: Get.find()),
-        fenix: true);
-    Get.lazyPut(() => GetCompanyUsecase(mainInfoRepository: Get.find()),
-        fenix: true);
-    Get.lazyPut(() => GetAllCurenciesUseCase(mainInfoRepository: Get.find()),
-        fenix: true);
-    //repository
-    Get.lazyPut<MainInfoRepository>(
-        () => MainInfoRepositoryImp(
-            mainInfoLocalDatasource: Get.find(),
-            mainInfoRemoteDatasource: Get.find(),
-            sharedPreferencesService: Get.find()),
-        fenix: true);
+//! Features - main-info
+    //?controller
+    Get.lazyPut(
+      () => MainInfoController(
+        getAllItemGroupsUsecase: Get.find(),
+        getUserStoreInfoUsecase: Get.find(),
+        getAllItemAlterUsecase: Get.find(),
+        getAllItemBarcodeUsecase: Get.find(),
+        getAllCurenciesUsecase: Get.find(),
+        getBranchUsecase: Get.find(),
+        getCompanyUsecase: Get.find(),
+        getAllUnitsUsecase: Get.find(),
+        getAllItemsUsecase: Get.find(),
+        getAllPaymentsUsecase: Get.find(),
+        getAllSystemDocsUsecase: Get.find(),
+        getUserSettingsUsecase: Get.find(),
+      ),
+      fenix: true,
+    );
 
-    //datasources
-    Get.lazyPut<MainInfoLocalDatasource>(() => MainInfoLocalDatasourceImp(),
-        fenix: true);
+    //?usecase
+    Get.lazyPut(
+      () => GetUserStoreInfoUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemGroupsUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemAlterUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemBarcodeUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllPaymentsUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllSystemDocsUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetUserSettingsUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllUnitsUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetBranchUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetCompanyUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllCurenciesUseCase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemsUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    //?repository
+    Get.lazyPut<MainInfoRepository>(
+      () => MainInfoRepositoryImp(
+        mainInfoLocalDatasource: Get.find(),
+        mainInfoRemoteDatasource: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    //?datasources
+    Get.lazyPut<MainInfoLocalDatasource>(
+      () => MainInfoLocalDatasourceImp(),
+      fenix: true,
+    );
     Get.lazyPut<MainInfoRemoteDatasource>(
-        () => MainInfoRemoteDatasourceImp(
-              apiConnection: Get.find(),
-              httpMethod: Get.find(),
-              sharedPreferencesService: Get.find(),
-            ),
-        fenix: true);
+      () => MainInfoRemoteDatasourceImp(
+        apiConnection: Get.find(),
+        httpMethod: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
+      fenix: true,
+    );
 
     //! Features - user
-    //controller
-    Get.lazyPut(() => UserController(getUserUseCase: Get.find()), fenix: true);
+    //?controller
+    Get.lazyPut(
+      () => UserController(
+        getUserUseCase: Get.find(),
+      ),
+      fenix: true,
+    );
 
-    //usecase
-    Get.lazyPut(() => GetUserUseCase(userRepository: Get.find()), fenix: true);
-    //repostory
+    //?usecase
+    Get.lazyPut(
+      () => GetUserUseCase(
+        userRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    //?repostory
     Get.lazyPut<UserRepository>(
-        () => UserRepositoryImp(
-            userRemoteDataSource: Get.find(), userLocalDataSource: Get.find()),
-        fenix: true);
-    //datasource
-    Get.lazyPut<UserLocalDataSource>(() => UserLocalDataSourceImp(),
-        fenix: true);
+      () => UserRepositoryImp(
+        userRemoteDataSource: Get.find(),
+        userLocalDataSource: Get.find(),
+      ),
+      fenix: true,
+    );
+    //?datasource
+    Get.lazyPut<UserLocalDataSource>(
+      () => UserLocalDataSourceImp(),
+      fenix: true,
+    );
     Get.lazyPut<UserRemoteDataSource>(
-        () => UserRemoteDataSourceImp(
-            httpMethod: Get.find(),
-            apiConnection: Get.find(),
-            sharedPreferencesService: Get.find()),
+      () => UserRemoteDataSourceImp(
+          httpMethod: Get.find(),
+          apiConnection: Get.find(),
+          sharedPreferencesService: Get.find()),
+      fenix: true,
+    );
+
+    //! Features - accounts
+    //controller
+    Get.lazyPut(() => AccountsController(getAccountsUseCase: Get.find()),
         fenix: true);
+    //Usecases
+    Get.lazyPut(() => GetAccountsUseCase(accountsRepository: Get.find()),
+        fenix: true);
+
+    //Repository
+    Get.lazyPut<AccountsRepository>(
+      () => AccountsRepositoryImp(
+        sharedPreferencesService: Get.find(),
+        accountsLocalDatasource: Get.find(),
+        accountsRemoteDatasource: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    //Datasources
+
+    Get.lazyPut<AccountsRemoteDatasource>(
+      () => AccountsRemoteDatasourceImpl(
+        httpMethod: Get.find(),
+        apiConnection: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<AccountsLocalDatasource>(
+      () => AccountsLocalDatasourceImpl(),
+      fenix: true,
+    );
   }
 }

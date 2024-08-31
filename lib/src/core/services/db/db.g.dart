@@ -322,14 +322,14 @@ class $CompanyTableTable extends CompanyTable
   late final GeneratedColumn<String> note = GeneratedColumn<String>(
       'note', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _imageMeta = const VerificationMeta('image');
+  static const VerificationMeta _logoMeta = const VerificationMeta('logo');
   @override
-  late final GeneratedColumn<Uint8List> image = GeneratedColumn<Uint8List>(
-      'image', aliasedName, false,
+  late final GeneratedColumn<Uint8List> logo = GeneratedColumn<Uint8List>(
+      'logo', aliasedName, false,
       type: DriftSqlType.blob, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, enName, shortName, enShortName, address, website, note, image];
+      [id, name, enName, shortName, enShortName, address, website, note, logo];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -387,11 +387,11 @@ class $CompanyTableTable extends CompanyTable
     } else if (isInserting) {
       context.missing(_noteMeta);
     }
-    if (data.containsKey('image')) {
+    if (data.containsKey('logo')) {
       context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
+          _logoMeta, logo.isAcceptableOrUnknown(data['logo']!, _logoMeta));
     } else if (isInserting) {
-      context.missing(_imageMeta);
+      context.missing(_logoMeta);
     }
     return context;
   }
@@ -419,7 +419,7 @@ class $CompanyTableTable extends CompanyTable
       note: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}note'])!,
       logo: attachedDatabase.typeMapping
-          .read(DriftSqlType.blob, data['${effectivePrefix}image'])!,
+          .read(DriftSqlType.blob, data['${effectivePrefix}logo'])!,
     );
   }
 
@@ -438,7 +438,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
   final Value<String> address;
   final Value<String> website;
   final Value<String> note;
-  final Value<Uint8List> image;
+  final Value<Uint8List> logo;
   const CompanyTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -448,7 +448,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
     this.address = const Value.absent(),
     this.website = const Value.absent(),
     this.note = const Value.absent(),
-    this.image = const Value.absent(),
+    this.logo = const Value.absent(),
   });
   CompanyTableCompanion.insert({
     this.id = const Value.absent(),
@@ -459,7 +459,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
     required String address,
     required String website,
     required String note,
-    required Uint8List image,
+    required Uint8List logo,
   })  : name = Value(name),
         enName = Value(enName),
         shortName = Value(shortName),
@@ -467,7 +467,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
         address = Value(address),
         website = Value(website),
         note = Value(note),
-        image = Value(image);
+        logo = Value(logo);
   static Insertable<CompanyModel> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -477,7 +477,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
     Expression<String>? address,
     Expression<String>? website,
     Expression<String>? note,
-    Expression<Uint8List>? image,
+    Expression<Uint8List>? logo,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -488,7 +488,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
       if (address != null) 'address': address,
       if (website != null) 'website': website,
       if (note != null) 'note': note,
-      if (image != null) 'image': image,
+      if (logo != null) 'logo': logo,
     });
   }
 
@@ -501,7 +501,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
       Value<String>? address,
       Value<String>? website,
       Value<String>? note,
-      Value<Uint8List>? image}) {
+      Value<Uint8List>? logo}) {
     return CompanyTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -511,7 +511,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
       address: address ?? this.address,
       website: website ?? this.website,
       note: note ?? this.note,
-      image: image ?? this.image,
+      logo: logo ?? this.logo,
     );
   }
 
@@ -542,8 +542,8 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
     if (note.present) {
       map['note'] = Variable<String>(note.value);
     }
-    if (image.present) {
-      map['image'] = Variable<Uint8List>(image.value);
+    if (logo.present) {
+      map['logo'] = Variable<Uint8List>(logo.value);
     }
     return map;
   }
@@ -559,7 +559,7 @@ class CompanyTableCompanion extends UpdateCompanion<CompanyModel> {
           ..write('address: $address, ')
           ..write('website: $website, ')
           ..write('note: $note, ')
-          ..write('image: $image')
+          ..write('logo: $logo')
           ..write(')'))
         .toString();
   }
@@ -615,10 +615,10 @@ class $BranchTableTable extends BranchTable
   late final GeneratedColumn<String> enReportHeader = GeneratedColumn<String>(
       'en_report_header', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _imageMeta = const VerificationMeta('image');
+  static const VerificationMeta _logoMeta = const VerificationMeta('logo');
   @override
-  late final GeneratedColumn<Uint8List> image = GeneratedColumn<Uint8List>(
-      'image', aliasedName, false,
+  late final GeneratedColumn<Uint8List> logo = GeneratedColumn<Uint8List>(
+      'logo', aliasedName, false,
       type: DriftSqlType.blob, requiredDuringInsert: true);
   static const VerificationMeta _noteMeta = const VerificationMeta('note');
   @override
@@ -635,7 +635,7 @@ class $BranchTableTable extends BranchTable
         email,
         arReportHeader,
         enReportHeader,
-        image,
+        logo,
         note
       ];
   @override
@@ -697,11 +697,11 @@ class $BranchTableTable extends BranchTable
     } else if (isInserting) {
       context.missing(_enReportHeaderMeta);
     }
-    if (data.containsKey('image')) {
+    if (data.containsKey('logo')) {
       context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
+          _logoMeta, logo.isAcceptableOrUnknown(data['logo']!, _logoMeta));
     } else if (isInserting) {
-      context.missing(_imageMeta);
+      context.missing(_logoMeta);
     }
     if (data.containsKey('note')) {
       context.handle(
@@ -737,7 +737,7 @@ class $BranchTableTable extends BranchTable
       note: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}note'])!,
       logo: attachedDatabase.typeMapping
-          .read(DriftSqlType.blob, data['${effectivePrefix}image'])!,
+          .read(DriftSqlType.blob, data['${effectivePrefix}logo'])!,
     );
   }
 
@@ -756,7 +756,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
   final Value<String> email;
   final Value<String> arReportHeader;
   final Value<String> enReportHeader;
-  final Value<Uint8List> image;
+  final Value<Uint8List> logo;
   final Value<String> note;
   const BranchTableCompanion({
     this.id = const Value.absent(),
@@ -767,7 +767,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
     this.email = const Value.absent(),
     this.arReportHeader = const Value.absent(),
     this.enReportHeader = const Value.absent(),
-    this.image = const Value.absent(),
+    this.logo = const Value.absent(),
     this.note = const Value.absent(),
   });
   BranchTableCompanion.insert({
@@ -779,7 +779,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
     required String email,
     required String arReportHeader,
     required String enReportHeader,
-    required Uint8List image,
+    required Uint8List logo,
     required String note,
   })  : companyId = Value(companyId),
         name = Value(name),
@@ -788,7 +788,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
         email = Value(email),
         arReportHeader = Value(arReportHeader),
         enReportHeader = Value(enReportHeader),
-        image = Value(image),
+        logo = Value(logo),
         note = Value(note);
   static Insertable<BranchModel> custom({
     Expression<int>? id,
@@ -799,7 +799,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
     Expression<String>? email,
     Expression<String>? arReportHeader,
     Expression<String>? enReportHeader,
-    Expression<Uint8List>? image,
+    Expression<Uint8List>? logo,
     Expression<String>? note,
   }) {
     return RawValuesInsertable({
@@ -811,7 +811,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
       if (email != null) 'email': email,
       if (arReportHeader != null) 'ar_report_header': arReportHeader,
       if (enReportHeader != null) 'en_report_header': enReportHeader,
-      if (image != null) 'image': image,
+      if (logo != null) 'logo': logo,
       if (note != null) 'note': note,
     });
   }
@@ -825,7 +825,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
       Value<String>? email,
       Value<String>? arReportHeader,
       Value<String>? enReportHeader,
-      Value<Uint8List>? image,
+      Value<Uint8List>? logo,
       Value<String>? note}) {
     return BranchTableCompanion(
       id: id ?? this.id,
@@ -836,7 +836,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
       email: email ?? this.email,
       arReportHeader: arReportHeader ?? this.arReportHeader,
       enReportHeader: enReportHeader ?? this.enReportHeader,
-      image: image ?? this.image,
+      logo: logo ?? this.logo,
       note: note ?? this.note,
     );
   }
@@ -868,8 +868,8 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
     if (enReportHeader.present) {
       map['en_report_header'] = Variable<String>(enReportHeader.value);
     }
-    if (image.present) {
-      map['image'] = Variable<Uint8List>(image.value);
+    if (logo.present) {
+      map['logo'] = Variable<Uint8List>(logo.value);
     }
     if (note.present) {
       map['note'] = Variable<String>(note.value);
@@ -888,7 +888,7 @@ class BranchTableCompanion extends UpdateCompanion<BranchModel> {
           ..write('email: $email, ')
           ..write('arReportHeader: $arReportHeader, ')
           ..write('enReportHeader: $enReportHeader, ')
-          ..write('image: $image, ')
+          ..write('logo: $logo, ')
           ..write('note: $note')
           ..write(')'))
         .toString();
@@ -942,15 +942,15 @@ class $CurencyTableTable extends CurencyTable
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("local_currency" IN (0, 1))'));
-  static const VerificationMeta _storeCurencyMeta =
-      const VerificationMeta('storeCurency');
+  static const VerificationMeta _storeCurrencyMeta =
+      const VerificationMeta('storeCurrency');
   @override
-  late final GeneratedColumn<bool> storeCurency = GeneratedColumn<bool>(
-      'store_curency', aliasedName, false,
+  late final GeneratedColumn<bool> storeCurrency = GeneratedColumn<bool>(
+      'store_currency', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("store_curency" IN (0, 1))'));
+          'CHECK ("store_currency" IN (0, 1))'));
   static const VerificationMeta _maxValueMeta =
       const VerificationMeta('maxValue');
   @override
@@ -986,7 +986,7 @@ class $CurencyTableTable extends CurencyTable
         value,
         equivelant,
         localCurrency,
-        storeCurency,
+        storeCurrency,
         maxValue,
         minValue,
         note,
@@ -1045,13 +1045,13 @@ class $CurencyTableTable extends CurencyTable
     } else if (isInserting) {
       context.missing(_localCurrencyMeta);
     }
-    if (data.containsKey('store_curency')) {
+    if (data.containsKey('store_currency')) {
       context.handle(
-          _storeCurencyMeta,
-          storeCurency.isAcceptableOrUnknown(
-              data['store_curency']!, _storeCurencyMeta));
+          _storeCurrencyMeta,
+          storeCurrency.isAcceptableOrUnknown(
+              data['store_currency']!, _storeCurrencyMeta));
     } else if (isInserting) {
-      context.missing(_storeCurencyMeta);
+      context.missing(_storeCurrencyMeta);
     }
     if (data.containsKey('max_value')) {
       context.handle(_maxValueMeta,
@@ -1100,6 +1100,8 @@ class $CurencyTableTable extends CurencyTable
           .read(DriftSqlType.double, data['${effectivePrefix}equivelant'])!,
       localCurrency: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}local_currency'])!,
+      storeCurrency: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}store_currency'])!,
       maxValue: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}max_value'])!,
       minValue: attachedDatabase.typeMapping
@@ -1108,8 +1110,6 @@ class $CurencyTableTable extends CurencyTable
           .read(DriftSqlType.string, data['${effectivePrefix}note'])!,
       newData: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
-      storeCurrency: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}store_currency'])!,
     );
   }
 
@@ -1127,7 +1127,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
   final Value<double> value;
   final Value<double> equivelant;
   final Value<bool> localCurrency;
-  final Value<bool> storeCurency;
+  final Value<bool> storeCurrency;
   final Value<double> maxValue;
   final Value<double> minValue;
   final Value<String> note;
@@ -1140,7 +1140,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
     this.value = const Value.absent(),
     this.equivelant = const Value.absent(),
     this.localCurrency = const Value.absent(),
-    this.storeCurency = const Value.absent(),
+    this.storeCurrency = const Value.absent(),
     this.maxValue = const Value.absent(),
     this.minValue = const Value.absent(),
     this.note = const Value.absent(),
@@ -1154,7 +1154,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
     required double value,
     required double equivelant,
     required bool localCurrency,
-    required bool storeCurency,
+    required bool storeCurrency,
     required double maxValue,
     required double minValue,
     required String note,
@@ -1165,7 +1165,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
         value = Value(value),
         equivelant = Value(equivelant),
         localCurrency = Value(localCurrency),
-        storeCurency = Value(storeCurency),
+        storeCurrency = Value(storeCurrency),
         maxValue = Value(maxValue),
         minValue = Value(minValue),
         note = Value(note),
@@ -1178,7 +1178,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
     Expression<double>? value,
     Expression<double>? equivelant,
     Expression<bool>? localCurrency,
-    Expression<bool>? storeCurency,
+    Expression<bool>? storeCurrency,
     Expression<double>? maxValue,
     Expression<double>? minValue,
     Expression<String>? note,
@@ -1192,7 +1192,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
       if (value != null) 'value': value,
       if (equivelant != null) 'equivelant': equivelant,
       if (localCurrency != null) 'local_currency': localCurrency,
-      if (storeCurency != null) 'store_curency': storeCurency,
+      if (storeCurrency != null) 'store_currency': storeCurrency,
       if (maxValue != null) 'max_value': maxValue,
       if (minValue != null) 'min_value': minValue,
       if (note != null) 'note': note,
@@ -1208,7 +1208,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
       Value<double>? value,
       Value<double>? equivelant,
       Value<bool>? localCurrency,
-      Value<bool>? storeCurency,
+      Value<bool>? storeCurrency,
       Value<double>? maxValue,
       Value<double>? minValue,
       Value<String>? note,
@@ -1221,7 +1221,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
       value: value ?? this.value,
       equivelant: equivelant ?? this.equivelant,
       localCurrency: localCurrency ?? this.localCurrency,
-      storeCurency: storeCurency ?? this.storeCurency,
+      storeCurrency: storeCurrency ?? this.storeCurrency,
       maxValue: maxValue ?? this.maxValue,
       minValue: minValue ?? this.minValue,
       note: note ?? this.note,
@@ -1253,8 +1253,8 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
     if (localCurrency.present) {
       map['local_currency'] = Variable<bool>(localCurrency.value);
     }
-    if (storeCurency.present) {
-      map['store_curency'] = Variable<bool>(storeCurency.value);
+    if (storeCurrency.present) {
+      map['store_currency'] = Variable<bool>(storeCurrency.value);
     }
     if (maxValue.present) {
       map['max_value'] = Variable<double>(maxValue.value);
@@ -1281,7 +1281,7 @@ class CurencyTableCompanion extends UpdateCompanion<CurencyModel> {
           ..write('value: $value, ')
           ..write('equivelant: $equivelant, ')
           ..write('localCurrency: $localCurrency, ')
-          ..write('storeCurency: $storeCurency, ')
+          ..write('storeCurrency: $storeCurrency, ')
           ..write('maxValue: $maxValue, ')
           ..write('minValue: $minValue, ')
           ..write('note: $note, ')
@@ -2334,6 +2334,1965 @@ class ItemUnitTableCompanion extends UpdateCompanion<ItemUnitsModel> {
   }
 }
 
+class $ItemTableTable extends ItemTable
+    with TableInfo<$ItemTableTable, ItemModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _itemGroupIdMeta =
+      const VerificationMeta('itemGroupId');
+  @override
+  late final GeneratedColumn<int> itemGroupId = GeneratedColumn<int>(
+      'item_group_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemCodeMeta =
+      const VerificationMeta('itemCode');
+  @override
+  late final GeneratedColumn<int> itemCode = GeneratedColumn<int>(
+      'item_code', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _enNameMeta = const VerificationMeta('enName');
+  @override
+  late final GeneratedColumn<String> enName = GeneratedColumn<String>(
+      'en_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<int> type = GeneratedColumn<int>(
+      'type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemLimitMeta =
+      const VerificationMeta('itemLimit');
+  @override
+  late final GeneratedColumn<int> itemLimit = GeneratedColumn<int>(
+      'item_limit', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemImageMeta =
+      const VerificationMeta('itemImage');
+  @override
+  late final GeneratedColumn<Uint8List> itemImage = GeneratedColumn<Uint8List>(
+      'item_image', aliasedName, false,
+      type: DriftSqlType.blob, requiredDuringInsert: true);
+  static const VerificationMeta _isExpireMeta =
+      const VerificationMeta('isExpire');
+  @override
+  late final GeneratedColumn<bool> isExpire = GeneratedColumn<bool>(
+      'is_expire', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_expire" IN (0, 1))'));
+  static const VerificationMeta _freeQuantityAllowMeta =
+      const VerificationMeta('freeQuantityAllow');
+  @override
+  late final GeneratedColumn<bool> freeQuantityAllow = GeneratedColumn<bool>(
+      'free_quantity_allow', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("free_quantity_allow" IN (0, 1))'));
+  static const VerificationMeta _hasTaxMeta = const VerificationMeta('hasTax');
+  @override
+  late final GeneratedColumn<bool> hasTax = GeneratedColumn<bool>(
+      'has_tax', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("has_tax" IN (0, 1))'));
+  static const VerificationMeta _hasAlternatedMeta =
+      const VerificationMeta('hasAlternated');
+  @override
+  late final GeneratedColumn<bool> hasAlternated = GeneratedColumn<bool>(
+      'has_alternated', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("has_alternated" IN (0, 1))'));
+  static const VerificationMeta _newDataMeta =
+      const VerificationMeta('newData');
+  @override
+  late final GeneratedColumn<bool> newData = GeneratedColumn<bool>(
+      'new_data', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("new_data" IN (0, 1))'));
+  static const VerificationMeta _notifyBeforeMeta =
+      const VerificationMeta('notifyBefore');
+  @override
+  late final GeneratedColumn<int> notifyBefore = GeneratedColumn<int>(
+      'notify_before', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _taxRateMeta =
+      const VerificationMeta('taxRate');
+  @override
+  late final GeneratedColumn<int> taxRate = GeneratedColumn<int>(
+      'tax_rate', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemCompanyMeta =
+      const VerificationMeta('itemCompany');
+  @override
+  late final GeneratedColumn<String> itemCompany = GeneratedColumn<String>(
+      'item_company', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _orignalCountryMeta =
+      const VerificationMeta('orignalCountry');
+  @override
+  late final GeneratedColumn<String> orignalCountry = GeneratedColumn<String>(
+      'orignal_country', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _itemDescriptionMeta =
+      const VerificationMeta('itemDescription');
+  @override
+  late final GeneratedColumn<String> itemDescription = GeneratedColumn<String>(
+      'item_description', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+      'note', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        itemGroupId,
+        itemCode,
+        name,
+        enName,
+        type,
+        itemLimit,
+        itemImage,
+        isExpire,
+        freeQuantityAllow,
+        hasTax,
+        hasAlternated,
+        newData,
+        notifyBefore,
+        taxRate,
+        itemCompany,
+        orignalCountry,
+        itemDescription,
+        note
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'item_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<ItemModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('item_group_id')) {
+      context.handle(
+          _itemGroupIdMeta,
+          itemGroupId.isAcceptableOrUnknown(
+              data['item_group_id']!, _itemGroupIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemGroupIdMeta);
+    }
+    if (data.containsKey('item_code')) {
+      context.handle(_itemCodeMeta,
+          itemCode.isAcceptableOrUnknown(data['item_code']!, _itemCodeMeta));
+    } else if (isInserting) {
+      context.missing(_itemCodeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('en_name')) {
+      context.handle(_enNameMeta,
+          enName.isAcceptableOrUnknown(data['en_name']!, _enNameMeta));
+    } else if (isInserting) {
+      context.missing(_enNameMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('item_limit')) {
+      context.handle(_itemLimitMeta,
+          itemLimit.isAcceptableOrUnknown(data['item_limit']!, _itemLimitMeta));
+    } else if (isInserting) {
+      context.missing(_itemLimitMeta);
+    }
+    if (data.containsKey('item_image')) {
+      context.handle(_itemImageMeta,
+          itemImage.isAcceptableOrUnknown(data['item_image']!, _itemImageMeta));
+    } else if (isInserting) {
+      context.missing(_itemImageMeta);
+    }
+    if (data.containsKey('is_expire')) {
+      context.handle(_isExpireMeta,
+          isExpire.isAcceptableOrUnknown(data['is_expire']!, _isExpireMeta));
+    } else if (isInserting) {
+      context.missing(_isExpireMeta);
+    }
+    if (data.containsKey('free_quantity_allow')) {
+      context.handle(
+          _freeQuantityAllowMeta,
+          freeQuantityAllow.isAcceptableOrUnknown(
+              data['free_quantity_allow']!, _freeQuantityAllowMeta));
+    } else if (isInserting) {
+      context.missing(_freeQuantityAllowMeta);
+    }
+    if (data.containsKey('has_tax')) {
+      context.handle(_hasTaxMeta,
+          hasTax.isAcceptableOrUnknown(data['has_tax']!, _hasTaxMeta));
+    } else if (isInserting) {
+      context.missing(_hasTaxMeta);
+    }
+    if (data.containsKey('has_alternated')) {
+      context.handle(
+          _hasAlternatedMeta,
+          hasAlternated.isAcceptableOrUnknown(
+              data['has_alternated']!, _hasAlternatedMeta));
+    } else if (isInserting) {
+      context.missing(_hasAlternatedMeta);
+    }
+    if (data.containsKey('new_data')) {
+      context.handle(_newDataMeta,
+          newData.isAcceptableOrUnknown(data['new_data']!, _newDataMeta));
+    } else if (isInserting) {
+      context.missing(_newDataMeta);
+    }
+    if (data.containsKey('notify_before')) {
+      context.handle(
+          _notifyBeforeMeta,
+          notifyBefore.isAcceptableOrUnknown(
+              data['notify_before']!, _notifyBeforeMeta));
+    } else if (isInserting) {
+      context.missing(_notifyBeforeMeta);
+    }
+    if (data.containsKey('tax_rate')) {
+      context.handle(_taxRateMeta,
+          taxRate.isAcceptableOrUnknown(data['tax_rate']!, _taxRateMeta));
+    } else if (isInserting) {
+      context.missing(_taxRateMeta);
+    }
+    if (data.containsKey('item_company')) {
+      context.handle(
+          _itemCompanyMeta,
+          itemCompany.isAcceptableOrUnknown(
+              data['item_company']!, _itemCompanyMeta));
+    } else if (isInserting) {
+      context.missing(_itemCompanyMeta);
+    }
+    if (data.containsKey('orignal_country')) {
+      context.handle(
+          _orignalCountryMeta,
+          orignalCountry.isAcceptableOrUnknown(
+              data['orignal_country']!, _orignalCountryMeta));
+    } else if (isInserting) {
+      context.missing(_orignalCountryMeta);
+    }
+    if (data.containsKey('item_description')) {
+      context.handle(
+          _itemDescriptionMeta,
+          itemDescription.isAcceptableOrUnknown(
+              data['item_description']!, _itemDescriptionMeta));
+    } else if (isInserting) {
+      context.missing(_itemDescriptionMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+          _noteMeta, note.isAcceptableOrUnknown(data['note']!, _noteMeta));
+    } else if (isInserting) {
+      context.missing(_noteMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemGroupId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_group_id'])!,
+      itemCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_code'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      enName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}en_name'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}type'])!,
+      itemLimit: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_limit'])!,
+      itemImage: attachedDatabase.typeMapping
+          .read(DriftSqlType.blob, data['${effectivePrefix}item_image'])!,
+      isExpire: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_expire'])!,
+      notifyBefore: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}notify_before'])!,
+      freeQuantityAllow: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}free_quantity_allow'])!,
+      hasTax: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}has_tax'])!,
+      taxRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}tax_rate'])!,
+      itemCompany: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_company'])!,
+      orignalCountry: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}orignal_country'])!,
+      itemDescription: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}item_description'])!,
+      note: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}note'])!,
+      hasAlternated: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}has_alternated'])!,
+      newData: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
+    );
+  }
+
+  @override
+  $ItemTableTable createAlias(String alias) {
+    return $ItemTableTable(attachedDatabase, alias);
+  }
+}
+
+class ItemTableCompanion extends UpdateCompanion<ItemModel> {
+  final Value<int> id;
+  final Value<int> itemGroupId;
+  final Value<int> itemCode;
+  final Value<String> name;
+  final Value<String> enName;
+  final Value<int> type;
+  final Value<int> itemLimit;
+  final Value<Uint8List> itemImage;
+  final Value<bool> isExpire;
+  final Value<bool> freeQuantityAllow;
+  final Value<bool> hasTax;
+  final Value<bool> hasAlternated;
+  final Value<bool> newData;
+  final Value<int> notifyBefore;
+  final Value<int> taxRate;
+  final Value<String> itemCompany;
+  final Value<String> orignalCountry;
+  final Value<String> itemDescription;
+  final Value<String> note;
+  const ItemTableCompanion({
+    this.id = const Value.absent(),
+    this.itemGroupId = const Value.absent(),
+    this.itemCode = const Value.absent(),
+    this.name = const Value.absent(),
+    this.enName = const Value.absent(),
+    this.type = const Value.absent(),
+    this.itemLimit = const Value.absent(),
+    this.itemImage = const Value.absent(),
+    this.isExpire = const Value.absent(),
+    this.freeQuantityAllow = const Value.absent(),
+    this.hasTax = const Value.absent(),
+    this.hasAlternated = const Value.absent(),
+    this.newData = const Value.absent(),
+    this.notifyBefore = const Value.absent(),
+    this.taxRate = const Value.absent(),
+    this.itemCompany = const Value.absent(),
+    this.orignalCountry = const Value.absent(),
+    this.itemDescription = const Value.absent(),
+    this.note = const Value.absent(),
+  });
+  ItemTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int itemGroupId,
+    required int itemCode,
+    required String name,
+    required String enName,
+    required int type,
+    required int itemLimit,
+    required Uint8List itemImage,
+    required bool isExpire,
+    required bool freeQuantityAllow,
+    required bool hasTax,
+    required bool hasAlternated,
+    required bool newData,
+    required int notifyBefore,
+    required int taxRate,
+    required String itemCompany,
+    required String orignalCountry,
+    required String itemDescription,
+    required String note,
+  })  : itemGroupId = Value(itemGroupId),
+        itemCode = Value(itemCode),
+        name = Value(name),
+        enName = Value(enName),
+        type = Value(type),
+        itemLimit = Value(itemLimit),
+        itemImage = Value(itemImage),
+        isExpire = Value(isExpire),
+        freeQuantityAllow = Value(freeQuantityAllow),
+        hasTax = Value(hasTax),
+        hasAlternated = Value(hasAlternated),
+        newData = Value(newData),
+        notifyBefore = Value(notifyBefore),
+        taxRate = Value(taxRate),
+        itemCompany = Value(itemCompany),
+        orignalCountry = Value(orignalCountry),
+        itemDescription = Value(itemDescription),
+        note = Value(note);
+  static Insertable<ItemModel> custom({
+    Expression<int>? id,
+    Expression<int>? itemGroupId,
+    Expression<int>? itemCode,
+    Expression<String>? name,
+    Expression<String>? enName,
+    Expression<int>? type,
+    Expression<int>? itemLimit,
+    Expression<Uint8List>? itemImage,
+    Expression<bool>? isExpire,
+    Expression<bool>? freeQuantityAllow,
+    Expression<bool>? hasTax,
+    Expression<bool>? hasAlternated,
+    Expression<bool>? newData,
+    Expression<int>? notifyBefore,
+    Expression<int>? taxRate,
+    Expression<String>? itemCompany,
+    Expression<String>? orignalCountry,
+    Expression<String>? itemDescription,
+    Expression<String>? note,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (itemGroupId != null) 'item_group_id': itemGroupId,
+      if (itemCode != null) 'item_code': itemCode,
+      if (name != null) 'name': name,
+      if (enName != null) 'en_name': enName,
+      if (type != null) 'type': type,
+      if (itemLimit != null) 'item_limit': itemLimit,
+      if (itemImage != null) 'item_image': itemImage,
+      if (isExpire != null) 'is_expire': isExpire,
+      if (freeQuantityAllow != null) 'free_quantity_allow': freeQuantityAllow,
+      if (hasTax != null) 'has_tax': hasTax,
+      if (hasAlternated != null) 'has_alternated': hasAlternated,
+      if (newData != null) 'new_data': newData,
+      if (notifyBefore != null) 'notify_before': notifyBefore,
+      if (taxRate != null) 'tax_rate': taxRate,
+      if (itemCompany != null) 'item_company': itemCompany,
+      if (orignalCountry != null) 'orignal_country': orignalCountry,
+      if (itemDescription != null) 'item_description': itemDescription,
+      if (note != null) 'note': note,
+    });
+  }
+
+  ItemTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? itemGroupId,
+      Value<int>? itemCode,
+      Value<String>? name,
+      Value<String>? enName,
+      Value<int>? type,
+      Value<int>? itemLimit,
+      Value<Uint8List>? itemImage,
+      Value<bool>? isExpire,
+      Value<bool>? freeQuantityAllow,
+      Value<bool>? hasTax,
+      Value<bool>? hasAlternated,
+      Value<bool>? newData,
+      Value<int>? notifyBefore,
+      Value<int>? taxRate,
+      Value<String>? itemCompany,
+      Value<String>? orignalCountry,
+      Value<String>? itemDescription,
+      Value<String>? note}) {
+    return ItemTableCompanion(
+      id: id ?? this.id,
+      itemGroupId: itemGroupId ?? this.itemGroupId,
+      itemCode: itemCode ?? this.itemCode,
+      name: name ?? this.name,
+      enName: enName ?? this.enName,
+      type: type ?? this.type,
+      itemLimit: itemLimit ?? this.itemLimit,
+      itemImage: itemImage ?? this.itemImage,
+      isExpire: isExpire ?? this.isExpire,
+      freeQuantityAllow: freeQuantityAllow ?? this.freeQuantityAllow,
+      hasTax: hasTax ?? this.hasTax,
+      hasAlternated: hasAlternated ?? this.hasAlternated,
+      newData: newData ?? this.newData,
+      notifyBefore: notifyBefore ?? this.notifyBefore,
+      taxRate: taxRate ?? this.taxRate,
+      itemCompany: itemCompany ?? this.itemCompany,
+      orignalCountry: orignalCountry ?? this.orignalCountry,
+      itemDescription: itemDescription ?? this.itemDescription,
+      note: note ?? this.note,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (itemGroupId.present) {
+      map['item_group_id'] = Variable<int>(itemGroupId.value);
+    }
+    if (itemCode.present) {
+      map['item_code'] = Variable<int>(itemCode.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (enName.present) {
+      map['en_name'] = Variable<String>(enName.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<int>(type.value);
+    }
+    if (itemLimit.present) {
+      map['item_limit'] = Variable<int>(itemLimit.value);
+    }
+    if (itemImage.present) {
+      map['item_image'] = Variable<Uint8List>(itemImage.value);
+    }
+    if (isExpire.present) {
+      map['is_expire'] = Variable<bool>(isExpire.value);
+    }
+    if (freeQuantityAllow.present) {
+      map['free_quantity_allow'] = Variable<bool>(freeQuantityAllow.value);
+    }
+    if (hasTax.present) {
+      map['has_tax'] = Variable<bool>(hasTax.value);
+    }
+    if (hasAlternated.present) {
+      map['has_alternated'] = Variable<bool>(hasAlternated.value);
+    }
+    if (newData.present) {
+      map['new_data'] = Variable<bool>(newData.value);
+    }
+    if (notifyBefore.present) {
+      map['notify_before'] = Variable<int>(notifyBefore.value);
+    }
+    if (taxRate.present) {
+      map['tax_rate'] = Variable<int>(taxRate.value);
+    }
+    if (itemCompany.present) {
+      map['item_company'] = Variable<String>(itemCompany.value);
+    }
+    if (orignalCountry.present) {
+      map['orignal_country'] = Variable<String>(orignalCountry.value);
+    }
+    if (itemDescription.present) {
+      map['item_description'] = Variable<String>(itemDescription.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemTableCompanion(')
+          ..write('id: $id, ')
+          ..write('itemGroupId: $itemGroupId, ')
+          ..write('itemCode: $itemCode, ')
+          ..write('name: $name, ')
+          ..write('enName: $enName, ')
+          ..write('type: $type, ')
+          ..write('itemLimit: $itemLimit, ')
+          ..write('itemImage: $itemImage, ')
+          ..write('isExpire: $isExpire, ')
+          ..write('freeQuantityAllow: $freeQuantityAllow, ')
+          ..write('hasTax: $hasTax, ')
+          ..write('hasAlternated: $hasAlternated, ')
+          ..write('newData: $newData, ')
+          ..write('notifyBefore: $notifyBefore, ')
+          ..write('taxRate: $taxRate, ')
+          ..write('itemCompany: $itemCompany, ')
+          ..write('orignalCountry: $orignalCountry, ')
+          ..write('itemDescription: $itemDescription, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PaymentTableTable extends PaymentTable
+    with TableInfo<$PaymentTableTable, PaymentModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PaymentTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _methodNameMeta =
+      const VerificationMeta('methodName');
+  @override
+  late final GeneratedColumn<String> methodName = GeneratedColumn<String>(
+      'method_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _methodNoteMeta =
+      const VerificationMeta('methodNote');
+  @override
+  late final GeneratedColumn<String> methodNote = GeneratedColumn<String>(
+      'method_note', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _newDataMeta =
+      const VerificationMeta('newData');
+  @override
+  late final GeneratedColumn<bool> newData = GeneratedColumn<bool>(
+      'new_data', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("new_data" IN (0, 1))'));
+  static const VerificationMeta _isDefaultMeta =
+      const VerificationMeta('isDefault');
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+      'is_default', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_default" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, userId, methodName, methodNote, newData, isDefault];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'payment_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<PaymentModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('method_name')) {
+      context.handle(
+          _methodNameMeta,
+          methodName.isAcceptableOrUnknown(
+              data['method_name']!, _methodNameMeta));
+    } else if (isInserting) {
+      context.missing(_methodNameMeta);
+    }
+    if (data.containsKey('method_note')) {
+      context.handle(
+          _methodNoteMeta,
+          methodNote.isAcceptableOrUnknown(
+              data['method_note']!, _methodNoteMeta));
+    } else if (isInserting) {
+      context.missing(_methodNoteMeta);
+    }
+    if (data.containsKey('new_data')) {
+      context.handle(_newDataMeta,
+          newData.isAcceptableOrUnknown(data['new_data']!, _newDataMeta));
+    } else if (isInserting) {
+      context.missing(_newDataMeta);
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(_isDefaultMeta,
+          isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta));
+    } else if (isInserting) {
+      context.missing(_isDefaultMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PaymentModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PaymentModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      methodName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}method_name'])!,
+      newData: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
+      isDefault: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_default'])!,
+      methodNote: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}method_note'])!,
+    );
+  }
+
+  @override
+  $PaymentTableTable createAlias(String alias) {
+    return $PaymentTableTable(attachedDatabase, alias);
+  }
+}
+
+class PaymentTableCompanion extends UpdateCompanion<PaymentModel> {
+  final Value<int> id;
+  final Value<int> userId;
+  final Value<String> methodName;
+  final Value<String> methodNote;
+  final Value<bool> newData;
+  final Value<bool> isDefault;
+  const PaymentTableCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.methodName = const Value.absent(),
+    this.methodNote = const Value.absent(),
+    this.newData = const Value.absent(),
+    this.isDefault = const Value.absent(),
+  });
+  PaymentTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int userId,
+    required String methodName,
+    required String methodNote,
+    required bool newData,
+    required bool isDefault,
+  })  : userId = Value(userId),
+        methodName = Value(methodName),
+        methodNote = Value(methodNote),
+        newData = Value(newData),
+        isDefault = Value(isDefault);
+  static Insertable<PaymentModel> custom({
+    Expression<int>? id,
+    Expression<int>? userId,
+    Expression<String>? methodName,
+    Expression<String>? methodNote,
+    Expression<bool>? newData,
+    Expression<bool>? isDefault,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (methodName != null) 'method_name': methodName,
+      if (methodNote != null) 'method_note': methodNote,
+      if (newData != null) 'new_data': newData,
+      if (isDefault != null) 'is_default': isDefault,
+    });
+  }
+
+  PaymentTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? userId,
+      Value<String>? methodName,
+      Value<String>? methodNote,
+      Value<bool>? newData,
+      Value<bool>? isDefault}) {
+    return PaymentTableCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      methodName: methodName ?? this.methodName,
+      methodNote: methodNote ?? this.methodNote,
+      newData: newData ?? this.newData,
+      isDefault: isDefault ?? this.isDefault,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (methodName.present) {
+      map['method_name'] = Variable<String>(methodName.value);
+    }
+    if (methodNote.present) {
+      map['method_note'] = Variable<String>(methodNote.value);
+    }
+    if (newData.present) {
+      map['new_data'] = Variable<bool>(newData.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PaymentTableCompanion(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('methodName: $methodName, ')
+          ..write('methodNote: $methodNote, ')
+          ..write('newData: $newData, ')
+          ..write('isDefault: $isDefault')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SystemDocTableTable extends SystemDocTable
+    with TableInfo<$SystemDocTableTable, SystemDocModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SystemDocTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _docTypeMeta =
+      const VerificationMeta('docType');
+  @override
+  late final GeneratedColumn<int> docType = GeneratedColumn<int>(
+      'doc_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _docNameMeta =
+      const VerificationMeta('docName');
+  @override
+  late final GeneratedColumn<String> docName = GeneratedColumn<String>(
+      'doc_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, docType, docName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'system_doc_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<SystemDocModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('doc_type')) {
+      context.handle(_docTypeMeta,
+          docType.isAcceptableOrUnknown(data['doc_type']!, _docTypeMeta));
+    } else if (isInserting) {
+      context.missing(_docTypeMeta);
+    }
+    if (data.containsKey('doc_name')) {
+      context.handle(_docNameMeta,
+          docName.isAcceptableOrUnknown(data['doc_name']!, _docNameMeta));
+    } else if (isInserting) {
+      context.missing(_docNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SystemDocModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SystemDocModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      docName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}doc_name'])!,
+      docType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}doc_type'])!,
+    );
+  }
+
+  @override
+  $SystemDocTableTable createAlias(String alias) {
+    return $SystemDocTableTable(attachedDatabase, alias);
+  }
+}
+
+class SystemDocTableCompanion extends UpdateCompanion<SystemDocModel> {
+  final Value<int> id;
+  final Value<int> docType;
+  final Value<String> docName;
+  const SystemDocTableCompanion({
+    this.id = const Value.absent(),
+    this.docType = const Value.absent(),
+    this.docName = const Value.absent(),
+  });
+  SystemDocTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int docType,
+    required String docName,
+  })  : docType = Value(docType),
+        docName = Value(docName);
+  static Insertable<SystemDocModel> custom({
+    Expression<int>? id,
+    Expression<int>? docType,
+    Expression<String>? docName,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (docType != null) 'doc_type': docType,
+      if (docName != null) 'doc_name': docName,
+    });
+  }
+
+  SystemDocTableCompanion copyWith(
+      {Value<int>? id, Value<int>? docType, Value<String>? docName}) {
+    return SystemDocTableCompanion(
+      id: id ?? this.id,
+      docType: docType ?? this.docType,
+      docName: docName ?? this.docName,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (docType.present) {
+      map['doc_type'] = Variable<int>(docType.value);
+    }
+    if (docName.present) {
+      map['doc_name'] = Variable<String>(docName.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SystemDocTableCompanion(')
+          ..write('id: $id, ')
+          ..write('docType: $docType, ')
+          ..write('docName: $docName')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $UserSettingTableTable extends UserSettingTable
+    with TableInfo<$UserSettingTableTable, UserSettingModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UserSettingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _custParentMeta =
+      const VerificationMeta('custParent');
+  @override
+  late final GeneratedColumn<int> custParent = GeneratedColumn<int>(
+      'cust_parent', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _custGroupMeta =
+      const VerificationMeta('custGroup');
+  @override
+  late final GeneratedColumn<int> custGroup = GeneratedColumn<int>(
+      'cust_group', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _generateCodeMeta =
+      const VerificationMeta('generateCode');
+  @override
+  late final GeneratedColumn<String> generateCode = GeneratedColumn<String>(
+      'generate_code', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, custParent, custGroup, generateCode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'user_setting_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<UserSettingModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('cust_parent')) {
+      context.handle(
+          _custParentMeta,
+          custParent.isAcceptableOrUnknown(
+              data['cust_parent']!, _custParentMeta));
+    } else if (isInserting) {
+      context.missing(_custParentMeta);
+    }
+    if (data.containsKey('cust_group')) {
+      context.handle(_custGroupMeta,
+          custGroup.isAcceptableOrUnknown(data['cust_group']!, _custGroupMeta));
+    } else if (isInserting) {
+      context.missing(_custGroupMeta);
+    }
+    if (data.containsKey('generate_code')) {
+      context.handle(
+          _generateCodeMeta,
+          generateCode.isAcceptableOrUnknown(
+              data['generate_code']!, _generateCodeMeta));
+    } else if (isInserting) {
+      context.missing(_generateCodeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  UserSettingModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserSettingModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      custParent: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}cust_parent'])!,
+      generateCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}generate_code'])!,
+      custGroup: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}cust_group'])!,
+    );
+  }
+
+  @override
+  $UserSettingTableTable createAlias(String alias) {
+    return $UserSettingTableTable(attachedDatabase, alias);
+  }
+}
+
+class UserSettingTableCompanion extends UpdateCompanion<UserSettingModel> {
+  final Value<int> id;
+  final Value<int> custParent;
+  final Value<int> custGroup;
+  final Value<String> generateCode;
+  const UserSettingTableCompanion({
+    this.id = const Value.absent(),
+    this.custParent = const Value.absent(),
+    this.custGroup = const Value.absent(),
+    this.generateCode = const Value.absent(),
+  });
+  UserSettingTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int custParent,
+    required int custGroup,
+    required String generateCode,
+  })  : custParent = Value(custParent),
+        custGroup = Value(custGroup),
+        generateCode = Value(generateCode);
+  static Insertable<UserSettingModel> custom({
+    Expression<int>? id,
+    Expression<int>? custParent,
+    Expression<int>? custGroup,
+    Expression<String>? generateCode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (custParent != null) 'cust_parent': custParent,
+      if (custGroup != null) 'cust_group': custGroup,
+      if (generateCode != null) 'generate_code': generateCode,
+    });
+  }
+
+  UserSettingTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? custParent,
+      Value<int>? custGroup,
+      Value<String>? generateCode}) {
+    return UserSettingTableCompanion(
+      id: id ?? this.id,
+      custParent: custParent ?? this.custParent,
+      custGroup: custGroup ?? this.custGroup,
+      generateCode: generateCode ?? this.generateCode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (custParent.present) {
+      map['cust_parent'] = Variable<int>(custParent.value);
+    }
+    if (custGroup.present) {
+      map['cust_group'] = Variable<int>(custGroup.value);
+    }
+    if (generateCode.present) {
+      map['generate_code'] = Variable<String>(generateCode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserSettingTableCompanion(')
+          ..write('id: $id, ')
+          ..write('custParent: $custParent, ')
+          ..write('custGroup: $custGroup, ')
+          ..write('generateCode: $generateCode')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ItemAlterTableTable extends ItemAlterTable
+    with TableInfo<$ItemAlterTableTable, ItemAlterModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemAlterTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemAlterIdMeta =
+      const VerificationMeta('itemAlterId');
+  @override
+  late final GeneratedColumn<int> itemAlterId = GeneratedColumn<int>(
+      'item_alter_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemOrderMeta =
+      const VerificationMeta('itemOrder');
+  @override
+  late final GeneratedColumn<int> itemOrder = GeneratedColumn<int>(
+      'item_order', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, itemId, itemAlterId, itemOrder];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'item_alter_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<ItemAlterModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('item_alter_id')) {
+      context.handle(
+          _itemAlterIdMeta,
+          itemAlterId.isAcceptableOrUnknown(
+              data['item_alter_id']!, _itemAlterIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemAlterIdMeta);
+    }
+    if (data.containsKey('item_order')) {
+      context.handle(_itemOrderMeta,
+          itemOrder.isAcceptableOrUnknown(data['item_order']!, _itemOrderMeta));
+    } else if (isInserting) {
+      context.missing(_itemOrderMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemAlterModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemAlterModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_id'])!,
+      itemAlterId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_alter_id'])!,
+      itemOrder: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_order'])!,
+    );
+  }
+
+  @override
+  $ItemAlterTableTable createAlias(String alias) {
+    return $ItemAlterTableTable(attachedDatabase, alias);
+  }
+}
+
+class ItemAlterTableCompanion extends UpdateCompanion<ItemAlterModel> {
+  final Value<int> id;
+  final Value<int> itemId;
+  final Value<int> itemAlterId;
+  final Value<int> itemOrder;
+  const ItemAlterTableCompanion({
+    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.itemAlterId = const Value.absent(),
+    this.itemOrder = const Value.absent(),
+  });
+  ItemAlterTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int itemId,
+    required int itemAlterId,
+    required int itemOrder,
+  })  : itemId = Value(itemId),
+        itemAlterId = Value(itemAlterId),
+        itemOrder = Value(itemOrder);
+  static Insertable<ItemAlterModel> custom({
+    Expression<int>? id,
+    Expression<int>? itemId,
+    Expression<int>? itemAlterId,
+    Expression<int>? itemOrder,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
+      if (itemAlterId != null) 'item_alter_id': itemAlterId,
+      if (itemOrder != null) 'item_order': itemOrder,
+    });
+  }
+
+  ItemAlterTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? itemId,
+      Value<int>? itemAlterId,
+      Value<int>? itemOrder}) {
+    return ItemAlterTableCompanion(
+      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
+      itemAlterId: itemAlterId ?? this.itemAlterId,
+      itemOrder: itemOrder ?? this.itemOrder,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    if (itemAlterId.present) {
+      map['item_alter_id'] = Variable<int>(itemAlterId.value);
+    }
+    if (itemOrder.present) {
+      map['item_order'] = Variable<int>(itemOrder.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemAlterTableCompanion(')
+          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
+          ..write('itemAlterId: $itemAlterId, ')
+          ..write('itemOrder: $itemOrder')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BarcodeTableTable extends BarcodeTable
+    with TableInfo<$BarcodeTableTable, BarcodeModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BarcodeTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemBarcodeMeta =
+      const VerificationMeta('itemBarcode');
+  @override
+  late final GeneratedColumn<String> itemBarcode = GeneratedColumn<String>(
+      'item_barcode', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, itemId, itemBarcode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'barcode_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<BarcodeModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('item_barcode')) {
+      context.handle(
+          _itemBarcodeMeta,
+          itemBarcode.isAcceptableOrUnknown(
+              data['item_barcode']!, _itemBarcodeMeta));
+    } else if (isInserting) {
+      context.missing(_itemBarcodeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BarcodeModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BarcodeModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_id'])!,
+      itemBarcode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_barcode'])!,
+    );
+  }
+
+  @override
+  $BarcodeTableTable createAlias(String alias) {
+    return $BarcodeTableTable(attachedDatabase, alias);
+  }
+}
+
+class BarcodeTableCompanion extends UpdateCompanion<BarcodeModel> {
+  final Value<int> id;
+  final Value<int> itemId;
+  final Value<String> itemBarcode;
+  const BarcodeTableCompanion({
+    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.itemBarcode = const Value.absent(),
+  });
+  BarcodeTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int itemId,
+    required String itemBarcode,
+  })  : itemId = Value(itemId),
+        itemBarcode = Value(itemBarcode);
+  static Insertable<BarcodeModel> custom({
+    Expression<int>? id,
+    Expression<int>? itemId,
+    Expression<String>? itemBarcode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
+      if (itemBarcode != null) 'item_barcode': itemBarcode,
+    });
+  }
+
+  BarcodeTableCompanion copyWith(
+      {Value<int>? id, Value<int>? itemId, Value<String>? itemBarcode}) {
+    return BarcodeTableCompanion(
+      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
+      itemBarcode: itemBarcode ?? this.itemBarcode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    if (itemBarcode.present) {
+      map['item_barcode'] = Variable<String>(itemBarcode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BarcodeTableCompanion(')
+          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
+          ..write('itemBarcode: $itemBarcode')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AccountTableTable extends AccountTable
+    with TableInfo<$AccountTableTable, AccountModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AccountTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _accNumberMeta =
+      const VerificationMeta('accNumber');
+  @override
+  late final GeneratedColumn<int> accNumber = GeneratedColumn<int>(
+      'acc_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accNameMeta =
+      const VerificationMeta('accName');
+  @override
+  late final GeneratedColumn<String> accName = GeneratedColumn<String>(
+      'acc_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accParentMeta =
+      const VerificationMeta('accParent');
+  @override
+  late final GeneratedColumn<int> accParent = GeneratedColumn<int>(
+      'acc_parent', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accTypeMeta =
+      const VerificationMeta('accType');
+  @override
+  late final GeneratedColumn<int> accType = GeneratedColumn<int>(
+      'acc_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accLevelMeta =
+      const VerificationMeta('accLevel');
+  @override
+  late final GeneratedColumn<int> accLevel = GeneratedColumn<int>(
+      'acc_level', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+      'note', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accCatagoryMeta =
+      const VerificationMeta('accCatagory');
+  @override
+  late final GeneratedColumn<int> accCatagory = GeneratedColumn<int>(
+      'acc_catagory', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accCatIdMeta =
+      const VerificationMeta('accCatId');
+  @override
+  late final GeneratedColumn<int> accCatId = GeneratedColumn<int>(
+      'acc_cat_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accPhoneMeta =
+      const VerificationMeta('accPhone');
+  @override
+  late final GeneratedColumn<String> accPhone = GeneratedColumn<String>(
+      'acc_phone', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _addressMeta =
+      const VerificationMeta('address');
+  @override
+  late final GeneratedColumn<String> address = GeneratedColumn<String>(
+      'address', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accLimitMeta =
+      const VerificationMeta('accLimit');
+  @override
+  late final GeneratedColumn<int> accLimit = GeneratedColumn<int>(
+      'acc_limit', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _paymentTypeMeta =
+      const VerificationMeta('paymentType');
+  @override
+  late final GeneratedColumn<int> paymentType = GeneratedColumn<int>(
+      'payment_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _branchIdMeta =
+      const VerificationMeta('branchId');
+  @override
+  late final GeneratedColumn<int> branchId = GeneratedColumn<int>(
+      'branch_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accStopedMeta =
+      const VerificationMeta('accStoped');
+  @override
+  late final GeneratedColumn<bool> accStoped = GeneratedColumn<bool>(
+      'acc_stoped', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("acc_stoped" IN (0, 1))'));
+  static const VerificationMeta _newDataMeta =
+      const VerificationMeta('newData');
+  @override
+  late final GeneratedColumn<bool> newData = GeneratedColumn<bool>(
+      'new_data', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("new_data" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        accNumber,
+        accName,
+        accParent,
+        accType,
+        accLevel,
+        note,
+        accCatagory,
+        accCatId,
+        accPhone,
+        address,
+        email,
+        accLimit,
+        paymentType,
+        branchId,
+        accStoped,
+        newData
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'account_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<AccountModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('acc_number')) {
+      context.handle(_accNumberMeta,
+          accNumber.isAcceptableOrUnknown(data['acc_number']!, _accNumberMeta));
+    } else if (isInserting) {
+      context.missing(_accNumberMeta);
+    }
+    if (data.containsKey('acc_name')) {
+      context.handle(_accNameMeta,
+          accName.isAcceptableOrUnknown(data['acc_name']!, _accNameMeta));
+    } else if (isInserting) {
+      context.missing(_accNameMeta);
+    }
+    if (data.containsKey('acc_parent')) {
+      context.handle(_accParentMeta,
+          accParent.isAcceptableOrUnknown(data['acc_parent']!, _accParentMeta));
+    } else if (isInserting) {
+      context.missing(_accParentMeta);
+    }
+    if (data.containsKey('acc_type')) {
+      context.handle(_accTypeMeta,
+          accType.isAcceptableOrUnknown(data['acc_type']!, _accTypeMeta));
+    } else if (isInserting) {
+      context.missing(_accTypeMeta);
+    }
+    if (data.containsKey('acc_level')) {
+      context.handle(_accLevelMeta,
+          accLevel.isAcceptableOrUnknown(data['acc_level']!, _accLevelMeta));
+    } else if (isInserting) {
+      context.missing(_accLevelMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+          _noteMeta, note.isAcceptableOrUnknown(data['note']!, _noteMeta));
+    } else if (isInserting) {
+      context.missing(_noteMeta);
+    }
+    if (data.containsKey('acc_catagory')) {
+      context.handle(
+          _accCatagoryMeta,
+          accCatagory.isAcceptableOrUnknown(
+              data['acc_catagory']!, _accCatagoryMeta));
+    } else if (isInserting) {
+      context.missing(_accCatagoryMeta);
+    }
+    if (data.containsKey('acc_cat_id')) {
+      context.handle(_accCatIdMeta,
+          accCatId.isAcceptableOrUnknown(data['acc_cat_id']!, _accCatIdMeta));
+    } else if (isInserting) {
+      context.missing(_accCatIdMeta);
+    }
+    if (data.containsKey('acc_phone')) {
+      context.handle(_accPhoneMeta,
+          accPhone.isAcceptableOrUnknown(data['acc_phone']!, _accPhoneMeta));
+    } else if (isInserting) {
+      context.missing(_accPhoneMeta);
+    }
+    if (data.containsKey('address')) {
+      context.handle(_addressMeta,
+          address.isAcceptableOrUnknown(data['address']!, _addressMeta));
+    } else if (isInserting) {
+      context.missing(_addressMeta);
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('acc_limit')) {
+      context.handle(_accLimitMeta,
+          accLimit.isAcceptableOrUnknown(data['acc_limit']!, _accLimitMeta));
+    } else if (isInserting) {
+      context.missing(_accLimitMeta);
+    }
+    if (data.containsKey('payment_type')) {
+      context.handle(
+          _paymentTypeMeta,
+          paymentType.isAcceptableOrUnknown(
+              data['payment_type']!, _paymentTypeMeta));
+    } else if (isInserting) {
+      context.missing(_paymentTypeMeta);
+    }
+    if (data.containsKey('branch_id')) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableOrUnknown(data['branch_id']!, _branchIdMeta));
+    } else if (isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    if (data.containsKey('acc_stoped')) {
+      context.handle(_accStopedMeta,
+          accStoped.isAcceptableOrUnknown(data['acc_stoped']!, _accStopedMeta));
+    } else if (isInserting) {
+      context.missing(_accStopedMeta);
+    }
+    if (data.containsKey('new_data')) {
+      context.handle(_newDataMeta,
+          newData.isAcceptableOrUnknown(data['new_data']!, _newDataMeta));
+    } else if (isInserting) {
+      context.missing(_newDataMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AccountModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AccountModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      accNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_number'])!,
+      accName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}acc_name'])!,
+      accParent: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_parent'])!,
+      accType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_type'])!,
+      accLevel: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_level'])!,
+      note: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}note'])!,
+      accCatagory: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_catagory'])!,
+      accCatId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_cat_id'])!,
+      accPhone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}acc_phone'])!,
+      address: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}address'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      accLimit: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_limit'])!,
+      paymentType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}payment_type'])!,
+      branchId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}branch_id'])!,
+      accStoped: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}acc_stoped'])!,
+      newData: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
+    );
+  }
+
+  @override
+  $AccountTableTable createAlias(String alias) {
+    return $AccountTableTable(attachedDatabase, alias);
+  }
+}
+
+class AccountTableCompanion extends UpdateCompanion<AccountModel> {
+  final Value<int> id;
+  final Value<int> accNumber;
+  final Value<String> accName;
+  final Value<int> accParent;
+  final Value<int> accType;
+  final Value<int> accLevel;
+  final Value<String> note;
+  final Value<int> accCatagory;
+  final Value<int> accCatId;
+  final Value<String> accPhone;
+  final Value<String> address;
+  final Value<String> email;
+  final Value<int> accLimit;
+  final Value<int> paymentType;
+  final Value<int> branchId;
+  final Value<bool> accStoped;
+  final Value<bool> newData;
+  const AccountTableCompanion({
+    this.id = const Value.absent(),
+    this.accNumber = const Value.absent(),
+    this.accName = const Value.absent(),
+    this.accParent = const Value.absent(),
+    this.accType = const Value.absent(),
+    this.accLevel = const Value.absent(),
+    this.note = const Value.absent(),
+    this.accCatagory = const Value.absent(),
+    this.accCatId = const Value.absent(),
+    this.accPhone = const Value.absent(),
+    this.address = const Value.absent(),
+    this.email = const Value.absent(),
+    this.accLimit = const Value.absent(),
+    this.paymentType = const Value.absent(),
+    this.branchId = const Value.absent(),
+    this.accStoped = const Value.absent(),
+    this.newData = const Value.absent(),
+  });
+  AccountTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int accNumber,
+    required String accName,
+    required int accParent,
+    required int accType,
+    required int accLevel,
+    required String note,
+    required int accCatagory,
+    required int accCatId,
+    required String accPhone,
+    required String address,
+    required String email,
+    required int accLimit,
+    required int paymentType,
+    required int branchId,
+    required bool accStoped,
+    required bool newData,
+  })  : accNumber = Value(accNumber),
+        accName = Value(accName),
+        accParent = Value(accParent),
+        accType = Value(accType),
+        accLevel = Value(accLevel),
+        note = Value(note),
+        accCatagory = Value(accCatagory),
+        accCatId = Value(accCatId),
+        accPhone = Value(accPhone),
+        address = Value(address),
+        email = Value(email),
+        accLimit = Value(accLimit),
+        paymentType = Value(paymentType),
+        branchId = Value(branchId),
+        accStoped = Value(accStoped),
+        newData = Value(newData);
+  static Insertable<AccountModel> custom({
+    Expression<int>? id,
+    Expression<int>? accNumber,
+    Expression<String>? accName,
+    Expression<int>? accParent,
+    Expression<int>? accType,
+    Expression<int>? accLevel,
+    Expression<String>? note,
+    Expression<int>? accCatagory,
+    Expression<int>? accCatId,
+    Expression<String>? accPhone,
+    Expression<String>? address,
+    Expression<String>? email,
+    Expression<int>? accLimit,
+    Expression<int>? paymentType,
+    Expression<int>? branchId,
+    Expression<bool>? accStoped,
+    Expression<bool>? newData,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (accNumber != null) 'acc_number': accNumber,
+      if (accName != null) 'acc_name': accName,
+      if (accParent != null) 'acc_parent': accParent,
+      if (accType != null) 'acc_type': accType,
+      if (accLevel != null) 'acc_level': accLevel,
+      if (note != null) 'note': note,
+      if (accCatagory != null) 'acc_catagory': accCatagory,
+      if (accCatId != null) 'acc_cat_id': accCatId,
+      if (accPhone != null) 'acc_phone': accPhone,
+      if (address != null) 'address': address,
+      if (email != null) 'email': email,
+      if (accLimit != null) 'acc_limit': accLimit,
+      if (paymentType != null) 'payment_type': paymentType,
+      if (branchId != null) 'branch_id': branchId,
+      if (accStoped != null) 'acc_stoped': accStoped,
+      if (newData != null) 'new_data': newData,
+    });
+  }
+
+  AccountTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? accNumber,
+      Value<String>? accName,
+      Value<int>? accParent,
+      Value<int>? accType,
+      Value<int>? accLevel,
+      Value<String>? note,
+      Value<int>? accCatagory,
+      Value<int>? accCatId,
+      Value<String>? accPhone,
+      Value<String>? address,
+      Value<String>? email,
+      Value<int>? accLimit,
+      Value<int>? paymentType,
+      Value<int>? branchId,
+      Value<bool>? accStoped,
+      Value<bool>? newData}) {
+    return AccountTableCompanion(
+      id: id ?? this.id,
+      accNumber: accNumber ?? this.accNumber,
+      accName: accName ?? this.accName,
+      accParent: accParent ?? this.accParent,
+      accType: accType ?? this.accType,
+      accLevel: accLevel ?? this.accLevel,
+      note: note ?? this.note,
+      accCatagory: accCatagory ?? this.accCatagory,
+      accCatId: accCatId ?? this.accCatId,
+      accPhone: accPhone ?? this.accPhone,
+      address: address ?? this.address,
+      email: email ?? this.email,
+      accLimit: accLimit ?? this.accLimit,
+      paymentType: paymentType ?? this.paymentType,
+      branchId: branchId ?? this.branchId,
+      accStoped: accStoped ?? this.accStoped,
+      newData: newData ?? this.newData,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (accNumber.present) {
+      map['acc_number'] = Variable<int>(accNumber.value);
+    }
+    if (accName.present) {
+      map['acc_name'] = Variable<String>(accName.value);
+    }
+    if (accParent.present) {
+      map['acc_parent'] = Variable<int>(accParent.value);
+    }
+    if (accType.present) {
+      map['acc_type'] = Variable<int>(accType.value);
+    }
+    if (accLevel.present) {
+      map['acc_level'] = Variable<int>(accLevel.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (accCatagory.present) {
+      map['acc_catagory'] = Variable<int>(accCatagory.value);
+    }
+    if (accCatId.present) {
+      map['acc_cat_id'] = Variable<int>(accCatId.value);
+    }
+    if (accPhone.present) {
+      map['acc_phone'] = Variable<String>(accPhone.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (accLimit.present) {
+      map['acc_limit'] = Variable<int>(accLimit.value);
+    }
+    if (paymentType.present) {
+      map['payment_type'] = Variable<int>(paymentType.value);
+    }
+    if (branchId.present) {
+      map['branch_id'] = Variable<int>(branchId.value);
+    }
+    if (accStoped.present) {
+      map['acc_stoped'] = Variable<bool>(accStoped.value);
+    }
+    if (newData.present) {
+      map['new_data'] = Variable<bool>(newData.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AccountTableCompanion(')
+          ..write('id: $id, ')
+          ..write('accNumber: $accNumber, ')
+          ..write('accName: $accName, ')
+          ..write('accParent: $accParent, ')
+          ..write('accType: $accType, ')
+          ..write('accLevel: $accLevel, ')
+          ..write('note: $note, ')
+          ..write('accCatagory: $accCatagory, ')
+          ..write('accCatId: $accCatId, ')
+          ..write('accPhone: $accPhone, ')
+          ..write('address: $address, ')
+          ..write('email: $email, ')
+          ..write('accLimit: $accLimit, ')
+          ..write('paymentType: $paymentType, ')
+          ..write('branchId: $branchId, ')
+          ..write('accStoped: $accStoped, ')
+          ..write('newData: $newData')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2345,6 +4304,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $UnitTableTable unitTable = $UnitTableTable(this);
   late final $ItemGroupTableTable itemGroupTable = $ItemGroupTableTable(this);
   late final $ItemUnitTableTable itemUnitTable = $ItemUnitTableTable(this);
+  late final $ItemTableTable itemTable = $ItemTableTable(this);
+  late final $PaymentTableTable paymentTable = $PaymentTableTable(this);
+  late final $SystemDocTableTable systemDocTable = $SystemDocTableTable(this);
+  late final $UserSettingTableTable userSettingTable =
+      $UserSettingTableTable(this);
+  late final $ItemAlterTableTable itemAlterTable = $ItemAlterTableTable(this);
+  late final $BarcodeTableTable barcodeTable = $BarcodeTableTable(this);
+  late final $AccountTableTable accountTable = $AccountTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2357,7 +4324,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         userStoreTable,
         unitTable,
         itemGroupTable,
-        itemUnitTable
+        itemUnitTable,
+        itemTable,
+        paymentTable,
+        systemDocTable,
+        userSettingTable,
+        itemAlterTable,
+        barcodeTable,
+        accountTable
       ];
 }
 
@@ -2539,7 +4513,7 @@ typedef $$CompanyTableTableCreateCompanionBuilder = CompanyTableCompanion
   required String address,
   required String website,
   required String note,
-  required Uint8List image,
+  required Uint8List logo,
 });
 typedef $$CompanyTableTableUpdateCompanionBuilder = CompanyTableCompanion
     Function({
@@ -2551,7 +4525,7 @@ typedef $$CompanyTableTableUpdateCompanionBuilder = CompanyTableCompanion
   Value<String> address,
   Value<String> website,
   Value<String> note,
-  Value<Uint8List> image,
+  Value<Uint8List> logo,
 });
 
 class $$CompanyTableTableTableManager extends RootTableManager<
@@ -2579,7 +4553,7 @@ class $$CompanyTableTableTableManager extends RootTableManager<
             Value<String> address = const Value.absent(),
             Value<String> website = const Value.absent(),
             Value<String> note = const Value.absent(),
-            Value<Uint8List> image = const Value.absent(),
+            Value<Uint8List> logo = const Value.absent(),
           }) =>
               CompanyTableCompanion(
             id: id,
@@ -2590,7 +4564,7 @@ class $$CompanyTableTableTableManager extends RootTableManager<
             address: address,
             website: website,
             note: note,
-            image: image,
+            logo: logo,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -2601,7 +4575,7 @@ class $$CompanyTableTableTableManager extends RootTableManager<
             required String address,
             required String website,
             required String note,
-            required Uint8List image,
+            required Uint8List logo,
           }) =>
               CompanyTableCompanion.insert(
             id: id,
@@ -2612,7 +4586,7 @@ class $$CompanyTableTableTableManager extends RootTableManager<
             address: address,
             website: website,
             note: note,
-            image: image,
+            logo: logo,
           ),
         ));
 }
@@ -2660,8 +4634,8 @@ class $$CompanyTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<Uint8List> get image => $state.composableBuilder(
-      column: $state.table.image,
+  ColumnFilters<Uint8List> get logo => $state.composableBuilder(
+      column: $state.table.logo,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -2709,8 +4683,8 @@ class $$CompanyTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<Uint8List> get image => $state.composableBuilder(
-      column: $state.table.image,
+  ColumnOrderings<Uint8List> get logo => $state.composableBuilder(
+      column: $state.table.logo,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
@@ -2725,7 +4699,7 @@ typedef $$BranchTableTableCreateCompanionBuilder = BranchTableCompanion
   required String email,
   required String arReportHeader,
   required String enReportHeader,
-  required Uint8List image,
+  required Uint8List logo,
   required String note,
 });
 typedef $$BranchTableTableUpdateCompanionBuilder = BranchTableCompanion
@@ -2738,7 +4712,7 @@ typedef $$BranchTableTableUpdateCompanionBuilder = BranchTableCompanion
   Value<String> email,
   Value<String> arReportHeader,
   Value<String> enReportHeader,
-  Value<Uint8List> image,
+  Value<Uint8List> logo,
   Value<String> note,
 });
 
@@ -2767,7 +4741,7 @@ class $$BranchTableTableTableManager extends RootTableManager<
             Value<String> email = const Value.absent(),
             Value<String> arReportHeader = const Value.absent(),
             Value<String> enReportHeader = const Value.absent(),
-            Value<Uint8List> image = const Value.absent(),
+            Value<Uint8List> logo = const Value.absent(),
             Value<String> note = const Value.absent(),
           }) =>
               BranchTableCompanion(
@@ -2779,7 +4753,7 @@ class $$BranchTableTableTableManager extends RootTableManager<
             email: email,
             arReportHeader: arReportHeader,
             enReportHeader: enReportHeader,
-            image: image,
+            logo: logo,
             note: note,
           ),
           createCompanionCallback: ({
@@ -2791,7 +4765,7 @@ class $$BranchTableTableTableManager extends RootTableManager<
             required String email,
             required String arReportHeader,
             required String enReportHeader,
-            required Uint8List image,
+            required Uint8List logo,
             required String note,
           }) =>
               BranchTableCompanion.insert(
@@ -2803,7 +4777,7 @@ class $$BranchTableTableTableManager extends RootTableManager<
             email: email,
             arReportHeader: arReportHeader,
             enReportHeader: enReportHeader,
-            image: image,
+            logo: logo,
             note: note,
           ),
         ));
@@ -2852,8 +4826,8 @@ class $$BranchTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<Uint8List> get image => $state.composableBuilder(
-      column: $state.table.image,
+  ColumnFilters<Uint8List> get logo => $state.composableBuilder(
+      column: $state.table.logo,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -2906,8 +4880,8 @@ class $$BranchTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<Uint8List> get image => $state.composableBuilder(
-      column: $state.table.image,
+  ColumnOrderings<Uint8List> get logo => $state.composableBuilder(
+      column: $state.table.logo,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -2926,7 +4900,7 @@ typedef $$CurencyTableTableCreateCompanionBuilder = CurencyTableCompanion
   required double value,
   required double equivelant,
   required bool localCurrency,
-  required bool storeCurency,
+  required bool storeCurrency,
   required double maxValue,
   required double minValue,
   required String note,
@@ -2941,7 +4915,7 @@ typedef $$CurencyTableTableUpdateCompanionBuilder = CurencyTableCompanion
   Value<double> value,
   Value<double> equivelant,
   Value<bool> localCurrency,
-  Value<bool> storeCurency,
+  Value<bool> storeCurrency,
   Value<double> maxValue,
   Value<double> minValue,
   Value<String> note,
@@ -2972,7 +4946,7 @@ class $$CurencyTableTableTableManager extends RootTableManager<
             Value<double> value = const Value.absent(),
             Value<double> equivelant = const Value.absent(),
             Value<bool> localCurrency = const Value.absent(),
-            Value<bool> storeCurency = const Value.absent(),
+            Value<bool> storeCurrency = const Value.absent(),
             Value<double> maxValue = const Value.absent(),
             Value<double> minValue = const Value.absent(),
             Value<String> note = const Value.absent(),
@@ -2986,7 +4960,7 @@ class $$CurencyTableTableTableManager extends RootTableManager<
             value: value,
             equivelant: equivelant,
             localCurrency: localCurrency,
-            storeCurency: storeCurency,
+            storeCurrency: storeCurrency,
             maxValue: maxValue,
             minValue: minValue,
             note: note,
@@ -3000,7 +4974,7 @@ class $$CurencyTableTableTableManager extends RootTableManager<
             required double value,
             required double equivelant,
             required bool localCurrency,
-            required bool storeCurency,
+            required bool storeCurrency,
             required double maxValue,
             required double minValue,
             required String note,
@@ -3014,7 +4988,7 @@ class $$CurencyTableTableTableManager extends RootTableManager<
             value: value,
             equivelant: equivelant,
             localCurrency: localCurrency,
-            storeCurency: storeCurency,
+            storeCurrency: storeCurrency,
             maxValue: maxValue,
             minValue: minValue,
             note: note,
@@ -3061,8 +5035,8 @@ class $$CurencyTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<bool> get storeCurency => $state.composableBuilder(
-      column: $state.table.storeCurency,
+  ColumnFilters<bool> get storeCurrency => $state.composableBuilder(
+      column: $state.table.storeCurrency,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -3125,8 +5099,8 @@ class $$CurencyTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<bool> get storeCurency => $state.composableBuilder(
-      column: $state.table.storeCurency,
+  ColumnOrderings<bool> get storeCurrency => $state.composableBuilder(
+      column: $state.table.storeCurrency,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -3789,6 +5763,1197 @@ class $$ItemUnitTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+typedef $$ItemTableTableCreateCompanionBuilder = ItemTableCompanion Function({
+  Value<int> id,
+  required int itemGroupId,
+  required int itemCode,
+  required String name,
+  required String enName,
+  required int type,
+  required int itemLimit,
+  required Uint8List itemImage,
+  required bool isExpire,
+  required bool freeQuantityAllow,
+  required bool hasTax,
+  required bool hasAlternated,
+  required bool newData,
+  required int notifyBefore,
+  required int taxRate,
+  required String itemCompany,
+  required String orignalCountry,
+  required String itemDescription,
+  required String note,
+});
+typedef $$ItemTableTableUpdateCompanionBuilder = ItemTableCompanion Function({
+  Value<int> id,
+  Value<int> itemGroupId,
+  Value<int> itemCode,
+  Value<String> name,
+  Value<String> enName,
+  Value<int> type,
+  Value<int> itemLimit,
+  Value<Uint8List> itemImage,
+  Value<bool> isExpire,
+  Value<bool> freeQuantityAllow,
+  Value<bool> hasTax,
+  Value<bool> hasAlternated,
+  Value<bool> newData,
+  Value<int> notifyBefore,
+  Value<int> taxRate,
+  Value<String> itemCompany,
+  Value<String> orignalCountry,
+  Value<String> itemDescription,
+  Value<String> note,
+});
+
+class $$ItemTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ItemTableTable,
+    ItemModel,
+    $$ItemTableTableFilterComposer,
+    $$ItemTableTableOrderingComposer,
+    $$ItemTableTableCreateCompanionBuilder,
+    $$ItemTableTableUpdateCompanionBuilder> {
+  $$ItemTableTableTableManager(_$AppDatabase db, $ItemTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ItemTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ItemTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> itemGroupId = const Value.absent(),
+            Value<int> itemCode = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> enName = const Value.absent(),
+            Value<int> type = const Value.absent(),
+            Value<int> itemLimit = const Value.absent(),
+            Value<Uint8List> itemImage = const Value.absent(),
+            Value<bool> isExpire = const Value.absent(),
+            Value<bool> freeQuantityAllow = const Value.absent(),
+            Value<bool> hasTax = const Value.absent(),
+            Value<bool> hasAlternated = const Value.absent(),
+            Value<bool> newData = const Value.absent(),
+            Value<int> notifyBefore = const Value.absent(),
+            Value<int> taxRate = const Value.absent(),
+            Value<String> itemCompany = const Value.absent(),
+            Value<String> orignalCountry = const Value.absent(),
+            Value<String> itemDescription = const Value.absent(),
+            Value<String> note = const Value.absent(),
+          }) =>
+              ItemTableCompanion(
+            id: id,
+            itemGroupId: itemGroupId,
+            itemCode: itemCode,
+            name: name,
+            enName: enName,
+            type: type,
+            itemLimit: itemLimit,
+            itemImage: itemImage,
+            isExpire: isExpire,
+            freeQuantityAllow: freeQuantityAllow,
+            hasTax: hasTax,
+            hasAlternated: hasAlternated,
+            newData: newData,
+            notifyBefore: notifyBefore,
+            taxRate: taxRate,
+            itemCompany: itemCompany,
+            orignalCountry: orignalCountry,
+            itemDescription: itemDescription,
+            note: note,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int itemGroupId,
+            required int itemCode,
+            required String name,
+            required String enName,
+            required int type,
+            required int itemLimit,
+            required Uint8List itemImage,
+            required bool isExpire,
+            required bool freeQuantityAllow,
+            required bool hasTax,
+            required bool hasAlternated,
+            required bool newData,
+            required int notifyBefore,
+            required int taxRate,
+            required String itemCompany,
+            required String orignalCountry,
+            required String itemDescription,
+            required String note,
+          }) =>
+              ItemTableCompanion.insert(
+            id: id,
+            itemGroupId: itemGroupId,
+            itemCode: itemCode,
+            name: name,
+            enName: enName,
+            type: type,
+            itemLimit: itemLimit,
+            itemImage: itemImage,
+            isExpire: isExpire,
+            freeQuantityAllow: freeQuantityAllow,
+            hasTax: hasTax,
+            hasAlternated: hasAlternated,
+            newData: newData,
+            notifyBefore: notifyBefore,
+            taxRate: taxRate,
+            itemCompany: itemCompany,
+            orignalCountry: orignalCountry,
+            itemDescription: itemDescription,
+            note: note,
+          ),
+        ));
+}
+
+class $$ItemTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ItemTableTable> {
+  $$ItemTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemGroupId => $state.composableBuilder(
+      column: $state.table.itemGroupId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemCode => $state.composableBuilder(
+      column: $state.table.itemCode,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get enName => $state.composableBuilder(
+      column: $state.table.enName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get type => $state.composableBuilder(
+      column: $state.table.type,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemLimit => $state.composableBuilder(
+      column: $state.table.itemLimit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<Uint8List> get itemImage => $state.composableBuilder(
+      column: $state.table.itemImage,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get isExpire => $state.composableBuilder(
+      column: $state.table.isExpire,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get freeQuantityAllow => $state.composableBuilder(
+      column: $state.table.freeQuantityAllow,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get hasTax => $state.composableBuilder(
+      column: $state.table.hasTax,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get hasAlternated => $state.composableBuilder(
+      column: $state.table.hasAlternated,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get notifyBefore => $state.composableBuilder(
+      column: $state.table.notifyBefore,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get taxRate => $state.composableBuilder(
+      column: $state.table.taxRate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get itemCompany => $state.composableBuilder(
+      column: $state.table.itemCompany,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get orignalCountry => $state.composableBuilder(
+      column: $state.table.orignalCountry,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get itemDescription => $state.composableBuilder(
+      column: $state.table.itemDescription,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get note => $state.composableBuilder(
+      column: $state.table.note,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$ItemTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ItemTableTable> {
+  $$ItemTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemGroupId => $state.composableBuilder(
+      column: $state.table.itemGroupId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemCode => $state.composableBuilder(
+      column: $state.table.itemCode,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get enName => $state.composableBuilder(
+      column: $state.table.enName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get type => $state.composableBuilder(
+      column: $state.table.type,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemLimit => $state.composableBuilder(
+      column: $state.table.itemLimit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<Uint8List> get itemImage => $state.composableBuilder(
+      column: $state.table.itemImage,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get isExpire => $state.composableBuilder(
+      column: $state.table.isExpire,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get freeQuantityAllow => $state.composableBuilder(
+      column: $state.table.freeQuantityAllow,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get hasTax => $state.composableBuilder(
+      column: $state.table.hasTax,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get hasAlternated => $state.composableBuilder(
+      column: $state.table.hasAlternated,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get notifyBefore => $state.composableBuilder(
+      column: $state.table.notifyBefore,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get taxRate => $state.composableBuilder(
+      column: $state.table.taxRate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get itemCompany => $state.composableBuilder(
+      column: $state.table.itemCompany,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get orignalCountry => $state.composableBuilder(
+      column: $state.table.orignalCountry,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get itemDescription => $state.composableBuilder(
+      column: $state.table.itemDescription,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get note => $state.composableBuilder(
+      column: $state.table.note,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$PaymentTableTableCreateCompanionBuilder = PaymentTableCompanion
+    Function({
+  Value<int> id,
+  required int userId,
+  required String methodName,
+  required String methodNote,
+  required bool newData,
+  required bool isDefault,
+});
+typedef $$PaymentTableTableUpdateCompanionBuilder = PaymentTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> userId,
+  Value<String> methodName,
+  Value<String> methodNote,
+  Value<bool> newData,
+  Value<bool> isDefault,
+});
+
+class $$PaymentTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PaymentTableTable,
+    PaymentModel,
+    $$PaymentTableTableFilterComposer,
+    $$PaymentTableTableOrderingComposer,
+    $$PaymentTableTableCreateCompanionBuilder,
+    $$PaymentTableTableUpdateCompanionBuilder> {
+  $$PaymentTableTableTableManager(_$AppDatabase db, $PaymentTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$PaymentTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$PaymentTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> userId = const Value.absent(),
+            Value<String> methodName = const Value.absent(),
+            Value<String> methodNote = const Value.absent(),
+            Value<bool> newData = const Value.absent(),
+            Value<bool> isDefault = const Value.absent(),
+          }) =>
+              PaymentTableCompanion(
+            id: id,
+            userId: userId,
+            methodName: methodName,
+            methodNote: methodNote,
+            newData: newData,
+            isDefault: isDefault,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int userId,
+            required String methodName,
+            required String methodNote,
+            required bool newData,
+            required bool isDefault,
+          }) =>
+              PaymentTableCompanion.insert(
+            id: id,
+            userId: userId,
+            methodName: methodName,
+            methodNote: methodNote,
+            newData: newData,
+            isDefault: isDefault,
+          ),
+        ));
+}
+
+class $$PaymentTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $PaymentTableTable> {
+  $$PaymentTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get userId => $state.composableBuilder(
+      column: $state.table.userId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get methodName => $state.composableBuilder(
+      column: $state.table.methodName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get methodNote => $state.composableBuilder(
+      column: $state.table.methodNote,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get isDefault => $state.composableBuilder(
+      column: $state.table.isDefault,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$PaymentTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $PaymentTableTable> {
+  $$PaymentTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get userId => $state.composableBuilder(
+      column: $state.table.userId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get methodName => $state.composableBuilder(
+      column: $state.table.methodName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get methodNote => $state.composableBuilder(
+      column: $state.table.methodNote,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get isDefault => $state.composableBuilder(
+      column: $state.table.isDefault,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$SystemDocTableTableCreateCompanionBuilder = SystemDocTableCompanion
+    Function({
+  Value<int> id,
+  required int docType,
+  required String docName,
+});
+typedef $$SystemDocTableTableUpdateCompanionBuilder = SystemDocTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> docType,
+  Value<String> docName,
+});
+
+class $$SystemDocTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $SystemDocTableTable,
+    SystemDocModel,
+    $$SystemDocTableTableFilterComposer,
+    $$SystemDocTableTableOrderingComposer,
+    $$SystemDocTableTableCreateCompanionBuilder,
+    $$SystemDocTableTableUpdateCompanionBuilder> {
+  $$SystemDocTableTableTableManager(
+      _$AppDatabase db, $SystemDocTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$SystemDocTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$SystemDocTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> docType = const Value.absent(),
+            Value<String> docName = const Value.absent(),
+          }) =>
+              SystemDocTableCompanion(
+            id: id,
+            docType: docType,
+            docName: docName,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int docType,
+            required String docName,
+          }) =>
+              SystemDocTableCompanion.insert(
+            id: id,
+            docType: docType,
+            docName: docName,
+          ),
+        ));
+}
+
+class $$SystemDocTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $SystemDocTableTable> {
+  $$SystemDocTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get docType => $state.composableBuilder(
+      column: $state.table.docType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get docName => $state.composableBuilder(
+      column: $state.table.docName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$SystemDocTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $SystemDocTableTable> {
+  $$SystemDocTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get docType => $state.composableBuilder(
+      column: $state.table.docType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get docName => $state.composableBuilder(
+      column: $state.table.docName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$UserSettingTableTableCreateCompanionBuilder
+    = UserSettingTableCompanion Function({
+  Value<int> id,
+  required int custParent,
+  required int custGroup,
+  required String generateCode,
+});
+typedef $$UserSettingTableTableUpdateCompanionBuilder
+    = UserSettingTableCompanion Function({
+  Value<int> id,
+  Value<int> custParent,
+  Value<int> custGroup,
+  Value<String> generateCode,
+});
+
+class $$UserSettingTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $UserSettingTableTable,
+    UserSettingModel,
+    $$UserSettingTableTableFilterComposer,
+    $$UserSettingTableTableOrderingComposer,
+    $$UserSettingTableTableCreateCompanionBuilder,
+    $$UserSettingTableTableUpdateCompanionBuilder> {
+  $$UserSettingTableTableTableManager(
+      _$AppDatabase db, $UserSettingTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$UserSettingTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$UserSettingTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> custParent = const Value.absent(),
+            Value<int> custGroup = const Value.absent(),
+            Value<String> generateCode = const Value.absent(),
+          }) =>
+              UserSettingTableCompanion(
+            id: id,
+            custParent: custParent,
+            custGroup: custGroup,
+            generateCode: generateCode,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int custParent,
+            required int custGroup,
+            required String generateCode,
+          }) =>
+              UserSettingTableCompanion.insert(
+            id: id,
+            custParent: custParent,
+            custGroup: custGroup,
+            generateCode: generateCode,
+          ),
+        ));
+}
+
+class $$UserSettingTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $UserSettingTableTable> {
+  $$UserSettingTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get custParent => $state.composableBuilder(
+      column: $state.table.custParent,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get custGroup => $state.composableBuilder(
+      column: $state.table.custGroup,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get generateCode => $state.composableBuilder(
+      column: $state.table.generateCode,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$UserSettingTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $UserSettingTableTable> {
+  $$UserSettingTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get custParent => $state.composableBuilder(
+      column: $state.table.custParent,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get custGroup => $state.composableBuilder(
+      column: $state.table.custGroup,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get generateCode => $state.composableBuilder(
+      column: $state.table.generateCode,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$ItemAlterTableTableCreateCompanionBuilder = ItemAlterTableCompanion
+    Function({
+  Value<int> id,
+  required int itemId,
+  required int itemAlterId,
+  required int itemOrder,
+});
+typedef $$ItemAlterTableTableUpdateCompanionBuilder = ItemAlterTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> itemId,
+  Value<int> itemAlterId,
+  Value<int> itemOrder,
+});
+
+class $$ItemAlterTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ItemAlterTableTable,
+    ItemAlterModel,
+    $$ItemAlterTableTableFilterComposer,
+    $$ItemAlterTableTableOrderingComposer,
+    $$ItemAlterTableTableCreateCompanionBuilder,
+    $$ItemAlterTableTableUpdateCompanionBuilder> {
+  $$ItemAlterTableTableTableManager(
+      _$AppDatabase db, $ItemAlterTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ItemAlterTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ItemAlterTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> itemId = const Value.absent(),
+            Value<int> itemAlterId = const Value.absent(),
+            Value<int> itemOrder = const Value.absent(),
+          }) =>
+              ItemAlterTableCompanion(
+            id: id,
+            itemId: itemId,
+            itemAlterId: itemAlterId,
+            itemOrder: itemOrder,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int itemId,
+            required int itemAlterId,
+            required int itemOrder,
+          }) =>
+              ItemAlterTableCompanion.insert(
+            id: id,
+            itemId: itemId,
+            itemAlterId: itemAlterId,
+            itemOrder: itemOrder,
+          ),
+        ));
+}
+
+class $$ItemAlterTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ItemAlterTableTable> {
+  $$ItemAlterTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemAlterId => $state.composableBuilder(
+      column: $state.table.itemAlterId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemOrder => $state.composableBuilder(
+      column: $state.table.itemOrder,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$ItemAlterTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ItemAlterTableTable> {
+  $$ItemAlterTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemAlterId => $state.composableBuilder(
+      column: $state.table.itemAlterId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemOrder => $state.composableBuilder(
+      column: $state.table.itemOrder,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$BarcodeTableTableCreateCompanionBuilder = BarcodeTableCompanion
+    Function({
+  Value<int> id,
+  required int itemId,
+  required String itemBarcode,
+});
+typedef $$BarcodeTableTableUpdateCompanionBuilder = BarcodeTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> itemId,
+  Value<String> itemBarcode,
+});
+
+class $$BarcodeTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $BarcodeTableTable,
+    BarcodeModel,
+    $$BarcodeTableTableFilterComposer,
+    $$BarcodeTableTableOrderingComposer,
+    $$BarcodeTableTableCreateCompanionBuilder,
+    $$BarcodeTableTableUpdateCompanionBuilder> {
+  $$BarcodeTableTableTableManager(_$AppDatabase db, $BarcodeTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$BarcodeTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$BarcodeTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> itemId = const Value.absent(),
+            Value<String> itemBarcode = const Value.absent(),
+          }) =>
+              BarcodeTableCompanion(
+            id: id,
+            itemId: itemId,
+            itemBarcode: itemBarcode,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int itemId,
+            required String itemBarcode,
+          }) =>
+              BarcodeTableCompanion.insert(
+            id: id,
+            itemId: itemId,
+            itemBarcode: itemBarcode,
+          ),
+        ));
+}
+
+class $$BarcodeTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $BarcodeTableTable> {
+  $$BarcodeTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get itemBarcode => $state.composableBuilder(
+      column: $state.table.itemBarcode,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$BarcodeTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $BarcodeTableTable> {
+  $$BarcodeTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get itemBarcode => $state.composableBuilder(
+      column: $state.table.itemBarcode,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$AccountTableTableCreateCompanionBuilder = AccountTableCompanion
+    Function({
+  Value<int> id,
+  required int accNumber,
+  required String accName,
+  required int accParent,
+  required int accType,
+  required int accLevel,
+  required String note,
+  required int accCatagory,
+  required int accCatId,
+  required String accPhone,
+  required String address,
+  required String email,
+  required int accLimit,
+  required int paymentType,
+  required int branchId,
+  required bool accStoped,
+  required bool newData,
+});
+typedef $$AccountTableTableUpdateCompanionBuilder = AccountTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> accNumber,
+  Value<String> accName,
+  Value<int> accParent,
+  Value<int> accType,
+  Value<int> accLevel,
+  Value<String> note,
+  Value<int> accCatagory,
+  Value<int> accCatId,
+  Value<String> accPhone,
+  Value<String> address,
+  Value<String> email,
+  Value<int> accLimit,
+  Value<int> paymentType,
+  Value<int> branchId,
+  Value<bool> accStoped,
+  Value<bool> newData,
+});
+
+class $$AccountTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $AccountTableTable,
+    AccountModel,
+    $$AccountTableTableFilterComposer,
+    $$AccountTableTableOrderingComposer,
+    $$AccountTableTableCreateCompanionBuilder,
+    $$AccountTableTableUpdateCompanionBuilder> {
+  $$AccountTableTableTableManager(_$AppDatabase db, $AccountTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$AccountTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$AccountTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> accNumber = const Value.absent(),
+            Value<String> accName = const Value.absent(),
+            Value<int> accParent = const Value.absent(),
+            Value<int> accType = const Value.absent(),
+            Value<int> accLevel = const Value.absent(),
+            Value<String> note = const Value.absent(),
+            Value<int> accCatagory = const Value.absent(),
+            Value<int> accCatId = const Value.absent(),
+            Value<String> accPhone = const Value.absent(),
+            Value<String> address = const Value.absent(),
+            Value<String> email = const Value.absent(),
+            Value<int> accLimit = const Value.absent(),
+            Value<int> paymentType = const Value.absent(),
+            Value<int> branchId = const Value.absent(),
+            Value<bool> accStoped = const Value.absent(),
+            Value<bool> newData = const Value.absent(),
+          }) =>
+              AccountTableCompanion(
+            id: id,
+            accNumber: accNumber,
+            accName: accName,
+            accParent: accParent,
+            accType: accType,
+            accLevel: accLevel,
+            note: note,
+            accCatagory: accCatagory,
+            accCatId: accCatId,
+            accPhone: accPhone,
+            address: address,
+            email: email,
+            accLimit: accLimit,
+            paymentType: paymentType,
+            branchId: branchId,
+            accStoped: accStoped,
+            newData: newData,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int accNumber,
+            required String accName,
+            required int accParent,
+            required int accType,
+            required int accLevel,
+            required String note,
+            required int accCatagory,
+            required int accCatId,
+            required String accPhone,
+            required String address,
+            required String email,
+            required int accLimit,
+            required int paymentType,
+            required int branchId,
+            required bool accStoped,
+            required bool newData,
+          }) =>
+              AccountTableCompanion.insert(
+            id: id,
+            accNumber: accNumber,
+            accName: accName,
+            accParent: accParent,
+            accType: accType,
+            accLevel: accLevel,
+            note: note,
+            accCatagory: accCatagory,
+            accCatId: accCatId,
+            accPhone: accPhone,
+            address: address,
+            email: email,
+            accLimit: accLimit,
+            paymentType: paymentType,
+            branchId: branchId,
+            accStoped: accStoped,
+            newData: newData,
+          ),
+        ));
+}
+
+class $$AccountTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $AccountTableTable> {
+  $$AccountTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get accName => $state.composableBuilder(
+      column: $state.table.accName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accParent => $state.composableBuilder(
+      column: $state.table.accParent,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accType => $state.composableBuilder(
+      column: $state.table.accType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accLevel => $state.composableBuilder(
+      column: $state.table.accLevel,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get note => $state.composableBuilder(
+      column: $state.table.note,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accCatagory => $state.composableBuilder(
+      column: $state.table.accCatagory,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accCatId => $state.composableBuilder(
+      column: $state.table.accCatId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get accPhone => $state.composableBuilder(
+      column: $state.table.accPhone,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get address => $state.composableBuilder(
+      column: $state.table.address,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get email => $state.composableBuilder(
+      column: $state.table.email,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accLimit => $state.composableBuilder(
+      column: $state.table.accLimit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get paymentType => $state.composableBuilder(
+      column: $state.table.paymentType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get accStoped => $state.composableBuilder(
+      column: $state.table.accStoped,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$AccountTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $AccountTableTable> {
+  $$AccountTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get accName => $state.composableBuilder(
+      column: $state.table.accName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accParent => $state.composableBuilder(
+      column: $state.table.accParent,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accType => $state.composableBuilder(
+      column: $state.table.accType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accLevel => $state.composableBuilder(
+      column: $state.table.accLevel,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get note => $state.composableBuilder(
+      column: $state.table.note,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accCatagory => $state.composableBuilder(
+      column: $state.table.accCatagory,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accCatId => $state.composableBuilder(
+      column: $state.table.accCatId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get accPhone => $state.composableBuilder(
+      column: $state.table.accPhone,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get address => $state.composableBuilder(
+      column: $state.table.address,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get email => $state.composableBuilder(
+      column: $state.table.email,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accLimit => $state.composableBuilder(
+      column: $state.table.accLimit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get paymentType => $state.composableBuilder(
+      column: $state.table.paymentType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get accStoped => $state.composableBuilder(
+      column: $state.table.accStoped,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
@@ -3808,4 +6973,18 @@ class $AppDatabaseManager {
       $$ItemGroupTableTableTableManager(_db, _db.itemGroupTable);
   $$ItemUnitTableTableTableManager get itemUnitTable =>
       $$ItemUnitTableTableTableManager(_db, _db.itemUnitTable);
+  $$ItemTableTableTableManager get itemTable =>
+      $$ItemTableTableTableManager(_db, _db.itemTable);
+  $$PaymentTableTableTableManager get paymentTable =>
+      $$PaymentTableTableTableManager(_db, _db.paymentTable);
+  $$SystemDocTableTableTableManager get systemDocTable =>
+      $$SystemDocTableTableTableManager(_db, _db.systemDocTable);
+  $$UserSettingTableTableTableManager get userSettingTable =>
+      $$UserSettingTableTableTableManager(_db, _db.userSettingTable);
+  $$ItemAlterTableTableTableManager get itemAlterTable =>
+      $$ItemAlterTableTableTableManager(_db, _db.itemAlterTable);
+  $$BarcodeTableTableTableManager get barcodeTable =>
+      $$BarcodeTableTableTableManager(_db, _db.barcodeTable);
+  $$AccountTableTableTableManager get accountTable =>
+      $$AccountTableTableTableManager(_db, _db.accountTable);
 }

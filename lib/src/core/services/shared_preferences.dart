@@ -14,6 +14,4 @@ class SharedPreferencesService {
       await _preferences.setBool(key, value);
 
   bool? getBool(String key) => _preferences.getBool(key);
-
-  // Add more methods as needed...
 }

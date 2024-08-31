@@ -2,29 +2,20 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:era_pro_application/src/core/services/db/tables/branch_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/company_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/curency_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/item_group_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/item_unit_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/unit_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/user_store_table.dart';
-import 'package:era_pro_application/src/core/services/db/tables/user_table.dart';
+import '../../../features/accounts/data/models/account_model.dart';
+import './tables/db_tables.dart';
 import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
 
 import 'package:flutter/foundation.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:drift_dev/api/migrations.dart';
 
-import '../../../features/main_info/data/models/branch_model.dart';
-import '../../../features/main_info/data/models/company_model.dart';
-import '../../../features/main_info/data/models/curency_model.dart';
 import '../../../core/error/error.dart';
-import '../../../features/main_info/data/models/item_group_model.dart';
-import '../../../features/main_info/data/models/item_units_model.dart';
-import '../../../features/main_info/data/models/unit_model.dart';
-import '../../../features/main_info/data/models/user_store_model.dart';
+import '../../../features/main_info/data/models/main_info_model.dart';
+
 part 'db.g.dart';
 
 @DriftDatabase(
@@ -37,6 +28,13 @@ part 'db.g.dart';
     UnitTable,
     ItemGroupTable,
     ItemUnitTable,
+    ItemTable,
+    PaymentTable,
+    SystemDocTable,
+    UserSettingTable,
+    ItemAlterTable,
+    BarcodeTable,
+    AccountTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -66,6 +64,26 @@ class AppDatabase extends _$AppDatabase {
     }
   }
 
+  // Future<void> saveImage(Uint8List imageData, int id) async {
+  //   await into(imagesTable).insert(
+  //     ImagesTableCompanion(
+  //       id: const Value.absent(),
+  //       imageData: Value(imageData),
+  //       relatedRecordId: Value(id),
+  //     ),
+  //   );
+  // }
+
+  // Future<Uint8List?> getImage(int id) async {
+  //   // Fetch the image record from the database
+  //   final imageRecord = await (select(imagesTable)
+  //         ..where((tbl) => tbl.relatedRecordId.equals(id)))
+  //       .getSingleOrNull();
+
+  //   // If the record exists, return the image data, otherwise return null
+  //   return imageRecord?.imageData;
+  // }
+
   Future<void> saveAll<T extends Table, D>(
     TableInfo<T, D> table,
     List<Insertable<D>> models,
@@ -81,8 +99,12 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future<List<D>> getAll<T extends Table, D>(TableInfo<T, D> table) async {
-    final db = AppDatabase.instance();
-    return await db.select(table).get();
+    try {
+      final db = AppDatabase.instance();
+      return await db.select(table).get();
+    } catch (e) {
+      throw LocalStorageException(message: e.toString());
+    }
   }
 
   @override
@@ -116,7 +138,7 @@ class AppDatabase extends _$AppDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+    final file = File(p.join(dbFolder.path, 'db1.sqlite'));
     return NativeDatabase.createInBackground(file);
   });
 }

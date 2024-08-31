@@ -1,39 +1,39 @@
 import 'dart:typed_data';
 
-import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension CustomImage on Image {
   static Widget memoryWithError(Uint8List? imageData,
-      {double w = 50, double h = 50}) {
+      {double w = 50,
+      double h = 50,
+      BoxDecoration decoration = const BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.whiteColor,
+      )}) {
     return SizedBox(
       width: w,
       height: h,
       child: imageData != null
           ? Image.memory(
               fit: BoxFit.cover,
+              width: w,
+              height: h,
               imageData,
               errorBuilder:
                   (BuildContext context, Object error, StackTrace? stackTrace) {
                 return Container(
                   width: w,
                   height: h,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.containerColor,
-                  ),
+                  decoration: decoration,
                 );
               },
             )
           : Container(
               width: w,
               height: h,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.containerColor,
-              ),
+              decoration: decoration,
             ),
     );
   }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../widgets/company_info_item_widget.dart';
+import '../widgets/company_branch_title_widget.dart';
 
 // ignore: must_be_immutable
 class CompanyAndBranchInfoPage extends StatelessWidget {
@@ -70,22 +70,22 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                       style: context.titleLarge,
                     ),
                     Gaps.g16,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'اسم الشركة بالعربي',
                       subTitle: mainInfoController.company.value?.name ?? '',
                     ),
                     Gaps.g8,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'العنوان',
                       subTitle: mainInfoController.company.value?.address ?? '',
                     ),
                     Gaps.g8,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'الموقع الالكتروني',
                       subTitle: mainInfoController.company.value?.website ?? '',
                     ),
                     Gaps.g8,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'اسم الشركة بالإنجليزية',
                       subTitle: mainInfoController.company.value?.enName ?? '',
                       withDivider: false,
@@ -120,22 +120,22 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                     ),
                     Gaps.g8,
                     Gaps.g16,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'اسم  الفرع',
                       subTitle: mainInfoController.branch.value?.name ?? "",
                     ),
                     Gaps.g8,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'العنوان',
                       subTitle: mainInfoController.branch.value?.address ?? "",
                     ),
                     Gaps.g8,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'الهاتف',
                       subTitle: mainInfoController.branch.value?.phone ?? "",
                     ),
                     Gaps.g8,
-                    CompanyInfoItemWidget(
+                    CompanyBranchTitleWidget(
                       title: 'البريد الإلكتروني',
                       subTitle: mainInfoController.branch.value?.email ?? "",
                       withDivider: false,

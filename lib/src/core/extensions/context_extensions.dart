@@ -48,6 +48,7 @@ extension BuildContextEntension<T> on BuildContext {
   // colors
 
   Color get primaryColor => Theme.of(this).primaryColor;
+  Color get bg => Theme.of(this).canvasColor;
 
   Color get primaryColorDark => Theme.of(this).primaryColorDark;
 

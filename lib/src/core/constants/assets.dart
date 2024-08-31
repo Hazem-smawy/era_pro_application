@@ -8,6 +8,7 @@ class Assets {
   /// Assets for assetsImagesAvatar1
   /// assets/images/avatar1.jpg
   static const String assetsImagesAvatar1 = "assets/images/avatar1.jpg";
+  static const String assetsImagesCurencies = "assets/images/curencies.png";
 
   /// Assets for assetsImagesAvatar2
   /// assets/images/avatar2.jpg

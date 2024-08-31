@@ -43,7 +43,7 @@ class CurencyModel extends CurencyEntity {
       newData: Value(newData),
       equivelant: Value(equivelant),
       localCurrency: Value(localCurrency),
-      storeCurency: Value(storeCurrency),
+      storeCurrency: Value(storeCurrency),
     );
   }
 }

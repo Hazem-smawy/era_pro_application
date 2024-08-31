@@ -3,8 +3,9 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 
-class CompanyInfoItemWidget extends StatelessWidget {
-  CompanyInfoItemWidget(
+// ignore: must_be_immutable
+class CompanyBranchTitleWidget extends StatelessWidget {
+  CompanyBranchTitleWidget(
       {super.key,
       required this.title,
       required this.subTitle,

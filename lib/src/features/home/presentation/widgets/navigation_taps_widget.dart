@@ -22,8 +22,7 @@ class NavigationTapsWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          AnimatedContainer(
-            duration: const Duration(microseconds: 300),
+          Container(
             height: 80,
             width: 240,
             padding: const EdgeInsets.all(8),
@@ -96,12 +95,11 @@ class NavigationTapWidget extends StatelessWidget {
       onTap: () {
         pageController.animateToPage(
           animateToPage,
-          duration: const Duration(microseconds: 200),
-          curve: Curves.decelerate,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
         );
       },
-      child: AnimatedContainer(
-        duration: const Duration(microseconds: 200),
+      child: Container(
         width: 66,
         height: 66,
         decoration: BoxDecoration(

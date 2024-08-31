@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
-import 'package:era_pro_application/src/features/auth/data/models/auth_response_model.dart';
 import 'package:era_pro_application/src/features/auth/domain/entities/auth_response_entity.dart';
 
 import '../../../../core/error/failures.dart';

@@ -13,7 +13,7 @@ class AppThemData {
     return ThemeData(
       colorScheme: colorScheme,
       canvasColor: AppColors.bg,
-      scaffoldBackgroundColor: AppColors.whiteColor,
+      scaffoldBackgroundColor: AppColors.bg,
       highlightColor: Colors.transparent,
       focusColor: colorScheme.primary,
       useMaterial3: true,

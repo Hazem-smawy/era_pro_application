@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomOutLineBtnWidget extends StatelessWidget {
-  const CustomOutLineBtnWidget(
-      {super.key, required this.label, required this.action});
+  const CustomOutLineBtnWidget({
+    super.key,
+    required this.label,
+    required this.action,
+  });
   final String label;
   final VoidCallback action;
 
@@ -18,10 +21,11 @@ class CustomOutLineBtnWidget extends StatelessWidget {
         backgroundColor: context.primaryColor,
         elevation: 0,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(
-              color: context.containerColor.withOpacity(0.5),
-            )),
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(
+            color: context.containerColor.withOpacity(0.5),
+          ),
+        ),
         minimumSize: Size.fromHeight(40.h),
       ),
       child: Text(

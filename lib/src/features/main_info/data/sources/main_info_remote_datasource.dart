@@ -1,14 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:era_pro_application/src/core/api/api.dart';
 import 'package:era_pro_application/src/core/api/methods.dart';
-import 'package:era_pro_application/src/core/error/failures.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
+import 'package:era_pro_application/src/features/main_info/data/models/barcode_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/branch_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/company_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/curency_model.dart';
+import 'package:era_pro_application/src/features/main_info/data/models/item_alter_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/item_group_model.dart';
+import 'package:era_pro_application/src/features/main_info/data/models/item_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/item_units_model.dart';
+import 'package:era_pro_application/src/features/main_info/data/models/payment_model.dart';
+import 'package:era_pro_application/src/features/main_info/data/models/system_doc_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/unit_model.dart';
+import 'package:era_pro_application/src/features/main_info/data/models/user_setting_model.dart';
 import 'package:era_pro_application/src/features/main_info/data/models/user_store_model.dart';
 
 abstract class MainInfoRemoteDatasource {
@@ -19,6 +24,15 @@ abstract class MainInfoRemoteDatasource {
   Future<List<ItemGroupModel>> getAllItemGroups();
   Future<UserStoreModel> getUserStoreInfo();
   Future<List<ItemUnitsModel>> getAllItemUnit();
+
+  Future<List<ItemModel>> getAllItems();
+  Future<List<PaymentModel>> getAllPaymentMethods();
+  Future<List<SystemDocModel>> getAllSystemDocs();
+  Future<UserSettingModel> getUserSettings();
+
+  //feature
+  Future<List<ItemAlterModel>> getAllItemAlter();
+  Future<List<BarcodeModel>> getAllBarcode();
 }
 
 class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
@@ -85,6 +99,52 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
     return httpMethod.handleRequest<List<CurencyModel>>(
       apiConnection.curencyUrl,
       (data) => CurencyModel.fromJsonArray(data),
+    );
+  }
+
+  @override
+  Future<List<ItemModel>> getAllItems() {
+    return httpMethod.handleRequest<List<ItemModel>>(apiConnection.itemsUrl,
+        (data) {
+      return ItemModel.fromJsonArray(data);
+    });
+  }
+
+  @override
+  Future<List<PaymentModel>> getAllPaymentMethods() {
+    return httpMethod
+        .handleRequest<List<PaymentModel>>(apiConnection.paymentsUrl, (data) {
+      return PaymentModel.fromJsonArray(data);
+    });
+  }
+
+  @override
+  Future<List<SystemDocModel>> getAllSystemDocs() {
+    return httpMethod.handleRequest<List<SystemDocModel>>(
+        apiConnection.systemDocsUrl,
+        (data) => SystemDocModel.fromJsonArray(data));
+  }
+
+  @override
+  Future<UserSettingModel> getUserSettings() {
+    return httpMethod.handleRequest(
+      apiConnection.userSettingsUrl,
+      (data) => UserSettingModel.fromJson(data),
+    );
+  }
+
+  @override
+  Future<List<BarcodeModel>> getAllBarcode() {
+    return httpMethod.handleRequest<List<BarcodeModel>>(
+        apiConnection.itemBarcodesUrl,
+        (data) => BarcodeModel.fromJsonArray(data));
+  }
+
+  @override
+  Future<List<ItemAlterModel>> getAllItemAlter() {
+    return httpMethod.handleRequest<List<ItemAlterModel>>(
+      apiConnection.itemAlterUrl,
+      (data) => ItemAlterModel.fromJsonArray(data),
     );
   }
 }
