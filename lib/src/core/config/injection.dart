@@ -17,11 +17,13 @@ import 'package:era_pro_application/src/features/main_info/data/sources/main_inf
 import 'package:era_pro_application/src/features/store/data/implements/store_implements.dart';
 import 'package:era_pro_application/src/features/store/data/sources/store_local_datasource.dart';
 import 'package:era_pro_application/src/features/store/data/sources/store_remote_datasource.dart';
-import 'package:era_pro_application/src/features/store/domain/repositories/repositories.dart';
+import 'package:era_pro_application/src/features/store/domain/repositories/store_repositories.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/get_all_item_details_usecase.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/get_all_store_operation_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/store_usecases.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
 import 'package:era_pro_application/src/features/user/data/implements/user_implements.dart';
-import 'package:era_pro_application/src/features/user/domain/repositories/repositories.dart';
+import 'package:era_pro_application/src/features/user/domain/repositories/user_repository.dart';
 import 'package:era_pro_application/src/features/user/presentation/getX/user_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -41,7 +43,6 @@ import '../../features/main_info/domain/usecases/main_info_usecase.dart';
 class DependencyInjection {
   static Future<void> init() async {
     //? core
-
     //shared prefrences
     final sharedPreferences = await SharedPreferences.getInstance();
     Get.lazyPut(() => sharedPreferences, fenix: true);
@@ -81,24 +82,16 @@ class DependencyInjection {
     //?controller
     Get.lazyPut(
       () => MainInfoController(
-        getUserStoreInfoUsecase: Get.find(),
         getAllCurenciesUsecase: Get.find(),
         getBranchUsecase: Get.find(),
         getCompanyUsecase: Get.find(),
         getAllPaymentsUsecase: Get.find(),
         getAllSystemDocsUsecase: Get.find(),
-        getUserSettingsUsecase: Get.find(),
       ),
       fenix: true,
     );
 
     //?usecase
-    Get.lazyPut(
-      () => GetUserStoreInfoUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
 
     Get.lazyPut(
       () => GetAllPaymentsUsecase(
@@ -108,12 +101,6 @@ class DependencyInjection {
     );
     Get.lazyPut(
       () => GetAllSystemDocsUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetUserSettingsUsecase(
         mainInfoRepository: Get.find(),
       ),
       fenix: true,
@@ -166,6 +153,9 @@ class DependencyInjection {
     //?controller
     Get.lazyPut(
       () => StoreController(
+        getAllItemWithDetailsUsecase: Get.find(),
+        getAllStoreOperationUsecase: Get.find(),
+        getUserStoreInfoUsecase: Get.find(),
         getAllItemGroupsUsecase: Get.find(),
         getAllItemAlterUsecase: Get.find(),
         getAllItemBarcodeUsecase: Get.find(),
@@ -177,7 +167,24 @@ class DependencyInjection {
     );
 
     //?usecase
-
+    Get.lazyPut(
+      () => GetAllItemWithDetailsUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllStoreOperationUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetUserStoreInfoUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(
       () => GetAllItemGroupsUsecase(
         storeRepository: Get.find(),
@@ -256,9 +263,17 @@ class DependencyInjection {
       ),
       fenix: true,
     );
+
+    Get.lazyPut(
+      () => GetUserSettingsUsecase(
+        userRepository: Get.find(),
+      ),
+      fenix: true,
+    );
     //?repostory
     Get.lazyPut<UserRepository>(
       () => UserRepositoryImp(
+        sharedPreferencesService: Get.find(),
         userRemoteDataSource: Get.find(),
         userLocalDataSource: Get.find(),
       ),

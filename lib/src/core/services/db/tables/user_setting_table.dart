@@ -5,7 +5,7 @@
 */
 
 import 'package:drift/drift.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/user_setting_model.dart';
+import 'package:era_pro_application/src/features/user/data/models/user_setting_model.dart';
 
 @UseRowClass(UserSettingModel)
 class UserSettingTable extends Table {

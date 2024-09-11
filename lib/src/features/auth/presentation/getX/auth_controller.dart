@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/core/api/api.dart';
-import 'package:era_pro_application/src/core/routes/routes.dart';
 import 'package:era_pro_application/src/core/types/status_types.dart';
 import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../core/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -36,7 +37,7 @@ class AuthController extends GetxController {
         errorMessage.value = l.message;
         authState.value = Status.ERROR;
       }, (r) {
-        Get.offAllNamed(AppRouteName.bnp.name);
+        Get.offAllNamed(Routes.BOTTOMNAVIGATIONBAR);
         authState.value = Status.SUCCESS;
       });
     }

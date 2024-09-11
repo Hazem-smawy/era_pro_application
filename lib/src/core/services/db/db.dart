@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import '../../../features/accounts/data/models/account_model.dart';
-import './tables/db_tables.dart';
 import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
+import '../../../features/main_info/data/models/main_info_model.dart';
+import '../../../features/store/data/models/models.dart';
 
 import 'package:flutter/foundation.dart';
 // ignore: depend_on_referenced_packages
@@ -14,9 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:drift_dev/api/migrations.dart';
 
 import '../../../core/error/error.dart';
-import '../../../features/main_info/data/models/main_info_model.dart';
-import '../../../features/store/data/models/models.dart';
-
+import './tables/db_tables.dart';
 part 'db.g.dart';
 
 @DriftDatabase(
@@ -36,6 +35,7 @@ part 'db.g.dart';
     ItemAlterTable,
     BarcodeTable,
     AccountTable,
+    StoreOperationTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -50,40 +50,27 @@ class AppDatabase extends _$AppDatabase {
 
   Future<D?> getSingle<T extends Table, D>(TableInfo<T, D> table,
       Expression<int> Function(T) idSelector, int id) async {
-    D? model = await (select(table)..where((tbl) => idSelector(tbl).equals(id)))
-        .getSingleOrNull();
-    return model;
-  }
-
-  Future<void> saveSingle<T extends Table, D>(
-      TableInfo<T, D> table, Insertable<D> model) async {
     try {
-      AppDatabase db = AppDatabase.instance();
-      await db.into(table).insertOnConflictUpdate(model);
+      D? model = await (select(table)
+            ..where((tbl) => idSelector(tbl).equals(id)))
+          .getSingleOrNull();
+
+      return model;
     } catch (e) {
       throw LocalStorageException();
     }
   }
 
-  // Future<void> saveImage(Uint8List imageData, int id) async {
-  //   await into(imagesTable).insert(
-  //     ImagesTableCompanion(
-  //       id: const Value.absent(),
-  //       imageData: Value(imageData),
-  //       relatedRecordId: Value(id),
-  //     ),
-  //   );
-  // }
-
-  // Future<Uint8List?> getImage(int id) async {
-  //   // Fetch the image record from the database
-  //   final imageRecord = await (select(imagesTable)
-  //         ..where((tbl) => tbl.relatedRecordId.equals(id)))
-  //       .getSingleOrNull();
-
-  //   // If the record exists, return the image data, otherwise return null
-  //   return imageRecord?.imageData;
-  // }
+  Future<int> saveSingle<T extends Table, D>(
+      TableInfo<T, D> table, Insertable<D> model) async {
+    try {
+      AppDatabase db = AppDatabase.instance();
+      var id = await db.into(table).insertOnConflictUpdate(model);
+      return id;
+    } catch (e) {
+      throw LocalStorageException();
+    }
+  }
 
   Future<void> saveAll<T extends Table, D>(
     TableInfo<T, D> table,

@@ -5,7 +5,7 @@ import 'package:era_pro_application/src/core/error/failures.dart';
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/user/domain/entities/user_entity.dart';
 
-import '../repositories/repositories.dart';
+import '../repositories/user_repository.dart';
 
 class GetUserUseCase extends NoParamUseCase<UserEntity> {
   final UserRepository userRepository;

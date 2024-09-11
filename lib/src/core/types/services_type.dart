@@ -1,9 +1,9 @@
 import 'package:era_pro_application/src/core/constants/colors.dart';
-import 'package:era_pro_application/src/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+
+import '../routes/app_pages.dart';
 
 enum ServicesType {
   exchange,
@@ -86,7 +86,7 @@ extension CustomIconExtension on ServicesType {
         return () {};
       case ServicesType.salesInvoice:
         return () {
-          Get.toNamed(AppRouteName.salse.name);
+          Get.toNamed(Routes.BILLS);
         };
       case ServicesType.statistics:
         return () {};

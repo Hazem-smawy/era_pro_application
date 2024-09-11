@@ -66,6 +66,10 @@ class ApiConnection extends GetxController {
       .replaceFirst('{endpoints}', EndPoints.itembarcode);
   String get itemAlterUrl => '$getBaseUrl/api/{endpoints}'
       .replaceFirst('{endpoints}', EndPoints.itemAlter);
+  String get storeOperation => '$getBaseUrl/api/{endpoints}'.replaceFirst(
+        '{endpoints}',
+        EndPoints.storeOperation,
+      );
 
 //accounts
   String get accountsUrl => '$getBaseUrl/api/{endpoints}'.replaceFirst(

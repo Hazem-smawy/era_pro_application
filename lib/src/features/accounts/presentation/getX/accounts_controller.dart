@@ -9,16 +9,19 @@ class AccountsController extends GetxController {
 
   final allAccounts = Rx<List<AccountEntity>>([]);
 
+  final selectedAccounts = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
     getAllAccounts();
   }
 
-  Future<void> getAllAccounts() async {
+  Future<List<AccountEntity>> getAllAccounts() async {
     await handleUsecase(
       usecase: getAccountsUseCase.call,
       target: allAccounts,
     );
+    return allAccounts.value;
   }
 }

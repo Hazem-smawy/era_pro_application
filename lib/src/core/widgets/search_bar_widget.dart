@@ -21,7 +21,7 @@ class SearchAppbarWidget extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     //initialValue: widget.placeHolder ?? "",
                     textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
@@ -37,6 +37,9 @@ class SearchAppbarWidget extends StatelessWidget {
                       hintStyle: context.bodyMeduim?.copyWith(
                         fontWeight: FontWeight.normal,
                       ),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent)),
+                      focusColor: Colors.transparent,
                       contentPadding: const EdgeInsets.only(
                         right: 10,
                         bottom: 10,

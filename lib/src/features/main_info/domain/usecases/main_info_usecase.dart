@@ -8,6 +8,6 @@ export './get_all_system_docs_usecase.dart';
 export '../../../store/domain/usecases/get_all_units_usecase.dart';
 export './get_branch_usecase.dart';
 export './get_company_usecase.dart';
-export './get_user_settings_usecase.dart';
-export './get_user_store_info_usecase.dart';
+export '../../../user/domain/usecases/get_user_settings_usecase.dart';
+export '../../../store/domain/usecases/get_user_store_info_usecase.dart';
 export './main_info_usecase.dart';

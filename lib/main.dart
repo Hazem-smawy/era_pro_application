@@ -7,8 +7,6 @@ Future<void> main() async {
   //  Here we are calling the Dependency Injection
   //  This is the main app
   WidgetsFlutterBinding.ensureInitialized();
-
   await DependencyInjection.init();
-
   runApp(const EraProApp());
 }

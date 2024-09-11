@@ -15,4 +15,5 @@ class EndPoints {
   static String itembarcode = 'syncdata/itembarcode';
   static String itemAlter = 'syncdata/itemalternative';
   static String accounts = 'syncdata/accounts';
+  static String storeOperation = 'syncdata/stoperation';
 }

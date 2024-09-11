@@ -1,4 +1,5 @@
 import 'package:era_pro_application/src/core/api/methods.dart';
+import 'package:era_pro_application/src/core/constants/share_pref_keys.dart';
 import 'package:era_pro_application/src/core/error/failures.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
 import 'package:era_pro_application/src/core/api/api.dart';
@@ -59,11 +60,15 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
       );
 
       await sharedPreferencesService.setString(
-          'token', authResponseModel.token);
+        SharedPrefKeys.TOKEN_KEY,
+        authResponseModel.token,
+      );
       await sharedPreferencesService.setString(
-          'refreshToken', authResponseModel.refreshToken);
+        SharedPrefKeys.REFRESHTOKEN_KEY,
+        authResponseModel.refreshToken,
+      );
       await sharedPreferencesService.setString(
-        'userId',
+        SharedPrefKeys.USERID_KEY,
         authResponseModel.userId,
       );
 

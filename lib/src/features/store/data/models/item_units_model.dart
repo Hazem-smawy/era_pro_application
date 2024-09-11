@@ -42,4 +42,20 @@ class ItemUnitsModel extends ItemUnitsEntity {
       newData: Value(newData),
     );
   }
+
+  ItemUnitsEntity toEntity() {
+    return ItemUnitsEntity(
+      id: id,
+      itemId: itemId,
+      itemUnitId: itemUnitId,
+      unitFactor: unitFactor,
+      wholeSaleprice: wholeSaleprice,
+      retailPrice: retailPrice,
+      spacialPrice: spacialPrice,
+      intialCost: intialCost,
+      itemDiscount: itemDiscount,
+      unitBarcode: unitBarcode,
+      newData: newData,
+    );
+  }
 }

@@ -1,7 +1,7 @@
+import 'package:era_pro_application/src/core/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
-import 'src/core/routes/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/core/theme/theme_data.dart';
@@ -19,8 +19,9 @@ class EraProApp extends StatelessWidget {
         theme: AppThemData.lightThemeData,
         themeMode: ThemeMode.light,
         debugShowCheckedModeBanner: false,
-        getPages: routesPage,
-        initialRoute: AppRouteName.auth.name,
+        getPages: AppPages.routesPage,
+        initialRoute: AppPages.INITIAL,
+        // home: const AccountDetailsPage(),
       ),
     );
   }

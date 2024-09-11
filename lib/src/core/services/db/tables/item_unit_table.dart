@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:era_pro_application/src/core/services/db/tables/db_tables.dart';
 import 'package:era_pro_application/src/features/store/data/models/item_units_model.dart';
 
 /*
@@ -18,8 +19,8 @@ import 'package:era_pro_application/src/features/store/data/models/item_units_mo
 @UseRowClass(ItemUnitsModel)
 class ItemUnitTable extends Table {
   IntColumn get id => integer()();
-  IntColumn get itemId => integer()();
-  IntColumn get itemUnitId => integer()();
+  IntColumn get itemId => integer().references(ItemTable, #id)();
+  IntColumn get itemUnitId => integer().references(UnitTable, #id)();
   IntColumn get unitFactor => integer()();
   RealColumn get wholeSaleprice => real()();
   RealColumn get retailPrice => real()();
@@ -28,4 +29,7 @@ class ItemUnitTable extends Table {
   RealColumn get itemDiscount => real()();
   TextColumn get unitBarcode => text()();
   BoolColumn get newData => boolean()();
+
+  @override
+  Set<Column> get primaryKey => {id};
 }

@@ -1,4 +1,3 @@
-import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:era_pro_application/src/core/constants/text_style.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +9,13 @@ class AppThemData {
   static ThemeData themeData(
     ColorScheme colorScheme,
   ) {
-    return ThemeData(
+    return ThemeData.from(colorScheme: colorScheme).copyWith(
       colorScheme: colorScheme,
       canvasColor: AppColors.bg,
       scaffoldBackgroundColor: AppColors.bg,
       highlightColor: Colors.transparent,
       focusColor: colorScheme.primary,
-      useMaterial3: true,
-      fontFamily: Assets.fontFamily,
+      // fontFamily: Assets.fontFamily,
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -56,20 +54,17 @@ class AppThemData {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      textTheme: TextTheme.lerp(
-          TextTheme(
-            displayLarge: AppTextStyle.displayLarge,
-            displayMedium: AppTextStyle.displayMedium,
-            displaySmall: AppTextStyle.displaySmall,
-            titleLarge: AppTextStyle.titleLarge,
-            titleMedium: AppTextStyle.titleMedium,
-            titleSmall: AppTextStyle.titleSmall,
-            bodyLarge: AppTextStyle.bodyLarge,
-            bodySmall: AppTextStyle.bodySmall,
-            bodyMedium: AppTextStyle.bodyMedium,
-          ),
-          const TextTheme(),
-          1),
+      textTheme: TextTheme(
+        displayLarge: AppTextStyle.displayLarge,
+        displayMedium: AppTextStyle.displayMedium,
+        displaySmall: AppTextStyle.displaySmall,
+        titleLarge: AppTextStyle.titleLarge,
+        titleMedium: AppTextStyle.titleMedium,
+        titleSmall: AppTextStyle.titleSmall,
+        bodyLarge: AppTextStyle.bodyLarge,
+        bodySmall: AppTextStyle.bodySmall,
+        bodyMedium: AppTextStyle.bodyMedium,
+      ),
     );
   }
 

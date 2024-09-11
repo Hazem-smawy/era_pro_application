@@ -6,8 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension CustomImage on Image {
   static Widget memoryWithError(Uint8List? imageData,
-      {double w = 50,
-      double h = 50,
+      {double? w,
+      double? h,
+      BoxFit? fit,
       BoxDecoration decoration = const BoxDecoration(
         shape: BoxShape.circle,
         color: AppColors.whiteColor,
@@ -17,9 +18,9 @@ extension CustomImage on Image {
       height: h,
       child: imageData != null
           ? Image.memory(
-              fit: BoxFit.cover,
-              width: w,
-              height: h,
+              fit: fit ?? BoxFit.cover,
+              width: w ?? double.infinity,
+              height: h ?? double.infinity,
               imageData,
               errorBuilder:
                   (BuildContext context, Object error, StackTrace? stackTrace) {

@@ -1944,396 +1944,6 @@ class ItemGroupTableCompanion extends UpdateCompanion<ItemGroupModel> {
   }
 }
 
-class $ItemUnitTableTable extends ItemUnitTable
-    with TableInfo<$ItemUnitTableTable, ItemUnitsModel> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ItemUnitTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
-  @override
-  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
-      'item_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _itemUnitIdMeta =
-      const VerificationMeta('itemUnitId');
-  @override
-  late final GeneratedColumn<int> itemUnitId = GeneratedColumn<int>(
-      'item_unit_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _unitFactorMeta =
-      const VerificationMeta('unitFactor');
-  @override
-  late final GeneratedColumn<int> unitFactor = GeneratedColumn<int>(
-      'unit_factor', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _wholeSalepriceMeta =
-      const VerificationMeta('wholeSaleprice');
-  @override
-  late final GeneratedColumn<double> wholeSaleprice = GeneratedColumn<double>(
-      'whole_saleprice', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _retailPriceMeta =
-      const VerificationMeta('retailPrice');
-  @override
-  late final GeneratedColumn<double> retailPrice = GeneratedColumn<double>(
-      'retail_price', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _spacialPriceMeta =
-      const VerificationMeta('spacialPrice');
-  @override
-  late final GeneratedColumn<double> spacialPrice = GeneratedColumn<double>(
-      'spacial_price', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _intialCostMeta =
-      const VerificationMeta('intialCost');
-  @override
-  late final GeneratedColumn<double> intialCost = GeneratedColumn<double>(
-      'intial_cost', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _itemDiscountMeta =
-      const VerificationMeta('itemDiscount');
-  @override
-  late final GeneratedColumn<double> itemDiscount = GeneratedColumn<double>(
-      'item_discount', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _unitBarcodeMeta =
-      const VerificationMeta('unitBarcode');
-  @override
-  late final GeneratedColumn<String> unitBarcode = GeneratedColumn<String>(
-      'unit_barcode', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _newDataMeta =
-      const VerificationMeta('newData');
-  @override
-  late final GeneratedColumn<bool> newData = GeneratedColumn<bool>(
-      'new_data', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("new_data" IN (0, 1))'));
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        itemId,
-        itemUnitId,
-        unitFactor,
-        wholeSaleprice,
-        retailPrice,
-        spacialPrice,
-        intialCost,
-        itemDiscount,
-        unitBarcode,
-        newData
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'item_unit_table';
-  @override
-  VerificationContext validateIntegrity(Insertable<ItemUnitsModel> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('item_id')) {
-      context.handle(_itemIdMeta,
-          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
-    } else if (isInserting) {
-      context.missing(_itemIdMeta);
-    }
-    if (data.containsKey('item_unit_id')) {
-      context.handle(
-          _itemUnitIdMeta,
-          itemUnitId.isAcceptableOrUnknown(
-              data['item_unit_id']!, _itemUnitIdMeta));
-    } else if (isInserting) {
-      context.missing(_itemUnitIdMeta);
-    }
-    if (data.containsKey('unit_factor')) {
-      context.handle(
-          _unitFactorMeta,
-          unitFactor.isAcceptableOrUnknown(
-              data['unit_factor']!, _unitFactorMeta));
-    } else if (isInserting) {
-      context.missing(_unitFactorMeta);
-    }
-    if (data.containsKey('whole_saleprice')) {
-      context.handle(
-          _wholeSalepriceMeta,
-          wholeSaleprice.isAcceptableOrUnknown(
-              data['whole_saleprice']!, _wholeSalepriceMeta));
-    } else if (isInserting) {
-      context.missing(_wholeSalepriceMeta);
-    }
-    if (data.containsKey('retail_price')) {
-      context.handle(
-          _retailPriceMeta,
-          retailPrice.isAcceptableOrUnknown(
-              data['retail_price']!, _retailPriceMeta));
-    } else if (isInserting) {
-      context.missing(_retailPriceMeta);
-    }
-    if (data.containsKey('spacial_price')) {
-      context.handle(
-          _spacialPriceMeta,
-          spacialPrice.isAcceptableOrUnknown(
-              data['spacial_price']!, _spacialPriceMeta));
-    } else if (isInserting) {
-      context.missing(_spacialPriceMeta);
-    }
-    if (data.containsKey('intial_cost')) {
-      context.handle(
-          _intialCostMeta,
-          intialCost.isAcceptableOrUnknown(
-              data['intial_cost']!, _intialCostMeta));
-    } else if (isInserting) {
-      context.missing(_intialCostMeta);
-    }
-    if (data.containsKey('item_discount')) {
-      context.handle(
-          _itemDiscountMeta,
-          itemDiscount.isAcceptableOrUnknown(
-              data['item_discount']!, _itemDiscountMeta));
-    } else if (isInserting) {
-      context.missing(_itemDiscountMeta);
-    }
-    if (data.containsKey('unit_barcode')) {
-      context.handle(
-          _unitBarcodeMeta,
-          unitBarcode.isAcceptableOrUnknown(
-              data['unit_barcode']!, _unitBarcodeMeta));
-    } else if (isInserting) {
-      context.missing(_unitBarcodeMeta);
-    }
-    if (data.containsKey('new_data')) {
-      context.handle(_newDataMeta,
-          newData.isAcceptableOrUnknown(data['new_data']!, _newDataMeta));
-    } else if (isInserting) {
-      context.missing(_newDataMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ItemUnitsModel map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ItemUnitsModel(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      itemId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}item_id'])!,
-      itemUnitId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}item_unit_id'])!,
-      unitFactor: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}unit_factor'])!,
-      wholeSaleprice: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}whole_saleprice'])!,
-      retailPrice: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}retail_price'])!,
-      spacialPrice: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}spacial_price'])!,
-      intialCost: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}intial_cost'])!,
-      itemDiscount: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}item_discount'])!,
-      unitBarcode: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unit_barcode'])!,
-      newData: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
-    );
-  }
-
-  @override
-  $ItemUnitTableTable createAlias(String alias) {
-    return $ItemUnitTableTable(attachedDatabase, alias);
-  }
-}
-
-class ItemUnitTableCompanion extends UpdateCompanion<ItemUnitsModel> {
-  final Value<int> id;
-  final Value<int> itemId;
-  final Value<int> itemUnitId;
-  final Value<int> unitFactor;
-  final Value<double> wholeSaleprice;
-  final Value<double> retailPrice;
-  final Value<double> spacialPrice;
-  final Value<double> intialCost;
-  final Value<double> itemDiscount;
-  final Value<String> unitBarcode;
-  final Value<bool> newData;
-  final Value<int> rowid;
-  const ItemUnitTableCompanion({
-    this.id = const Value.absent(),
-    this.itemId = const Value.absent(),
-    this.itemUnitId = const Value.absent(),
-    this.unitFactor = const Value.absent(),
-    this.wholeSaleprice = const Value.absent(),
-    this.retailPrice = const Value.absent(),
-    this.spacialPrice = const Value.absent(),
-    this.intialCost = const Value.absent(),
-    this.itemDiscount = const Value.absent(),
-    this.unitBarcode = const Value.absent(),
-    this.newData = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ItemUnitTableCompanion.insert({
-    required int id,
-    required int itemId,
-    required int itemUnitId,
-    required int unitFactor,
-    required double wholeSaleprice,
-    required double retailPrice,
-    required double spacialPrice,
-    required double intialCost,
-    required double itemDiscount,
-    required String unitBarcode,
-    required bool newData,
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        itemId = Value(itemId),
-        itemUnitId = Value(itemUnitId),
-        unitFactor = Value(unitFactor),
-        wholeSaleprice = Value(wholeSaleprice),
-        retailPrice = Value(retailPrice),
-        spacialPrice = Value(spacialPrice),
-        intialCost = Value(intialCost),
-        itemDiscount = Value(itemDiscount),
-        unitBarcode = Value(unitBarcode),
-        newData = Value(newData);
-  static Insertable<ItemUnitsModel> custom({
-    Expression<int>? id,
-    Expression<int>? itemId,
-    Expression<int>? itemUnitId,
-    Expression<int>? unitFactor,
-    Expression<double>? wholeSaleprice,
-    Expression<double>? retailPrice,
-    Expression<double>? spacialPrice,
-    Expression<double>? intialCost,
-    Expression<double>? itemDiscount,
-    Expression<String>? unitBarcode,
-    Expression<bool>? newData,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (itemId != null) 'item_id': itemId,
-      if (itemUnitId != null) 'item_unit_id': itemUnitId,
-      if (unitFactor != null) 'unit_factor': unitFactor,
-      if (wholeSaleprice != null) 'whole_saleprice': wholeSaleprice,
-      if (retailPrice != null) 'retail_price': retailPrice,
-      if (spacialPrice != null) 'spacial_price': spacialPrice,
-      if (intialCost != null) 'intial_cost': intialCost,
-      if (itemDiscount != null) 'item_discount': itemDiscount,
-      if (unitBarcode != null) 'unit_barcode': unitBarcode,
-      if (newData != null) 'new_data': newData,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ItemUnitTableCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? itemId,
-      Value<int>? itemUnitId,
-      Value<int>? unitFactor,
-      Value<double>? wholeSaleprice,
-      Value<double>? retailPrice,
-      Value<double>? spacialPrice,
-      Value<double>? intialCost,
-      Value<double>? itemDiscount,
-      Value<String>? unitBarcode,
-      Value<bool>? newData,
-      Value<int>? rowid}) {
-    return ItemUnitTableCompanion(
-      id: id ?? this.id,
-      itemId: itemId ?? this.itemId,
-      itemUnitId: itemUnitId ?? this.itemUnitId,
-      unitFactor: unitFactor ?? this.unitFactor,
-      wholeSaleprice: wholeSaleprice ?? this.wholeSaleprice,
-      retailPrice: retailPrice ?? this.retailPrice,
-      spacialPrice: spacialPrice ?? this.spacialPrice,
-      intialCost: intialCost ?? this.intialCost,
-      itemDiscount: itemDiscount ?? this.itemDiscount,
-      unitBarcode: unitBarcode ?? this.unitBarcode,
-      newData: newData ?? this.newData,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (itemId.present) {
-      map['item_id'] = Variable<int>(itemId.value);
-    }
-    if (itemUnitId.present) {
-      map['item_unit_id'] = Variable<int>(itemUnitId.value);
-    }
-    if (unitFactor.present) {
-      map['unit_factor'] = Variable<int>(unitFactor.value);
-    }
-    if (wholeSaleprice.present) {
-      map['whole_saleprice'] = Variable<double>(wholeSaleprice.value);
-    }
-    if (retailPrice.present) {
-      map['retail_price'] = Variable<double>(retailPrice.value);
-    }
-    if (spacialPrice.present) {
-      map['spacial_price'] = Variable<double>(spacialPrice.value);
-    }
-    if (intialCost.present) {
-      map['intial_cost'] = Variable<double>(intialCost.value);
-    }
-    if (itemDiscount.present) {
-      map['item_discount'] = Variable<double>(itemDiscount.value);
-    }
-    if (unitBarcode.present) {
-      map['unit_barcode'] = Variable<String>(unitBarcode.value);
-    }
-    if (newData.present) {
-      map['new_data'] = Variable<bool>(newData.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ItemUnitTableCompanion(')
-          ..write('id: $id, ')
-          ..write('itemId: $itemId, ')
-          ..write('itemUnitId: $itemUnitId, ')
-          ..write('unitFactor: $unitFactor, ')
-          ..write('wholeSaleprice: $wholeSaleprice, ')
-          ..write('retailPrice: $retailPrice, ')
-          ..write('spacialPrice: $spacialPrice, ')
-          ..write('intialCost: $intialCost, ')
-          ..write('itemDiscount: $itemDiscount, ')
-          ..write('unitBarcode: $unitBarcode, ')
-          ..write('newData: $newData, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ItemTableTable extends ItemTable
     with TableInfo<$ItemTableTable, ItemModel> {
   @override
@@ -2350,7 +1960,10 @@ class $ItemTableTable extends ItemTable
   @override
   late final GeneratedColumn<int> itemGroupId = GeneratedColumn<int>(
       'item_group_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES item_group_table (id)'));
   static const VerificationMeta _itemCodeMeta =
       const VerificationMeta('itemCode');
   @override
@@ -2932,6 +2545,388 @@ class ItemTableCompanion extends UpdateCompanion<ItemModel> {
   }
 }
 
+class $ItemUnitTableTable extends ItemUnitTable
+    with TableInfo<$ItemUnitTableTable, ItemUnitsModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemUnitTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES item_table (id)'));
+  static const VerificationMeta _itemUnitIdMeta =
+      const VerificationMeta('itemUnitId');
+  @override
+  late final GeneratedColumn<int> itemUnitId = GeneratedColumn<int>(
+      'item_unit_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES unit_table (id)'));
+  static const VerificationMeta _unitFactorMeta =
+      const VerificationMeta('unitFactor');
+  @override
+  late final GeneratedColumn<int> unitFactor = GeneratedColumn<int>(
+      'unit_factor', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _wholeSalepriceMeta =
+      const VerificationMeta('wholeSaleprice');
+  @override
+  late final GeneratedColumn<double> wholeSaleprice = GeneratedColumn<double>(
+      'whole_saleprice', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _retailPriceMeta =
+      const VerificationMeta('retailPrice');
+  @override
+  late final GeneratedColumn<double> retailPrice = GeneratedColumn<double>(
+      'retail_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _spacialPriceMeta =
+      const VerificationMeta('spacialPrice');
+  @override
+  late final GeneratedColumn<double> spacialPrice = GeneratedColumn<double>(
+      'spacial_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _intialCostMeta =
+      const VerificationMeta('intialCost');
+  @override
+  late final GeneratedColumn<double> intialCost = GeneratedColumn<double>(
+      'intial_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _itemDiscountMeta =
+      const VerificationMeta('itemDiscount');
+  @override
+  late final GeneratedColumn<double> itemDiscount = GeneratedColumn<double>(
+      'item_discount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _unitBarcodeMeta =
+      const VerificationMeta('unitBarcode');
+  @override
+  late final GeneratedColumn<String> unitBarcode = GeneratedColumn<String>(
+      'unit_barcode', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _newDataMeta =
+      const VerificationMeta('newData');
+  @override
+  late final GeneratedColumn<bool> newData = GeneratedColumn<bool>(
+      'new_data', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("new_data" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        itemId,
+        itemUnitId,
+        unitFactor,
+        wholeSaleprice,
+        retailPrice,
+        spacialPrice,
+        intialCost,
+        itemDiscount,
+        unitBarcode,
+        newData
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'item_unit_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<ItemUnitsModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('item_unit_id')) {
+      context.handle(
+          _itemUnitIdMeta,
+          itemUnitId.isAcceptableOrUnknown(
+              data['item_unit_id']!, _itemUnitIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemUnitIdMeta);
+    }
+    if (data.containsKey('unit_factor')) {
+      context.handle(
+          _unitFactorMeta,
+          unitFactor.isAcceptableOrUnknown(
+              data['unit_factor']!, _unitFactorMeta));
+    } else if (isInserting) {
+      context.missing(_unitFactorMeta);
+    }
+    if (data.containsKey('whole_saleprice')) {
+      context.handle(
+          _wholeSalepriceMeta,
+          wholeSaleprice.isAcceptableOrUnknown(
+              data['whole_saleprice']!, _wholeSalepriceMeta));
+    } else if (isInserting) {
+      context.missing(_wholeSalepriceMeta);
+    }
+    if (data.containsKey('retail_price')) {
+      context.handle(
+          _retailPriceMeta,
+          retailPrice.isAcceptableOrUnknown(
+              data['retail_price']!, _retailPriceMeta));
+    } else if (isInserting) {
+      context.missing(_retailPriceMeta);
+    }
+    if (data.containsKey('spacial_price')) {
+      context.handle(
+          _spacialPriceMeta,
+          spacialPrice.isAcceptableOrUnknown(
+              data['spacial_price']!, _spacialPriceMeta));
+    } else if (isInserting) {
+      context.missing(_spacialPriceMeta);
+    }
+    if (data.containsKey('intial_cost')) {
+      context.handle(
+          _intialCostMeta,
+          intialCost.isAcceptableOrUnknown(
+              data['intial_cost']!, _intialCostMeta));
+    } else if (isInserting) {
+      context.missing(_intialCostMeta);
+    }
+    if (data.containsKey('item_discount')) {
+      context.handle(
+          _itemDiscountMeta,
+          itemDiscount.isAcceptableOrUnknown(
+              data['item_discount']!, _itemDiscountMeta));
+    } else if (isInserting) {
+      context.missing(_itemDiscountMeta);
+    }
+    if (data.containsKey('unit_barcode')) {
+      context.handle(
+          _unitBarcodeMeta,
+          unitBarcode.isAcceptableOrUnknown(
+              data['unit_barcode']!, _unitBarcodeMeta));
+    } else if (isInserting) {
+      context.missing(_unitBarcodeMeta);
+    }
+    if (data.containsKey('new_data')) {
+      context.handle(_newDataMeta,
+          newData.isAcceptableOrUnknown(data['new_data']!, _newDataMeta));
+    } else if (isInserting) {
+      context.missing(_newDataMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemUnitsModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemUnitsModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_id'])!,
+      itemUnitId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_unit_id'])!,
+      unitFactor: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}unit_factor'])!,
+      wholeSaleprice: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}whole_saleprice'])!,
+      retailPrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}retail_price'])!,
+      spacialPrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}spacial_price'])!,
+      intialCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}intial_cost'])!,
+      itemDiscount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}item_discount'])!,
+      unitBarcode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}unit_barcode'])!,
+      newData: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
+    );
+  }
+
+  @override
+  $ItemUnitTableTable createAlias(String alias) {
+    return $ItemUnitTableTable(attachedDatabase, alias);
+  }
+}
+
+class ItemUnitTableCompanion extends UpdateCompanion<ItemUnitsModel> {
+  final Value<int> id;
+  final Value<int> itemId;
+  final Value<int> itemUnitId;
+  final Value<int> unitFactor;
+  final Value<double> wholeSaleprice;
+  final Value<double> retailPrice;
+  final Value<double> spacialPrice;
+  final Value<double> intialCost;
+  final Value<double> itemDiscount;
+  final Value<String> unitBarcode;
+  final Value<bool> newData;
+  const ItemUnitTableCompanion({
+    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.itemUnitId = const Value.absent(),
+    this.unitFactor = const Value.absent(),
+    this.wholeSaleprice = const Value.absent(),
+    this.retailPrice = const Value.absent(),
+    this.spacialPrice = const Value.absent(),
+    this.intialCost = const Value.absent(),
+    this.itemDiscount = const Value.absent(),
+    this.unitBarcode = const Value.absent(),
+    this.newData = const Value.absent(),
+  });
+  ItemUnitTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int itemId,
+    required int itemUnitId,
+    required int unitFactor,
+    required double wholeSaleprice,
+    required double retailPrice,
+    required double spacialPrice,
+    required double intialCost,
+    required double itemDiscount,
+    required String unitBarcode,
+    required bool newData,
+  })  : itemId = Value(itemId),
+        itemUnitId = Value(itemUnitId),
+        unitFactor = Value(unitFactor),
+        wholeSaleprice = Value(wholeSaleprice),
+        retailPrice = Value(retailPrice),
+        spacialPrice = Value(spacialPrice),
+        intialCost = Value(intialCost),
+        itemDiscount = Value(itemDiscount),
+        unitBarcode = Value(unitBarcode),
+        newData = Value(newData);
+  static Insertable<ItemUnitsModel> custom({
+    Expression<int>? id,
+    Expression<int>? itemId,
+    Expression<int>? itemUnitId,
+    Expression<int>? unitFactor,
+    Expression<double>? wholeSaleprice,
+    Expression<double>? retailPrice,
+    Expression<double>? spacialPrice,
+    Expression<double>? intialCost,
+    Expression<double>? itemDiscount,
+    Expression<String>? unitBarcode,
+    Expression<bool>? newData,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
+      if (itemUnitId != null) 'item_unit_id': itemUnitId,
+      if (unitFactor != null) 'unit_factor': unitFactor,
+      if (wholeSaleprice != null) 'whole_saleprice': wholeSaleprice,
+      if (retailPrice != null) 'retail_price': retailPrice,
+      if (spacialPrice != null) 'spacial_price': spacialPrice,
+      if (intialCost != null) 'intial_cost': intialCost,
+      if (itemDiscount != null) 'item_discount': itemDiscount,
+      if (unitBarcode != null) 'unit_barcode': unitBarcode,
+      if (newData != null) 'new_data': newData,
+    });
+  }
+
+  ItemUnitTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? itemId,
+      Value<int>? itemUnitId,
+      Value<int>? unitFactor,
+      Value<double>? wholeSaleprice,
+      Value<double>? retailPrice,
+      Value<double>? spacialPrice,
+      Value<double>? intialCost,
+      Value<double>? itemDiscount,
+      Value<String>? unitBarcode,
+      Value<bool>? newData}) {
+    return ItemUnitTableCompanion(
+      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
+      itemUnitId: itemUnitId ?? this.itemUnitId,
+      unitFactor: unitFactor ?? this.unitFactor,
+      wholeSaleprice: wholeSaleprice ?? this.wholeSaleprice,
+      retailPrice: retailPrice ?? this.retailPrice,
+      spacialPrice: spacialPrice ?? this.spacialPrice,
+      intialCost: intialCost ?? this.intialCost,
+      itemDiscount: itemDiscount ?? this.itemDiscount,
+      unitBarcode: unitBarcode ?? this.unitBarcode,
+      newData: newData ?? this.newData,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    if (itemUnitId.present) {
+      map['item_unit_id'] = Variable<int>(itemUnitId.value);
+    }
+    if (unitFactor.present) {
+      map['unit_factor'] = Variable<int>(unitFactor.value);
+    }
+    if (wholeSaleprice.present) {
+      map['whole_saleprice'] = Variable<double>(wholeSaleprice.value);
+    }
+    if (retailPrice.present) {
+      map['retail_price'] = Variable<double>(retailPrice.value);
+    }
+    if (spacialPrice.present) {
+      map['spacial_price'] = Variable<double>(spacialPrice.value);
+    }
+    if (intialCost.present) {
+      map['intial_cost'] = Variable<double>(intialCost.value);
+    }
+    if (itemDiscount.present) {
+      map['item_discount'] = Variable<double>(itemDiscount.value);
+    }
+    if (unitBarcode.present) {
+      map['unit_barcode'] = Variable<String>(unitBarcode.value);
+    }
+    if (newData.present) {
+      map['new_data'] = Variable<bool>(newData.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemUnitTableCompanion(')
+          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
+          ..write('itemUnitId: $itemUnitId, ')
+          ..write('unitFactor: $unitFactor, ')
+          ..write('wholeSaleprice: $wholeSaleprice, ')
+          ..write('retailPrice: $retailPrice, ')
+          ..write('spacialPrice: $spacialPrice, ')
+          ..write('intialCost: $intialCost, ')
+          ..write('itemDiscount: $itemDiscount, ')
+          ..write('unitBarcode: $unitBarcode, ')
+          ..write('newData: $newData')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PaymentTableTable extends PaymentTable
     with TableInfo<$PaymentTableTable, PaymentModel> {
   @override
@@ -3478,13 +3473,19 @@ class $ItemAlterTableTable extends ItemAlterTable
   @override
   late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
       'item_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES item_table (id)'));
   static const VerificationMeta _itemAlterIdMeta =
       const VerificationMeta('itemAlterId');
   @override
   late final GeneratedColumn<int> itemAlterId = GeneratedColumn<int>(
       'item_alter_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES item_table (id)'));
   static const VerificationMeta _itemOrderMeta =
       const VerificationMeta('itemOrder');
   @override
@@ -3643,7 +3644,10 @@ class $BarcodeTableTable extends BarcodeTable
   @override
   late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
       'item_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES item_table (id)'));
   static const VerificationMeta _itemBarcodeMeta =
       const VerificationMeta('itemBarcode');
   @override
@@ -4293,6 +4297,522 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   }
 }
 
+class $StoreOperationTableTable extends StoreOperationTable
+    with TableInfo<$StoreOperationTableTable, StoreOperationModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StoreOperationTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _operationIdMeta =
+      const VerificationMeta('operationId');
+  @override
+  late final GeneratedColumn<int> operationId = GeneratedColumn<int>(
+      'operation_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _operationTypeMeta =
+      const VerificationMeta('operationType');
+  @override
+  late final GeneratedColumn<int> operationType = GeneratedColumn<int>(
+      'operation_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _operationDateMeta =
+      const VerificationMeta('operationDate');
+  @override
+  late final GeneratedColumn<DateTime> operationDate =
+      GeneratedColumn<DateTime>('operation_date', aliasedName, false,
+          type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _operationInMeta =
+      const VerificationMeta('operationIn');
+  @override
+  late final GeneratedColumn<bool> operationIn = GeneratedColumn<bool>(
+      'operation_in', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("operation_in" IN (0, 1))'));
+  static const VerificationMeta _storeIdMeta =
+      const VerificationMeta('storeId');
+  @override
+  late final GeneratedColumn<int> storeId = GeneratedColumn<int>(
+      'store_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES item_table (id)'));
+  static const VerificationMeta _unitIdMeta = const VerificationMeta('unitId');
+  @override
+  late final GeneratedColumn<int> unitId = GeneratedColumn<int>(
+      'unit_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES unit_table (id)'));
+  static const VerificationMeta _quantityMeta =
+      const VerificationMeta('quantity');
+  @override
+  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
+      'quantity', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _averageCostMeta =
+      const VerificationMeta('averageCost');
+  @override
+  late final GeneratedColumn<double> averageCost = GeneratedColumn<double>(
+      'average_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _unitCostMeta =
+      const VerificationMeta('unitCost');
+  @override
+  late final GeneratedColumn<double> unitCost = GeneratedColumn<double>(
+      'unit_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _totalCostMeta =
+      const VerificationMeta('totalCost');
+  @override
+  late final GeneratedColumn<double> totalCost = GeneratedColumn<double>(
+      'total_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _unitFactorMeta =
+      const VerificationMeta('unitFactor');
+  @override
+  late final GeneratedColumn<int> unitFactor = GeneratedColumn<int>(
+      'unit_factor', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _qtyConvertMeta =
+      const VerificationMeta('qtyConvert');
+  @override
+  late final GeneratedColumn<int> qtyConvert = GeneratedColumn<int>(
+      'qty_convert', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _expirDateMeta =
+      const VerificationMeta('expirDate');
+  @override
+  late final GeneratedColumn<String> expirDate = GeneratedColumn<String>(
+      'expir_date', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _addBranchMeta =
+      const VerificationMeta('addBranch');
+  @override
+  late final GeneratedColumn<int> addBranch = GeneratedColumn<int>(
+      'add_branch', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        operationId,
+        operationType,
+        operationDate,
+        operationIn,
+        storeId,
+        itemId,
+        unitId,
+        quantity,
+        averageCost,
+        unitCost,
+        totalCost,
+        unitFactor,
+        qtyConvert,
+        expirDate,
+        addBranch
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'store_operation_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<StoreOperationModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('operation_id')) {
+      context.handle(
+          _operationIdMeta,
+          operationId.isAcceptableOrUnknown(
+              data['operation_id']!, _operationIdMeta));
+    } else if (isInserting) {
+      context.missing(_operationIdMeta);
+    }
+    if (data.containsKey('operation_type')) {
+      context.handle(
+          _operationTypeMeta,
+          operationType.isAcceptableOrUnknown(
+              data['operation_type']!, _operationTypeMeta));
+    } else if (isInserting) {
+      context.missing(_operationTypeMeta);
+    }
+    if (data.containsKey('operation_date')) {
+      context.handle(
+          _operationDateMeta,
+          operationDate.isAcceptableOrUnknown(
+              data['operation_date']!, _operationDateMeta));
+    } else if (isInserting) {
+      context.missing(_operationDateMeta);
+    }
+    if (data.containsKey('operation_in')) {
+      context.handle(
+          _operationInMeta,
+          operationIn.isAcceptableOrUnknown(
+              data['operation_in']!, _operationInMeta));
+    } else if (isInserting) {
+      context.missing(_operationInMeta);
+    }
+    if (data.containsKey('store_id')) {
+      context.handle(_storeIdMeta,
+          storeId.isAcceptableOrUnknown(data['store_id']!, _storeIdMeta));
+    } else if (isInserting) {
+      context.missing(_storeIdMeta);
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('unit_id')) {
+      context.handle(_unitIdMeta,
+          unitId.isAcceptableOrUnknown(data['unit_id']!, _unitIdMeta));
+    } else if (isInserting) {
+      context.missing(_unitIdMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(_quantityMeta,
+          quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta));
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('average_cost')) {
+      context.handle(
+          _averageCostMeta,
+          averageCost.isAcceptableOrUnknown(
+              data['average_cost']!, _averageCostMeta));
+    } else if (isInserting) {
+      context.missing(_averageCostMeta);
+    }
+    if (data.containsKey('unit_cost')) {
+      context.handle(_unitCostMeta,
+          unitCost.isAcceptableOrUnknown(data['unit_cost']!, _unitCostMeta));
+    } else if (isInserting) {
+      context.missing(_unitCostMeta);
+    }
+    if (data.containsKey('total_cost')) {
+      context.handle(_totalCostMeta,
+          totalCost.isAcceptableOrUnknown(data['total_cost']!, _totalCostMeta));
+    } else if (isInserting) {
+      context.missing(_totalCostMeta);
+    }
+    if (data.containsKey('unit_factor')) {
+      context.handle(
+          _unitFactorMeta,
+          unitFactor.isAcceptableOrUnknown(
+              data['unit_factor']!, _unitFactorMeta));
+    } else if (isInserting) {
+      context.missing(_unitFactorMeta);
+    }
+    if (data.containsKey('qty_convert')) {
+      context.handle(
+          _qtyConvertMeta,
+          qtyConvert.isAcceptableOrUnknown(
+              data['qty_convert']!, _qtyConvertMeta));
+    } else if (isInserting) {
+      context.missing(_qtyConvertMeta);
+    }
+    if (data.containsKey('expir_date')) {
+      context.handle(_expirDateMeta,
+          expirDate.isAcceptableOrUnknown(data['expir_date']!, _expirDateMeta));
+    } else if (isInserting) {
+      context.missing(_expirDateMeta);
+    }
+    if (data.containsKey('add_branch')) {
+      context.handle(_addBranchMeta,
+          addBranch.isAcceptableOrUnknown(data['add_branch']!, _addBranchMeta));
+    } else if (isInserting) {
+      context.missing(_addBranchMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StoreOperationModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StoreOperationModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      operationId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}operation_id'])!,
+      operationType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}operation_type'])!,
+      operationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}operation_date'])!,
+      operationIn: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}operation_in'])!,
+      storeId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}store_id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_id'])!,
+      unitId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}unit_id'])!,
+      quantity: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}quantity'])!,
+      averageCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}average_cost'])!,
+      unitCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}unit_cost'])!,
+      totalCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}total_cost'])!,
+      unitFactor: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}unit_factor'])!,
+      qtyConvert: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}qty_convert'])!,
+      expirDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}expir_date'])!,
+      addBranch: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}add_branch'])!,
+    );
+  }
+
+  @override
+  $StoreOperationTableTable createAlias(String alias) {
+    return $StoreOperationTableTable(attachedDatabase, alias);
+  }
+}
+
+class StoreOperationTableCompanion
+    extends UpdateCompanion<StoreOperationModel> {
+  final Value<int> id;
+  final Value<int> operationId;
+  final Value<int> operationType;
+  final Value<DateTime> operationDate;
+  final Value<bool> operationIn;
+  final Value<int> storeId;
+  final Value<int> itemId;
+  final Value<int> unitId;
+  final Value<int> quantity;
+  final Value<double> averageCost;
+  final Value<double> unitCost;
+  final Value<double> totalCost;
+  final Value<int> unitFactor;
+  final Value<int> qtyConvert;
+  final Value<String> expirDate;
+  final Value<int> addBranch;
+  const StoreOperationTableCompanion({
+    this.id = const Value.absent(),
+    this.operationId = const Value.absent(),
+    this.operationType = const Value.absent(),
+    this.operationDate = const Value.absent(),
+    this.operationIn = const Value.absent(),
+    this.storeId = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.averageCost = const Value.absent(),
+    this.unitCost = const Value.absent(),
+    this.totalCost = const Value.absent(),
+    this.unitFactor = const Value.absent(),
+    this.qtyConvert = const Value.absent(),
+    this.expirDate = const Value.absent(),
+    this.addBranch = const Value.absent(),
+  });
+  StoreOperationTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int operationId,
+    required int operationType,
+    required DateTime operationDate,
+    required bool operationIn,
+    required int storeId,
+    required int itemId,
+    required int unitId,
+    required int quantity,
+    required double averageCost,
+    required double unitCost,
+    required double totalCost,
+    required int unitFactor,
+    required int qtyConvert,
+    required String expirDate,
+    required int addBranch,
+  })  : operationId = Value(operationId),
+        operationType = Value(operationType),
+        operationDate = Value(operationDate),
+        operationIn = Value(operationIn),
+        storeId = Value(storeId),
+        itemId = Value(itemId),
+        unitId = Value(unitId),
+        quantity = Value(quantity),
+        averageCost = Value(averageCost),
+        unitCost = Value(unitCost),
+        totalCost = Value(totalCost),
+        unitFactor = Value(unitFactor),
+        qtyConvert = Value(qtyConvert),
+        expirDate = Value(expirDate),
+        addBranch = Value(addBranch);
+  static Insertable<StoreOperationModel> custom({
+    Expression<int>? id,
+    Expression<int>? operationId,
+    Expression<int>? operationType,
+    Expression<DateTime>? operationDate,
+    Expression<bool>? operationIn,
+    Expression<int>? storeId,
+    Expression<int>? itemId,
+    Expression<int>? unitId,
+    Expression<int>? quantity,
+    Expression<double>? averageCost,
+    Expression<double>? unitCost,
+    Expression<double>? totalCost,
+    Expression<int>? unitFactor,
+    Expression<int>? qtyConvert,
+    Expression<String>? expirDate,
+    Expression<int>? addBranch,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (operationId != null) 'operation_id': operationId,
+      if (operationType != null) 'operation_type': operationType,
+      if (operationDate != null) 'operation_date': operationDate,
+      if (operationIn != null) 'operation_in': operationIn,
+      if (storeId != null) 'store_id': storeId,
+      if (itemId != null) 'item_id': itemId,
+      if (unitId != null) 'unit_id': unitId,
+      if (quantity != null) 'quantity': quantity,
+      if (averageCost != null) 'average_cost': averageCost,
+      if (unitCost != null) 'unit_cost': unitCost,
+      if (totalCost != null) 'total_cost': totalCost,
+      if (unitFactor != null) 'unit_factor': unitFactor,
+      if (qtyConvert != null) 'qty_convert': qtyConvert,
+      if (expirDate != null) 'expir_date': expirDate,
+      if (addBranch != null) 'add_branch': addBranch,
+    });
+  }
+
+  StoreOperationTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? operationId,
+      Value<int>? operationType,
+      Value<DateTime>? operationDate,
+      Value<bool>? operationIn,
+      Value<int>? storeId,
+      Value<int>? itemId,
+      Value<int>? unitId,
+      Value<int>? quantity,
+      Value<double>? averageCost,
+      Value<double>? unitCost,
+      Value<double>? totalCost,
+      Value<int>? unitFactor,
+      Value<int>? qtyConvert,
+      Value<String>? expirDate,
+      Value<int>? addBranch}) {
+    return StoreOperationTableCompanion(
+      id: id ?? this.id,
+      operationId: operationId ?? this.operationId,
+      operationType: operationType ?? this.operationType,
+      operationDate: operationDate ?? this.operationDate,
+      operationIn: operationIn ?? this.operationIn,
+      storeId: storeId ?? this.storeId,
+      itemId: itemId ?? this.itemId,
+      unitId: unitId ?? this.unitId,
+      quantity: quantity ?? this.quantity,
+      averageCost: averageCost ?? this.averageCost,
+      unitCost: unitCost ?? this.unitCost,
+      totalCost: totalCost ?? this.totalCost,
+      unitFactor: unitFactor ?? this.unitFactor,
+      qtyConvert: qtyConvert ?? this.qtyConvert,
+      expirDate: expirDate ?? this.expirDate,
+      addBranch: addBranch ?? this.addBranch,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (operationId.present) {
+      map['operation_id'] = Variable<int>(operationId.value);
+    }
+    if (operationType.present) {
+      map['operation_type'] = Variable<int>(operationType.value);
+    }
+    if (operationDate.present) {
+      map['operation_date'] = Variable<DateTime>(operationDate.value);
+    }
+    if (operationIn.present) {
+      map['operation_in'] = Variable<bool>(operationIn.value);
+    }
+    if (storeId.present) {
+      map['store_id'] = Variable<int>(storeId.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    if (unitId.present) {
+      map['unit_id'] = Variable<int>(unitId.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<int>(quantity.value);
+    }
+    if (averageCost.present) {
+      map['average_cost'] = Variable<double>(averageCost.value);
+    }
+    if (unitCost.present) {
+      map['unit_cost'] = Variable<double>(unitCost.value);
+    }
+    if (totalCost.present) {
+      map['total_cost'] = Variable<double>(totalCost.value);
+    }
+    if (unitFactor.present) {
+      map['unit_factor'] = Variable<int>(unitFactor.value);
+    }
+    if (qtyConvert.present) {
+      map['qty_convert'] = Variable<int>(qtyConvert.value);
+    }
+    if (expirDate.present) {
+      map['expir_date'] = Variable<String>(expirDate.value);
+    }
+    if (addBranch.present) {
+      map['add_branch'] = Variable<int>(addBranch.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StoreOperationTableCompanion(')
+          ..write('id: $id, ')
+          ..write('operationId: $operationId, ')
+          ..write('operationType: $operationType, ')
+          ..write('operationDate: $operationDate, ')
+          ..write('operationIn: $operationIn, ')
+          ..write('storeId: $storeId, ')
+          ..write('itemId: $itemId, ')
+          ..write('unitId: $unitId, ')
+          ..write('quantity: $quantity, ')
+          ..write('averageCost: $averageCost, ')
+          ..write('unitCost: $unitCost, ')
+          ..write('totalCost: $totalCost, ')
+          ..write('unitFactor: $unitFactor, ')
+          ..write('qtyConvert: $qtyConvert, ')
+          ..write('expirDate: $expirDate, ')
+          ..write('addBranch: $addBranch')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -4303,8 +4823,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $UserStoreTableTable userStoreTable = $UserStoreTableTable(this);
   late final $UnitTableTable unitTable = $UnitTableTable(this);
   late final $ItemGroupTableTable itemGroupTable = $ItemGroupTableTable(this);
-  late final $ItemUnitTableTable itemUnitTable = $ItemUnitTableTable(this);
   late final $ItemTableTable itemTable = $ItemTableTable(this);
+  late final $ItemUnitTableTable itemUnitTable = $ItemUnitTableTable(this);
   late final $PaymentTableTable paymentTable = $PaymentTableTable(this);
   late final $SystemDocTableTable systemDocTable = $SystemDocTableTable(this);
   late final $UserSettingTableTable userSettingTable =
@@ -4312,6 +4832,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ItemAlterTableTable itemAlterTable = $ItemAlterTableTable(this);
   late final $BarcodeTableTable barcodeTable = $BarcodeTableTable(this);
   late final $AccountTableTable accountTable = $AccountTableTable(this);
+  late final $StoreOperationTableTable storeOperationTable =
+      $StoreOperationTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4324,14 +4846,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         userStoreTable,
         unitTable,
         itemGroupTable,
-        itemUnitTable,
         itemTable,
+        itemUnitTable,
         paymentTable,
         systemDocTable,
         userSettingTable,
         itemAlterTable,
         barcodeTable,
-        accountTable
+        accountTable,
+        storeOperationTable
       ];
 }
 
@@ -5358,6 +5881,36 @@ class $$UnitTableTableFilterComposer
       column: $state.table.newData,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ComposableFilter itemUnitTableRefs(
+      ComposableFilter Function($$ItemUnitTableTableFilterComposer f) f) {
+    final $$ItemUnitTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.itemUnitTable,
+        getReferencedColumn: (t) => t.itemUnitId,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemUnitTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemUnitTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter storeOperationTableRefs(
+      ComposableFilter Function($$StoreOperationTableTableFilterComposer f) f) {
+    final $$StoreOperationTableTableFilterComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $state.db.storeOperationTable,
+            getReferencedColumn: (t) => t.unitId,
+            builder: (joinBuilder, parentComposers) =>
+                $$StoreOperationTableTableFilterComposer(ComposerState(
+                    $state.db,
+                    $state.db.storeOperationTable,
+                    joinBuilder,
+                    parentComposers)));
+    return f(composer);
+  }
 }
 
 class $$UnitTableTableOrderingComposer
@@ -5498,6 +6051,19 @@ class $$ItemGroupTableTableFilterComposer
       column: $state.table.newData,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ComposableFilter itemTableRefs(
+      ComposableFilter Function($$ItemTableTableFilterComposer f) f) {
+    final $$ItemTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.itemGroupId,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
 }
 
 class $$ItemGroupTableTableOrderingComposer
@@ -5530,230 +6096,6 @@ class $$ItemGroupTableTableOrderingComposer
 
   ColumnOrderings<String> get note => $state.composableBuilder(
       column: $state.table.note,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get newData => $state.composableBuilder(
-      column: $state.table.newData,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-typedef $$ItemUnitTableTableCreateCompanionBuilder = ItemUnitTableCompanion
-    Function({
-  required int id,
-  required int itemId,
-  required int itemUnitId,
-  required int unitFactor,
-  required double wholeSaleprice,
-  required double retailPrice,
-  required double spacialPrice,
-  required double intialCost,
-  required double itemDiscount,
-  required String unitBarcode,
-  required bool newData,
-  Value<int> rowid,
-});
-typedef $$ItemUnitTableTableUpdateCompanionBuilder = ItemUnitTableCompanion
-    Function({
-  Value<int> id,
-  Value<int> itemId,
-  Value<int> itemUnitId,
-  Value<int> unitFactor,
-  Value<double> wholeSaleprice,
-  Value<double> retailPrice,
-  Value<double> spacialPrice,
-  Value<double> intialCost,
-  Value<double> itemDiscount,
-  Value<String> unitBarcode,
-  Value<bool> newData,
-  Value<int> rowid,
-});
-
-class $$ItemUnitTableTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ItemUnitTableTable,
-    ItemUnitsModel,
-    $$ItemUnitTableTableFilterComposer,
-    $$ItemUnitTableTableOrderingComposer,
-    $$ItemUnitTableTableCreateCompanionBuilder,
-    $$ItemUnitTableTableUpdateCompanionBuilder> {
-  $$ItemUnitTableTableTableManager(_$AppDatabase db, $ItemUnitTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$ItemUnitTableTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ItemUnitTableTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> itemId = const Value.absent(),
-            Value<int> itemUnitId = const Value.absent(),
-            Value<int> unitFactor = const Value.absent(),
-            Value<double> wholeSaleprice = const Value.absent(),
-            Value<double> retailPrice = const Value.absent(),
-            Value<double> spacialPrice = const Value.absent(),
-            Value<double> intialCost = const Value.absent(),
-            Value<double> itemDiscount = const Value.absent(),
-            Value<String> unitBarcode = const Value.absent(),
-            Value<bool> newData = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ItemUnitTableCompanion(
-            id: id,
-            itemId: itemId,
-            itemUnitId: itemUnitId,
-            unitFactor: unitFactor,
-            wholeSaleprice: wholeSaleprice,
-            retailPrice: retailPrice,
-            spacialPrice: spacialPrice,
-            intialCost: intialCost,
-            itemDiscount: itemDiscount,
-            unitBarcode: unitBarcode,
-            newData: newData,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required int id,
-            required int itemId,
-            required int itemUnitId,
-            required int unitFactor,
-            required double wholeSaleprice,
-            required double retailPrice,
-            required double spacialPrice,
-            required double intialCost,
-            required double itemDiscount,
-            required String unitBarcode,
-            required bool newData,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              ItemUnitTableCompanion.insert(
-            id: id,
-            itemId: itemId,
-            itemUnitId: itemUnitId,
-            unitFactor: unitFactor,
-            wholeSaleprice: wholeSaleprice,
-            retailPrice: retailPrice,
-            spacialPrice: spacialPrice,
-            intialCost: intialCost,
-            itemDiscount: itemDiscount,
-            unitBarcode: unitBarcode,
-            newData: newData,
-            rowid: rowid,
-          ),
-        ));
-}
-
-class $$ItemUnitTableTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ItemUnitTableTable> {
-  $$ItemUnitTableTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get itemId => $state.composableBuilder(
-      column: $state.table.itemId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get itemUnitId => $state.composableBuilder(
-      column: $state.table.itemUnitId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get unitFactor => $state.composableBuilder(
-      column: $state.table.unitFactor,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get wholeSaleprice => $state.composableBuilder(
-      column: $state.table.wholeSaleprice,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get retailPrice => $state.composableBuilder(
-      column: $state.table.retailPrice,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get spacialPrice => $state.composableBuilder(
-      column: $state.table.spacialPrice,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get intialCost => $state.composableBuilder(
-      column: $state.table.intialCost,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get itemDiscount => $state.composableBuilder(
-      column: $state.table.itemDiscount,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get unitBarcode => $state.composableBuilder(
-      column: $state.table.unitBarcode,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get newData => $state.composableBuilder(
-      column: $state.table.newData,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$ItemUnitTableTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ItemUnitTableTable> {
-  $$ItemUnitTableTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get itemId => $state.composableBuilder(
-      column: $state.table.itemId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get itemUnitId => $state.composableBuilder(
-      column: $state.table.itemUnitId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get unitFactor => $state.composableBuilder(
-      column: $state.table.unitFactor,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get wholeSaleprice => $state.composableBuilder(
-      column: $state.table.wholeSaleprice,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get retailPrice => $state.composableBuilder(
-      column: $state.table.retailPrice,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get spacialPrice => $state.composableBuilder(
-      column: $state.table.spacialPrice,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get intialCost => $state.composableBuilder(
-      column: $state.table.intialCost,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get itemDiscount => $state.composableBuilder(
-      column: $state.table.itemDiscount,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get unitBarcode => $state.composableBuilder(
-      column: $state.table.unitBarcode,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -5917,11 +6259,6 @@ class $$ItemTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get itemGroupId => $state.composableBuilder(
-      column: $state.table.itemGroupId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
   ColumnFilters<int> get itemCode => $state.composableBuilder(
       column: $state.table.itemCode,
       builder: (column, joinBuilders) =>
@@ -6006,6 +6343,61 @@ class $$ItemTableTableFilterComposer
       column: $state.table.note,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ItemGroupTableTableFilterComposer get itemGroupId {
+    final $$ItemGroupTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemGroupId,
+        referencedTable: $state.db.itemGroupTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemGroupTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemGroupTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  ComposableFilter itemUnitTableRefs(
+      ComposableFilter Function($$ItemUnitTableTableFilterComposer f) f) {
+    final $$ItemUnitTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.itemUnitTable,
+        getReferencedColumn: (t) => t.itemId,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemUnitTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemUnitTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter barcodeTableRefs(
+      ComposableFilter Function($$BarcodeTableTableFilterComposer f) f) {
+    final $$BarcodeTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.barcodeTable,
+        getReferencedColumn: (t) => t.itemId,
+        builder: (joinBuilder, parentComposers) =>
+            $$BarcodeTableTableFilterComposer(ComposerState($state.db,
+                $state.db.barcodeTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter storeOperationTableRefs(
+      ComposableFilter Function($$StoreOperationTableTableFilterComposer f) f) {
+    final $$StoreOperationTableTableFilterComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $state.db.storeOperationTable,
+            getReferencedColumn: (t) => t.itemId,
+            builder: (joinBuilder, parentComposers) =>
+                $$StoreOperationTableTableFilterComposer(ComposerState(
+                    $state.db,
+                    $state.db.storeOperationTable,
+                    joinBuilder,
+                    parentComposers)));
+    return f(composer);
+  }
 }
 
 class $$ItemTableTableOrderingComposer
@@ -6013,11 +6405,6 @@ class $$ItemTableTableOrderingComposer
   $$ItemTableTableOrderingComposer(super.$state);
   ColumnOrderings<int> get id => $state.composableBuilder(
       column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get itemGroupId => $state.composableBuilder(
-      column: $state.table.itemGroupId,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -6105,6 +6492,265 @@ class $$ItemTableTableOrderingComposer
       column: $state.table.note,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ItemGroupTableTableOrderingComposer get itemGroupId {
+    final $$ItemGroupTableTableOrderingComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.itemGroupId,
+            referencedTable: $state.db.itemGroupTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder, parentComposers) =>
+                $$ItemGroupTableTableOrderingComposer(ComposerState($state.db,
+                    $state.db.itemGroupTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+typedef $$ItemUnitTableTableCreateCompanionBuilder = ItemUnitTableCompanion
+    Function({
+  Value<int> id,
+  required int itemId,
+  required int itemUnitId,
+  required int unitFactor,
+  required double wholeSaleprice,
+  required double retailPrice,
+  required double spacialPrice,
+  required double intialCost,
+  required double itemDiscount,
+  required String unitBarcode,
+  required bool newData,
+});
+typedef $$ItemUnitTableTableUpdateCompanionBuilder = ItemUnitTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> itemId,
+  Value<int> itemUnitId,
+  Value<int> unitFactor,
+  Value<double> wholeSaleprice,
+  Value<double> retailPrice,
+  Value<double> spacialPrice,
+  Value<double> intialCost,
+  Value<double> itemDiscount,
+  Value<String> unitBarcode,
+  Value<bool> newData,
+});
+
+class $$ItemUnitTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ItemUnitTableTable,
+    ItemUnitsModel,
+    $$ItemUnitTableTableFilterComposer,
+    $$ItemUnitTableTableOrderingComposer,
+    $$ItemUnitTableTableCreateCompanionBuilder,
+    $$ItemUnitTableTableUpdateCompanionBuilder> {
+  $$ItemUnitTableTableTableManager(_$AppDatabase db, $ItemUnitTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ItemUnitTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ItemUnitTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> itemId = const Value.absent(),
+            Value<int> itemUnitId = const Value.absent(),
+            Value<int> unitFactor = const Value.absent(),
+            Value<double> wholeSaleprice = const Value.absent(),
+            Value<double> retailPrice = const Value.absent(),
+            Value<double> spacialPrice = const Value.absent(),
+            Value<double> intialCost = const Value.absent(),
+            Value<double> itemDiscount = const Value.absent(),
+            Value<String> unitBarcode = const Value.absent(),
+            Value<bool> newData = const Value.absent(),
+          }) =>
+              ItemUnitTableCompanion(
+            id: id,
+            itemId: itemId,
+            itemUnitId: itemUnitId,
+            unitFactor: unitFactor,
+            wholeSaleprice: wholeSaleprice,
+            retailPrice: retailPrice,
+            spacialPrice: spacialPrice,
+            intialCost: intialCost,
+            itemDiscount: itemDiscount,
+            unitBarcode: unitBarcode,
+            newData: newData,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int itemId,
+            required int itemUnitId,
+            required int unitFactor,
+            required double wholeSaleprice,
+            required double retailPrice,
+            required double spacialPrice,
+            required double intialCost,
+            required double itemDiscount,
+            required String unitBarcode,
+            required bool newData,
+          }) =>
+              ItemUnitTableCompanion.insert(
+            id: id,
+            itemId: itemId,
+            itemUnitId: itemUnitId,
+            unitFactor: unitFactor,
+            wholeSaleprice: wholeSaleprice,
+            retailPrice: retailPrice,
+            spacialPrice: spacialPrice,
+            intialCost: intialCost,
+            itemDiscount: itemDiscount,
+            unitBarcode: unitBarcode,
+            newData: newData,
+          ),
+        ));
+}
+
+class $$ItemUnitTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ItemUnitTableTable> {
+  $$ItemUnitTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get unitFactor => $state.composableBuilder(
+      column: $state.table.unitFactor,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get wholeSaleprice => $state.composableBuilder(
+      column: $state.table.wholeSaleprice,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get retailPrice => $state.composableBuilder(
+      column: $state.table.retailPrice,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get spacialPrice => $state.composableBuilder(
+      column: $state.table.spacialPrice,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get intialCost => $state.composableBuilder(
+      column: $state.table.intialCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get itemDiscount => $state.composableBuilder(
+      column: $state.table.itemDiscount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get unitBarcode => $state.composableBuilder(
+      column: $state.table.unitBarcode,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableFilterComposer get itemId {
+    final $$ItemTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  $$UnitTableTableFilterComposer get itemUnitId {
+    final $$UnitTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemUnitId,
+        referencedTable: $state.db.unitTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$UnitTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.unitTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$ItemUnitTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ItemUnitTableTable> {
+  $$ItemUnitTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get unitFactor => $state.composableBuilder(
+      column: $state.table.unitFactor,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get wholeSaleprice => $state.composableBuilder(
+      column: $state.table.wholeSaleprice,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get retailPrice => $state.composableBuilder(
+      column: $state.table.retailPrice,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get spacialPrice => $state.composableBuilder(
+      column: $state.table.spacialPrice,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get intialCost => $state.composableBuilder(
+      column: $state.table.intialCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get itemDiscount => $state.composableBuilder(
+      column: $state.table.itemDiscount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get unitBarcode => $state.composableBuilder(
+      column: $state.table.unitBarcode,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get newData => $state.composableBuilder(
+      column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableOrderingComposer get itemId {
+    final $$ItemTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  $$UnitTableTableOrderingComposer get itemUnitId {
+    final $$UnitTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemUnitId,
+        referencedTable: $state.db.unitTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$UnitTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.unitTable, joinBuilder, parentComposers)));
+    return composer;
+  }
 }
 
 typedef $$PaymentTableTableCreateCompanionBuilder = PaymentTableCompanion
@@ -6510,20 +7156,34 @@ class $$ItemAlterTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get itemId => $state.composableBuilder(
-      column: $state.table.itemId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get itemAlterId => $state.composableBuilder(
-      column: $state.table.itemAlterId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
   ColumnFilters<int> get itemOrder => $state.composableBuilder(
       column: $state.table.itemOrder,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableFilterComposer get itemId {
+    final $$ItemTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  $$ItemTableTableFilterComposer get itemAlterId {
+    final $$ItemTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemAlterId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
 }
 
 class $$ItemAlterTableTableOrderingComposer
@@ -6534,20 +7194,34 @@ class $$ItemAlterTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get itemId => $state.composableBuilder(
-      column: $state.table.itemId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get itemAlterId => $state.composableBuilder(
-      column: $state.table.itemAlterId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
   ColumnOrderings<int> get itemOrder => $state.composableBuilder(
       column: $state.table.itemOrder,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableOrderingComposer get itemId {
+    final $$ItemTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  $$ItemTableTableOrderingComposer get itemAlterId {
+    final $$ItemTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemAlterId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
 }
 
 typedef $$BarcodeTableTableCreateCompanionBuilder = BarcodeTableCompanion
@@ -6610,15 +7284,22 @@ class $$BarcodeTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get itemId => $state.composableBuilder(
-      column: $state.table.itemId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
   ColumnFilters<String> get itemBarcode => $state.composableBuilder(
       column: $state.table.itemBarcode,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableFilterComposer get itemId {
+    final $$ItemTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
 }
 
 class $$BarcodeTableTableOrderingComposer
@@ -6629,15 +7310,22 @@ class $$BarcodeTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get itemId => $state.composableBuilder(
-      column: $state.table.itemId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
   ColumnOrderings<String> get itemBarcode => $state.composableBuilder(
       column: $state.table.itemBarcode,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableOrderingComposer get itemId {
+    final $$ItemTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
 }
 
 typedef $$AccountTableTableCreateCompanionBuilder = AccountTableCompanion
@@ -6954,6 +7642,333 @@ class $$AccountTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+typedef $$StoreOperationTableTableCreateCompanionBuilder
+    = StoreOperationTableCompanion Function({
+  Value<int> id,
+  required int operationId,
+  required int operationType,
+  required DateTime operationDate,
+  required bool operationIn,
+  required int storeId,
+  required int itemId,
+  required int unitId,
+  required int quantity,
+  required double averageCost,
+  required double unitCost,
+  required double totalCost,
+  required int unitFactor,
+  required int qtyConvert,
+  required String expirDate,
+  required int addBranch,
+});
+typedef $$StoreOperationTableTableUpdateCompanionBuilder
+    = StoreOperationTableCompanion Function({
+  Value<int> id,
+  Value<int> operationId,
+  Value<int> operationType,
+  Value<DateTime> operationDate,
+  Value<bool> operationIn,
+  Value<int> storeId,
+  Value<int> itemId,
+  Value<int> unitId,
+  Value<int> quantity,
+  Value<double> averageCost,
+  Value<double> unitCost,
+  Value<double> totalCost,
+  Value<int> unitFactor,
+  Value<int> qtyConvert,
+  Value<String> expirDate,
+  Value<int> addBranch,
+});
+
+class $$StoreOperationTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $StoreOperationTableTable,
+    StoreOperationModel,
+    $$StoreOperationTableTableFilterComposer,
+    $$StoreOperationTableTableOrderingComposer,
+    $$StoreOperationTableTableCreateCompanionBuilder,
+    $$StoreOperationTableTableUpdateCompanionBuilder> {
+  $$StoreOperationTableTableTableManager(
+      _$AppDatabase db, $StoreOperationTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$StoreOperationTableTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$StoreOperationTableTableOrderingComposer(
+              ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> operationId = const Value.absent(),
+            Value<int> operationType = const Value.absent(),
+            Value<DateTime> operationDate = const Value.absent(),
+            Value<bool> operationIn = const Value.absent(),
+            Value<int> storeId = const Value.absent(),
+            Value<int> itemId = const Value.absent(),
+            Value<int> unitId = const Value.absent(),
+            Value<int> quantity = const Value.absent(),
+            Value<double> averageCost = const Value.absent(),
+            Value<double> unitCost = const Value.absent(),
+            Value<double> totalCost = const Value.absent(),
+            Value<int> unitFactor = const Value.absent(),
+            Value<int> qtyConvert = const Value.absent(),
+            Value<String> expirDate = const Value.absent(),
+            Value<int> addBranch = const Value.absent(),
+          }) =>
+              StoreOperationTableCompanion(
+            id: id,
+            operationId: operationId,
+            operationType: operationType,
+            operationDate: operationDate,
+            operationIn: operationIn,
+            storeId: storeId,
+            itemId: itemId,
+            unitId: unitId,
+            quantity: quantity,
+            averageCost: averageCost,
+            unitCost: unitCost,
+            totalCost: totalCost,
+            unitFactor: unitFactor,
+            qtyConvert: qtyConvert,
+            expirDate: expirDate,
+            addBranch: addBranch,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int operationId,
+            required int operationType,
+            required DateTime operationDate,
+            required bool operationIn,
+            required int storeId,
+            required int itemId,
+            required int unitId,
+            required int quantity,
+            required double averageCost,
+            required double unitCost,
+            required double totalCost,
+            required int unitFactor,
+            required int qtyConvert,
+            required String expirDate,
+            required int addBranch,
+          }) =>
+              StoreOperationTableCompanion.insert(
+            id: id,
+            operationId: operationId,
+            operationType: operationType,
+            operationDate: operationDate,
+            operationIn: operationIn,
+            storeId: storeId,
+            itemId: itemId,
+            unitId: unitId,
+            quantity: quantity,
+            averageCost: averageCost,
+            unitCost: unitCost,
+            totalCost: totalCost,
+            unitFactor: unitFactor,
+            qtyConvert: qtyConvert,
+            expirDate: expirDate,
+            addBranch: addBranch,
+          ),
+        ));
+}
+
+class $$StoreOperationTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $StoreOperationTableTable> {
+  $$StoreOperationTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get operationId => $state.composableBuilder(
+      column: $state.table.operationId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get operationType => $state.composableBuilder(
+      column: $state.table.operationType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get operationDate => $state.composableBuilder(
+      column: $state.table.operationDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get operationIn => $state.composableBuilder(
+      column: $state.table.operationIn,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get storeId => $state.composableBuilder(
+      column: $state.table.storeId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get quantity => $state.composableBuilder(
+      column: $state.table.quantity,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get averageCost => $state.composableBuilder(
+      column: $state.table.averageCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get unitCost => $state.composableBuilder(
+      column: $state.table.unitCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get totalCost => $state.composableBuilder(
+      column: $state.table.totalCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get unitFactor => $state.composableBuilder(
+      column: $state.table.unitFactor,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get qtyConvert => $state.composableBuilder(
+      column: $state.table.qtyConvert,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get expirDate => $state.composableBuilder(
+      column: $state.table.expirDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get addBranch => $state.composableBuilder(
+      column: $state.table.addBranch,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableFilterComposer get itemId {
+    final $$ItemTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  $$UnitTableTableFilterComposer get unitId {
+    final $$UnitTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.unitId,
+        referencedTable: $state.db.unitTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$UnitTableTableFilterComposer(ComposerState(
+                $state.db, $state.db.unitTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$StoreOperationTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $StoreOperationTableTable> {
+  $$StoreOperationTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get operationId => $state.composableBuilder(
+      column: $state.table.operationId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get operationType => $state.composableBuilder(
+      column: $state.table.operationType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get operationDate => $state.composableBuilder(
+      column: $state.table.operationDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get operationIn => $state.composableBuilder(
+      column: $state.table.operationIn,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get storeId => $state.composableBuilder(
+      column: $state.table.storeId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get quantity => $state.composableBuilder(
+      column: $state.table.quantity,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get averageCost => $state.composableBuilder(
+      column: $state.table.averageCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get unitCost => $state.composableBuilder(
+      column: $state.table.unitCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get totalCost => $state.composableBuilder(
+      column: $state.table.totalCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get unitFactor => $state.composableBuilder(
+      column: $state.table.unitFactor,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get qtyConvert => $state.composableBuilder(
+      column: $state.table.qtyConvert,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get expirDate => $state.composableBuilder(
+      column: $state.table.expirDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get addBranch => $state.composableBuilder(
+      column: $state.table.addBranch,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ItemTableTableOrderingComposer get itemId {
+    final $$ItemTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.itemId,
+        referencedTable: $state.db.itemTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.itemTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  $$UnitTableTableOrderingComposer get unitId {
+    final $$UnitTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.unitId,
+        referencedTable: $state.db.unitTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$UnitTableTableOrderingComposer(ComposerState(
+                $state.db, $state.db.unitTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
@@ -6971,10 +7986,10 @@ class $AppDatabaseManager {
       $$UnitTableTableTableManager(_db, _db.unitTable);
   $$ItemGroupTableTableTableManager get itemGroupTable =>
       $$ItemGroupTableTableTableManager(_db, _db.itemGroupTable);
-  $$ItemUnitTableTableTableManager get itemUnitTable =>
-      $$ItemUnitTableTableTableManager(_db, _db.itemUnitTable);
   $$ItemTableTableTableManager get itemTable =>
       $$ItemTableTableTableManager(_db, _db.itemTable);
+  $$ItemUnitTableTableTableManager get itemUnitTable =>
+      $$ItemUnitTableTableTableManager(_db, _db.itemUnitTable);
   $$PaymentTableTableTableManager get paymentTable =>
       $$PaymentTableTableTableManager(_db, _db.paymentTable);
   $$SystemDocTableTableTableManager get systemDocTable =>
@@ -6987,4 +8002,6 @@ class $AppDatabaseManager {
       $$BarcodeTableTableTableManager(_db, _db.barcodeTable);
   $$AccountTableTableTableManager get accountTable =>
       $$AccountTableTableTableManager(_db, _db.accountTable);
+  $$StoreOperationTableTableTableManager get storeOperationTable =>
+      $$StoreOperationTableTableTableManager(_db, _db.storeOperationTable);
 }

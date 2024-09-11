@@ -55,5 +55,6 @@ class AppTextStyle {
         fontSize: 11.sp,
         fontFamily: Assets.fontFamily,
         color: AppColors.secondaryTextColor,
+        fontWeight: FontWeight.normal,
       );
 }

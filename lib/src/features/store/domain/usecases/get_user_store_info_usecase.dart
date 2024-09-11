@@ -3,16 +3,16 @@ import 'package:dartz/dartz.dart';
 
 import 'package:era_pro_application/src/core/error/failures.dart';
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/user_store_entity.dart';
-import 'package:era_pro_application/src/features/main_info/domain/repositories/main_info_repository.dart';
+import 'package:era_pro_application/src/features/store/domain/entities/user_store_entity.dart';
+import 'package:era_pro_application/src/features/store/domain/repositories/store_repositories.dart';
 
 class GetUserStoreInfoUsecase extends NoParamUseCase<UserStoreEntity> {
-  MainInfoRepository mainInfoRepository;
+  StoreRepository storeRepository;
   GetUserStoreInfoUsecase({
-    required this.mainInfoRepository,
+    required this.storeRepository,
   });
   @override
   Future<Either<Failure, UserStoreEntity>> call() {
-    return mainInfoRepository.getUserStoreInfo();
+    return storeRepository.getUserStoreInfo();
   }
 }

@@ -1,21 +1,22 @@
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../error/error.dart';
-import '../error/failures.dart';
 
 Future<Either<Failure, T>> fetchSingleData<T>({
-  required Future<T?> Function() fetchLocalData,
+  required Future<T?> Function(int) fetchLocalData,
   required Future<T> Function() fetchRemoteData,
-  required Future<void> Function(T) saveLocalData,
+  required Future<int> Function(T) saveLocalData,
   required String sharedPrefKey,
+  required String dateTimeShredPreKey,
   required SharedPreferencesService sharedPreferencesService,
+  bool? isUserInfo = false,
 }) async {
   try {
     var id = sharedPreferencesService.getString(sharedPrefKey);
     if (id != null) {
-      final data = await fetchLocalData();
+      final data = await fetchLocalData(int.parse(id));
+
       if (data != null) {
         return Right(data);
       } else {
@@ -24,19 +25,33 @@ Future<Either<Failure, T>> fetchSingleData<T>({
     } else {
       final data = await fetchRemoteData();
       if (data != null) {
-        // Assuming data has an id property, replace `data.id` with the actual way to access the id.
-        final String id = (data as dynamic).id?.toString() ??
-            ''; // Casting to dynamic to access id
-        await sharedPreferencesService.setString(sharedPrefKey, id);
-        await saveLocalData(data);
+        if (isUserInfo != null && isUserInfo) {
+          int? id = (data as dynamic).branchId;
+
+          await sharedPreferencesService.setString(
+            'userBranchId',
+            id.toString(),
+          );
+        }
+
+        var storedId = await saveLocalData(data);
+        await sharedPreferencesService.setString(
+          sharedPrefKey,
+          storedId.toString(),
+        );
+        await sharedPreferencesService.saveDateTime(
+          dateTime: DateTime.now(),
+          key: dateTimeShredPreKey,
+        );
+
         return Right(data);
       } else {
         return const Left(ServerFailures(message: "Server failure"));
       }
     }
-  } on LocalStorageException {
-    return const Left(
-        LocalStorageFailures(message: "Can't get data from local storage"));
+  } on LocalStorageException catch (e) {
+    return Left(
+        LocalStorageFailures(message: "Can't get data from local storage $e"));
   } on ServerException {
     return const Left(ServerFailures(message: "Can't get data from server"));
   } catch (e) {
@@ -50,6 +65,7 @@ Future<Either<Failure, List<T>>> fetchArrayOfData<T>({
   required Future<List<T>> Function() fetchFromLocal,
   required Future<List<T>> Function() fetchFromRemote,
   required Future<void> Function(List<T>) saveDataToLocal,
+  required String dateTimeSharePrefKey,
   String localError = "Unable to retrieve data from local storage.",
   String remoteError = "Unable to retrieve data from server.",
   String genericError = "An unexpected error occurred while fetching data.",
@@ -69,6 +85,11 @@ Future<Either<Failure, List<T>>> fetchArrayOfData<T>({
       final List<T> remoteData = await fetchFromRemote();
       await saveDataToLocal(remoteData);
       await sharedPreferencesService.setBool(cacheKey, true);
+      await sharedPreferencesService.saveDateTime(
+        key: dateTimeSharePrefKey,
+        dateTime: DateTime.now(),
+      );
+
       return Right(remoteData);
     }
   } on LocalStorageException {

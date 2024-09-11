@@ -22,12 +22,13 @@
  */
 
 import 'package:drift/drift.dart';
+import 'package:era_pro_application/src/core/services/db/tables/db_tables.dart';
 import 'package:era_pro_application/src/features/store/data/models/item_model.dart';
 
 @UseRowClass(ItemModel)
 class ItemTable extends Table {
   IntColumn get id => integer()();
-  IntColumn get itemGroupId => integer()();
+  IntColumn get itemGroupId => integer().references(ItemGroupTable, #id)();
   IntColumn get itemCode => integer()();
   TextColumn get name => text()();
   TextColumn get enName => text()();

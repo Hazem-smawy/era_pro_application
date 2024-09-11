@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:dartz/dartz.dart';
+import 'package:era_pro_application/src/core/constants/share_pref_keys.dart';
 import '../models/main_info_model.dart';
 
 import 'package:era_pro_application/src/core/error/failures.dart';
@@ -88,25 +89,23 @@ class MainInfoRepositoryImp implements MainInfoRepository {
   @override
   Future<Either<Failure, BranchModel>> getBranchInfo() async {
     return fetchSingleData(
-      sharedPreferencesService: sharedPreferencesService,
-      fetchLocalData: () => mainInfoLocalDatasource.getBranchInfo(
-          int.parse(sharedPreferencesService.getString('branchId') ?? '0')),
-      fetchRemoteData: mainInfoRemoteDatasource.getBranchInfo,
-      saveLocalData: mainInfoLocalDatasource.saveBranchInfo,
-      sharedPrefKey: 'branchId',
-    );
+        sharedPreferencesService: sharedPreferencesService,
+        fetchLocalData: mainInfoLocalDatasource.getBranchInfo,
+        fetchRemoteData: mainInfoRemoteDatasource.getBranchInfo,
+        saveLocalData: mainInfoLocalDatasource.saveBranchInfo,
+        sharedPrefKey: SharedPrefKeys.BRANCHINFO_KEY,
+        dateTimeShredPreKey: SharedPrefKeys.DATETIME_BRANCHINFO_KEY);
   }
 
   @override
   Future<Either<Failure, CompanyModel>> getCompnayInfo() async {
     return fetchSingleData(
-      sharedPreferencesService: sharedPreferencesService,
-      fetchLocalData: () => mainInfoLocalDatasource.getCompanyInfo(
-          int.parse(sharedPreferencesService.getString('companyId') ?? '0')),
-      fetchRemoteData: mainInfoRemoteDatasource.getCompanyInfo,
-      saveLocalData: mainInfoLocalDatasource.saveCompanyInfo,
-      sharedPrefKey: 'companyId',
-    );
+        sharedPreferencesService: sharedPreferencesService,
+        fetchLocalData: mainInfoLocalDatasource.getCompanyInfo,
+        fetchRemoteData: mainInfoRemoteDatasource.getCompanyInfo,
+        saveLocalData: mainInfoLocalDatasource.saveCompanyInfo,
+        sharedPrefKey: SharedPrefKeys.COMPANY_KEY,
+        dateTimeShredPreKey: SharedPrefKeys.DATETIME_COMPANY_KEY);
   }
 
   //curencies
@@ -114,7 +113,8 @@ class MainInfoRepositoryImp implements MainInfoRepository {
   @override
   Future<Either<Failure, List<CurencyModel>>> getAllCurencies() async {
     return fetchArrayOfData<CurencyModel>(
-      cacheKey: 'curency',
+      cacheKey: SharedPrefKeys.CURENCIES_KEY,
+      dateTimeSharePrefKey: SharedPrefKeys.DATETIME_CURENCIES_KEY,
       sharedPreferencesService: sharedPreferencesService,
       fetchFromLocal: mainInfoLocalDatasource.getAllCurency,
       fetchFromRemote: mainInfoRemoteDatasource.getAllCurency,
@@ -127,22 +127,11 @@ class MainInfoRepositoryImp implements MainInfoRepository {
   }
 
   @override
-  Future<Either<Failure, UserStoreModel>> getUserStoreInfo() {
-    return fetchSingleData(
-      sharedPreferencesService: sharedPreferencesService,
-      fetchLocalData: () => mainInfoLocalDatasource.getUserStoreInfo(int.parse(
-          sharedPreferencesService.getString('userStoreInfo') ?? '0')),
-      fetchRemoteData: mainInfoRemoteDatasource.getUserStoreInfo,
-      saveLocalData: mainInfoLocalDatasource.saveUserStoreInfo,
-      sharedPrefKey: 'userStoreInfoId',
-    );
-  }
-
-  @override
   Future<Either<Failure, List<PaymentModel>>> getPaymentMethods() {
     return fetchArrayOfData<PaymentModel>(
       sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'payments',
+      cacheKey: SharedPrefKeys.PAYMETHODS_KEY,
+      dateTimeSharePrefKey: SharedPrefKeys.DATETIME_PAYMETHODS_KEY,
       fetchFromLocal: mainInfoLocalDatasource.getAllPaymentMethod,
       fetchFromRemote: mainInfoRemoteDatasource.getAllPaymentMethods,
       saveDataToLocal: mainInfoLocalDatasource.saveAllPaymentMethod,
@@ -156,25 +145,14 @@ class MainInfoRepositoryImp implements MainInfoRepository {
   Future<Either<Failure, List<SystemDocModel>>> getSystemDocs() {
     return fetchArrayOfData<SystemDocModel>(
       sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'system_doc',
+      cacheKey: SharedPrefKeys.SYSTEMDOCS_KEY,
+      dateTimeSharePrefKey: SharedPrefKeys.DATETIME_SYSTEMDOCS_KEY,
       fetchFromLocal: mainInfoLocalDatasource.getAllSystemDocs,
       fetchFromRemote: mainInfoRemoteDatasource.getAllSystemDocs,
       saveDataToLocal: mainInfoLocalDatasource.saveAllSystemDocs,
       localError: "can't get system_doc info from local",
       remoteError: "can't get system_doc info from server",
       genericError: "server failures to get system_doc",
-    );
-  }
-
-  @override
-  Future<Either<Failure, UserSettingModel>> getUserSettings() {
-    return fetchSingleData(
-      sharedPreferencesService: sharedPreferencesService,
-      fetchLocalData: () => mainInfoLocalDatasource.getUserSettings(int.parse(
-          sharedPreferencesService.getString('user_Settings') ?? '1')),
-      fetchRemoteData: mainInfoRemoteDatasource.getUserSettings,
-      saveLocalData: mainInfoLocalDatasource.saveUserSettings,
-      sharedPrefKey: 'user_Settings',
     );
   }
 }

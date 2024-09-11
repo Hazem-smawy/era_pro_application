@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../../../core/utils/image_converter.dart';
 
 class UserEntity {
-  final int? id;
+  final int id;
   @JsonKey(name: "user_name")
   final String userName;
   final String password;

@@ -17,21 +17,16 @@ class MainInfoController extends GetxController {
   GetAllPaymentsUsecase getAllPaymentsUsecase;
   GetAllSystemDocsUsecase getAllSystemDocsUsecase;
 
-  GetUserStoreInfoUsecase getUserStoreInfoUsecase;
-
-  GetUserSettingsUsecase getUserSettingsUsecase;
   var company = Rx<CompanyEntity?>(null);
 
   var branch = Rx<BranchEntity?>(null);
-  var userSettings = Rx<UserSettingEntity?>(null);
-  var userStoreInfo = Rx<UserStoreEntity?>(null);
 
   var allCurencies = Rx<List<CurencyEntity>>([]);
 
   var allPaymentsMethod = Rx<List<PaymentEntity>>([]);
   var allSystemDocs = Rx<List<SystemDocEntity>>([]);
+  // var status = RxStatus.empty();
 
-  var units = Rx<List<UnitEnitity>>([]);
   final errorMessage = ''.obs;
 
   MainInfoController({
@@ -40,8 +35,6 @@ class MainInfoController extends GetxController {
     required this.getAllCurenciesUsecase,
     required this.getAllPaymentsUsecase,
     required this.getAllSystemDocsUsecase,
-    required this.getUserStoreInfoUsecase,
-    required this.getUserSettingsUsecase,
   });
 
   @override
@@ -49,27 +42,13 @@ class MainInfoController extends GetxController {
     super.onInit();
     getBranchInfo();
     getCompanyInfo();
-    getAllCurenciesInfo();
-
-    getAllPaymentsMethod();
-    getAllSystemDocs();
-    getUserSettings();
-
-    getUserStoreInfo();
   }
 
   Future<void> getBranchInfo() async {
+    // status(RxStatus.error());
     await handleUsecase(
       usecase: getBranchUsecase.call,
       target: branch,
-      errorMessageTarget: errorMessage,
-    );
-  }
-
-  Future<void> getUserStoreInfo() async {
-    await handleUsecase(
-      usecase: getUserStoreInfoUsecase.call,
-      target: userStoreInfo,
       errorMessageTarget: errorMessage,
     );
   }
@@ -78,14 +57,6 @@ class MainInfoController extends GetxController {
     await handleUsecase(
       usecase: getCompanyUsecase.call,
       target: company,
-      errorMessageTarget: errorMessage,
-    );
-  }
-
-  Future<void> getUserSettings() async {
-    await handleUsecase(
-      usecase: getUserSettingsUsecase.call,
-      target: userSettings,
       errorMessageTarget: errorMessage,
     );
   }

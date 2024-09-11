@@ -3,26 +3,28 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:flutter/material.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
-  const CustomTextFieldWidget({
-    super.key,
-    required this.controller,
-    required this.label,
-    this.isNumber = false,
-  });
+  const CustomTextFieldWidget(
+      {super.key,
+      required this.controller,
+      this.label = '',
+      this.isNumber = false,
+      this.hint = ''});
   final TextEditingController controller;
   final String label;
   final bool isNumber;
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          label,
-          style: context.bodyLarge,
-        ),
-        Gaps.g8,
+        if (label.isNotEmpty)
+          Text(
+            label,
+            style: context.bodyLarge,
+          ),
+        if (label.isNotEmpty) Gaps.g8,
         Directionality(
           textDirection: TextDirection.rtl,
           child: TextFormField(
@@ -39,7 +41,10 @@ class CustomTextFieldWidget extends StatelessWidget {
             },
             decoration: InputDecoration(
               fillColor: context.wightColor,
-              hintStyle: context.bodySmall,
+              hintStyle: context.bodySmall?.copyWith(
+                fontWeight: FontWeight.normal,
+              ),
+              hintText: hint,
               filled: true,
               floatingLabelAlignment: FloatingLabelAlignment.center,
               border: OutlineInputBorder(

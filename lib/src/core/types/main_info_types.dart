@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../routes/routes.dart';
+import '../routes/app_pages.dart';
 
 class MainInfoItemTypes {
   final int id;
@@ -32,6 +32,13 @@ class MainInfoItemTypes {
 class MainInfoTypes {
   static List<MainInfoItemTypes> items = [
     MainInfoItemTypes(
+      id: 7,
+      title: 'الحسابات',
+      color: const Color(0xffED3C56),
+      icon: FontAwesomeIcons.user,
+      action: () => Get.toNamed(Routes.ACCOUNTS),
+    ),
+    MainInfoItemTypes(
       id: 1,
       title: 'الفواتير',
       color: const Color(0xff37B6BD),
@@ -39,57 +46,34 @@ class MainInfoTypes {
       action: () {},
     ),
     MainInfoItemTypes(
-        id: 2,
-        title: 'العملاء',
-        color: const Color(0xffED3C56),
-        icon: FontAwesomeIcons.user,
-        action: () {}),
-    MainInfoItemTypes(
       id: 3,
       title: 'المخزون',
       color: Colors.blue,
       icon: FontAwesomeIcons.building,
       action: () {
-        Get.toNamed(AppRouteName.store.name);
+        Get.toNamed(Routes.STORE);
       },
     ),
     MainInfoItemTypes(
-      id: 4,
-      title: 'العملاء',
-      color: const Color(0xffED3C56),
-      icon: FontAwesomeIcons.user,
-      action: () {},
+      id: 5,
+      title: 'العملات',
+      color: Colors.green,
+      icon: FontAwesomeIcons.dollarSign,
+      action: () => Get.toNamed(Routes.CURRENCIES),
     ),
-    MainInfoItemTypes(
-        id: 5,
-        title: 'العملات',
-        color: Colors.green,
-        icon: FontAwesomeIcons.dollarSign,
-        action: () {
-          Get.toNamed(AppRouteName.curency.name);
-        }),
     MainInfoItemTypes(
       id: 6,
       title: 'معلومات الشركة',
       color: const Color.fromARGB(255, 231, 153, 20),
       icon: FontAwesomeIcons.circleInfo,
-      action: () {
-        Get.toNamed(AppRouteName.companyInfo.name);
-      },
-    ),
-    MainInfoItemTypes(
-      id: 7,
-      title: 'العملاء',
-      color: const Color(0xffED3C56),
-      icon: FontAwesomeIcons.user,
-      action: () {},
+      action: () => Get.toNamed(Routes.COMPANYINFO),
     ),
     MainInfoItemTypes(
       id: 8,
-      title: 'المخزون',
+      title: 'الوحدات',
       color: Colors.blue,
-      icon: FontAwesomeIcons.building,
-      action: () {},
+      icon: FontAwesomeIcons.glassWater,
+      action: () => Get.toNamed(Routes.UNTIS),
     ),
   ];
 }

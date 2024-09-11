@@ -65,4 +65,27 @@ class ItemModel extends ItemEntity {
       note: Value(note),
     );
   }
+
+  ItemEntity toEntity() {
+    return ItemEntity(
+      id: id,
+      itemGroupId: itemGroupId,
+      itemCode: itemCode,
+      name: name,
+      enName: enName,
+      type: type,
+      itemLimit: itemLimit,
+      itemImage: itemImage,
+      notifyBefore: notifyBefore,
+      freeQuantityAllow: freeQuantityAllow,
+      hasTax: hasTax,
+      taxRate: taxRate,
+      itemCompany: itemCompany,
+      orignalCountry: orignalCountry,
+      itemDescription: itemDescription,
+      note: note,
+      hasAlternated: hasAlternated,
+      newData: newData,
+    );
+  }
 }

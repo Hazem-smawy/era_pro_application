@@ -13,3 +13,4 @@ export './unit_table.dart';
 export './user_setting_table.dart';
 export './user_store_table.dart';
 export './user_table.dart';
+export './store_operation_table.dart';

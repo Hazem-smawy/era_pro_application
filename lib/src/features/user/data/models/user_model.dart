@@ -29,7 +29,7 @@ class UserModel extends UserEntity {
 
   UserTableCompanion toCompanion() {
     return UserTableCompanion(
-      id: drift.Value(id ?? -1),
+      id: drift.Value(id),
       userName: drift.Value(userName),
       password: drift.Value(password),
       userAcctype: drift.Value(userAcctype),

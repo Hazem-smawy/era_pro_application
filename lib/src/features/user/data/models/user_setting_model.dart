@@ -1,7 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/core/services/db/db.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/user_setting_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entities/user_setting_entity.dart';
 
 part 'user_setting_model.g.dart';
 

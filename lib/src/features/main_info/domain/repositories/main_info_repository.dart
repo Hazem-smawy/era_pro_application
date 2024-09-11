@@ -6,12 +6,7 @@ abstract class MainInfoRepository {
   Future<Either<Failure, BranchEntity>> getBranchInfo();
   Future<Either<Failure, CompanyEntity>> getCompnayInfo();
   Future<Either<Failure, List<CurencyEntity>>> getAllCurencies();
-  Future<Either<Failure, UserStoreEntity>> getUserStoreInfo();
- 
 
- 
   Future<Either<Failure, List<PaymentEntity>>> getPaymentMethods();
   Future<Either<Failure, List<SystemDocEntity>>> getSystemDocs();
-  Future<Either<Failure, UserSettingEntity>> getUserSettings();
- 
 }

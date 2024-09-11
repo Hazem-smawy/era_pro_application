@@ -5,14 +5,13 @@ import 'package:era_pro_application/src/core/widgets/future_builder_widget.dart'
 import 'package:era_pro_application/src/features/main_info/domain/entities/curency_entity.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../widgets/curency_item_widget.dart';
 
 class CurenciesInfoPage extends StatelessWidget {
   CurenciesInfoPage({super.key});
-  MainInfoController mainInfoController = Get.find();
+  final MainInfoController mainInfoController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +27,15 @@ class CurenciesInfoPage extends StatelessWidget {
               future: mainInfoController.getAllCurenciesInfo(),
               builder: (context, data) {
                 return ListView.separated(
-                  separatorBuilder: (context, index) => context.g12,
+                  separatorBuilder: (context, index) => Divider(
+                    color: context.secondaryTextColor.withOpacity(
+                      0.2,
+                    ),
+                  ).pv(10),
                   itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final currency = data[index];
-                    return CurencyItemWidget(
-                      curency: currency,
-                    );
-                  },
+                  itemBuilder: (context, index) => CurencyItemWidget(
+                    curency: data[index],
+                  ),
                 );
               },
             ),

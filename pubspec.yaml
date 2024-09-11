@@ -54,7 +54,7 @@ dependencies:
   path_provider:
   font_awesome_flutter:
   sqlite3_flutter_libs: any
-
+  device_info_plus: any
 
 
 dev_dependencies:
@@ -66,6 +66,7 @@ dev_dependencies:
   json_serializable: any
 
   drift_dev: ^2.14.1
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

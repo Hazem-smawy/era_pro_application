@@ -35,4 +35,16 @@ class ItemGroupModel extends ItemGroupEntity {
       newData: Value(newData),
     );
   }
+
+  ItemGroupEntity toEntity() {
+    return ItemGroupEntity(
+      id: id,
+      code: code,
+      name: name,
+      type: type,
+      parent: parent,
+      note: note,
+      newData: newData,
+    );
+  }
 }

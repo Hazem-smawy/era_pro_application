@@ -14,13 +14,12 @@ class CurencyItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.2),
-        ),
+        // border: Border.all(
+        //     // color: context.secondaryTextColor.withOpacity(0.2),
+        //     ),
       ),
       child: Column(
         children: [
@@ -31,41 +30,44 @@ class CurencyItemWidget extends StatelessWidget {
                 label: 'اسم العملة',
                 value: curency.name,
               ),
-              CurencyAttributeWidget(
-                label: 'اسم العملة',
-                value: curency.name,
-              ),
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          context.g8,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CurencyAttributeWidget(
-                label: 'اسم العملة',
-                value: curency.name,
+                label: 'الفكة',
+                value: curency.subName.toString(),
               ),
+              context.g8,
               CurencyAttributeWidget(
-                label: 'اسم العملة',
-                value: curency.name,
+                label: 'رمز العملة',
+                value: curency.symbol,
               ),
             ],
           ),
-          const SizedBox(
-            height: 10,
+          context.g8,
+          Row(
+            children: [
+              CurencyAttributeWidget(
+                label: 'سعر الصرف',
+                value: curency.equivelant.toString(),
+              ),
+            ],
           ),
+          context.g8,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CurencyAttributeWidget(
-                label: 'اسم العملة',
-                value: curency.name,
+                label: 'اقل قيمة',
+                value: curency.minValue.toString(),
               ),
+              context.g8,
               CurencyAttributeWidget(
-                label: 'اسم العملة',
-                value: curency.name,
+                label: 'اكبر قيمة',
+                value: curency.maxValue.toString(),
               ),
             ],
           ),
@@ -75,77 +77,99 @@ class CurencyItemWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Row(
-                children: [
-                  Text(
-                    'عملة مخزون',
-                    style: context.titleSmall,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.circle,
-                    color: context.secondaryTextColor,
-                    size: 20,
-                  ),
-                ],
+              CurencyCheckBoxWidget(
+                isChecked: curency.storeCurrency,
+                label: 'عملة مخزون',
               ),
-              Row(
-                children: [
-                  Text(
-                    'عملة محلية',
-                    style: context.bodyLarge,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.circleCheck,
-                    color: context.primaryColor,
-                    size: 20,
-                  ),
-                ],
+              CurencyCheckBoxWidget(
+                label: 'عملة محلية',
+                isChecked: curency.localCurrency,
               ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-class CurencyAttributeWidget extends StatelessWidget {
-  const CurencyAttributeWidget(
-      {super.key, required this.label, required this.value});
+class CurencyCheckBoxWidget extends StatelessWidget {
+  final bool isChecked;
   final String label;
-  final String value;
+  const CurencyCheckBoxWidget({
+    super.key,
+    required this.isChecked,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(
-              color: context.secondaryTextColor.withOpacity(0.5),
-            ),
-          ),
-          child: Text(
-            value,
-            style: context.bodySmall,
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
         Text(
-          'اسم العملة',
-          style: context.bodySmall,
+          label,
+          style: context.bodySmall?.copyWith(
+            color:
+                isChecked ? context.primaryColor : context.secondaryTextColor,
+            fontWeight: isChecked ? FontWeight.bold : null,
+          ),
+        ),
+        context.g8,
+        FaIcon(
+          isChecked ? FontAwesomeIcons.squareCheck : FontAwesomeIcons.square,
+          color: isChecked ? context.primaryColor : context.secondaryTextColor,
+          size: 20,
         ),
       ],
+    );
+  }
+}
+
+class CurencyAttributeWidget extends StatelessWidget {
+  const CurencyAttributeWidget({
+    super.key,
+    required this.label,
+    required this.value,
+  });
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 7,
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: context.surfaceColor
+                  // border: Border.all(
+                  //   color: context.secondaryTextColor.withOpacity(0.5),
+                  // ),
+                  ),
+              child: Text(
+                value,
+                style: context.bodyMeduim?.copyWith(
+                  color: context.blackColor,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            label,
+            style: context.bodySmall,
+          ),
+        ],
+      ),
     );
   }
 }

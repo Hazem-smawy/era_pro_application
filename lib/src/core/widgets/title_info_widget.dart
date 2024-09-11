@@ -4,8 +4,8 @@ import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class CompanyBranchTitleWidget extends StatelessWidget {
-  CompanyBranchTitleWidget(
+class TitleInfoWidget extends StatelessWidget {
+  TitleInfoWidget(
       {super.key,
       required this.title,
       required this.subTitle,
@@ -36,10 +36,14 @@ class CompanyBranchTitleWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                subTitle,
-                textAlign: TextAlign.end,
-                style: context.titleMedium,
+              Expanded(
+                child: Text(
+                  subTitle,
+                  textAlign: TextAlign.end,
+                  style: context.titleSmall?.copyWith(
+                    color: context.blackColor,
+                  ),
+                ),
               ),
             ],
           ),

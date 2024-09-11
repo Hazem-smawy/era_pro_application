@@ -1,18 +1,20 @@
+import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_application/src/features/store/domain/entities/item_entity.dart';
+import 'package:era_pro_application/src/core/routes/app_pages.dart';
+import 'package:era_pro_application/src/core/widgets/empty_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
+import 'package:era_pro_application/src/core/widgets/categories_widget.dart';
+import 'package:era_pro_application/src/features/store/presentation/pages/item_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/widgets/future_builder_widget.dart';
 import '../../../../core/widgets/search_bar_widget.dart';
 import '../widgets/store_item_widget.dart';
 
 class StoreInfoPage extends StatelessWidget {
   StoreInfoPage({super.key});
-  StoreController storeController = Get.find();
+  final StoreController storeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -21,124 +23,74 @@ class StoreInfoPage extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
+          context.g8,
           SizedBox(
             height: 50,
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(Routes.STOREDETAILS);
+                  },
                   icon: Icon(
-                    FontAwesomeIcons.filter,
-                    size: 20,
+                    Icons.info_outline,
+                    size: 30,
                     color: context.secondaryTextColor,
                   ),
-                ),
+                ).ph(5),
                 const Expanded(
                   child: SearchAppbarWidget(),
                 ),
               ],
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            height: 40,
-            child: Row(
-              children: [
-                Expanded(
-                  child: AnimatedContainer(
-                    duration: const Duration(microseconds: 200),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      // color: const Color(0xff777777),
-                    ),
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      reverse: true,
-                      itemCount: 2,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 5,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 40,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: context.wightColor,
-                          ),
-                          child: Center(
-                            child: Text(
-                              "كل التصنيفات",
-                              style: context.bodySmall,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: context.secondary,
-                    border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'الكل',
-                      style: context.bodyMeduim?.copyWith(
-                        color: context.wightColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          context.g12,
+          Obx(
+            () => CategoriesWidget(
+              idExtractor: (p0) => p0.code,
+              nameExtractor: (p0) => p0.name,
+              items: storeController.allItemGroups.value,
+              selectedId: storeController.selectedGroupId.value,
+              action: (p0) {
+                storeController.changeCategory(p0);
+              },
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          context.g12,
           Expanded(
-            flex: 1,
-            child: ReusableFutureBuilder<List<ItemEntity>>(
-              future: storeController.getAllItems(),
-              builder: (context, data) {
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.1,
-                    mainAxisSpacing: context.sp12,
-                    crossAxisSpacing: context.sp12,
-                  ),
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var item = data[index];
-                    return ItemWidget(itemEntity: item);
-                  },
-                );
-              },
-            ).p(15),
+            child: Obx(
+              () => storeController.itemsInCategory.value.isEmpty
+                  ? const EmptyWidget(
+                      imageName: Assets.assetsImagesCurencies,
+                      label: "لاتوجد اي منتجات")
+                  : Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: GridView.builder(
+                        padding: const EdgeInsets.only(
+                          bottom: 20,
+                        ),
+                        reverse: false,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1 / 0.9,
+                          mainAxisSpacing: context.sp12,
+                          crossAxisSpacing: context.sp12,
+                        ),
+                        itemCount: storeController.itemsInCategory.value.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var item =
+                              storeController.itemsInCategory.value[index];
+                          return GestureDetector(
+                              onTap: () => Get.to(
+                                    () => ItemDetailsPage(
+                                      storeItemDetailsEntity: item,
+                                    ),
+                                  ),
+                              child: ItemWidget(itemEntity: item));
+                        },
+                      ).ph(15),
+                    ),
+            ),
           ),
         ],
       )),

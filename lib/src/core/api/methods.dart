@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:era_pro_application/src/core/constants/share_pref_keys.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,7 +30,7 @@ class HttpMethod {
         Uri.parse(url),
         headers: {
           'Authorization':
-              'Bearer ${_sharedPreferencesService.getString('token')}',
+              'Bearer ${_sharedPreferencesService.getString(SharedPrefKeys.TOKEN_KEY)}',
           'Content-Type': 'application/json'
         },
         body: jsonEncode(body),
@@ -44,42 +45,49 @@ class HttpMethod {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        if (data.length > 1) {
+        if (data is List) {
+          // If data is a list, return it as T
+          if (data.isNotEmpty) {
+            return data as T;
+          } else {
+            throw ServerException(message: 'Empty list returned from server');
+          }
+        } else if (data is Map) {
+          // If data is a single object (Map), return it as T
           return data as T;
         } else {
-          return data[0] as T;
+          throw ServerException(message: 'Unexpected response format');
         }
       } else {
-        throw ServerException(message: 'from server statatus not 200');
+        throw ServerException(
+          message: 'Server responded with status code: ${response.statusCode}',
+        );
       }
     } on http.ClientException catch (e) {
       throw ServerException(message: 'client exception : $e');
     } catch (e) {
-      print(e);
       throw ServerException(message: 'another exception $e');
     }
   }
 
-  Future<Map<String, dynamic>> prepareRequestBody() async {
+  Future<Map<String, dynamic>> prepareRequestBody(String sharedPrefKey) async {
     return {
-      "userid": _sharedPreferencesService.getString('userId'),
-      "branchid": 1,
-      "dateTime": null,
+      "userid": _sharedPreferencesService.getString(SharedPrefKeys.USERID_KEY),
+      "branchid":
+          _sharedPreferencesService.getString(SharedPrefKeys.BRANCHID_KEY) ?? 1,
+      "dateTime": _sharedPreferencesService.getString(sharedPrefKey),
     };
   }
 
   Future<T> handleRequest<T>(
-    String url,
-    T Function(dynamic) fromJson,
-  ) async {
-    final body = await prepareRequestBody();
+      String url, T Function(dynamic) fromJson, String sharedPrefKey) async {
+    final body = await prepareRequestBody(sharedPrefKey);
 
     try {
       final responseData = await post(body, url);
 
       return fromJson(responseData);
     } catch (e) {
-      print(e);
       throw ServerFailures(message: "Server error: $e");
     }
   }
