@@ -1,16 +1,4 @@
-import 'package:era_pro_application/src/features/main_info/data/models/barcode_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/branch_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/company_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/curency_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_alter_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_group_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_units_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/payment_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/system_doc_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/unit_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/user_setting_model.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/user_store_model.dart';
+import '../models/main_info_model.dart';
 
 import '../../../../core/services/db/db.dart';
 
@@ -24,17 +12,11 @@ abstract class MainInfoLocalDatasource {
   Future<void> saveAllCurency(List<CurencyModel> curencyList);
   Future<List<CurencyModel>> getAllCurency();
 
-  Future<void> saveAllItemGroups(List<ItemGroupModel> items);
-  Future<List<ItemGroupModel>> getAllItemGroups();
-
+ 
   Future<void> saveAllUnits(List<UnitModel> items);
   Future<List<UnitModel>> getAllUnits();
 
-  Future<void> saveAllItemUnits(List<ItemUnitsModel> items);
-  Future<List<ItemUnitsModel>> getAllItemUnits();
-
-  Future<void> saveAllItems(List<ItemModel> items);
-  Future<List<ItemModel>> getAllItems();
+  
 
   Future<void> saveAllPaymentMethod(List<PaymentModel> items);
   Future<List<PaymentModel>> getAllPaymentMethod();
@@ -46,11 +28,7 @@ abstract class MainInfoLocalDatasource {
   Future<void> saveUserSettings(UserSettingModel userSettingModel);
 
   //item alter and barcode
-  Future<void> saveAllItemBarcode(List<BarcodeModel> items);
-  Future<List<BarcodeModel>> getAllItemBarcode();
-
-  Future<void> saveAllItemAlter(List<ItemAlterModel> items);
-  Future<List<ItemAlterModel>> getAllItemAlter();
+  
 }
 
 class MainInfoLocalDatasourceImp implements MainInfoLocalDatasource {
@@ -98,12 +76,7 @@ class MainInfoLocalDatasourceImp implements MainInfoLocalDatasource {
     return await db.getAll(db.curencyTable);
   }
 
-  @override
-  Future<List<ItemGroupModel>> getAllItemGroups() async {
-    AppDatabase db = AppDatabase.instance();
 
-    return await db.getAll(db.itemGroupTable);
-  }
 
   @override
   Future<List<UnitModel>> getAllUnits() async {
@@ -119,14 +92,7 @@ class MainInfoLocalDatasourceImp implements MainInfoLocalDatasource {
     return await db.getSingle(db.userStoreTable, (tbl) => tbl.id, id);
   }
 
-  @override
-  Future<void> saveAllItemGroups(List<ItemGroupModel> items) async {
-    AppDatabase db = AppDatabase.instance();
-    await db.saveAll(
-      db.itemGroupTable,
-      items.map((currency) => currency.toCompanion()).toList(),
-    );
-  }
+
 
   @override
   Future<void> saveAllUnits(List<UnitModel> items) async {
@@ -143,37 +109,7 @@ class MainInfoLocalDatasourceImp implements MainInfoLocalDatasource {
     db.saveSingle(db.userStoreTable, userStoreInfo.toCompanion());
   }
 
-  @override
-  Future<List<ItemUnitsModel>> getAllItemUnits() async {
-    AppDatabase db = AppDatabase.instance();
-
-    return await db.getAll(db.itemUnitTable);
-  }
-
-  @override
-  Future<void> saveAllItemUnits(List<ItemUnitsModel> items) async {
-    AppDatabase db = AppDatabase.instance();
-    await db.saveAll(
-      db.itemUnitTable,
-      items.map((item) => item.toCompanion()).toList(),
-    );
-  }
-
-  @override
-  Future<List<ItemModel>> getAllItems() async {
-    AppDatabase db = AppDatabase.instance();
-
-    return await db.getAll(db.itemTable);
-  }
-
-  @override
-  Future<void> saveAllItems(List<ItemModel> items) async {
-    AppDatabase db = AppDatabase.instance();
-    await db.saveAll(
-      db.itemTable,
-      items.map((item) => item.toCompanion()).toList(),
-    );
-  }
+ 
 
   @override
   Future<List<PaymentModel>> getAllPaymentMethod() async {
@@ -219,35 +155,8 @@ class MainInfoLocalDatasourceImp implements MainInfoLocalDatasource {
     await db.saveSingle(db.userSettingTable, userSettingModel.toCompanion());
   }
 
-  @override
-  Future<List<ItemAlterModel>> getAllItemAlter() async {
-    AppDatabase db = AppDatabase.instance();
+  
+  
 
-    return await db.getAll(db.itemAlterTable);
-  }
-
-  @override
-  Future<List<BarcodeModel>> getAllItemBarcode() async {
-    AppDatabase db = AppDatabase.instance();
-
-    return await db.getAll(db.barcodeTable);
-  }
-
-  @override
-  Future<void> saveAllItemAlter(List<ItemAlterModel> items) async {
-    AppDatabase db = AppDatabase.instance();
-    await db.saveAll(
-      db.itemAlterTable,
-      items.map((item) => item.toCompanion()).toList(),
-    );
-  }
-
-  @override
-  Future<void> saveAllItemBarcode(List<BarcodeModel> items) async {
-    AppDatabase db = AppDatabase.instance();
-    await db.saveAll(
-      db.barcodeTable,
-      items.map((item) => item.toCompanion()).toList(),
-    );
-  }
+ 
 }

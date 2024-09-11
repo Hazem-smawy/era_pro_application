@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/barcode_model.dart';
+import 'package:era_pro_application/src/features/store/data/models/barcode_model.dart';
 
 @UseRowClass(BarcodeModel)
 class BarcodeTable extends Table {

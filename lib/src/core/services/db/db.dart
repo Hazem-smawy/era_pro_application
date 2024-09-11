@@ -15,6 +15,7 @@ import 'package:drift_dev/api/migrations.dart';
 
 import '../../../core/error/error.dart';
 import '../../../features/main_info/data/models/main_info_model.dart';
+import '../../../features/store/data/models/models.dart';
 
 part 'db.g.dart';
 

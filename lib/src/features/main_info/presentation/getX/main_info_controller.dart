@@ -4,9 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/core/error/error.dart';
 import 'package:era_pro_application/src/core/utils/usecase_helper.dart';
-import 'package:era_pro_application/src/features/main_info/domain/usecases/get_user_settings_usecase.dart';
-import 'package:era_pro_application/src/features/main_info/domain/usecases/get_user_store_info_usecase.dart';
-
 import '../../domain/entities/main_info_entity.dart';
 import '../../domain/usecases/main_info_usecase.dart';
 
@@ -16,13 +13,10 @@ class MainInfoController extends GetxController {
   GetBranchUsecase getBranchUsecase;
   GetCompanyUsecase getCompanyUsecase;
   GetAllCurenciesUseCase getAllCurenciesUsecase;
-  GetAllUnitsUsecase getAllUnitsUsecase;
-  GetAllItemsUsecase getAllItemsUsecase;
+
   GetAllPaymentsUsecase getAllPaymentsUsecase;
   GetAllSystemDocsUsecase getAllSystemDocsUsecase;
-  GetAllItemBarcodeUsecase getAllItemBarcodeUsecase;
-  GetAllItemAlterUsecase getAllItemAlterUsecase;
-  GetAllItemGroupsUsecase getAllItemGroupsUsecase;
+
   GetUserStoreInfoUsecase getUserStoreInfoUsecase;
 
   GetUserSettingsUsecase getUserSettingsUsecase;
@@ -33,12 +27,9 @@ class MainInfoController extends GetxController {
   var userStoreInfo = Rx<UserStoreEntity?>(null);
 
   var allCurencies = Rx<List<CurencyEntity>>([]);
-  var allItemBarcode = Rx<List<BarcodeEntity>>([]);
-  var allItemAlter = Rx<List<ItemAlterEntity>>([]);
-  var allItems = Rx<List<ItemEntity>>([]);
+
   var allPaymentsMethod = Rx<List<PaymentEntity>>([]);
   var allSystemDocs = Rx<List<SystemDocEntity>>([]);
-  var allItemGroups = Rx<List<ItemGroupEntity>>([]);
 
   var units = Rx<List<UnitEnitity>>([]);
   final errorMessage = ''.obs;
@@ -47,13 +38,8 @@ class MainInfoController extends GetxController {
     required this.getBranchUsecase,
     required this.getCompanyUsecase,
     required this.getAllCurenciesUsecase,
-    required this.getAllUnitsUsecase,
-    required this.getAllItemsUsecase,
     required this.getAllPaymentsUsecase,
     required this.getAllSystemDocsUsecase,
-    required this.getAllItemBarcodeUsecase,
-    required this.getAllItemAlterUsecase,
-    required this.getAllItemGroupsUsecase,
     required this.getUserStoreInfoUsecase,
     required this.getUserSettingsUsecase,
   });
@@ -64,14 +50,11 @@ class MainInfoController extends GetxController {
     getBranchInfo();
     getCompanyInfo();
     getAllCurenciesInfo();
-    getAllUnits();
-    getAllItems();
+
     getAllPaymentsMethod();
     getAllSystemDocs();
     getUserSettings();
-    getAllItemBarcode();
-    getAllItemAlter();
-    getAllItemGroupsInfo();
+
     getUserStoreInfo();
   }
 
@@ -115,54 +98,6 @@ class MainInfoController extends GetxController {
     );
 
     return allCurencies.value;
-  }
-
-  Future<List<ItemGroupEntity>> getAllItemGroupsInfo() async {
-    await handleUsecase(
-      usecase: getAllItemGroupsUsecase.call,
-      target: allItemGroups,
-      errorMessageTarget: errorMessage,
-    );
-
-    return allItemGroups.value;
-  }
-
-  Future<List<CurencyEntity>> getAllItemBarcode() async {
-    await handleUsecase(
-      usecase: getAllItemBarcodeUsecase.call,
-      target: allItemBarcode,
-      errorMessageTarget: errorMessage,
-    );
-
-    return allCurencies.value;
-  }
-
-  Future<List<ItemAlterEntity>> getAllItemAlter() async {
-    await handleUsecase(
-      usecase: getAllItemAlterUsecase.call,
-      target: allItemAlter,
-      errorMessageTarget: errorMessage,
-    );
-
-    return allItemAlter.value;
-  }
-
-  Future<void> getAllUnits() async {
-    await handleUsecase(
-      usecase: getAllUnitsUsecase.call,
-      target: units,
-      errorMessageTarget: errorMessage,
-    );
-  }
-
-  Future<List<ItemEntity>> getAllItems() async {
-    await handleUsecase(
-      usecase: getAllItemsUsecase.call,
-      target: allItems,
-      errorMessageTarget: errorMessage,
-    );
-
-    return allItems.value;
   }
 
   Future<void> getAllPaymentsMethod() async {

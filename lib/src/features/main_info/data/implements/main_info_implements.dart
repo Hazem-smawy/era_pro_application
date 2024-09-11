@@ -139,65 +139,6 @@ class MainInfoRepositoryImp implements MainInfoRepository {
   }
 
   @override
-  Future<Either<Failure, List<ItemGroupModel>>> getItemGroups() async {
-    return fetchArrayOfData<ItemGroupModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'itemGroup',
-      fetchFromLocal: mainInfoLocalDatasource.getAllItemGroups,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllItemGroups,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllItemGroups,
-      localError:
-          "Failed to retrieve itemGroup information from local storage.",
-      remoteError: "Failed to retrieve itemGroup information from the server.",
-      genericError:
-          "An unexpected error occurred while retrieving itemGroup information.",
-    );
-  }
-
-  @override
-  Future<Either<Failure, List<UnitModel>>> getUnits() async {
-    return fetchArrayOfData<UnitModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'units',
-      fetchFromLocal: mainInfoLocalDatasource.getAllUnits,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllUnits,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllUnits,
-      localError: "Failed to retrieve units information from local storage.",
-      remoteError: "Failed to retrieve units information from the server.",
-      genericError:
-          "An unexpected error occurred while retrieving units information.",
-    );
-  }
-
-  @override
-  Future<Either<Failure, List<ItemUnitsModel>>> getItemUnits() async {
-    return fetchArrayOfData<ItemUnitsModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'itemUnits',
-      fetchFromLocal: mainInfoLocalDatasource.getAllItemUnits,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllItemUnit,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllItemUnits,
-      localError: "can't get item units info from local",
-      remoteError: "can't get item units info from server",
-      genericError: "server failures to get item units",
-    );
-  }
-
-  @override
-  Future<Either<Failure, List<ItemModel>>> getItems() {
-    return fetchArrayOfData<ItemModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'items',
-      fetchFromLocal: mainInfoLocalDatasource.getAllItems,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllItems,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllItems,
-      localError: "can't get item info from local",
-      remoteError: "can't get item info from server",
-      genericError: "server failures to get item",
-    );
-  }
-
-  @override
   Future<Either<Failure, List<PaymentModel>>> getPaymentMethods() {
     return fetchArrayOfData<PaymentModel>(
       sharedPreferencesService: sharedPreferencesService,
@@ -234,34 +175,6 @@ class MainInfoRepositoryImp implements MainInfoRepository {
       fetchRemoteData: mainInfoRemoteDatasource.getUserSettings,
       saveLocalData: mainInfoLocalDatasource.saveUserSettings,
       sharedPrefKey: 'user_Settings',
-    );
-  }
-
-  @override
-  Future<Either<Failure, List<ItemAlterModel>>> getItemAlter() {
-    return fetchArrayOfData<ItemAlterModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'Item_alter',
-      fetchFromLocal: mainInfoLocalDatasource.getAllItemAlter,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllItemAlter,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllItemAlter,
-      localError: "can't get Item_alter info from local",
-      remoteError: "can't get Item_alter info from server",
-      genericError: "server failures to get Item_alter",
-    );
-  }
-
-  @override
-  Future<Either<Failure, List<BarcodeModel>>> getAllItemBarcodes() async {
-    return fetchArrayOfData<BarcodeModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: 'Item_barcode',
-      fetchFromLocal: mainInfoLocalDatasource.getAllItemBarcode,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllBarcode,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllItemBarcode,
-      localError: "can't get Item_alter info from local",
-      remoteError: "can't get Item_alter info from server",
-      genericError: "server failures to get Item_alter",
     );
   }
 }

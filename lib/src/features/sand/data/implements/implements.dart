@@ -2,10 +2,10 @@
     import '../sources/sources.dart';
     import '../../domain/repositories/repositories.dart';
     
-    class StoreRepositoryImp implements StoreRepository{
+    class SandRepositoryImp implements SandRepository{
 
-        final StoreRemoteDataSource remoteDataSource;
-        StoreRepositoryImp({required this.remoteDataSource});
+        final SandRemoteDataSource remoteDataSource;
+        SandRepositoryImp({required this.remoteDataSource});
       
         // ... example ...
         //

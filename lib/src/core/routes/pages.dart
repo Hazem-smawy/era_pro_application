@@ -8,7 +8,7 @@ import 'package:era_pro_application/src/features/home/presentation/pages/home_pa
 import 'package:era_pro_application/src/features/main_info/presentation/pages/company_info_page.dart';
 import 'package:era_pro_application/src/features/home/presentation/pages/bottom_navigation_bar.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/pages/curency_info_page.dart';
-import 'package:era_pro_application/src/features/main_info/presentation/pages/store_info_page.dart';
+import 'package:era_pro_application/src/features/store/presentation/pages/store_info_page.dart';
 import 'package:get/get.dart';
 import 'routes.dart';
 

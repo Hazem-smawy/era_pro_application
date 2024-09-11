@@ -14,6 +14,12 @@ import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.d
 import 'package:era_pro_application/src/features/auth/presentation/getX/auth_controller.dart';
 import 'package:era_pro_application/src/features/main_info/data/implements/main_info_implements.dart';
 import 'package:era_pro_application/src/features/main_info/data/sources/main_info_local_datasource.dart';
+import 'package:era_pro_application/src/features/store/data/implements/store_implements.dart';
+import 'package:era_pro_application/src/features/store/data/sources/store_local_datasource.dart';
+import 'package:era_pro_application/src/features/store/data/sources/store_remote_datasource.dart';
+import 'package:era_pro_application/src/features/store/domain/repositories/repositories.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/store_usecases.dart';
+import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
 import 'package:era_pro_application/src/features/user/data/implements/user_implements.dart';
 import 'package:era_pro_application/src/features/user/domain/repositories/repositories.dart';
 import 'package:era_pro_application/src/features/user/presentation/getX/user_controller.dart';
@@ -75,15 +81,10 @@ class DependencyInjection {
     //?controller
     Get.lazyPut(
       () => MainInfoController(
-        getAllItemGroupsUsecase: Get.find(),
         getUserStoreInfoUsecase: Get.find(),
-        getAllItemAlterUsecase: Get.find(),
-        getAllItemBarcodeUsecase: Get.find(),
         getAllCurenciesUsecase: Get.find(),
         getBranchUsecase: Get.find(),
         getCompanyUsecase: Get.find(),
-        getAllUnitsUsecase: Get.find(),
-        getAllItemsUsecase: Get.find(),
         getAllPaymentsUsecase: Get.find(),
         getAllSystemDocsUsecase: Get.find(),
         getUserSettingsUsecase: Get.find(),
@@ -98,24 +99,7 @@ class DependencyInjection {
       ),
       fenix: true,
     );
-    Get.lazyPut(
-      () => GetAllItemGroupsUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemAlterUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemBarcodeUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
+
     Get.lazyPut(
       () => GetAllPaymentsUsecase(
         mainInfoRepository: Get.find(),
@@ -134,12 +118,7 @@ class DependencyInjection {
       ),
       fenix: true,
     );
-    Get.lazyPut(
-      () => GetAllUnitsUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
+
     Get.lazyPut(
       () => GetBranchUsecase(
         mainInfoRepository: Get.find(),
@@ -158,12 +137,7 @@ class DependencyInjection {
       ),
       fenix: true,
     );
-    Get.lazyPut(
-      () => GetAllItemsUsecase(
-        mainInfoRepository: Get.find(),
-      ),
-      fenix: true,
-    );
+
     //?repository
     Get.lazyPut<MainInfoRepository>(
       () => MainInfoRepositoryImp(
@@ -181,6 +155,84 @@ class DependencyInjection {
     );
     Get.lazyPut<MainInfoRemoteDatasource>(
       () => MainInfoRemoteDatasourceImp(
+        apiConnection: Get.find(),
+        httpMethod: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
+      fenix: true,
+    );
+
+//! Features - store
+    //?controller
+    Get.lazyPut(
+      () => StoreController(
+        getAllItemGroupsUsecase: Get.find(),
+        getAllItemAlterUsecase: Get.find(),
+        getAllItemBarcodeUsecase: Get.find(),
+        getAllItemUnitsUsecase: Get.find(),
+        getAllUnitsUsecase: Get.find(),
+        getAllItemsUsecase: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    //?usecase
+
+    Get.lazyPut(
+      () => GetAllItemGroupsUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemUnitsUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemAlterUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllItemBarcodeUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut(
+      () => GetAllUnitsUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut(
+      () => GetAllItemsUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    //?repository
+    Get.lazyPut<StoreRepository>(
+      () => StoreRepositoryImpl(
+        storeLocalDatasource: Get.find(),
+        storeRemoteDatasource: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    //?datasources
+    Get.lazyPut<StoreLocalDatasource>(
+      () => StoreLocalDatasourceImpl(),
+      fenix: true,
+    );
+    Get.lazyPut<StoreRemoteDatasource>(
+      () => StoreRemoteDatasourceImp(
         apiConnection: Get.find(),
         httpMethod: Get.find(),
         sharedPreferencesService: Get.find(),

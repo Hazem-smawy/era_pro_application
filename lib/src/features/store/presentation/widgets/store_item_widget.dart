@@ -1,5 +1,5 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/item_entity.dart';
+import 'package:era_pro_application/src/features/store/domain/entities/item_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/extensions/image_with_error_extension.dart';

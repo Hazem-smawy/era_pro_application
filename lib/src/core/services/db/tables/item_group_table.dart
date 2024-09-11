@@ -9,7 +9,7 @@
  */
 
 import 'package:drift/drift.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_group_model.dart';
+import 'package:era_pro_application/src/features/store/data/models/item_group_model.dart';
 
 @UseRowClass(ItemGroupModel)
 class ItemGroupTable extends Table {

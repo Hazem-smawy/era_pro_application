@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/core/services/db/db.dart';
-import 'package:era_pro_application/src/features/main_info/domain/entities/item_entity.dart';
+import 'package:era_pro_application/src/features/store/domain/entities/item_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/utils/image_converter.dart';

@@ -1,10 +1,8 @@
- 
-    class  StoreModel {
-        // ...
-        // A model is a more generic term and can represent structured data used within an application. 
-        // ...
-        // fromJson
-        // ...
-        // toJson
-   
-    }
+export './barcode_model.dart';
+
+export '../../../store/data/models/item_alter_model.dart';
+export '../../../store/data/models/item_group_model.dart';
+export '../../../store/data/models/item_model.dart';
+export '../../../store/data/models/item_units_model.dart';
+
+export '../../../store/data/models/unit_model.dart';

@@ -18,6 +18,7 @@ class UserEntity {
   final String note;
   @Uint8ListConverter()
   final Uint8List? image;
+
   UserEntity({
     required this.id,
     required this.userName,

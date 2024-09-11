@@ -22,7 +22,7 @@
  */
 
 import 'package:drift/drift.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_model.dart';
+import 'package:era_pro_application/src/features/store/data/models/item_model.dart';
 
 @UseRowClass(ItemModel)
 class ItemTable extends Table {

@@ -7,7 +7,7 @@
     */
 
 import 'package:drift/drift.dart';
-import 'package:era_pro_application/src/features/main_info/data/models/item_alter_model.dart';
+import 'package:era_pro_application/src/features/store/data/models/item_alter_model.dart';
 
 @UseRowClass(ItemAlterModel)
 class ItemAlterTable extends Table {
