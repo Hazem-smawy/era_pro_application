@@ -7,6 +7,7 @@ class ItemDetailsModel extends StoreItemDetailsEntity {
     required super.group,
     required super.itemUnits,
     required super.itemUnitsDetails,
+    required super.totalQuantityInStore,
   });
 
   // static List<StoreItemDetailsEntity> fromJsonArray(

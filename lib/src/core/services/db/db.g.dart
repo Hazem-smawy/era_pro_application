@@ -3804,12 +3804,6 @@ class $AccountTableTable extends AccountTable
   late final GeneratedColumn<int> accType = GeneratedColumn<int>(
       'acc_type', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _accLevelMeta =
-      const VerificationMeta('accLevel');
-  @override
-  late final GeneratedColumn<int> accLevel = GeneratedColumn<int>(
-      'acc_level', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _noteMeta = const VerificationMeta('note');
   @override
   late final GeneratedColumn<String> note = GeneratedColumn<String>(
@@ -3887,7 +3881,6 @@ class $AccountTableTable extends AccountTable
         accName,
         accParent,
         accType,
-        accLevel,
         note,
         accCatagory,
         accCatId,
@@ -3936,12 +3929,6 @@ class $AccountTableTable extends AccountTable
           accType.isAcceptableOrUnknown(data['acc_type']!, _accTypeMeta));
     } else if (isInserting) {
       context.missing(_accTypeMeta);
-    }
-    if (data.containsKey('acc_level')) {
-      context.handle(_accLevelMeta,
-          accLevel.isAcceptableOrUnknown(data['acc_level']!, _accLevelMeta));
-    } else if (isInserting) {
-      context.missing(_accLevelMeta);
     }
     if (data.containsKey('note')) {
       context.handle(
@@ -4032,8 +4019,6 @@ class $AccountTableTable extends AccountTable
           .read(DriftSqlType.int, data['${effectivePrefix}acc_parent'])!,
       accType: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}acc_type'])!,
-      accLevel: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}acc_level'])!,
       note: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}note'])!,
       accCatagory: attachedDatabase.typeMapping
@@ -4071,7 +4056,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   final Value<String> accName;
   final Value<int> accParent;
   final Value<int> accType;
-  final Value<int> accLevel;
   final Value<String> note;
   final Value<int> accCatagory;
   final Value<int> accCatId;
@@ -4089,7 +4073,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     this.accName = const Value.absent(),
     this.accParent = const Value.absent(),
     this.accType = const Value.absent(),
-    this.accLevel = const Value.absent(),
     this.note = const Value.absent(),
     this.accCatagory = const Value.absent(),
     this.accCatId = const Value.absent(),
@@ -4108,7 +4091,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     required String accName,
     required int accParent,
     required int accType,
-    required int accLevel,
     required String note,
     required int accCatagory,
     required int accCatId,
@@ -4124,7 +4106,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
         accName = Value(accName),
         accParent = Value(accParent),
         accType = Value(accType),
-        accLevel = Value(accLevel),
         note = Value(note),
         accCatagory = Value(accCatagory),
         accCatId = Value(accCatId),
@@ -4142,7 +4123,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     Expression<String>? accName,
     Expression<int>? accParent,
     Expression<int>? accType,
-    Expression<int>? accLevel,
     Expression<String>? note,
     Expression<int>? accCatagory,
     Expression<int>? accCatId,
@@ -4161,7 +4141,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
       if (accName != null) 'acc_name': accName,
       if (accParent != null) 'acc_parent': accParent,
       if (accType != null) 'acc_type': accType,
-      if (accLevel != null) 'acc_level': accLevel,
       if (note != null) 'note': note,
       if (accCatagory != null) 'acc_catagory': accCatagory,
       if (accCatId != null) 'acc_cat_id': accCatId,
@@ -4182,7 +4161,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
       Value<String>? accName,
       Value<int>? accParent,
       Value<int>? accType,
-      Value<int>? accLevel,
       Value<String>? note,
       Value<int>? accCatagory,
       Value<int>? accCatId,
@@ -4200,7 +4178,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
       accName: accName ?? this.accName,
       accParent: accParent ?? this.accParent,
       accType: accType ?? this.accType,
-      accLevel: accLevel ?? this.accLevel,
       note: note ?? this.note,
       accCatagory: accCatagory ?? this.accCatagory,
       accCatId: accCatId ?? this.accCatId,
@@ -4232,9 +4209,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     }
     if (accType.present) {
       map['acc_type'] = Variable<int>(accType.value);
-    }
-    if (accLevel.present) {
-      map['acc_level'] = Variable<int>(accLevel.value);
     }
     if (note.present) {
       map['note'] = Variable<String>(note.value);
@@ -4280,7 +4254,6 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
           ..write('accName: $accName, ')
           ..write('accParent: $accParent, ')
           ..write('accType: $accType, ')
-          ..write('accLevel: $accLevel, ')
           ..write('note: $note, ')
           ..write('accCatagory: $accCatagory, ')
           ..write('accCatId: $accCatId, ')
@@ -7335,7 +7308,6 @@ typedef $$AccountTableTableCreateCompanionBuilder = AccountTableCompanion
   required String accName,
   required int accParent,
   required int accType,
-  required int accLevel,
   required String note,
   required int accCatagory,
   required int accCatId,
@@ -7355,7 +7327,6 @@ typedef $$AccountTableTableUpdateCompanionBuilder = AccountTableCompanion
   Value<String> accName,
   Value<int> accParent,
   Value<int> accType,
-  Value<int> accLevel,
   Value<String> note,
   Value<int> accCatagory,
   Value<int> accCatId,
@@ -7391,7 +7362,6 @@ class $$AccountTableTableTableManager extends RootTableManager<
             Value<String> accName = const Value.absent(),
             Value<int> accParent = const Value.absent(),
             Value<int> accType = const Value.absent(),
-            Value<int> accLevel = const Value.absent(),
             Value<String> note = const Value.absent(),
             Value<int> accCatagory = const Value.absent(),
             Value<int> accCatId = const Value.absent(),
@@ -7410,7 +7380,6 @@ class $$AccountTableTableTableManager extends RootTableManager<
             accName: accName,
             accParent: accParent,
             accType: accType,
-            accLevel: accLevel,
             note: note,
             accCatagory: accCatagory,
             accCatId: accCatId,
@@ -7429,7 +7398,6 @@ class $$AccountTableTableTableManager extends RootTableManager<
             required String accName,
             required int accParent,
             required int accType,
-            required int accLevel,
             required String note,
             required int accCatagory,
             required int accCatId,
@@ -7448,7 +7416,6 @@ class $$AccountTableTableTableManager extends RootTableManager<
             accName: accName,
             accParent: accParent,
             accType: accType,
-            accLevel: accLevel,
             note: note,
             accCatagory: accCatagory,
             accCatId: accCatId,
@@ -7489,11 +7456,6 @@ class $$AccountTableTableFilterComposer
 
   ColumnFilters<int> get accType => $state.composableBuilder(
       column: $state.table.accType,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get accLevel => $state.composableBuilder(
-      column: $state.table.accLevel,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -7578,11 +7540,6 @@ class $$AccountTableTableOrderingComposer
 
   ColumnOrderings<int> get accType => $state.composableBuilder(
       column: $state.table.accType,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get accLevel => $state.composableBuilder(
-      column: $state.table.accLevel,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

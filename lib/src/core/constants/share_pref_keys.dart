@@ -1,6 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
 class SharedPrefKeys {
+  static const USERSETTING_PARENT_KEY = 'USERSETTING_PARENT_KEY';
+  static const USERSETTING_GENERATED_KEY = 'USERSETTING_GENERATED_KEY';
+  static const USERSETTING_CUSTOMERGROUP_KEY = 'PAYMETHODS_PARENT_KEY';
+  static const USERSTORE_PARENT_KEY = 'USERSTORE_PARENT_KEY';
   static const USERID_KEY = 'USERID_KEY';
   static const TOKEN_KEY = 'TOKEN_KEY';
   static const REFRESHTOKEN_KEY = 'REFRESHTOKEN_KEY';

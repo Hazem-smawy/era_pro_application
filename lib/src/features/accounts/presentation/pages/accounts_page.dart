@@ -27,35 +27,33 @@ class AccountsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              //title
-
-              ReusableFutureBuilder<List<AccountEntity>>(
-                future: accountsController.getAllAccounts(),
-                builder: (context, data) {
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    primary: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => Container(
-                      color: Colors.white,
-                      height: 2,
-                    ),
-                    itemCount: data.length,
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Get.to(
-                          () => AccountDetailsPage(
-                            accountEntity: data[index],
-                          ),
-                        );
-                      },
-                      child: AccountItemWidget(
-                        accountEntity: data[index],
+              Obx(() => accountsController.customers.value.isEmpty
+                  ? const SizedBox()
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      primary: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) => Container(
+                        color: Colors.white,
+                        height: 2,
                       ),
-                    ),
-                  );
-                },
-              ),
+                      itemCount: accountsController.customers.value.length,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => AccountDetailsPage(
+                              accountEntity:
+                                  accountsController.customers.value[index],
+                            ),
+                          );
+                        },
+                        child: AccountItemWidget(
+                          accountEntity:
+                              accountsController.customers.value[index],
+                        ),
+                      ),
+                    )),
+              //title
 
               context.g16,
             ],
@@ -65,7 +63,10 @@ class AccountsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: context.primaryColor,
         onPressed: () {
-          Get.bottomSheet(AddNewAccountSheet());
+          Get.bottomSheet(
+            AddNewAccountSheet(),
+            isScrollControlled: true,
+          );
         },
         child: FaIcon(
           FontAwesomeIcons.plus,

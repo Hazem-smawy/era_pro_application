@@ -49,6 +49,7 @@ class StoreController extends GetxController {
   final errorMessage = ''.obs;
   var selectedGroupId = 0.obs;
   var itemsInCategory = Rx<List<StoreItemDetailsEntity>>([]);
+  var isFilterByQuantity = false.obs;
 
   //actions
 
@@ -56,9 +57,9 @@ class StoreController extends GetxController {
   var selectedPriceIndex = <int, RxInt>{}.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getAllStoreInfo();
+    await getAllStoreInfo();
   }
 
   Future getAllStoreInfo() async {
@@ -75,7 +76,6 @@ class StoreController extends GetxController {
 
   void updatePriceIndex(int unitHash, int newIndex) {
     selectedPriceIndex[unitHash]?.value = newIndex;
-    print(unitHash);
   }
 
   // Get the selected price for the given unit hash
@@ -176,14 +176,74 @@ class StoreController extends GetxController {
   Future<void> changeCategory(int? groupId) async {
     if (groupId != null) {
       selectedGroupId.value = groupId;
+      if (isFilterByQuantity.value) {
+        itemsInCategory.value = allItemsWithDetails.value
+            .where(
+              (item) =>
+                  item.item.itemGroupId == groupId &&
+                  item.totalQuantityInStore > 0,
+            )
+            .toList();
+      } else {
+        itemsInCategory.value = allItemsWithDetails.value
+            .where(
+              (item) => item.item.itemGroupId == groupId,
+            )
+            .toList();
+      }
+    } else {
+      selectedGroupId.value = 0;
+      if (isFilterByQuantity.value) {
+        itemsInCategory.value = allItemsWithDetails.value
+            .where((e) => e.totalQuantityInStore > 0)
+            .toList();
+      } else {
+        itemsInCategory.value = allItemsWithDetails.value;
+      }
+    }
+  }
+
+  Future<void> searchByName(String name) async {
+    if (name.trim().isNotEmpty) {
+      selectedGroupId.value = 0;
       itemsInCategory.value = allItemsWithDetails.value
           .where(
-            (item) => item.item.itemGroupId == groupId,
+            (item) => item.item.name.contains(name),
           )
           .toList();
     } else {
       itemsInCategory.value = allItemsWithDetails.value;
       selectedGroupId.value = 0;
+    }
+  }
+
+  filterByQuantity() {
+    if (isFilterByQuantity.value) {
+      if (selectedGroupId.value != 0) {
+        itemsInCategory.value = allItemsWithDetails.value
+            .where(
+              (item) =>
+                  item.totalQuantityInStore > 0 &&
+                  item.item.itemGroupId == selectedGroupId.value,
+            )
+            .toList();
+      } else {
+        itemsInCategory.value = allItemsWithDetails.value
+            .where(
+              (item) => item.totalQuantityInStore > 0,
+            )
+            .toList();
+      }
+    } else {
+      if (selectedGroupId.value == 0) {
+        itemsInCategory.value = allItemsWithDetails.value;
+      } else {
+        itemsInCategory.value = allItemsWithDetails.value
+            .where(
+              (item) => item.item.itemGroupId == selectedGroupId.value,
+            )
+            .toList();
+      }
     }
   }
 }

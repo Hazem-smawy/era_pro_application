@@ -32,6 +32,7 @@ class ItemUnitDetails {
 class StoreItemDetailsEntity extends Equatable {
   int? id;
   final ItemEntity item;
+  final int totalQuantityInStore;
   ItemGroupEntity? group;
   List<ItemUnitDetailsEntity> itemUnitsDetails;
   List<ItemAlterEntity>? itemAlter;
@@ -42,6 +43,7 @@ class StoreItemDetailsEntity extends Equatable {
     required this.group,
     required this.itemUnits,
     required this.itemUnitsDetails,
+    required this.totalQuantityInStore,
     this.itemAlter,
   });
 

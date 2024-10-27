@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 class AccountEntity extends Equatable {
-  final int id;
+  int? id;
   final int accNumber;
   final String accName;
   final int accParent;
   final int accType;
-  final int accLevel;
+
   final String note;
   final int accCatagory;
   final int accCatId;
@@ -19,13 +19,12 @@ class AccountEntity extends Equatable {
   final bool accStoped;
   final bool newData;
 
-  const AccountEntity({
-    required this.id,
+  AccountEntity({
+    this.id,
     required this.accNumber,
     required this.accName,
     required this.accParent,
     required this.accType,
-    required this.accLevel,
     required this.note,
     required this.accCatagory,
     required this.accCatId,
@@ -46,7 +45,6 @@ class AccountEntity extends Equatable {
         accName,
         accParent,
         accType,
-        accLevel,
         note,
         accCatagory,
         accCatId,

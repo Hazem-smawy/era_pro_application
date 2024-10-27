@@ -8,11 +8,13 @@ class CustomTextFieldWidget extends StatelessWidget {
       required this.controller,
       this.label = '',
       this.isNumber = false,
-      this.hint = ''});
+      this.hint = '',
+      this.validator});
   final TextEditingController controller;
   final String label;
   final bool isNumber;
   final String hint;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +35,7 @@ class CustomTextFieldWidget extends StatelessWidget {
             textAlign: TextAlign.right,
             textDirection: isNumber ? TextDirection.ltr : TextDirection.rtl,
             style: context.bodyLarge,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return '$label مطلوبة';
-              }
-              return null;
-            },
+            validator: validator,
             decoration: InputDecoration(
               fillColor: context.wightColor,
               hintStyle: context.bodySmall?.copyWith(

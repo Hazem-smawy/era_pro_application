@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 class SearchAppbarWidget extends StatelessWidget {
   const SearchAppbarWidget({
     super.key,
+    required this.action,
   });
-
+  final Function(String) action;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,7 +30,9 @@ class SearchAppbarWidget extends StatelessWidget {
                       color: context.blackColor,
                       fontWeight: FontWeight.bold,
                     ),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      action(value);
+                    },
                     onTap: () {},
                     decoration: InputDecoration(
                       border: InputBorder.none,

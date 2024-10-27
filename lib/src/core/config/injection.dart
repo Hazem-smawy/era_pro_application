@@ -29,6 +29,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/accounts/domain/usecases/add_account_usecase.dart';
 import '../../features/auth/data/implements/auth_implements.dart';
 import '../../features/auth/domain/repositories/repositories.dart';
 import '../../features/main_info/data/sources/main_info_remote_datasource.dart';
@@ -252,6 +253,8 @@ class DependencyInjection {
     Get.lazyPut(
       () => UserController(
         getUserUseCase: Get.find(),
+        getUserSettingsUsecase: Get.find(),
+        sharedPreferencesService: Get.find(),
       ),
       fenix: true,
     );
@@ -294,11 +297,21 @@ class DependencyInjection {
 
     //! Features - accounts
     //controller
-    Get.lazyPut(() => AccountsController(getAccountsUseCase: Get.find()),
+    Get.lazyPut(
+        () => AccountsController(
+              getAccountsUseCase: Get.find(),
+              addAccountUsecase: Get.find(),
+            ),
         fenix: true);
     //Usecases
-    Get.lazyPut(() => GetAccountsUseCase(accountsRepository: Get.find()),
-        fenix: true);
+    Get.lazyPut(
+      () => GetAccountsUseCase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => AddAccountUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
 
     //Repository
     Get.lazyPut<AccountsRepository>(

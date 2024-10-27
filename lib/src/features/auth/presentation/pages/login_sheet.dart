@@ -45,23 +45,47 @@ class LoginSheet extends StatelessWidget {
                 CustomTextFieldWidget(
                   controller: authController.nameController,
                   label: 'اسم الموزع',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'اسم الموزع مطلوب';
+                    }
+                    return null;
+                  },
                 ),
                 Gaps.g20,
                 CustomTextFieldWidget(
                   controller: authController.passwordController,
                   label: 'كلمة المرور',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'كلمة المرور  مطلوب';
+                    }
+                    return null;
+                  },
                 ),
                 Gaps.g16,
                 CustomTextFieldWidget(
                   controller: authController.ipController,
                   label: 'عنوان الاتصال',
                   isNumber: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'عنوان الاتصال مطلوب';
+                    }
+                    return null;
+                  },
                 ),
                 Gaps.g16,
                 CustomTextFieldWidget(
                   controller: authController.portController,
                   label: 'رقم المنفذ',
                   isNumber: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'رقم المنفذ مطلوب';
+                    }
+                    return null;
+                  },
                 ),
                 Gaps.g16,
                 Obx(

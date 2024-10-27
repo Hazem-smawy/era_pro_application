@@ -55,6 +55,7 @@ dependencies:
   font_awesome_flutter:
   sqlite3_flutter_libs: any
   device_info_plus: any
+  qrscan: any
 
 
 dev_dependencies:

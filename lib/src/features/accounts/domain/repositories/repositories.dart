@@ -5,4 +5,5 @@ import 'package:era_pro_application/src/features/accounts/domain/entities/accoun
 abstract class AccountsRepository {
   // Future<User> getUser(String userId);
   Future<Either<Failure, List<AccountEntity>>> getAllAccounts();
+  Future<Either<Failure, int>> addAccount(AccountEntity account);
 }

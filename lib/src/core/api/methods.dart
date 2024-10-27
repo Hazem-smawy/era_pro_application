@@ -75,7 +75,8 @@ class HttpMethod {
       "userid": _sharedPreferencesService.getString(SharedPrefKeys.USERID_KEY),
       "branchid":
           _sharedPreferencesService.getString(SharedPrefKeys.BRANCHID_KEY) ?? 1,
-      "dateTime": _sharedPreferencesService.getString(sharedPrefKey),
+      // "dateTime": _sharedPreferencesService.getString(sharedPrefKey),
+      "dateTime": null,
     };
   }
 

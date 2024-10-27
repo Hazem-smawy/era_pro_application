@@ -7,6 +7,7 @@ import 'package:era_pro_application/src/features/store/presentation/getX/store_c
 import 'package:era_pro_application/src/core/widgets/categories_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/pages/item_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/widgets/search_bar_widget.dart';
@@ -28,6 +29,9 @@ class StoreInfoPage extends StatelessWidget {
             height: 50,
             child: Row(
               children: [
+                const SizedBox(
+                  width: 5,
+                ),
                 IconButton(
                   onPressed: () {
                     Get.toNamed(Routes.STOREDETAILS);
@@ -37,24 +41,50 @@ class StoreInfoPage extends StatelessWidget {
                     size: 30,
                     color: context.secondaryTextColor,
                   ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    storeController.isFilterByQuantity.value =
+                        !storeController.isFilterByQuantity.value;
+                    storeController.filterByQuantity();
+                  },
+                  icon: Obx(
+                    () => Icon(
+                      !storeController.isFilterByQuantity.value
+                          ? Icons.filter_alt_outlined
+                          : Icons.filter_alt_off,
+                      size: 30,
+                      color: context.secondaryTextColor,
+                    ),
+                  ),
                 ).ph(5),
-                const Expanded(
-                  child: SearchAppbarWidget(),
+                Expanded(
+                  child: SearchAppbarWidget(
+                    action: (p0) {
+                      storeController.searchByName(p0);
+                    },
+                  ),
                 ),
               ],
             ),
           ),
           context.g12,
-          Obx(
-            () => CategoriesWidget(
-              idExtractor: (p0) => p0.code,
-              nameExtractor: (p0) => p0.name,
-              items: storeController.allItemGroups.value,
-              selectedId: storeController.selectedGroupId.value,
-              action: (p0) {
-                storeController.changeCategory(p0);
-              },
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Obx(
+                  () => CategoriesWidget(
+                    idExtractor: (p0) => p0.code,
+                    nameExtractor: (p0) => p0.name,
+                    items: storeController.allItemGroups.value,
+                    selectedId: storeController.selectedGroupId.value,
+                    action: (p0) {
+                      storeController.changeCategory(p0);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           context.g12,
           Expanded(

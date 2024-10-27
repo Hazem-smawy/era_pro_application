@@ -28,7 +28,6 @@ class AccountTable extends Table {
   TextColumn get accName => text()();
   IntColumn get accParent => integer()();
   IntColumn get accType => integer()();
-  IntColumn get accLevel => integer()();
   TextColumn get note => text()();
   IntColumn get accCatagory => integer()();
   IntColumn get accCatId => integer()();

@@ -29,7 +29,7 @@ class ServiceWidget extends StatelessWidget {
               alignment: WrapAlignment.spaceBetween,
               runAlignment: WrapAlignment.spaceBetween,
               crossAxisAlignment: WrapCrossAlignment.end,
-              spacing: context.sp20,
+              spacing: context.sp12,
               runSpacing: context.sp16,
               children: ServicesType.values
                   .map((service) => ServiceItemWidget(
@@ -41,7 +41,7 @@ class ServiceWidget extends StatelessWidget {
                         },
                       ))
                   .toList(),
-            ).p(context.sp12),
+            ).p(context.sp8),
           ),
         ],
       ),
@@ -69,7 +69,7 @@ class ServiceItemWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: context.width / 4.5,
+            width: context.width / 5.2,
             height: 80,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),

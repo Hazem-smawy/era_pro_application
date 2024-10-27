@@ -87,33 +87,35 @@ class ItemWidget extends StatelessWidget {
               //   ),
               // ),
               alignment: Alignment.centerRight,
-              child: Text(
-                itemEntity.item.name,
-                style: context.titleMedium,
+              child: FittedBox(
+                child: Text(
+                  itemEntity.item.name,
+                  style: context.titleMedium,
+                ),
               ),
             ),
           ],
         ),
-        // Positioned(
-        //   right: 5,
-        //   top: 5,
-        //   child: Container(
-        //     width: 25,
-        //     height: 25,
-        //     decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.circular(12),
-        //       color: context.secondaryTextColor,
-        //     ),
-        //     child: Center(
-        //       child: Text(
-        //         '4',
-        //         style: context.bodyLarge?.copyWith(
-        //           color: context.wightColor,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // )
+        Positioned(
+          right: 5,
+          top: 5,
+          child: Container(
+            width: 40,
+            height: 30,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: context.primary,
+            ),
+            child: Center(
+              child: Text(
+                itemEntity.totalQuantityInStore.toString(),
+                style: context.bodyLarge?.copyWith(
+                  color: context.wightColor,
+                ),
+              ),
+            ),
+          ),
+        )
       ],
     );
   }

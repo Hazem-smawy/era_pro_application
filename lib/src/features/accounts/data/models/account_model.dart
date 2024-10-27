@@ -7,13 +7,12 @@ part 'account_model.g.dart';
 
 @JsonSerializable()
 class AccountModel extends AccountEntity {
-  const AccountModel({
-    required super.id,
+  AccountModel({
+    super.id,
     required super.accNumber,
     required super.accName,
     required super.accParent,
     required super.accType,
-    required super.accLevel,
     required super.note,
     required super.accCatagory,
     required super.accCatId,
@@ -38,12 +37,11 @@ class AccountModel extends AccountEntity {
 
   AccountTableCompanion toCompanion() {
     return AccountTableCompanion(
-      id: Value(id),
+      id: Value(id ?? -1),
       accNumber: Value(accNumber),
       accName: Value(accName),
       accParent: Value(accParent),
       accType: Value(accType),
-      accLevel: Value(accLevel),
       note: Value(note),
       accCatagory: Value(accCatagory),
       accCatId: Value(accCatId),

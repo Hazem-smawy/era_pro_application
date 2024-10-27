@@ -58,8 +58,57 @@ class StoreInfoDetailsPage extends StatelessWidget {
                 ),
               ),
             ),
+            StoreDetailsInfoWidget(
+              label: 'كل الأصناف في المخزن',
+              value: storeController.allItems.value.length.toString(),
+            ),
+            context.g4,
+            StoreDetailsInfoWidget(
+              label: 'عدد الأصناف مع كميات',
+              value: storeController.allItemsWithDetails.value
+                  .where((e) => e.totalQuantityInStore > 0)
+                  .toList()
+                  .length
+                  .toString(),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class StoreDetailsInfoWidget extends StatelessWidget {
+  const StoreDetailsInfoWidget({
+    super.key,
+    required this.label,
+    required this.value,
+  });
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: context.wightColor,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            value,
+            style: context.titleLarge,
+          ),
+          Text(
+            label,
+            style: context.titleMedium,
+          ),
+        ],
       ),
     );
   }

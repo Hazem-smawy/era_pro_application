@@ -13,7 +13,7 @@ import '../../../../core/widgets/title_info_widget.dart';
 class CompanyAndBranchInfoPage extends StatelessWidget {
   CompanyAndBranchInfoPage({super.key});
 
-  MainInfoController mainInfoController = Get.find();
+  final MainInfoController mainInfoController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -153,14 +153,14 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                         title: reporArtHead,
                         subTitle:
                             mainInfoController.branch.value?.arReportHeader ??
-                                "",
+                                "لايوجد",
                       ),
                       Gaps.g8,
                       TitleInfoWidget(
                         title: reporEntHead,
                         subTitle:
                             mainInfoController.branch.value?.enReportHeader ??
-                                "",
+                                "لايوجد",
                         withDivider: false,
                       ),
                     ],

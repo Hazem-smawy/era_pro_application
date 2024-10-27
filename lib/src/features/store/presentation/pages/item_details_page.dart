@@ -287,7 +287,7 @@ class ItemDetailsPage extends StatelessWidget {
   }
 
   Column _buildUnitsAndPricessWidget(BuildContext context) {
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
       Text(
         'الوحدات والأسعار',
         style: context.titleMedium,
@@ -301,6 +301,7 @@ class ItemDetailsPage extends StatelessWidget {
           separatorBuilder: (BuildContext context, int index) => context.g16,
           itemBuilder: (BuildContext context, int index) {
             return ItemUnitsDetailsWidget(
+              item: storeItemDetailsEntity,
               itemUnitDetails: storeItemDetailsEntity.itemUnitsDetails[index],
               isMain: true,
             );
@@ -356,11 +357,13 @@ class ItemDetailsPage extends StatelessWidget {
 class ItemUnitsDetailsWidget extends StatelessWidget {
   final ItemUnitDetailsEntity itemUnitDetails;
   final bool isMain;
+  final StoreItemDetailsEntity item;
 
   ItemUnitsDetailsWidget({
     super.key,
     required this.itemUnitDetails,
     this.isMain = false,
+    required this.item,
   });
 
   final StoreController storeController = Get.find();
@@ -373,7 +376,7 @@ class ItemUnitsDetailsWidget extends StatelessWidget {
       () => Column(
         children: [
           ItemDetailsUnitWidget(
-            quantity: itemUnitDetails.quantity,
+            quantity: item.totalQuantityInStore ~/ itemUnitDetails.unitFactor,
             isMain: itemUnitDetails.unitFactor == 1,
             name: itemUnitDetails.unitName,
           ),
@@ -525,18 +528,18 @@ class ItemDetailsUnitWidget extends StatelessWidget {
         color: context.containerColor,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             child: Text(
               quantity.toString(),
               textAlign: TextAlign.left,
-              style: context.displayLarge,
+              style: context.titleLarge,
             ).pl(10),
           ),
           context.g8,
           Text(
-            'الكمية',
+            ':الكمية',
             textAlign: TextAlign.left,
             style: context.bodySmall,
           ),

@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:typed_data';
 
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../../../../core/utils/image_converter.dart';
 
-class UserEntity {
+class UserEntity extends Equatable {
   final int id;
   @JsonKey(name: "user_name")
   final String userName;
@@ -29,4 +30,10 @@ class UserEntity {
     required this.note,
     required this.image,
   });
+  
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    id,userName,password,userAcctype,branchId,groupId,note,image
+  ];
 }

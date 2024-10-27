@@ -38,10 +38,17 @@ class MainInfoController extends GetxController {
   });
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getBranchInfo();
-    getCompanyInfo();
+    await getAllMainInfo();
+  }
+
+  Future<void> getAllMainInfo() async {
+    await getBranchInfo();
+    await getCompanyInfo();
+    await getAllCurenciesInfo();
+    await getAllPaymentsMethod();
+    await getAllSystemDocs();
   }
 
   Future<void> getBranchInfo() async {

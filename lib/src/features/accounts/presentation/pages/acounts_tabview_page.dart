@@ -1,12 +1,15 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/accounts_page.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/special_accounts_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/widgets/search_bar_widget.dart';
 
 class AcountsTabviewPage extends StatelessWidget {
-  const AcountsTabviewPage({super.key});
+  AcountsTabviewPage({super.key});
+  final AccountsController accountsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +30,17 @@ class AcountsTabviewPage extends StatelessWidget {
                   color: context.secondaryTextColor,
                 ),
               ),
-              const Expanded(child: SearchAppbarWidget())
+              Expanded(child: SearchAppbarWidget(
+                action: (p0) {
+                  accountsController.search(p0);
+                },
+              ))
             ],
           ),
           bottom: TabBar(
             dividerColor: context.secondaryTextColor.withOpacity(0.3),
+            labelStyle: context.titleMedium?.copyWith(color: context.primary),
+            unselectedLabelColor: context.secondaryTextColor,
             tabs: const [
               Tab(
                 text: 'الحسابات',

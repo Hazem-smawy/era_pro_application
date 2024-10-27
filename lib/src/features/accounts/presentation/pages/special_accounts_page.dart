@@ -1,5 +1,4 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,12 +9,12 @@ import '../widgets/custom_popup_menu_button.dart';
 
 class SpecialAccountsPage extends StatelessWidget {
   SpecialAccountsPage({super.key});
-  AccountsController accountsController = Get.find();
+  final AccountsController accountsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return ReusableFutureBuilder<List<AccountEntity>>(
-      future: accountsController.getAllAccounts(),
+      future: accountsController.getSpecailAccounts(),
       builder: (context, data) {
         return ListView.separated(
           shrinkWrap: true,

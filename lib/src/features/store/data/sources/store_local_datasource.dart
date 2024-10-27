@@ -295,6 +295,7 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
         final itemUnitDetails = <ItemUnitDetailsEntity>[];
 
         final itemUnitsResult = await itemUnitsQuery.get();
+
         for (final itemUnitRow in itemUnitsResult) {
           final unit = itemUnitRow.readTable(db.unitTable);
           final itemUnit = itemUnitRow.readTable(db.itemUnitTable);
@@ -328,7 +329,13 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
           ));
         }
 
+        int totalQuantityInStore = 0;
+        for (var i in itemUnitDetails) {
+          totalQuantityInStore += i.quantity * i.unitFactor;
+        }
+
         itemDetailsList.add(StoreItemDetailsEntity(
+          totalQuantityInStore: totalQuantityInStore,
           item: item,
           group: group,
           itemAlter: itemAlters,

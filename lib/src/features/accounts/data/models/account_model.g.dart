@@ -7,12 +7,11 @@ part of 'account_model.dart';
 // **************************************************************************
 
 AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       accNumber: (json['accNumber'] as num).toInt(),
       accName: json['accName'] as String,
       accParent: (json['accParent'] as num).toInt(),
       accType: (json['accType'] as num).toInt(),
-      accLevel: (json['accLevel'] as num).toInt(),
       note: json['note'] as String,
       accCatagory: (json['accCatagory'] as num).toInt(),
       accCatId: (json['accCatId'] as num).toInt(),
@@ -33,7 +32,6 @@ Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
       'accName': instance.accName,
       'accParent': instance.accParent,
       'accType': instance.accType,
-      'accLevel': instance.accLevel,
       'note': instance.note,
       'accCatagory': instance.accCatagory,
       'accCatId': instance.accCatId,
