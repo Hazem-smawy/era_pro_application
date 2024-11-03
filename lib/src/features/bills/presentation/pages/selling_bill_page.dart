@@ -731,7 +731,7 @@ class SellingBillPage extends StatelessWidget {
   SellingBillPage({super.key});
 
   final TextEditingController nameController = TextEditingController();
-  StoreController storeController = Get.find();
+  final StoreController storeController = Get.find();
   final ItemController itemController = Get.put(ItemController());
 
   @override
@@ -740,63 +740,68 @@ class SellingBillPage extends StatelessWidget {
       backgroundColor: context.wightColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                context.g4,
-                const HeaderWidget(
-                  title: 'فاتورة بيع',
-                ),
-                context.g12,
-                const CategoriesWithSearchWidget(),
-                context.g4,
-                Expanded(
-                  child: Obx(
-                    () => itemController.items.isEmpty
-                        ? const EmptyWidget(
-                            imageName: Assets.assetsImagesCurencies,
-                            label: "لاتوجد اي منتجات",
-                          )
-                        : Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: GridView.builder(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 160),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.64,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                              ),
-                              itemCount: itemController.items.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                Item item = itemController.items[index];
-                                var rxItem = Rx(item);
-                                return SellingBillItemWiget(
-                                  index: index,
-                                  item: rxItem,
-                                  isCart: false,
-                                );
-                              },
-                            ),
-                          ),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  context.g4,
+                  const HeaderWidget(
+                    title: 'فاتورة بيع',
                   ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 10,
-              right: 0,
-              left: 0,
-              child: Obx(
-                () => itemController.cart.isEmpty
-                    ? const SizedBox()
-                    : const SellingFooterWidget(),
+                  context.g12,
+                  const CategoriesWithSearchWidget(),
+                  context.g4,
+                  Expanded(
+                    child: Obx(
+                      () => itemController.items.isEmpty
+                          ? const EmptyWidget(
+                              imageName: Assets.assetsImagesCurencies,
+                              label: "لاتوجد اي منتجات",
+                            )
+                          : Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: GridView.builder(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 10, bottom: 160),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.63,
+                                  crossAxisSpacing: 12,
+                                  mainAxisSpacing: 12,
+                                ),
+                                itemCount: itemController.items.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var item = itemController.items[index];
+                                  var rxItem = Rx(item);
+                                  return SellingBillItemWiget(
+                                    index: index,
+                                    item: rxItem,
+                                    isCart: false,
+                                  );
+                                },
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
               ),
-            )
-          ],
+              Positioned(
+                bottom: 10,
+                right: 0,
+                left: 0,
+                child: Obx(
+                  () => itemController.cart.isEmpty
+                      ? const SizedBox()
+                      : const SellingFooterWidget(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

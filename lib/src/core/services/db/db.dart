@@ -2,8 +2,12 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:era_pro_application/src/core/services/db/tables/bill_details_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/bill_table.dart';
 import '../../../features/accounts/data/models/account_model.dart';
 import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
+import '../../../features/bills/data/models/bill_details_model.dart';
+import '../../../features/bills/data/models/bill_model.dart';
 import '../../../features/main_info/data/models/main_info_model.dart';
 import '../../../features/store/data/models/models.dart';
 
@@ -36,6 +40,8 @@ part 'db.g.dart';
     BarcodeTable,
     AccountTable,
     StoreOperationTable,
+    BillTable,
+    BillDetailsTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -126,7 +132,7 @@ class AppDatabase extends _$AppDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db1.sqlite'));
+    final file = File(p.join(dbFolder.path, 'database.sqlite'));
     return NativeDatabase.createInBackground(file);
   });
 }

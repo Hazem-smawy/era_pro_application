@@ -56,6 +56,7 @@ dependencies:
   sqlite3_flutter_libs: any
   device_info_plus: any
   qrscan: any
+  animated_custom_dropdown: any
 
 
 dev_dependencies:

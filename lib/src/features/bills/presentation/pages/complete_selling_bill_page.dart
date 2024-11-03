@@ -1,15 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:era_pro_application/src/features/bills/presentation/widgets/cancel_btn_widget.dart';
+import 'package:era_pro_application/src/features/bills/presentation/widgets/complete_selling_bill_summary_item_widget.dart';
+import 'package:era_pro_application/src/features/bills/presentation/widgets/divider_widget.dart';
+import 'package:era_pro_application/src/features/bills/presentation/widgets/search_dropdown.dart';
+import 'package:era_pro_application/src/features/main_info/presentation/widgets/type_of_paid_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/elvated_btn_extension.dart';
 import 'package:era_pro_application/src/core/widgets/custom_text_field_with_label_widget.dart';
 import 'package:era_pro_application/src/core/widgets/header_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_getx.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/widgets/custom_text_filed_widget.dart';
+import '../../../accounts/presentation/pages/add_new_customer_sheet.dart';
 
 class CompleteSellingBillPage extends StatelessWidget {
   CompleteSellingBillPage({super.key});
@@ -35,10 +41,10 @@ class CompleteSellingBillPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      width: 45,
-                      height: 45,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         color: context.wightColor,
                       ),
                       child: Center(
@@ -50,14 +56,35 @@ class CompleteSellingBillPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 4,
                     ),
-                    Expanded(
-                      child: CustomTextFieldWidget(
-                        hint: 'اسم العميل',
-                        controller: itemController.customerName,
+                    GestureDetector(
+                      onTap: () {
+                        Get.bottomSheet(
+                          AddNewAccountSheet(),
+                          isScrollControlled: true,
+                        );
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: context.wightColor,
+                        ),
+                        child: Center(
+                          child: FaIcon(
+                            Icons.person_add,
+                            size: 20,
+                            color: context.secondaryTextColor,
+                          ),
+                        ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Expanded(child: SearchDropdownWidget())
                   ],
                 ),
               ),
@@ -77,7 +104,7 @@ class CompleteSellingBillPage extends StatelessWidget {
                 value:
                     itemController.newBill.value?.totalPrice.toString() ?? '',
               ),
-              context.g16,
+              const DividerWidget(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -134,9 +161,7 @@ class CompleteSellingBillPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              context.g12,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -150,11 +175,9 @@ class CompleteSellingBillPage extends StatelessWidget {
                           label: 'مبلغ',
                           action: (p0) {
                             if (p0.trim().isNotEmpty && p0 != '0') {
-                              print('p0: $p0');
                               itemController.newBill.value?.addTaxRate =
                                   double.parse(p0);
                             } else {
-                              print('p0: $p0');
                               itemController.newBill.value?.addTaxRate = 0;
                             }
                             itemController.updateBill();
@@ -162,9 +185,7 @@ class CompleteSellingBillPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    context.g12,
                     Expanded(
                       child: SizedBox(
                         height: 40,
@@ -185,7 +206,7 @@ class CompleteSellingBillPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      width: 30,
+                      width: 16,
                     ),
                     Text(
                       'الضريبة المضافة',
@@ -206,16 +227,9 @@ class CompleteSellingBillPage extends StatelessWidget {
                     ),
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                        horizontal: 10, vertical: 10),
                     child: Row(
                       children: [
-                        Text(
-                          'ر.س',
-                          style: context.bodySmall,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
                         Text(
                           itemController.newBill.value?.clearPrice.toString() ??
                               '0',
@@ -229,7 +243,8 @@ class CompleteSellingBillPage extends StatelessWidget {
                       ],
                     ),
                   )),
-              const DividerWidget(),
+              // const DividerWidget(),
+              context.g12,
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -243,7 +258,7 @@ class CompleteSellingBillPage extends StatelessWidget {
                 ],
               ),
               context.g12,
-              const TypeOfPaidWidget(),
+              TypeOfPaidWidget(),
               const DividerWidget(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -294,164 +309,10 @@ class CompleteSellingBillPage extends StatelessWidget {
   }
 }
 
-class CompleteSellingBillSummaryItemWidget extends StatelessWidget {
-  const CompleteSellingBillSummaryItemWidget({
-    super.key,
-    required this.label,
-    required this.value,
-  });
-  final String label;
-  final String value;
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          Text(
-            'ر.س',
-            style: context.bodySmall,
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Text(
-            value,
-            style: context.titleMedium,
-          ),
-          const Spacer(),
-          Text(
-            label,
-            style: context.bodyLarge,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CancelBtnWidget extends StatelessWidget {
-  const CancelBtnWidget({
-    super.key,
-    required this.action,
-    required this.label,
-  });
-  final String label;
-  final VoidCallback action;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        //Get.to(() => const CompleteSellingBillScreen());
-      },
-      child: Container(
-        height: 50,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: Colors.red.withOpacity(0.1),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: context.titleMedium?.copyWith(
-              color: Colors.red,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TypeOfPaidWidget extends StatelessWidget {
-  const TypeOfPaidWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'اجل',
-                    style: context.bodySmall
-                        ?.copyWith(color: context.primaryColor),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.circleCheck,
-                    color: context.primaryColor,
-                    size: 20,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    'نقداً',
-                    style: context.bodySmall,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.circle,
-                    color: context.secondaryTextColor,
-                    size: 20,
-                  ),
-                ],
-              ),
-              Text(
-                'نوع السداد',
-                style: context.titleMedium,
-              )
-            ],
-          ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
-          // const Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     LightBorderRowWidget(
-          //       label: 'الاستحقاق',
-          //       value: '2020-05-02',
-          //     ),
-          //   ],
-          // )
-        ],
-      ),
-    );
-  }
-}
-
-class DividerWidget extends StatelessWidget {
-  const DividerWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Divider(
-        color: context.secondaryTextColor.withOpacity(0.2),
-      ),
-    );
-  }
-}
+//1 box
+//2 bank
+//3 customer
+//10 salesman
+//6 store
+//11 saraf

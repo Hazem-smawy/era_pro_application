@@ -2,152 +2,36 @@
 // import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
 // import 'dart:typed_data';
 
-import 'package:drift/drift.dart';
+import 'package:era_pro_application/src/features/main_info/domain/entities/main_info_entity.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/store_entity.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
 
-class Bill {
-  int numberOfItems;
-  double totalPrice;
-  String customerName;
-  double addTaxPercent;
-  double addTaxRate;
-  double addDiscountPercent;
-  double addDiscountRate;
-  double clearPrice;
-  double tax;
-  double discount;
-  int typeOfPay;
-  String note;
-  Bill({
-    this.numberOfItems = 0,
-    this.totalPrice = 0,
-    this.customerName = '',
-    this.addTaxPercent = 0,
-    this.addTaxRate = 0,
-    this.addDiscountPercent = 0,
-    this.addDiscountRate = 0,
-    this.clearPrice = 0,
-    this.tax = 0,
-    this.discount = 0,
-    this.typeOfPay = 0,
-    this.note = '',
-  });
-}
-
-class Item {
-  int id;
-  String name;
-  // int quantity;
-  Uint8List? image;
-
-  List<UnitDetails> unitDetails;
-
-  String note;
-  UnitDetails selectedUnit;
-  UnitDetails smallUnit;
-  double discountRate;
-  double discountPercent;
-  double taxRate;
-  double taxPercent;
-  double totalPrice;
-  double totalPriceWithTaxRate;
-  double totalPriceWithTaxPercent;
-  double totalPriceWithDiscountRate;
-  double totalPriceWithDiscountPercent;
-  double clearPrice;
-  int allQuantityOfItem;
-  double totalPriceBeforeDiscountAndTax;
-  int freeUnitId;
-  int indexOfUnitDetails;
-  int groupId;
-
-  Item({
-    required this.id,
-    required this.name,
-    required this.totalPriceBeforeDiscountAndTax,
-    required this.smallUnit,
-    required this.image,
-    required this.unitDetails,
-    required this.note,
-    required this.selectedUnit,
-    required this.discountPercent,
-    required this.discountRate,
-    required this.taxPercent,
-    required this.taxRate,
-    required this.freeUnitId,
-    this.totalPriceWithDiscountPercent = 0,
-    this.totalPriceWithDiscountRate = 0,
-    this.totalPriceWithTaxPercent = 0,
-    this.totalPriceWithTaxRate = 0,
-    this.totalPrice = 0,
-    this.clearPrice = 0,
-    required this.allQuantityOfItem,
-    required this.indexOfUnitDetails,
-    required this.groupId,
-  });
-}
-
-class UnitDetails {
-  int id;
-  String name;
-  double price;
-  int updatedQuantity;
-  double totalPrice;
-  double taxRate;
-  double taxPercent;
-  double selectedPrice;
-  double firstPrice;
-  double secondPrice;
-  double thirdPrice;
-  int unitFactor;
-  int quantityRemaining;
-  // int constantQuantity;
-  int freeQuantity;
-
-  UnitDetails({
-    required this.id,
-    required this.name,
-    required this.quantityRemaining,
-    this.price = 0.0,
-    required this.unitFactor,
-    required this.updatedQuantity,
-    required this.totalPrice,
-    required this.taxRate,
-    required this.taxPercent,
-    required this.selectedPrice,
-    required this.firstPrice,
-    required this.secondPrice,
-    required this.thirdPrice,
-    required this.freeQuantity,
-    // required this.constantQuantity,
-  });
-}
+import '../../domain/entities/bill_ui_entity.dart';
 
 class ItemController extends GetxController {
-  var items = <Item>[].obs;
-  var totalItem = <Item>[].obs;
-  var cart = <Item>[].obs;
+  var items = <ItemUI>[].obs;
+  var totalItem = <ItemUI>[].obs;
+  var cart = <ItemUI>[].obs;
   var groups = <ItemGroupEntity>[].obs;
   StoreController storeController = Get.find();
   var selectedUnit = <int, Rx<int>>{}.obs;
   var selectedUnitIndex = <int, RxInt>{}.obs;
   var selectedGroupId = 0.obs;
-
+  var paymentType = false.obs;
   TextEditingController itemDetailsPriceController = TextEditingController();
   TextEditingController customerName = TextEditingController();
   TextEditingController billNote = TextEditingController();
-  var newBill = Rx<Bill?>(null);
+  var newBill = Rx<BillUI?>(null);
+  var paymentMethods = <PaymentEntity>[];
 
   @override
   void onInit() {
     super.onInit();
     getItems();
-    newBill.value = Bill();
+    newBill.value = BillUI();
   }
 
   void filterItemsByGroup(int groupId) async {
@@ -175,7 +59,7 @@ class ItemController extends GetxController {
   }
 
   // Get the selected price for the given unit hash
-  UnitDetails getSelectedUnit(int unitHash, List<UnitDetails> unitDetails) {
+  UnitDetailsUI getSelectedUnit(int unitHash, List<UnitDetailsUI> unitDetails) {
     int index = selectedUnitIndex[unitHash]?.value ?? 0;
     return unitDetails[index];
   }
@@ -188,7 +72,7 @@ class ItemController extends GetxController {
     final operations = await storeController.getStoreOperations();
     groups.value = await storeController.getAllItemGroupsInfo();
     for (var item in storeItems) {
-      final unitsDetails = <UnitDetails>[].obs;
+      final unitsDetails = <UnitDetailsUI>[].obs;
       final newItemUnits = itemUnits.where((e) => e.itemId == item.id);
 
       if (newItemUnits.isNotEmpty) {
@@ -199,7 +83,7 @@ class ItemController extends GetxController {
               .where((e) => e.itemId == item.id && e.unitId == newUnit.id)
               .fold(0, (pre, el) => pre + el.quantity);
 
-          final ud = UnitDetails(
+          final ud = UnitDetailsUI(
               // constantQuantity: quantity,
               freeQuantity: 0,
               updatedQuantity: 0,
@@ -231,7 +115,7 @@ class ItemController extends GetxController {
           // e.constantQuantity = totalQuantity ~/ e.unitFactor;
         }
 
-        final newItem = Item(
+        final newItem = ItemUI(
           freeUnitId: unitsDetails.firstWhere((e) => e.unitFactor == 1).id,
           totalPriceBeforeDiscountAndTax: 0,
           allQuantityOfItem: totalQuantity,
@@ -257,7 +141,7 @@ class ItemController extends GetxController {
     }
   }
 
-  void nextUnitDetails(Item item) {
+  void nextUnitDetails(ItemUI item) {
     // Find the current item index based on the ID
     int currentIndex =
         item.unitDetails.indexWhere((unit) => unit.id == item.selectedUnit.id);
@@ -276,9 +160,9 @@ class ItemController extends GetxController {
   Future updateSelectedPrice(int itemId, int itemUnitId, int number) async {
     final itemUnits = await storeController.getAllItemsUnit();
 
-    Item updatedItem = items.firstWhere((e) => e.id == itemId);
+    ItemUI updatedItem = items.firstWhere((e) => e.id == itemId);
     final selectedItemUnit = itemUnits.firstWhere((e) => e.id == itemUnitId);
-    UnitDetails unitDetails =
+    UnitDetailsUI unitDetails =
         updatedItem.unitDetails.firstWhere((e) => e.id == selectedItemUnit.id);
     if (number == 1) {
       unitDetails.selectedPrice = unitDetails.firstPrice;
@@ -296,7 +180,7 @@ class ItemController extends GetxController {
   }
 
   void updateQuantity(int itemId, int quantity, int freeQuntity) {
-    Item updatedItem = items.firstWhere((e) => e.id == itemId);
+    ItemUI updatedItem = items.firstWhere((e) => e.id == itemId);
     var freeUnit = updatedItem.unitDetails
         .firstWhere((e) => e.id == updatedItem.freeUnitId);
 
@@ -402,7 +286,7 @@ class ItemController extends GetxController {
   }
 
   void updatedQuantitiesForItem(
-      int quantity, Item updatedItem, UnitDetails selectedUnit) {
+      int quantity, ItemUI updatedItem, UnitDetailsUI selectedUnit) {
     if (updatedItem.allQuantityOfItem > selectedUnit.unitFactor) {
       updatedItem.allQuantityOfItem =
           updatedItem.allQuantityOfItem - quantity * selectedUnit.unitFactor;
@@ -415,7 +299,7 @@ class ItemController extends GetxController {
     }
   }
 
-  void refreshItemBillInfo(Item updatedItem) {
+  void refreshItemBillInfo(ItemUI updatedItem) {
     updatedItem.selectedUnit.totalPrice =
         updatedItem.selectedUnit.selectedPrice *
             updatedItem.selectedUnit.updatedQuantity;

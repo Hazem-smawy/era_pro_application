@@ -5,10 +5,10 @@ import 'package:era_pro_application/src/features/accounts/domain/entities/accoun
 import '../../../../core/error/error.dart';
 import '../repositories/repositories.dart';
 
-class GetAccountsUseCase extends NoParamUseCase<List<AccountEntity>> {
+class GetAllAccountsUseCase extends NoParamUseCase<List<AccountEntity>> {
   AccountsRepository accountsRepository;
 
-  GetAccountsUseCase({required this.accountsRepository});
+  GetAllAccountsUseCase({required this.accountsRepository});
   @override
   Future<Either<Failure, List<AccountEntity>>> call() {
     return accountsRepository.getAllAccounts();

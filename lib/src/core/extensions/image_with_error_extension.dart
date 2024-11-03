@@ -5,6 +5,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension CustomImage on Image {
+  // static Widget memoryWithError(Uint8List? imageData,
+  //     {double? w,
+  //     double? h,
+  //     BoxFit? fit,
+  //     BoxDecoration decoration = const BoxDecoration(
+  //       shape: BoxShape.circle,
+  //       color: AppColors.whiteColor,
+  //     )}) {
+  //   return SizedBox(
+  //     width: w,
+  //     height: h,
+  //     child: imageData != null
+  //         ? Image.memory(
+  //             fit: fit ?? BoxFit.cover,
+  //             width: w ?? double.infinity,
+  //             height: h ?? double.infinity,
+  //             imageData,
+  //             errorBuilder:
+  //                 (BuildContext context, Object error, StackTrace? stackTrace) {
+  //               return Container(
+  //                 width: w,
+  //                 height: h,
+  //                 decoration: decoration,
+  //               );
+  //             },
+  //           )
+  //         : Container(
+  //             width: w,
+  //             height: h,
+  //             decoration: decoration,
+  //           ),
+  //   );
+  // }
   static Widget memoryWithError(Uint8List? imageData,
       {double? w,
       double? h,
@@ -17,24 +50,41 @@ extension CustomImage on Image {
       width: w,
       height: h,
       child: imageData != null
-          ? Image.memory(
-              fit: fit ?? BoxFit.cover,
-              width: w ?? double.infinity,
-              height: h ?? double.infinity,
-              imageData,
-              errorBuilder:
-                  (BuildContext context, Object error, StackTrace? stackTrace) {
-                return Container(
-                  width: w,
-                  height: h,
-                  decoration: decoration,
-                );
+          ? Builder(
+              builder: (context) {
+                try {
+                  return Image.memory(
+                    imageData,
+                    fit: fit ?? BoxFit.cover,
+                    width: w ?? double.infinity,
+                    height: h ?? double.infinity,
+                    errorBuilder: (BuildContext context, Object error,
+                        StackTrace? stackTrace) {
+                      return Container(
+                        height: h,
+                        width: w ?? double.infinity,
+                        decoration: decoration,
+                        child:
+                            const Icon(Icons.broken_image, color: Colors.grey),
+                      );
+                    },
+                  );
+                } catch (e) {
+                  // If there is an exception during decoding, return the error container
+                  return Container(
+                    width: w ?? double.infinity,
+                    height: h,
+                    decoration: decoration,
+                    child: const Icon(Icons.broken_image, color: Colors.red),
+                  );
+                }
               },
             )
           : Container(
-              width: w,
+              width: w ?? double.infinity,
               height: h,
               decoration: decoration,
+              child: const Icon(Icons.image_not_supported, color: Colors.grey),
             ),
     );
   }

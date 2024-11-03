@@ -2,13 +2,14 @@ import 'dart:ui';
 
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/image_with_error_extension.dart';
-import 'package:era_pro_application/src/core/utils/validatators.dart';
 import 'package:era_pro_application/src/core/widgets/custom_text_field_with_label_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_getx.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/item_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+import '../../domain/entities/bill_ui_entity.dart';
 
 class SellingBillItemWiget extends StatefulWidget {
   const SellingBillItemWiget({
@@ -17,7 +18,7 @@ class SellingBillItemWiget extends StatefulWidget {
     required this.index,
     required this.isCart,
   });
-  final Rx<Item> item;
+  final Rx<ItemUI> item;
   final int index;
   final bool isCart;
 
@@ -35,11 +36,7 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
       children: [
         GestureDetector(
           onTap: () async {
-            Get.dialog(
-              ItemInfoDialg(
-                item: widget.item,
-              ),
-            );
+            itemController.updateQuantity(widget.item.value.id, 1, 0);
           },
           child: Stack(children: [
             ClipRRect(
@@ -57,12 +54,13 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ItemShortcutsBtnsWidget(
                         isInputQuantityOpen: isInputQuantityOpen,
                         widget: widget,
+                        isCard: widget.isCart,
                         action: () {
                           setState(() {
                             isInputQuantityOpen = !isInputQuantityOpen;
@@ -88,28 +86,34 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
                               child: Text(
                                 'x${widget.item.value.selectedUnit.unitFactor}',
                                 style: context.bodySmall?.copyWith(
-                                  color: Colors.white,
+                                  color: widget.item.value.selectedUnit
+                                              .updatedQuantity >
+                                          0
+                                      ? Colors.green
+                                      : Colors.white,
                                 ),
                               ),
                             ),
                           ),
-                          if (widget.item.value.selectedUnit.updatedQuantity >
-                              0)
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                height: 7,
-                                width: 7,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.green,
-                                  ),
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ),
+
+                          // if (widget.item.value.selectedUnit.updatedQuantity >
+                          //     0)
+                          //   Positioned(
+                          //     bottom: 0,
+                          //     right: 0,
+                          //     left: 0,
+                          //     child: Container(
+                          //       height: 8,
+                          //       width: 8,
+                          //       decoration: BoxDecoration(
+                          //         shape: BoxShape.circle,
+                          //         border: Border.all(
+                          //           color: Colors.green,
+                          //         ),
+                          //         color: Colors.green,
+                          //       ),
+                          //     ),
+                          //   ),
                         ],
                       ),
                     ),
@@ -188,7 +192,8 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
                       }
 
                       int updatedQuantity =
-                          res - widget.item.value.selectedUnit.updatedQuantity;
+                          (res - widget.item.value.selectedUnit.updatedQuantity)
+                              .toInt();
 
                       if (updatedQuantity > 0) {
                         for (var i = 0; i < updatedQuantity; i++) {
@@ -207,24 +212,26 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
               if (!isInputQuantityOpen)
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        itemController.updateQuantity(
-                            widget.item.value.id, 1, 0);
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xffEBEEF3),
+                    Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // color: const Color(0xffEBEEF3),
+                        border: Border.all(
+                          color: context.secondary.withOpacity(0.3),
                         ),
-                        child: const Center(
-                          child: FaIcon(
-                            Icons.add,
-                            size: 20,
-                          ),
-                        ),
+                      ),
+                      child: IconButton(
+                        icon: const Center(
+                            child: Icon(
+                          Icons.add,
+                          size: 18,
+                        )),
+                        onPressed: () {
+                          itemController.updateQuantity(
+                              widget.item.value.id, 1, 0);
+                        },
                       ),
                     ),
                     SizedBox(
@@ -241,27 +248,29 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        if (widget.item.value.selectedUnit.updatedQuantity >
-                            0) {
-                          itemController.updateQuantity(
-                              widget.item.value.id, -1, 0);
-                        }
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xffEBEEF3),
+                    Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // color: const Color(0xffEBEEF3),
+                        border: Border.all(
+                          color: context.secondary.withOpacity(0.3),
                         ),
-                        child: const Center(
-                          child: FaIcon(
-                            Icons.remove,
-                            size: 20,
-                          ),
-                        ),
+                      ),
+                      child: IconButton(
+                        icon: const Center(
+                            child: Icon(
+                          Icons.remove,
+                          size: 18,
+                        )),
+                        onPressed: () {
+                          if (widget.item.value.selectedUnit.updatedQuantity >
+                              0) {
+                            itemController.updateQuantity(
+                                widget.item.value.id, -1, 0);
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -276,15 +285,11 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 widget.item.value.selectedUnit.selectedPrice.toString(),
-                style: context.bodyLarge?.copyWith(
-                  color: context.secondary,
+                style: context.titleSmall?.copyWith(
+                  color: context.blackColor,
+                  // fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            context.g4,
-            Text(
-              'ر.ي',
-              style: context.bodySmall,
             ),
           ],
         ),
@@ -313,8 +318,8 @@ class ItemNameAndQuantityWidget extends StatelessWidget {
             child: Text(
               widget.item.value.name,
               style: context.bodyMeduim?.copyWith(
-                color: context.blackColor,
-              ),
+                  // color: context.blackColor,
+                  ),
             ),
           ),
         ),
@@ -331,7 +336,7 @@ class ItemNameAndQuantityWidget extends StatelessWidget {
                 widget.item.value.selectedUnit.quantityRemaining.toString(),
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   color: context.blackColor,
                 ),
               ),
@@ -349,48 +354,58 @@ class ItemShortcutsBtnsWidget extends StatelessWidget {
     required this.isInputQuantityOpen,
     required this.widget,
     required this.action,
+    required this.isCard,
   });
 
   final bool isInputQuantityOpen;
   final SellingBillItemWiget widget;
   final VoidCallback action;
+  final bool isCard;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 36,
-          width: 36,
-          child: GlassContainer(
-            child: FaIcon(
-              Icons.more_vert_rounded,
-              color: context.wightColor,
-              size: 16,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
         GestureDetector(
-          onTap: action,
+          onTap: () {
+            Get.dialog(
+              ItemInfoDialg(
+                item: widget.item,
+              ),
+            );
+          },
           child: SizedBox(
             height: 36,
             width: 36,
-            child: Center(
-              child: GlassContainer(
-                child: Icon(
-                  isInputQuantityOpen
-                      ? FontAwesomeIcons.arrowUp19
-                      : FontAwesomeIcons.keyboard,
-                  color: context.wightColor,
-                  size: 15,
-                ),
+            child: GlassContainer(
+              child: FaIcon(
+                Icons.more_vert_rounded,
+                color: context.wightColor,
+                size: 16,
               ),
             ),
           ),
         ),
+        if (!isCard) context.g12,
+        if (!isCard)
+          GestureDetector(
+            onTap: action,
+            child: SizedBox(
+              height: 36,
+              width: 36,
+              child: Center(
+                child: GlassContainer(
+                  child: Icon(
+                    isInputQuantityOpen
+                        ? FontAwesomeIcons.arrowUp19
+                        : FontAwesomeIcons.keyboard,
+                    color: context.wightColor,
+                    size: 15,
+                  ),
+                ),
+              ),
+            ),
+          ),
         context.g8,
         if (getItemStatus())
           Container(

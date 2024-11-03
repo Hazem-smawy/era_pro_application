@@ -11,3 +11,5 @@ extension StatusExtension on Status {
   bool isError() => this == Status.ERROR;
   bool isNothing() => this == Status.NOTHING;
 }
+
+enum StoreStatus { empty, loading, success, error }

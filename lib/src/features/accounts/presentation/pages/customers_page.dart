@@ -4,7 +4,7 @@ import 'package:era_pro_application/src/core/widgets/future_builder_widget.dart'
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/account_details_page.dart';
-import 'package:era_pro_application/src/features/accounts/presentation/pages/add_new_account_sheet.dart';
+import 'package:era_pro_application/src/features/accounts/presentation/pages/add_new_customer_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';

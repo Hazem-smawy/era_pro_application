@@ -9,7 +9,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../pages/account_add_operation_sheet.dart';
-import '../pages/account_details_page.dart';
 
 class AccountItemWidget extends StatelessWidget {
   final AccountEntity accountEntity;
@@ -26,7 +25,7 @@ class AccountItemWidget extends StatelessWidget {
         vertical: 10,
       ),
       decoration: BoxDecoration(
-        // color: context.wightColor,
+       
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AccountsController extends GetxController {
-  GetAccountsUseCase getAccountsUseCase;
+  GetAllAccountsUseCase getAccountsUseCase;
   AddAccountUsecase addAccountUsecase;
 
   AccountsController(

@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/usecases.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/core/error/error.dart';
@@ -16,14 +18,20 @@ class MainInfoController extends GetxController {
 
   GetAllPaymentsUsecase getAllPaymentsUsecase;
   GetAllSystemDocsUsecase getAllSystemDocsUsecase;
+  GetAllAccountsUseCase getAllAccountsUseCase;
 
   var company = Rx<CompanyEntity?>(null);
 
   var branch = Rx<BranchEntity?>(null);
+  var allAccount = Rx<List<AccountEntity>>([]);
 
   var allCurencies = Rx<List<CurencyEntity>>([]);
 
   var allPaymentsMethod = Rx<List<PaymentEntity>>([]);
+  var selectedPaymentsMethod = Rx<PaymentEntity?>(null);
+  final paymentType = true.obs;
+  final selectedPaymentsMethodDetails = ''.obs;
+  final paymentsMethodDetails = [].obs;
   var allSystemDocs = Rx<List<SystemDocEntity>>([]);
   // var status = RxStatus.empty();
 
@@ -35,12 +43,30 @@ class MainInfoController extends GetxController {
     required this.getAllCurenciesUsecase,
     required this.getAllPaymentsUsecase,
     required this.getAllSystemDocsUsecase,
+    required this.getAllAccountsUseCase,
   });
 
   @override
   void onInit() async {
     super.onInit();
     await getAllMainInfo();
+    await getAllAccounts();
+  }
+
+  // @override
+  // void onReady() {
+  //   getAllPaymentsMethod();
+  // }
+
+  Future<void> changeSelectedPaymentMethodsDetails(List list) async {
+    paymentsMethodDetails.value = list;
+  }
+
+  Future<void> getAllAccounts() async {
+    handleUsecase(
+      usecase: getAllAccountsUseCase.call,
+      target: allAccount,
+    );
   }
 
   Future<void> getAllMainInfo() async {
@@ -84,6 +110,7 @@ class MainInfoController extends GetxController {
       target: allPaymentsMethod,
       errorMessageTarget: errorMessage,
     );
+    selectedPaymentsMethod.value = allPaymentsMethod.value.first;
   }
 
   Future<void> getAllSystemDocs() async {
@@ -92,5 +119,27 @@ class MainInfoController extends GetxController {
       target: allSystemDocs,
       errorMessageTarget: errorMessage,
     );
+  }
+
+  Future<void> changePaymentMethod(PaymentEntity? value) async {
+    final newValue = value ??
+        allPaymentsMethod.value.firstWhere(
+          (method) => method.id != 0,
+          orElse: () => allPaymentsMethod.value.first,
+        );
+
+    selectedPaymentsMethod.value = newValue;
+
+    final newPaymentMethodDetails = allAccount.value
+        .where((e) => e.accCatagory == newValue.id)
+        .map((e) => e.accName)
+        .toList();
+
+    if (newPaymentMethodDetails.isNotEmpty) {
+      paymentsMethodDetails.value = newPaymentMethodDetails;
+      selectedPaymentsMethodDetails.value = paymentsMethodDetails.first;
+    } else {
+      selectedPaymentsMethodDetails.value = '';
+    }
   }
 }

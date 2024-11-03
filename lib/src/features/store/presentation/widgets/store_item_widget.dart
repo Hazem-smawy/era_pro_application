@@ -30,13 +30,13 @@ class ItemWidget extends StatelessWidget {
                   itemEntity.item.itemImage,
                   h: 120,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: context.primaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                    color: context.wightColor,
                     image: const DecorationImage(
                       image: AssetImage(
                         'assets/images/avatar1.jpg',
                       ),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 ),

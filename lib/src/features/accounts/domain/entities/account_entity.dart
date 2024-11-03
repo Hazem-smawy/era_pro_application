@@ -1,6 +1,7 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:equatable/equatable.dart';
 
-class AccountEntity extends Equatable {
+class AccountEntity extends Equatable with CustomDropdownListFilter {
   int? id;
   final int accNumber;
   final String accName;
@@ -57,4 +58,14 @@ class AccountEntity extends Equatable {
         accStoped,
         newData,
       ];
+
+  @override
+  String toString() {
+    return accName;
+  }
+
+  @override
+  bool filter(String query) {
+    return accName.toLowerCase().contains(query.toLowerCase());
+  }
 }

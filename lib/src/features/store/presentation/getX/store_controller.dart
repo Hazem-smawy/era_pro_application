@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
 import 'package:get/get.dart';
 
@@ -8,13 +9,18 @@ import 'package:era_pro_application/src/core/utils/usecase_helper.dart';
 import 'package:era_pro_application/src/features/main_info/domain/usecases/main_info_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_item_details_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_store_operation_usecase.dart';
+import 'package:sqlite3/common.dart';
 
+import '../../../../core/types/status_types.dart';
 import '../../domain/entities/store_entity.dart';
 import '../../domain/usecases/store_usecases.dart';
 
 typedef Usecase<T> = Future<Either<Failure, T>> Function();
 
 class StoreController extends GetxController {
+  // var storeStatus = RxStatus.empty().obs;
+  final storeStatus = RxStatus.empty().obs;
+
   GetAllItemsUsecase getAllItemsUsecase;
   GetAllItemAlterUsecase getAllItemAlterUsecase;
   GetAllUnitsUsecase getAllUnitsUsecase;
@@ -62,16 +68,39 @@ class StoreController extends GetxController {
     await getAllStoreInfo();
   }
 
-  Future getAllStoreInfo() async {
-    await getAllUnits();
-    await getAllItemGroupsInfo();
-    await getAllItems();
-    await getAllItemsUnit();
-    await getAllItemAlter();
-    await getAllItemBarcode();
-    await getUserStoreInfo();
-    await getStoreOperations();
-    await getAllItemsWithDetails();
+  StoreStatus get currentStatus {
+    if (storeStatus.value.isEmpty) return StoreStatus.empty;
+    if (storeStatus.value.isLoading) return StoreStatus.loading;
+    if (storeStatus.value.isSuccess) return StoreStatus.success;
+    if (storeStatus.value.isError) return StoreStatus.error;
+    return StoreStatus.empty; // Default to empty
+  }
+
+  Future<void> getAllStoreInfo() async {
+    storeStatus.value = RxStatus.loading();
+    try {
+      await getAllUnits();
+
+      await getAllItemGroupsInfo();
+
+      await getAllItems();
+
+      await getAllItemsUnit();
+
+      await getAllItemAlter();
+
+      await getAllItemBarcode();
+
+      await getUserStoreInfo();
+
+      await getStoreOperations();
+
+      await getAllItemsWithDetails();
+
+      storeStatus.value = RxStatus.success();
+    } catch (e) {
+      storeStatus.value = RxStatus.error(e.toString());
+    }
   }
 
   void updatePriceIndex(int unitHash, int newIndex) {
@@ -159,6 +188,10 @@ class StoreController extends GetxController {
       target: allItems,
       errorMessageTarget: errorMessage,
     );
+
+    if (allItems.value.isEmpty) {
+      throw EmptyCashException(message: errorMessage.value);
+    }
 
     return allItems.value;
   }

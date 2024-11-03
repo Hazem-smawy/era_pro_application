@@ -2,20 +2,21 @@ import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/routes/app_pages.dart';
+import 'package:era_pro_application/src/core/types/status_types.dart';
 import 'package:era_pro_application/src/core/widgets/empty_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
 import 'package:era_pro_application/src/core/widgets/categories_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/pages/item_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../../../../core/widgets/search_bar_widget.dart';
 import '../widgets/store_item_widget.dart';
 
 class StoreInfoPage extends StatelessWidget {
   StoreInfoPage({super.key});
-  final StoreController storeController = Get.find();
+  StoreController storeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -87,41 +88,115 @@ class StoreInfoPage extends StatelessWidget {
             ],
           ),
           context.g12,
-          Expanded(
-            child: Obx(
-              () => storeController.itemsInCategory.value.isEmpty
-                  ? const EmptyWidget(
-                      imageName: Assets.assetsImagesCurencies,
-                      label: "لاتوجد اي منتجات")
-                  : Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: GridView.builder(
-                        padding: const EdgeInsets.only(
-                          bottom: 20,
-                        ),
-                        reverse: false,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1 / 0.9,
-                          mainAxisSpacing: context.sp12,
-                          crossAxisSpacing: context.sp12,
-                        ),
-                        itemCount: storeController.itemsInCategory.value.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var item =
-                              storeController.itemsInCategory.value[index];
-                          return GestureDetector(
-                              onTap: () => Get.to(
-                                    () => ItemDetailsPage(
-                                      storeItemDetailsEntity: item,
-                                    ),
+          Expanded(child: Obx(
+            () {
+              switch (storeController.currentStatus) {
+                case StoreStatus.empty:
+                  return const EmptyWidget(
+                    imageName: Assets.assetsImagesCurencies,
+                    label: "لاتوجد اي منتجات",
+                  );
+                case StoreStatus.loading:
+                  return Container(
+                    alignment: Alignment.center,
+                    width: 50,
+                    height: 50,
+                    child: const CircularProgressIndicator(),
+                  );
+                case StoreStatus.error:
+                  return EmptyWidget(
+                    imageName: Assets.assetsImagesCurencies,
+                    label:
+                        storeController.storeStatus.value.errorMessage ?? 'خطأ',
+                  );
+
+                case StoreStatus.success:
+                  return storeController.itemsInCategory.value.isEmpty
+                      ? const EmptyWidget(
+                          imageName: Assets.assetsImagesCurencies,
+                          label: "لاتوجد اي منتجات",
+                        )
+                      : Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: GridView.builder(
+                            padding: const EdgeInsets.only(
+                              bottom: 20,
+                            ),
+                            reverse: false,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 1 / 0.9,
+                              mainAxisSpacing: context.sp12,
+                              crossAxisSpacing: context.sp12,
+                            ),
+                            itemCount:
+                                storeController.itemsInCategory.value.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              var item =
+                                  storeController.itemsInCategory.value[index];
+                              return GestureDetector(
+                                onTap: () => Get.to(
+                                  () => ItemDetailsPage(
+                                    storeItemDetailsEntity: item,
                                   ),
-                              child: ItemWidget(itemEntity: item));
-                        },
-                      ).ph(15),
-                    ),
-            ),
-          ),
+                                ),
+                                child: ItemWidget(itemEntity: item),
+                              );
+                            },
+                          ).ph(15),
+                        );
+              }
+            },
+          ))
+          // Expanded(
+          //   child: Obx(
+          //     () => storeController.storeStatus.value == RxStatus.empty()
+          //         ? storeController.storeStatus.value == RxStatus.loading()
+          //             ? Container(
+          //                 alignment: Alignment.center,
+          //                 width: 50,
+          //                 height: 50,
+          //                 child: const CircularProgressIndicator(),
+          //               )
+          //             : const EmptyWidget(
+          //                 imageName: Assets.assetsImagesCurencies,
+          //                 label: "لاتوجد اي منتجات")
+          //         : storeController.storeStatus.value == RxStatus.error()
+          //             ? const EmptyWidget(
+          //                 imageName: Assets.assetsImagesCurencies,
+          //                 label: "لاتوجد اي منتجات")
+          //             : Directionality(
+          //                 textDirection: TextDirection.rtl,
+          //                 child: GridView.builder(
+          //                   padding: const EdgeInsets.only(
+          //                     bottom: 20,
+          //                   ),
+          //                   reverse: false,
+          //                   gridDelegate:
+          //                       SliverGridDelegateWithFixedCrossAxisCount(
+          //                     crossAxisCount: 2,
+          //                     childAspectRatio: 1 / 0.9,
+          //                     mainAxisSpacing: context.sp12,
+          //                     crossAxisSpacing: context.sp12,
+          //                   ),
+          //                   itemCount:
+          //                       storeController.itemsInCategory.value.length,
+          //                   itemBuilder: (BuildContext context, int index) {
+          //                     var item =
+          //                         storeController.itemsInCategory.value[index];
+          //                     return GestureDetector(
+          //                         onTap: () => Get.to(
+          //                               () => ItemDetailsPage(
+          //                                 storeItemDetailsEntity: item,
+          //                               ),
+          //                             ),
+          //                         child: ItemWidget(itemEntity: item));
+          //                   },
+          //                 ).ph(15),
+          //               ),
+          //   ),
+          // ),
         ],
       )),
     );

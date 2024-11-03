@@ -34,7 +34,7 @@ class ItemTable extends Table {
   TextColumn get enName => text()();
   IntColumn get type => integer()();
   IntColumn get itemLimit => integer()();
-  BlobColumn get itemImage => blob()();
+  BlobColumn get itemImage => blob().nullable()();
   BoolColumn get isExpire => boolean()();
   BoolColumn get freeQuantityAllow => boolean()();
   BoolColumn get hasTax => boolean()();

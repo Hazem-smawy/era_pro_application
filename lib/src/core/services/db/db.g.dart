@@ -1995,8 +1995,8 @@ class $ItemTableTable extends ItemTable
       const VerificationMeta('itemImage');
   @override
   late final GeneratedColumn<Uint8List> itemImage = GeneratedColumn<Uint8List>(
-      'item_image', aliasedName, false,
-      type: DriftSqlType.blob, requiredDuringInsert: true);
+      'item_image', aliasedName, true,
+      type: DriftSqlType.blob, requiredDuringInsert: false);
   static const VerificationMeta _isExpireMeta =
       const VerificationMeta('isExpire');
   @override
@@ -2152,8 +2152,6 @@ class $ItemTableTable extends ItemTable
     if (data.containsKey('item_image')) {
       context.handle(_itemImageMeta,
           itemImage.isAcceptableOrUnknown(data['item_image']!, _itemImageMeta));
-    } else if (isInserting) {
-      context.missing(_itemImageMeta);
     }
     if (data.containsKey('is_expire')) {
       context.handle(_isExpireMeta,
@@ -2257,7 +2255,7 @@ class $ItemTableTable extends ItemTable
       itemLimit: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}item_limit'])!,
       itemImage: attachedDatabase.typeMapping
-          .read(DriftSqlType.blob, data['${effectivePrefix}item_image'])!,
+          .read(DriftSqlType.blob, data['${effectivePrefix}item_image']),
       isExpire: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_expire'])!,
       notifyBefore: attachedDatabase.typeMapping
@@ -2297,7 +2295,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemModel> {
   final Value<String> enName;
   final Value<int> type;
   final Value<int> itemLimit;
-  final Value<Uint8List> itemImage;
+  final Value<Uint8List?> itemImage;
   final Value<bool> isExpire;
   final Value<bool> freeQuantityAllow;
   final Value<bool> hasTax;
@@ -2338,7 +2336,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemModel> {
     required String enName,
     required int type,
     required int itemLimit,
-    required Uint8List itemImage,
+    this.itemImage = const Value.absent(),
     required bool isExpire,
     required bool freeQuantityAllow,
     required bool hasTax,
@@ -2356,7 +2354,6 @@ class ItemTableCompanion extends UpdateCompanion<ItemModel> {
         enName = Value(enName),
         type = Value(type),
         itemLimit = Value(itemLimit),
-        itemImage = Value(itemImage),
         isExpire = Value(isExpire),
         freeQuantityAllow = Value(freeQuantityAllow),
         hasTax = Value(hasTax),
@@ -2420,7 +2417,7 @@ class ItemTableCompanion extends UpdateCompanion<ItemModel> {
       Value<String>? enName,
       Value<int>? type,
       Value<int>? itemLimit,
-      Value<Uint8List>? itemImage,
+      Value<Uint8List?>? itemImage,
       Value<bool>? isExpire,
       Value<bool>? freeQuantityAllow,
       Value<bool>? hasTax,
@@ -4786,6 +4783,1423 @@ class StoreOperationTableCompanion
   }
 }
 
+class $BillTableTable extends BillTable
+    with TableInfo<$BillTableTable, BillsModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BillTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _branchIdMeta =
+      const VerificationMeta('branchId');
+  @override
+  late final GeneratedColumn<int> branchId = GeneratedColumn<int>(
+      'branch_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _billNumberMeta =
+      const VerificationMeta('billNumber');
+  @override
+  late final GeneratedColumn<int> billNumber = GeneratedColumn<int>(
+      'bill_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _billTypeMeta =
+      const VerificationMeta('billType');
+  @override
+  late final GeneratedColumn<int> billType = GeneratedColumn<int>(
+      'bill_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _billDateMeta =
+      const VerificationMeta('billDate');
+  @override
+  late final GeneratedColumn<DateTime> billDate = GeneratedColumn<DateTime>(
+      'bill_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _refNumberMeta =
+      const VerificationMeta('refNumber');
+  @override
+  late final GeneratedColumn<String> refNumber = GeneratedColumn<String>(
+      'ref_number', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _customerNumberMeta =
+      const VerificationMeta('customerNumber');
+  @override
+  late final GeneratedColumn<int> customerNumber = GeneratedColumn<int>(
+      'customer_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _currencyIdMeta =
+      const VerificationMeta('currencyId');
+  @override
+  late final GeneratedColumn<int> currencyId = GeneratedColumn<int>(
+      'currency_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _currencyValueMeta =
+      const VerificationMeta('currencyValue');
+  @override
+  late final GeneratedColumn<double> currencyValue = GeneratedColumn<double>(
+      'currency_value', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _fundNumberMeta =
+      const VerificationMeta('fundNumber');
+  @override
+  late final GeneratedColumn<int> fundNumber = GeneratedColumn<int>(
+      'fund_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _paymentMethedMeta =
+      const VerificationMeta('paymentMethed');
+  @override
+  late final GeneratedColumn<int> paymentMethed = GeneratedColumn<int>(
+      'payment_methed', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _storeIdMeta =
+      const VerificationMeta('storeId');
+  @override
+  late final GeneratedColumn<int> storeId = GeneratedColumn<int>(
+      'store_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _storeCurValueMeta =
+      const VerificationMeta('storeCurValue');
+  @override
+  late final GeneratedColumn<double> storeCurValue = GeneratedColumn<double>(
+      'store_cur_value', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _billNoteMeta =
+      const VerificationMeta('billNote');
+  @override
+  late final GeneratedColumn<String> billNote = GeneratedColumn<String>(
+      'bill_note', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _itemCalcMethodMeta =
+      const VerificationMeta('itemCalcMethod');
+  @override
+  late final GeneratedColumn<int> itemCalcMethod = GeneratedColumn<int>(
+      'item_calc_method', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _dueDateMeta =
+      const VerificationMeta('dueDate');
+  @override
+  late final GeneratedColumn<DateTime> dueDate = GeneratedColumn<DateTime>(
+      'due_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _salesPersonMeta =
+      const VerificationMeta('salesPerson');
+  @override
+  late final GeneratedColumn<int> salesPerson = GeneratedColumn<int>(
+      'sales_person', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _hasVatMeta = const VerificationMeta('hasVat');
+  @override
+  late final GeneratedColumn<bool> hasVat = GeneratedColumn<bool>(
+      'has_vat', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("has_vat" IN (0, 1))'));
+  static const VerificationMeta _hasSalesTaxMeta =
+      const VerificationMeta('hasSalesTax');
+  @override
+  late final GeneratedColumn<bool> hasSalesTax = GeneratedColumn<bool>(
+      'has_sales_tax', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("has_sales_tax" IN (0, 1))'));
+  static const VerificationMeta _salesTaxRateMeta =
+      const VerificationMeta('salesTaxRate');
+  @override
+  late final GeneratedColumn<int> salesTaxRate = GeneratedColumn<int>(
+      'sales_tax_rate', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _numOfitemsMeta =
+      const VerificationMeta('numOfitems');
+  @override
+  late final GeneratedColumn<int> numOfitems = GeneratedColumn<int>(
+      'num_ofitems', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _totalBillMeta =
+      const VerificationMeta('totalBill');
+  @override
+  late final GeneratedColumn<double> totalBill = GeneratedColumn<double>(
+      'total_bill', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _itemsDiscountMeta =
+      const VerificationMeta('itemsDiscount');
+  @override
+  late final GeneratedColumn<double> itemsDiscount = GeneratedColumn<double>(
+      'items_discount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _billDiscountMeta =
+      const VerificationMeta('billDiscount');
+  @override
+  late final GeneratedColumn<double> billDiscount = GeneratedColumn<double>(
+      'bill_discount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _netBillMeta =
+      const VerificationMeta('netBill');
+  @override
+  late final GeneratedColumn<double> netBill = GeneratedColumn<double>(
+      'net_bill', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _totalVatMeta =
+      const VerificationMeta('totalVat');
+  @override
+  late final GeneratedColumn<double> totalVat = GeneratedColumn<double>(
+      'total_vat', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _billFinalCostMeta =
+      const VerificationMeta('billFinalCost');
+  @override
+  late final GeneratedColumn<double> billFinalCost = GeneratedColumn<double>(
+      'bill_final_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _freeQtyCostMeta =
+      const VerificationMeta('freeQtyCost');
+  @override
+  late final GeneratedColumn<double> freeQtyCost = GeneratedColumn<double>(
+      'free_qty_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _totalAvragCostMeta =
+      const VerificationMeta('totalAvragCost');
+  @override
+  late final GeneratedColumn<double> totalAvragCost = GeneratedColumn<double>(
+      'total_avrag_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _paidAmountMeta =
+      const VerificationMeta('paidAmount');
+  @override
+  late final GeneratedColumn<double> paidAmount = GeneratedColumn<double>(
+      'paid_amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        branchId,
+        billNumber,
+        billType,
+        billDate,
+        refNumber,
+        customerNumber,
+        currencyId,
+        currencyValue,
+        fundNumber,
+        paymentMethed,
+        storeId,
+        storeCurValue,
+        billNote,
+        itemCalcMethod,
+        dueDate,
+        salesPerson,
+        hasVat,
+        hasSalesTax,
+        salesTaxRate,
+        numOfitems,
+        totalBill,
+        itemsDiscount,
+        billDiscount,
+        netBill,
+        totalVat,
+        billFinalCost,
+        freeQtyCost,
+        totalAvragCost,
+        paidAmount
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'bill_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<BillsModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('branch_id')) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableOrUnknown(data['branch_id']!, _branchIdMeta));
+    } else if (isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    if (data.containsKey('bill_number')) {
+      context.handle(
+          _billNumberMeta,
+          billNumber.isAcceptableOrUnknown(
+              data['bill_number']!, _billNumberMeta));
+    } else if (isInserting) {
+      context.missing(_billNumberMeta);
+    }
+    if (data.containsKey('bill_type')) {
+      context.handle(_billTypeMeta,
+          billType.isAcceptableOrUnknown(data['bill_type']!, _billTypeMeta));
+    } else if (isInserting) {
+      context.missing(_billTypeMeta);
+    }
+    if (data.containsKey('bill_date')) {
+      context.handle(_billDateMeta,
+          billDate.isAcceptableOrUnknown(data['bill_date']!, _billDateMeta));
+    } else if (isInserting) {
+      context.missing(_billDateMeta);
+    }
+    if (data.containsKey('ref_number')) {
+      context.handle(_refNumberMeta,
+          refNumber.isAcceptableOrUnknown(data['ref_number']!, _refNumberMeta));
+    } else if (isInserting) {
+      context.missing(_refNumberMeta);
+    }
+    if (data.containsKey('customer_number')) {
+      context.handle(
+          _customerNumberMeta,
+          customerNumber.isAcceptableOrUnknown(
+              data['customer_number']!, _customerNumberMeta));
+    } else if (isInserting) {
+      context.missing(_customerNumberMeta);
+    }
+    if (data.containsKey('currency_id')) {
+      context.handle(
+          _currencyIdMeta,
+          currencyId.isAcceptableOrUnknown(
+              data['currency_id']!, _currencyIdMeta));
+    } else if (isInserting) {
+      context.missing(_currencyIdMeta);
+    }
+    if (data.containsKey('currency_value')) {
+      context.handle(
+          _currencyValueMeta,
+          currencyValue.isAcceptableOrUnknown(
+              data['currency_value']!, _currencyValueMeta));
+    } else if (isInserting) {
+      context.missing(_currencyValueMeta);
+    }
+    if (data.containsKey('fund_number')) {
+      context.handle(
+          _fundNumberMeta,
+          fundNumber.isAcceptableOrUnknown(
+              data['fund_number']!, _fundNumberMeta));
+    } else if (isInserting) {
+      context.missing(_fundNumberMeta);
+    }
+    if (data.containsKey('payment_methed')) {
+      context.handle(
+          _paymentMethedMeta,
+          paymentMethed.isAcceptableOrUnknown(
+              data['payment_methed']!, _paymentMethedMeta));
+    } else if (isInserting) {
+      context.missing(_paymentMethedMeta);
+    }
+    if (data.containsKey('store_id')) {
+      context.handle(_storeIdMeta,
+          storeId.isAcceptableOrUnknown(data['store_id']!, _storeIdMeta));
+    } else if (isInserting) {
+      context.missing(_storeIdMeta);
+    }
+    if (data.containsKey('store_cur_value')) {
+      context.handle(
+          _storeCurValueMeta,
+          storeCurValue.isAcceptableOrUnknown(
+              data['store_cur_value']!, _storeCurValueMeta));
+    } else if (isInserting) {
+      context.missing(_storeCurValueMeta);
+    }
+    if (data.containsKey('bill_note')) {
+      context.handle(_billNoteMeta,
+          billNote.isAcceptableOrUnknown(data['bill_note']!, _billNoteMeta));
+    } else if (isInserting) {
+      context.missing(_billNoteMeta);
+    }
+    if (data.containsKey('item_calc_method')) {
+      context.handle(
+          _itemCalcMethodMeta,
+          itemCalcMethod.isAcceptableOrUnknown(
+              data['item_calc_method']!, _itemCalcMethodMeta));
+    } else if (isInserting) {
+      context.missing(_itemCalcMethodMeta);
+    }
+    if (data.containsKey('due_date')) {
+      context.handle(_dueDateMeta,
+          dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta));
+    } else if (isInserting) {
+      context.missing(_dueDateMeta);
+    }
+    if (data.containsKey('sales_person')) {
+      context.handle(
+          _salesPersonMeta,
+          salesPerson.isAcceptableOrUnknown(
+              data['sales_person']!, _salesPersonMeta));
+    } else if (isInserting) {
+      context.missing(_salesPersonMeta);
+    }
+    if (data.containsKey('has_vat')) {
+      context.handle(_hasVatMeta,
+          hasVat.isAcceptableOrUnknown(data['has_vat']!, _hasVatMeta));
+    } else if (isInserting) {
+      context.missing(_hasVatMeta);
+    }
+    if (data.containsKey('has_sales_tax')) {
+      context.handle(
+          _hasSalesTaxMeta,
+          hasSalesTax.isAcceptableOrUnknown(
+              data['has_sales_tax']!, _hasSalesTaxMeta));
+    } else if (isInserting) {
+      context.missing(_hasSalesTaxMeta);
+    }
+    if (data.containsKey('sales_tax_rate')) {
+      context.handle(
+          _salesTaxRateMeta,
+          salesTaxRate.isAcceptableOrUnknown(
+              data['sales_tax_rate']!, _salesTaxRateMeta));
+    } else if (isInserting) {
+      context.missing(_salesTaxRateMeta);
+    }
+    if (data.containsKey('num_ofitems')) {
+      context.handle(
+          _numOfitemsMeta,
+          numOfitems.isAcceptableOrUnknown(
+              data['num_ofitems']!, _numOfitemsMeta));
+    } else if (isInserting) {
+      context.missing(_numOfitemsMeta);
+    }
+    if (data.containsKey('total_bill')) {
+      context.handle(_totalBillMeta,
+          totalBill.isAcceptableOrUnknown(data['total_bill']!, _totalBillMeta));
+    } else if (isInserting) {
+      context.missing(_totalBillMeta);
+    }
+    if (data.containsKey('items_discount')) {
+      context.handle(
+          _itemsDiscountMeta,
+          itemsDiscount.isAcceptableOrUnknown(
+              data['items_discount']!, _itemsDiscountMeta));
+    } else if (isInserting) {
+      context.missing(_itemsDiscountMeta);
+    }
+    if (data.containsKey('bill_discount')) {
+      context.handle(
+          _billDiscountMeta,
+          billDiscount.isAcceptableOrUnknown(
+              data['bill_discount']!, _billDiscountMeta));
+    } else if (isInserting) {
+      context.missing(_billDiscountMeta);
+    }
+    if (data.containsKey('net_bill')) {
+      context.handle(_netBillMeta,
+          netBill.isAcceptableOrUnknown(data['net_bill']!, _netBillMeta));
+    } else if (isInserting) {
+      context.missing(_netBillMeta);
+    }
+    if (data.containsKey('total_vat')) {
+      context.handle(_totalVatMeta,
+          totalVat.isAcceptableOrUnknown(data['total_vat']!, _totalVatMeta));
+    } else if (isInserting) {
+      context.missing(_totalVatMeta);
+    }
+    if (data.containsKey('bill_final_cost')) {
+      context.handle(
+          _billFinalCostMeta,
+          billFinalCost.isAcceptableOrUnknown(
+              data['bill_final_cost']!, _billFinalCostMeta));
+    } else if (isInserting) {
+      context.missing(_billFinalCostMeta);
+    }
+    if (data.containsKey('free_qty_cost')) {
+      context.handle(
+          _freeQtyCostMeta,
+          freeQtyCost.isAcceptableOrUnknown(
+              data['free_qty_cost']!, _freeQtyCostMeta));
+    } else if (isInserting) {
+      context.missing(_freeQtyCostMeta);
+    }
+    if (data.containsKey('total_avrag_cost')) {
+      context.handle(
+          _totalAvragCostMeta,
+          totalAvragCost.isAcceptableOrUnknown(
+              data['total_avrag_cost']!, _totalAvragCostMeta));
+    } else if (isInserting) {
+      context.missing(_totalAvragCostMeta);
+    }
+    if (data.containsKey('paid_amount')) {
+      context.handle(
+          _paidAmountMeta,
+          paidAmount.isAcceptableOrUnknown(
+              data['paid_amount']!, _paidAmountMeta));
+    } else if (isInserting) {
+      context.missing(_paidAmountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BillsModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BillsModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      branchId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}branch_id'])!,
+      billNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}bill_number'])!,
+      billType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}bill_type'])!,
+      billDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}bill_date'])!,
+      refNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}ref_number'])!,
+      customerNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}customer_number'])!,
+      currencyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}currency_id'])!,
+      currencyValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}currency_value'])!,
+      fundNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}fund_number'])!,
+      paymentMethed: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}payment_methed'])!,
+      storeId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}store_id'])!,
+      storeCurValue: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}store_cur_value'])!,
+      billNote: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}bill_note'])!,
+      itemCalcMethod: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_calc_method'])!,
+      dueDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}due_date'])!,
+      salesPerson: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sales_person'])!,
+      hasVat: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}has_vat'])!,
+      hasSalesTax: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}has_sales_tax'])!,
+      salesTaxRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sales_tax_rate'])!,
+      numOfitems: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}num_ofitems'])!,
+      totalBill: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}total_bill'])!,
+      itemsDiscount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}items_discount'])!,
+      billDiscount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}bill_discount'])!,
+      netBill: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}net_bill'])!,
+      totalVat: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}total_vat'])!,
+      billFinalCost: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}bill_final_cost'])!,
+      freeQtyCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}free_qty_cost'])!,
+      totalAvragCost: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}total_avrag_cost'])!,
+      paidAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}paid_amount'])!,
+    );
+  }
+
+  @override
+  $BillTableTable createAlias(String alias) {
+    return $BillTableTable(attachedDatabase, alias);
+  }
+}
+
+class BillTableCompanion extends UpdateCompanion<BillsModel> {
+  final Value<int> id;
+  final Value<int> branchId;
+  final Value<int> billNumber;
+  final Value<int> billType;
+  final Value<DateTime> billDate;
+  final Value<String> refNumber;
+  final Value<int> customerNumber;
+  final Value<int> currencyId;
+  final Value<double> currencyValue;
+  final Value<int> fundNumber;
+  final Value<int> paymentMethed;
+  final Value<int> storeId;
+  final Value<double> storeCurValue;
+  final Value<String> billNote;
+  final Value<int> itemCalcMethod;
+  final Value<DateTime> dueDate;
+  final Value<int> salesPerson;
+  final Value<bool> hasVat;
+  final Value<bool> hasSalesTax;
+  final Value<int> salesTaxRate;
+  final Value<int> numOfitems;
+  final Value<double> totalBill;
+  final Value<double> itemsDiscount;
+  final Value<double> billDiscount;
+  final Value<double> netBill;
+  final Value<double> totalVat;
+  final Value<double> billFinalCost;
+  final Value<double> freeQtyCost;
+  final Value<double> totalAvragCost;
+  final Value<double> paidAmount;
+  const BillTableCompanion({
+    this.id = const Value.absent(),
+    this.branchId = const Value.absent(),
+    this.billNumber = const Value.absent(),
+    this.billType = const Value.absent(),
+    this.billDate = const Value.absent(),
+    this.refNumber = const Value.absent(),
+    this.customerNumber = const Value.absent(),
+    this.currencyId = const Value.absent(),
+    this.currencyValue = const Value.absent(),
+    this.fundNumber = const Value.absent(),
+    this.paymentMethed = const Value.absent(),
+    this.storeId = const Value.absent(),
+    this.storeCurValue = const Value.absent(),
+    this.billNote = const Value.absent(),
+    this.itemCalcMethod = const Value.absent(),
+    this.dueDate = const Value.absent(),
+    this.salesPerson = const Value.absent(),
+    this.hasVat = const Value.absent(),
+    this.hasSalesTax = const Value.absent(),
+    this.salesTaxRate = const Value.absent(),
+    this.numOfitems = const Value.absent(),
+    this.totalBill = const Value.absent(),
+    this.itemsDiscount = const Value.absent(),
+    this.billDiscount = const Value.absent(),
+    this.netBill = const Value.absent(),
+    this.totalVat = const Value.absent(),
+    this.billFinalCost = const Value.absent(),
+    this.freeQtyCost = const Value.absent(),
+    this.totalAvragCost = const Value.absent(),
+    this.paidAmount = const Value.absent(),
+  });
+  BillTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int branchId,
+    required int billNumber,
+    required int billType,
+    required DateTime billDate,
+    required String refNumber,
+    required int customerNumber,
+    required int currencyId,
+    required double currencyValue,
+    required int fundNumber,
+    required int paymentMethed,
+    required int storeId,
+    required double storeCurValue,
+    required String billNote,
+    required int itemCalcMethod,
+    required DateTime dueDate,
+    required int salesPerson,
+    required bool hasVat,
+    required bool hasSalesTax,
+    required int salesTaxRate,
+    required int numOfitems,
+    required double totalBill,
+    required double itemsDiscount,
+    required double billDiscount,
+    required double netBill,
+    required double totalVat,
+    required double billFinalCost,
+    required double freeQtyCost,
+    required double totalAvragCost,
+    required double paidAmount,
+  })  : branchId = Value(branchId),
+        billNumber = Value(billNumber),
+        billType = Value(billType),
+        billDate = Value(billDate),
+        refNumber = Value(refNumber),
+        customerNumber = Value(customerNumber),
+        currencyId = Value(currencyId),
+        currencyValue = Value(currencyValue),
+        fundNumber = Value(fundNumber),
+        paymentMethed = Value(paymentMethed),
+        storeId = Value(storeId),
+        storeCurValue = Value(storeCurValue),
+        billNote = Value(billNote),
+        itemCalcMethod = Value(itemCalcMethod),
+        dueDate = Value(dueDate),
+        salesPerson = Value(salesPerson),
+        hasVat = Value(hasVat),
+        hasSalesTax = Value(hasSalesTax),
+        salesTaxRate = Value(salesTaxRate),
+        numOfitems = Value(numOfitems),
+        totalBill = Value(totalBill),
+        itemsDiscount = Value(itemsDiscount),
+        billDiscount = Value(billDiscount),
+        netBill = Value(netBill),
+        totalVat = Value(totalVat),
+        billFinalCost = Value(billFinalCost),
+        freeQtyCost = Value(freeQtyCost),
+        totalAvragCost = Value(totalAvragCost),
+        paidAmount = Value(paidAmount);
+  static Insertable<BillsModel> custom({
+    Expression<int>? id,
+    Expression<int>? branchId,
+    Expression<int>? billNumber,
+    Expression<int>? billType,
+    Expression<DateTime>? billDate,
+    Expression<String>? refNumber,
+    Expression<int>? customerNumber,
+    Expression<int>? currencyId,
+    Expression<double>? currencyValue,
+    Expression<int>? fundNumber,
+    Expression<int>? paymentMethed,
+    Expression<int>? storeId,
+    Expression<double>? storeCurValue,
+    Expression<String>? billNote,
+    Expression<int>? itemCalcMethod,
+    Expression<DateTime>? dueDate,
+    Expression<int>? salesPerson,
+    Expression<bool>? hasVat,
+    Expression<bool>? hasSalesTax,
+    Expression<int>? salesTaxRate,
+    Expression<int>? numOfitems,
+    Expression<double>? totalBill,
+    Expression<double>? itemsDiscount,
+    Expression<double>? billDiscount,
+    Expression<double>? netBill,
+    Expression<double>? totalVat,
+    Expression<double>? billFinalCost,
+    Expression<double>? freeQtyCost,
+    Expression<double>? totalAvragCost,
+    Expression<double>? paidAmount,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (branchId != null) 'branch_id': branchId,
+      if (billNumber != null) 'bill_number': billNumber,
+      if (billType != null) 'bill_type': billType,
+      if (billDate != null) 'bill_date': billDate,
+      if (refNumber != null) 'ref_number': refNumber,
+      if (customerNumber != null) 'customer_number': customerNumber,
+      if (currencyId != null) 'currency_id': currencyId,
+      if (currencyValue != null) 'currency_value': currencyValue,
+      if (fundNumber != null) 'fund_number': fundNumber,
+      if (paymentMethed != null) 'payment_methed': paymentMethed,
+      if (storeId != null) 'store_id': storeId,
+      if (storeCurValue != null) 'store_cur_value': storeCurValue,
+      if (billNote != null) 'bill_note': billNote,
+      if (itemCalcMethod != null) 'item_calc_method': itemCalcMethod,
+      if (dueDate != null) 'due_date': dueDate,
+      if (salesPerson != null) 'sales_person': salesPerson,
+      if (hasVat != null) 'has_vat': hasVat,
+      if (hasSalesTax != null) 'has_sales_tax': hasSalesTax,
+      if (salesTaxRate != null) 'sales_tax_rate': salesTaxRate,
+      if (numOfitems != null) 'num_ofitems': numOfitems,
+      if (totalBill != null) 'total_bill': totalBill,
+      if (itemsDiscount != null) 'items_discount': itemsDiscount,
+      if (billDiscount != null) 'bill_discount': billDiscount,
+      if (netBill != null) 'net_bill': netBill,
+      if (totalVat != null) 'total_vat': totalVat,
+      if (billFinalCost != null) 'bill_final_cost': billFinalCost,
+      if (freeQtyCost != null) 'free_qty_cost': freeQtyCost,
+      if (totalAvragCost != null) 'total_avrag_cost': totalAvragCost,
+      if (paidAmount != null) 'paid_amount': paidAmount,
+    });
+  }
+
+  BillTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? branchId,
+      Value<int>? billNumber,
+      Value<int>? billType,
+      Value<DateTime>? billDate,
+      Value<String>? refNumber,
+      Value<int>? customerNumber,
+      Value<int>? currencyId,
+      Value<double>? currencyValue,
+      Value<int>? fundNumber,
+      Value<int>? paymentMethed,
+      Value<int>? storeId,
+      Value<double>? storeCurValue,
+      Value<String>? billNote,
+      Value<int>? itemCalcMethod,
+      Value<DateTime>? dueDate,
+      Value<int>? salesPerson,
+      Value<bool>? hasVat,
+      Value<bool>? hasSalesTax,
+      Value<int>? salesTaxRate,
+      Value<int>? numOfitems,
+      Value<double>? totalBill,
+      Value<double>? itemsDiscount,
+      Value<double>? billDiscount,
+      Value<double>? netBill,
+      Value<double>? totalVat,
+      Value<double>? billFinalCost,
+      Value<double>? freeQtyCost,
+      Value<double>? totalAvragCost,
+      Value<double>? paidAmount}) {
+    return BillTableCompanion(
+      id: id ?? this.id,
+      branchId: branchId ?? this.branchId,
+      billNumber: billNumber ?? this.billNumber,
+      billType: billType ?? this.billType,
+      billDate: billDate ?? this.billDate,
+      refNumber: refNumber ?? this.refNumber,
+      customerNumber: customerNumber ?? this.customerNumber,
+      currencyId: currencyId ?? this.currencyId,
+      currencyValue: currencyValue ?? this.currencyValue,
+      fundNumber: fundNumber ?? this.fundNumber,
+      paymentMethed: paymentMethed ?? this.paymentMethed,
+      storeId: storeId ?? this.storeId,
+      storeCurValue: storeCurValue ?? this.storeCurValue,
+      billNote: billNote ?? this.billNote,
+      itemCalcMethod: itemCalcMethod ?? this.itemCalcMethod,
+      dueDate: dueDate ?? this.dueDate,
+      salesPerson: salesPerson ?? this.salesPerson,
+      hasVat: hasVat ?? this.hasVat,
+      hasSalesTax: hasSalesTax ?? this.hasSalesTax,
+      salesTaxRate: salesTaxRate ?? this.salesTaxRate,
+      numOfitems: numOfitems ?? this.numOfitems,
+      totalBill: totalBill ?? this.totalBill,
+      itemsDiscount: itemsDiscount ?? this.itemsDiscount,
+      billDiscount: billDiscount ?? this.billDiscount,
+      netBill: netBill ?? this.netBill,
+      totalVat: totalVat ?? this.totalVat,
+      billFinalCost: billFinalCost ?? this.billFinalCost,
+      freeQtyCost: freeQtyCost ?? this.freeQtyCost,
+      totalAvragCost: totalAvragCost ?? this.totalAvragCost,
+      paidAmount: paidAmount ?? this.paidAmount,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (branchId.present) {
+      map['branch_id'] = Variable<int>(branchId.value);
+    }
+    if (billNumber.present) {
+      map['bill_number'] = Variable<int>(billNumber.value);
+    }
+    if (billType.present) {
+      map['bill_type'] = Variable<int>(billType.value);
+    }
+    if (billDate.present) {
+      map['bill_date'] = Variable<DateTime>(billDate.value);
+    }
+    if (refNumber.present) {
+      map['ref_number'] = Variable<String>(refNumber.value);
+    }
+    if (customerNumber.present) {
+      map['customer_number'] = Variable<int>(customerNumber.value);
+    }
+    if (currencyId.present) {
+      map['currency_id'] = Variable<int>(currencyId.value);
+    }
+    if (currencyValue.present) {
+      map['currency_value'] = Variable<double>(currencyValue.value);
+    }
+    if (fundNumber.present) {
+      map['fund_number'] = Variable<int>(fundNumber.value);
+    }
+    if (paymentMethed.present) {
+      map['payment_methed'] = Variable<int>(paymentMethed.value);
+    }
+    if (storeId.present) {
+      map['store_id'] = Variable<int>(storeId.value);
+    }
+    if (storeCurValue.present) {
+      map['store_cur_value'] = Variable<double>(storeCurValue.value);
+    }
+    if (billNote.present) {
+      map['bill_note'] = Variable<String>(billNote.value);
+    }
+    if (itemCalcMethod.present) {
+      map['item_calc_method'] = Variable<int>(itemCalcMethod.value);
+    }
+    if (dueDate.present) {
+      map['due_date'] = Variable<DateTime>(dueDate.value);
+    }
+    if (salesPerson.present) {
+      map['sales_person'] = Variable<int>(salesPerson.value);
+    }
+    if (hasVat.present) {
+      map['has_vat'] = Variable<bool>(hasVat.value);
+    }
+    if (hasSalesTax.present) {
+      map['has_sales_tax'] = Variable<bool>(hasSalesTax.value);
+    }
+    if (salesTaxRate.present) {
+      map['sales_tax_rate'] = Variable<int>(salesTaxRate.value);
+    }
+    if (numOfitems.present) {
+      map['num_ofitems'] = Variable<int>(numOfitems.value);
+    }
+    if (totalBill.present) {
+      map['total_bill'] = Variable<double>(totalBill.value);
+    }
+    if (itemsDiscount.present) {
+      map['items_discount'] = Variable<double>(itemsDiscount.value);
+    }
+    if (billDiscount.present) {
+      map['bill_discount'] = Variable<double>(billDiscount.value);
+    }
+    if (netBill.present) {
+      map['net_bill'] = Variable<double>(netBill.value);
+    }
+    if (totalVat.present) {
+      map['total_vat'] = Variable<double>(totalVat.value);
+    }
+    if (billFinalCost.present) {
+      map['bill_final_cost'] = Variable<double>(billFinalCost.value);
+    }
+    if (freeQtyCost.present) {
+      map['free_qty_cost'] = Variable<double>(freeQtyCost.value);
+    }
+    if (totalAvragCost.present) {
+      map['total_avrag_cost'] = Variable<double>(totalAvragCost.value);
+    }
+    if (paidAmount.present) {
+      map['paid_amount'] = Variable<double>(paidAmount.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BillTableCompanion(')
+          ..write('id: $id, ')
+          ..write('branchId: $branchId, ')
+          ..write('billNumber: $billNumber, ')
+          ..write('billType: $billType, ')
+          ..write('billDate: $billDate, ')
+          ..write('refNumber: $refNumber, ')
+          ..write('customerNumber: $customerNumber, ')
+          ..write('currencyId: $currencyId, ')
+          ..write('currencyValue: $currencyValue, ')
+          ..write('fundNumber: $fundNumber, ')
+          ..write('paymentMethed: $paymentMethed, ')
+          ..write('storeId: $storeId, ')
+          ..write('storeCurValue: $storeCurValue, ')
+          ..write('billNote: $billNote, ')
+          ..write('itemCalcMethod: $itemCalcMethod, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('salesPerson: $salesPerson, ')
+          ..write('hasVat: $hasVat, ')
+          ..write('hasSalesTax: $hasSalesTax, ')
+          ..write('salesTaxRate: $salesTaxRate, ')
+          ..write('numOfitems: $numOfitems, ')
+          ..write('totalBill: $totalBill, ')
+          ..write('itemsDiscount: $itemsDiscount, ')
+          ..write('billDiscount: $billDiscount, ')
+          ..write('netBill: $netBill, ')
+          ..write('totalVat: $totalVat, ')
+          ..write('billFinalCost: $billFinalCost, ')
+          ..write('freeQtyCost: $freeQtyCost, ')
+          ..write('totalAvragCost: $totalAvragCost, ')
+          ..write('paidAmount: $paidAmount')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BillDetailsTableTable extends BillDetailsTable
+    with TableInfo<$BillDetailsTableTable, BillDetailsModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BillDetailsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _billIDMeta = const VerificationMeta('billID');
+  @override
+  late final GeneratedColumn<int> billID = GeneratedColumn<int>(
+      'bill_i_d', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemUnitIDMeta =
+      const VerificationMeta('itemUnitID');
+  @override
+  late final GeneratedColumn<int> itemUnitID = GeneratedColumn<int>(
+      'item_unit_i_d', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _unitFactorMeta =
+      const VerificationMeta('unitFactor');
+  @override
+  late final GeneratedColumn<int> unitFactor = GeneratedColumn<int>(
+      'unit_factor', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _quantityMeta =
+      const VerificationMeta('quantity');
+  @override
+  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
+      'quantity', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _freeQtyMeta =
+      const VerificationMeta('freeQty');
+  @override
+  late final GeneratedColumn<int> freeQty = GeneratedColumn<int>(
+      'free_qty', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _avrageCostMeta =
+      const VerificationMeta('avrageCost');
+  @override
+  late final GeneratedColumn<double> avrageCost = GeneratedColumn<double>(
+      'avrage_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _sellPriceMeta =
+      const VerificationMeta('sellPrice');
+  @override
+  late final GeneratedColumn<double> sellPrice = GeneratedColumn<double>(
+      'sell_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _totalSellPriceMeta =
+      const VerificationMeta('totalSellPrice');
+  @override
+  late final GeneratedColumn<double> totalSellPrice = GeneratedColumn<double>(
+      'total_sell_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _discountPreMeta =
+      const VerificationMeta('discountPre');
+  @override
+  late final GeneratedColumn<double> discountPre = GeneratedColumn<double>(
+      'discount_pre', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _netSellPriceMeta =
+      const VerificationMeta('netSellPrice');
+  @override
+  late final GeneratedColumn<double> netSellPrice = GeneratedColumn<double>(
+      'net_sell_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _expirDateMeta =
+      const VerificationMeta('expirDate');
+  @override
+  late final GeneratedColumn<String> expirDate = GeneratedColumn<String>(
+      'expir_date', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _taxRateMeta =
+      const VerificationMeta('taxRate');
+  @override
+  late final GeneratedColumn<int> taxRate = GeneratedColumn<int>(
+      'tax_rate', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _itemNoteMeta =
+      const VerificationMeta('itemNote');
+  @override
+  late final GeneratedColumn<String> itemNote = GeneratedColumn<String>(
+      'item_note', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _freeQtyCostMeta =
+      const VerificationMeta('freeQtyCost');
+  @override
+  late final GeneratedColumn<double> freeQtyCost = GeneratedColumn<double>(
+      'free_qty_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        billID,
+        itemId,
+        itemUnitID,
+        unitFactor,
+        quantity,
+        freeQty,
+        avrageCost,
+        sellPrice,
+        totalSellPrice,
+        discountPre,
+        netSellPrice,
+        expirDate,
+        taxRate,
+        itemNote,
+        freeQtyCost
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'bill_details_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<BillDetailsModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('bill_i_d')) {
+      context.handle(_billIDMeta,
+          billID.isAcceptableOrUnknown(data['bill_i_d']!, _billIDMeta));
+    } else if (isInserting) {
+      context.missing(_billIDMeta);
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('item_unit_i_d')) {
+      context.handle(
+          _itemUnitIDMeta,
+          itemUnitID.isAcceptableOrUnknown(
+              data['item_unit_i_d']!, _itemUnitIDMeta));
+    } else if (isInserting) {
+      context.missing(_itemUnitIDMeta);
+    }
+    if (data.containsKey('unit_factor')) {
+      context.handle(
+          _unitFactorMeta,
+          unitFactor.isAcceptableOrUnknown(
+              data['unit_factor']!, _unitFactorMeta));
+    } else if (isInserting) {
+      context.missing(_unitFactorMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(_quantityMeta,
+          quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta));
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('free_qty')) {
+      context.handle(_freeQtyMeta,
+          freeQty.isAcceptableOrUnknown(data['free_qty']!, _freeQtyMeta));
+    } else if (isInserting) {
+      context.missing(_freeQtyMeta);
+    }
+    if (data.containsKey('avrage_cost')) {
+      context.handle(
+          _avrageCostMeta,
+          avrageCost.isAcceptableOrUnknown(
+              data['avrage_cost']!, _avrageCostMeta));
+    } else if (isInserting) {
+      context.missing(_avrageCostMeta);
+    }
+    if (data.containsKey('sell_price')) {
+      context.handle(_sellPriceMeta,
+          sellPrice.isAcceptableOrUnknown(data['sell_price']!, _sellPriceMeta));
+    } else if (isInserting) {
+      context.missing(_sellPriceMeta);
+    }
+    if (data.containsKey('total_sell_price')) {
+      context.handle(
+          _totalSellPriceMeta,
+          totalSellPrice.isAcceptableOrUnknown(
+              data['total_sell_price']!, _totalSellPriceMeta));
+    } else if (isInserting) {
+      context.missing(_totalSellPriceMeta);
+    }
+    if (data.containsKey('discount_pre')) {
+      context.handle(
+          _discountPreMeta,
+          discountPre.isAcceptableOrUnknown(
+              data['discount_pre']!, _discountPreMeta));
+    } else if (isInserting) {
+      context.missing(_discountPreMeta);
+    }
+    if (data.containsKey('net_sell_price')) {
+      context.handle(
+          _netSellPriceMeta,
+          netSellPrice.isAcceptableOrUnknown(
+              data['net_sell_price']!, _netSellPriceMeta));
+    } else if (isInserting) {
+      context.missing(_netSellPriceMeta);
+    }
+    if (data.containsKey('expir_date')) {
+      context.handle(_expirDateMeta,
+          expirDate.isAcceptableOrUnknown(data['expir_date']!, _expirDateMeta));
+    } else if (isInserting) {
+      context.missing(_expirDateMeta);
+    }
+    if (data.containsKey('tax_rate')) {
+      context.handle(_taxRateMeta,
+          taxRate.isAcceptableOrUnknown(data['tax_rate']!, _taxRateMeta));
+    } else if (isInserting) {
+      context.missing(_taxRateMeta);
+    }
+    if (data.containsKey('item_note')) {
+      context.handle(_itemNoteMeta,
+          itemNote.isAcceptableOrUnknown(data['item_note']!, _itemNoteMeta));
+    } else if (isInserting) {
+      context.missing(_itemNoteMeta);
+    }
+    if (data.containsKey('free_qty_cost')) {
+      context.handle(
+          _freeQtyCostMeta,
+          freeQtyCost.isAcceptableOrUnknown(
+              data['free_qty_cost']!, _freeQtyCostMeta));
+    } else if (isInserting) {
+      context.missing(_freeQtyCostMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BillDetailsModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BillDetailsModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      billID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}bill_i_d'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_id'])!,
+      itemUnitID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}item_unit_i_d'])!,
+      unitFactor: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}unit_factor'])!,
+      quantity: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}quantity'])!,
+      freeQty: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}free_qty'])!,
+      avrageCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}avrage_cost'])!,
+      sellPrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}sell_price'])!,
+      totalSellPrice: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}total_sell_price'])!,
+      discountPre: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}discount_pre'])!,
+      netSellPrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}net_sell_price'])!,
+      expirDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}expir_date'])!,
+      taxRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}tax_rate'])!,
+      itemNote: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_note'])!,
+      freeQtyCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}free_qty_cost'])!,
+    );
+  }
+
+  @override
+  $BillDetailsTableTable createAlias(String alias) {
+    return $BillDetailsTableTable(attachedDatabase, alias);
+  }
+}
+
+class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
+  final Value<int> id;
+  final Value<int> billID;
+  final Value<int> itemId;
+  final Value<int> itemUnitID;
+  final Value<int> unitFactor;
+  final Value<int> quantity;
+  final Value<int> freeQty;
+  final Value<double> avrageCost;
+  final Value<double> sellPrice;
+  final Value<double> totalSellPrice;
+  final Value<double> discountPre;
+  final Value<double> netSellPrice;
+  final Value<String> expirDate;
+  final Value<int> taxRate;
+  final Value<String> itemNote;
+  final Value<double> freeQtyCost;
+  const BillDetailsTableCompanion({
+    this.id = const Value.absent(),
+    this.billID = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.itemUnitID = const Value.absent(),
+    this.unitFactor = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.freeQty = const Value.absent(),
+    this.avrageCost = const Value.absent(),
+    this.sellPrice = const Value.absent(),
+    this.totalSellPrice = const Value.absent(),
+    this.discountPre = const Value.absent(),
+    this.netSellPrice = const Value.absent(),
+    this.expirDate = const Value.absent(),
+    this.taxRate = const Value.absent(),
+    this.itemNote = const Value.absent(),
+    this.freeQtyCost = const Value.absent(),
+  });
+  BillDetailsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int billID,
+    required int itemId,
+    required int itemUnitID,
+    required int unitFactor,
+    required int quantity,
+    required int freeQty,
+    required double avrageCost,
+    required double sellPrice,
+    required double totalSellPrice,
+    required double discountPre,
+    required double netSellPrice,
+    required String expirDate,
+    required int taxRate,
+    required String itemNote,
+    required double freeQtyCost,
+  })  : billID = Value(billID),
+        itemId = Value(itemId),
+        itemUnitID = Value(itemUnitID),
+        unitFactor = Value(unitFactor),
+        quantity = Value(quantity),
+        freeQty = Value(freeQty),
+        avrageCost = Value(avrageCost),
+        sellPrice = Value(sellPrice),
+        totalSellPrice = Value(totalSellPrice),
+        discountPre = Value(discountPre),
+        netSellPrice = Value(netSellPrice),
+        expirDate = Value(expirDate),
+        taxRate = Value(taxRate),
+        itemNote = Value(itemNote),
+        freeQtyCost = Value(freeQtyCost);
+  static Insertable<BillDetailsModel> custom({
+    Expression<int>? id,
+    Expression<int>? billID,
+    Expression<int>? itemId,
+    Expression<int>? itemUnitID,
+    Expression<int>? unitFactor,
+    Expression<int>? quantity,
+    Expression<int>? freeQty,
+    Expression<double>? avrageCost,
+    Expression<double>? sellPrice,
+    Expression<double>? totalSellPrice,
+    Expression<double>? discountPre,
+    Expression<double>? netSellPrice,
+    Expression<String>? expirDate,
+    Expression<int>? taxRate,
+    Expression<String>? itemNote,
+    Expression<double>? freeQtyCost,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (billID != null) 'bill_i_d': billID,
+      if (itemId != null) 'item_id': itemId,
+      if (itemUnitID != null) 'item_unit_i_d': itemUnitID,
+      if (unitFactor != null) 'unit_factor': unitFactor,
+      if (quantity != null) 'quantity': quantity,
+      if (freeQty != null) 'free_qty': freeQty,
+      if (avrageCost != null) 'avrage_cost': avrageCost,
+      if (sellPrice != null) 'sell_price': sellPrice,
+      if (totalSellPrice != null) 'total_sell_price': totalSellPrice,
+      if (discountPre != null) 'discount_pre': discountPre,
+      if (netSellPrice != null) 'net_sell_price': netSellPrice,
+      if (expirDate != null) 'expir_date': expirDate,
+      if (taxRate != null) 'tax_rate': taxRate,
+      if (itemNote != null) 'item_note': itemNote,
+      if (freeQtyCost != null) 'free_qty_cost': freeQtyCost,
+    });
+  }
+
+  BillDetailsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? billID,
+      Value<int>? itemId,
+      Value<int>? itemUnitID,
+      Value<int>? unitFactor,
+      Value<int>? quantity,
+      Value<int>? freeQty,
+      Value<double>? avrageCost,
+      Value<double>? sellPrice,
+      Value<double>? totalSellPrice,
+      Value<double>? discountPre,
+      Value<double>? netSellPrice,
+      Value<String>? expirDate,
+      Value<int>? taxRate,
+      Value<String>? itemNote,
+      Value<double>? freeQtyCost}) {
+    return BillDetailsTableCompanion(
+      id: id ?? this.id,
+      billID: billID ?? this.billID,
+      itemId: itemId ?? this.itemId,
+      itemUnitID: itemUnitID ?? this.itemUnitID,
+      unitFactor: unitFactor ?? this.unitFactor,
+      quantity: quantity ?? this.quantity,
+      freeQty: freeQty ?? this.freeQty,
+      avrageCost: avrageCost ?? this.avrageCost,
+      sellPrice: sellPrice ?? this.sellPrice,
+      totalSellPrice: totalSellPrice ?? this.totalSellPrice,
+      discountPre: discountPre ?? this.discountPre,
+      netSellPrice: netSellPrice ?? this.netSellPrice,
+      expirDate: expirDate ?? this.expirDate,
+      taxRate: taxRate ?? this.taxRate,
+      itemNote: itemNote ?? this.itemNote,
+      freeQtyCost: freeQtyCost ?? this.freeQtyCost,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (billID.present) {
+      map['bill_i_d'] = Variable<int>(billID.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    if (itemUnitID.present) {
+      map['item_unit_i_d'] = Variable<int>(itemUnitID.value);
+    }
+    if (unitFactor.present) {
+      map['unit_factor'] = Variable<int>(unitFactor.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<int>(quantity.value);
+    }
+    if (freeQty.present) {
+      map['free_qty'] = Variable<int>(freeQty.value);
+    }
+    if (avrageCost.present) {
+      map['avrage_cost'] = Variable<double>(avrageCost.value);
+    }
+    if (sellPrice.present) {
+      map['sell_price'] = Variable<double>(sellPrice.value);
+    }
+    if (totalSellPrice.present) {
+      map['total_sell_price'] = Variable<double>(totalSellPrice.value);
+    }
+    if (discountPre.present) {
+      map['discount_pre'] = Variable<double>(discountPre.value);
+    }
+    if (netSellPrice.present) {
+      map['net_sell_price'] = Variable<double>(netSellPrice.value);
+    }
+    if (expirDate.present) {
+      map['expir_date'] = Variable<String>(expirDate.value);
+    }
+    if (taxRate.present) {
+      map['tax_rate'] = Variable<int>(taxRate.value);
+    }
+    if (itemNote.present) {
+      map['item_note'] = Variable<String>(itemNote.value);
+    }
+    if (freeQtyCost.present) {
+      map['free_qty_cost'] = Variable<double>(freeQtyCost.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BillDetailsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('billID: $billID, ')
+          ..write('itemId: $itemId, ')
+          ..write('itemUnitID: $itemUnitID, ')
+          ..write('unitFactor: $unitFactor, ')
+          ..write('quantity: $quantity, ')
+          ..write('freeQty: $freeQty, ')
+          ..write('avrageCost: $avrageCost, ')
+          ..write('sellPrice: $sellPrice, ')
+          ..write('totalSellPrice: $totalSellPrice, ')
+          ..write('discountPre: $discountPre, ')
+          ..write('netSellPrice: $netSellPrice, ')
+          ..write('expirDate: $expirDate, ')
+          ..write('taxRate: $taxRate, ')
+          ..write('itemNote: $itemNote, ')
+          ..write('freeQtyCost: $freeQtyCost')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -4807,6 +6221,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $AccountTableTable accountTable = $AccountTableTable(this);
   late final $StoreOperationTableTable storeOperationTable =
       $StoreOperationTableTable(this);
+  late final $BillTableTable billTable = $BillTableTable(this);
+  late final $BillDetailsTableTable billDetailsTable =
+      $BillDetailsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4827,7 +6244,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         itemAlterTable,
         barcodeTable,
         accountTable,
-        storeOperationTable
+        storeOperationTable,
+        billTable,
+        billDetailsTable
       ];
 }
 
@@ -6086,7 +7505,7 @@ typedef $$ItemTableTableCreateCompanionBuilder = ItemTableCompanion Function({
   required String enName,
   required int type,
   required int itemLimit,
-  required Uint8List itemImage,
+  Value<Uint8List?> itemImage,
   required bool isExpire,
   required bool freeQuantityAllow,
   required bool hasTax,
@@ -6107,7 +7526,7 @@ typedef $$ItemTableTableUpdateCompanionBuilder = ItemTableCompanion Function({
   Value<String> enName,
   Value<int> type,
   Value<int> itemLimit,
-  Value<Uint8List> itemImage,
+  Value<Uint8List?> itemImage,
   Value<bool> isExpire,
   Value<bool> freeQuantityAllow,
   Value<bool> hasTax,
@@ -6145,7 +7564,7 @@ class $$ItemTableTableTableManager extends RootTableManager<
             Value<String> enName = const Value.absent(),
             Value<int> type = const Value.absent(),
             Value<int> itemLimit = const Value.absent(),
-            Value<Uint8List> itemImage = const Value.absent(),
+            Value<Uint8List?> itemImage = const Value.absent(),
             Value<bool> isExpire = const Value.absent(),
             Value<bool> freeQuantityAllow = const Value.absent(),
             Value<bool> hasTax = const Value.absent(),
@@ -6187,7 +7606,7 @@ class $$ItemTableTableTableManager extends RootTableManager<
             required String enName,
             required int type,
             required int itemLimit,
-            required Uint8List itemImage,
+            Value<Uint8List?> itemImage = const Value.absent(),
             required bool isExpire,
             required bool freeQuantityAllow,
             required bool hasTax,
@@ -7926,6 +9345,825 @@ class $$StoreOperationTableTableOrderingComposer
   }
 }
 
+typedef $$BillTableTableCreateCompanionBuilder = BillTableCompanion Function({
+  Value<int> id,
+  required int branchId,
+  required int billNumber,
+  required int billType,
+  required DateTime billDate,
+  required String refNumber,
+  required int customerNumber,
+  required int currencyId,
+  required double currencyValue,
+  required int fundNumber,
+  required int paymentMethed,
+  required int storeId,
+  required double storeCurValue,
+  required String billNote,
+  required int itemCalcMethod,
+  required DateTime dueDate,
+  required int salesPerson,
+  required bool hasVat,
+  required bool hasSalesTax,
+  required int salesTaxRate,
+  required int numOfitems,
+  required double totalBill,
+  required double itemsDiscount,
+  required double billDiscount,
+  required double netBill,
+  required double totalVat,
+  required double billFinalCost,
+  required double freeQtyCost,
+  required double totalAvragCost,
+  required double paidAmount,
+});
+typedef $$BillTableTableUpdateCompanionBuilder = BillTableCompanion Function({
+  Value<int> id,
+  Value<int> branchId,
+  Value<int> billNumber,
+  Value<int> billType,
+  Value<DateTime> billDate,
+  Value<String> refNumber,
+  Value<int> customerNumber,
+  Value<int> currencyId,
+  Value<double> currencyValue,
+  Value<int> fundNumber,
+  Value<int> paymentMethed,
+  Value<int> storeId,
+  Value<double> storeCurValue,
+  Value<String> billNote,
+  Value<int> itemCalcMethod,
+  Value<DateTime> dueDate,
+  Value<int> salesPerson,
+  Value<bool> hasVat,
+  Value<bool> hasSalesTax,
+  Value<int> salesTaxRate,
+  Value<int> numOfitems,
+  Value<double> totalBill,
+  Value<double> itemsDiscount,
+  Value<double> billDiscount,
+  Value<double> netBill,
+  Value<double> totalVat,
+  Value<double> billFinalCost,
+  Value<double> freeQtyCost,
+  Value<double> totalAvragCost,
+  Value<double> paidAmount,
+});
+
+class $$BillTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $BillTableTable,
+    BillsModel,
+    $$BillTableTableFilterComposer,
+    $$BillTableTableOrderingComposer,
+    $$BillTableTableCreateCompanionBuilder,
+    $$BillTableTableUpdateCompanionBuilder> {
+  $$BillTableTableTableManager(_$AppDatabase db, $BillTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$BillTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$BillTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> branchId = const Value.absent(),
+            Value<int> billNumber = const Value.absent(),
+            Value<int> billType = const Value.absent(),
+            Value<DateTime> billDate = const Value.absent(),
+            Value<String> refNumber = const Value.absent(),
+            Value<int> customerNumber = const Value.absent(),
+            Value<int> currencyId = const Value.absent(),
+            Value<double> currencyValue = const Value.absent(),
+            Value<int> fundNumber = const Value.absent(),
+            Value<int> paymentMethed = const Value.absent(),
+            Value<int> storeId = const Value.absent(),
+            Value<double> storeCurValue = const Value.absent(),
+            Value<String> billNote = const Value.absent(),
+            Value<int> itemCalcMethod = const Value.absent(),
+            Value<DateTime> dueDate = const Value.absent(),
+            Value<int> salesPerson = const Value.absent(),
+            Value<bool> hasVat = const Value.absent(),
+            Value<bool> hasSalesTax = const Value.absent(),
+            Value<int> salesTaxRate = const Value.absent(),
+            Value<int> numOfitems = const Value.absent(),
+            Value<double> totalBill = const Value.absent(),
+            Value<double> itemsDiscount = const Value.absent(),
+            Value<double> billDiscount = const Value.absent(),
+            Value<double> netBill = const Value.absent(),
+            Value<double> totalVat = const Value.absent(),
+            Value<double> billFinalCost = const Value.absent(),
+            Value<double> freeQtyCost = const Value.absent(),
+            Value<double> totalAvragCost = const Value.absent(),
+            Value<double> paidAmount = const Value.absent(),
+          }) =>
+              BillTableCompanion(
+            id: id,
+            branchId: branchId,
+            billNumber: billNumber,
+            billType: billType,
+            billDate: billDate,
+            refNumber: refNumber,
+            customerNumber: customerNumber,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+            fundNumber: fundNumber,
+            paymentMethed: paymentMethed,
+            storeId: storeId,
+            storeCurValue: storeCurValue,
+            billNote: billNote,
+            itemCalcMethod: itemCalcMethod,
+            dueDate: dueDate,
+            salesPerson: salesPerson,
+            hasVat: hasVat,
+            hasSalesTax: hasSalesTax,
+            salesTaxRate: salesTaxRate,
+            numOfitems: numOfitems,
+            totalBill: totalBill,
+            itemsDiscount: itemsDiscount,
+            billDiscount: billDiscount,
+            netBill: netBill,
+            totalVat: totalVat,
+            billFinalCost: billFinalCost,
+            freeQtyCost: freeQtyCost,
+            totalAvragCost: totalAvragCost,
+            paidAmount: paidAmount,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int branchId,
+            required int billNumber,
+            required int billType,
+            required DateTime billDate,
+            required String refNumber,
+            required int customerNumber,
+            required int currencyId,
+            required double currencyValue,
+            required int fundNumber,
+            required int paymentMethed,
+            required int storeId,
+            required double storeCurValue,
+            required String billNote,
+            required int itemCalcMethod,
+            required DateTime dueDate,
+            required int salesPerson,
+            required bool hasVat,
+            required bool hasSalesTax,
+            required int salesTaxRate,
+            required int numOfitems,
+            required double totalBill,
+            required double itemsDiscount,
+            required double billDiscount,
+            required double netBill,
+            required double totalVat,
+            required double billFinalCost,
+            required double freeQtyCost,
+            required double totalAvragCost,
+            required double paidAmount,
+          }) =>
+              BillTableCompanion.insert(
+            id: id,
+            branchId: branchId,
+            billNumber: billNumber,
+            billType: billType,
+            billDate: billDate,
+            refNumber: refNumber,
+            customerNumber: customerNumber,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+            fundNumber: fundNumber,
+            paymentMethed: paymentMethed,
+            storeId: storeId,
+            storeCurValue: storeCurValue,
+            billNote: billNote,
+            itemCalcMethod: itemCalcMethod,
+            dueDate: dueDate,
+            salesPerson: salesPerson,
+            hasVat: hasVat,
+            hasSalesTax: hasSalesTax,
+            salesTaxRate: salesTaxRate,
+            numOfitems: numOfitems,
+            totalBill: totalBill,
+            itemsDiscount: itemsDiscount,
+            billDiscount: billDiscount,
+            netBill: netBill,
+            totalVat: totalVat,
+            billFinalCost: billFinalCost,
+            freeQtyCost: freeQtyCost,
+            totalAvragCost: totalAvragCost,
+            paidAmount: paidAmount,
+          ),
+        ));
+}
+
+class $$BillTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $BillTableTable> {
+  $$BillTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get billNumber => $state.composableBuilder(
+      column: $state.table.billNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get billType => $state.composableBuilder(
+      column: $state.table.billType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get billDate => $state.composableBuilder(
+      column: $state.table.billDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get refNumber => $state.composableBuilder(
+      column: $state.table.refNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get customerNumber => $state.composableBuilder(
+      column: $state.table.customerNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get fundNumber => $state.composableBuilder(
+      column: $state.table.fundNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get paymentMethed => $state.composableBuilder(
+      column: $state.table.paymentMethed,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get storeId => $state.composableBuilder(
+      column: $state.table.storeId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get storeCurValue => $state.composableBuilder(
+      column: $state.table.storeCurValue,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get billNote => $state.composableBuilder(
+      column: $state.table.billNote,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemCalcMethod => $state.composableBuilder(
+      column: $state.table.itemCalcMethod,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get dueDate => $state.composableBuilder(
+      column: $state.table.dueDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get salesPerson => $state.composableBuilder(
+      column: $state.table.salesPerson,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get hasVat => $state.composableBuilder(
+      column: $state.table.hasVat,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get hasSalesTax => $state.composableBuilder(
+      column: $state.table.hasSalesTax,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get salesTaxRate => $state.composableBuilder(
+      column: $state.table.salesTaxRate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get numOfitems => $state.composableBuilder(
+      column: $state.table.numOfitems,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get totalBill => $state.composableBuilder(
+      column: $state.table.totalBill,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get itemsDiscount => $state.composableBuilder(
+      column: $state.table.itemsDiscount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get billDiscount => $state.composableBuilder(
+      column: $state.table.billDiscount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get netBill => $state.composableBuilder(
+      column: $state.table.netBill,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get totalVat => $state.composableBuilder(
+      column: $state.table.totalVat,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get billFinalCost => $state.composableBuilder(
+      column: $state.table.billFinalCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get freeQtyCost => $state.composableBuilder(
+      column: $state.table.freeQtyCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get totalAvragCost => $state.composableBuilder(
+      column: $state.table.totalAvragCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get paidAmount => $state.composableBuilder(
+      column: $state.table.paidAmount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$BillTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $BillTableTable> {
+  $$BillTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get billNumber => $state.composableBuilder(
+      column: $state.table.billNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get billType => $state.composableBuilder(
+      column: $state.table.billType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get billDate => $state.composableBuilder(
+      column: $state.table.billDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get refNumber => $state.composableBuilder(
+      column: $state.table.refNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get customerNumber => $state.composableBuilder(
+      column: $state.table.customerNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get fundNumber => $state.composableBuilder(
+      column: $state.table.fundNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get paymentMethed => $state.composableBuilder(
+      column: $state.table.paymentMethed,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get storeId => $state.composableBuilder(
+      column: $state.table.storeId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get storeCurValue => $state.composableBuilder(
+      column: $state.table.storeCurValue,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get billNote => $state.composableBuilder(
+      column: $state.table.billNote,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemCalcMethod => $state.composableBuilder(
+      column: $state.table.itemCalcMethod,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get dueDate => $state.composableBuilder(
+      column: $state.table.dueDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get salesPerson => $state.composableBuilder(
+      column: $state.table.salesPerson,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get hasVat => $state.composableBuilder(
+      column: $state.table.hasVat,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get hasSalesTax => $state.composableBuilder(
+      column: $state.table.hasSalesTax,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get salesTaxRate => $state.composableBuilder(
+      column: $state.table.salesTaxRate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get numOfitems => $state.composableBuilder(
+      column: $state.table.numOfitems,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get totalBill => $state.composableBuilder(
+      column: $state.table.totalBill,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get itemsDiscount => $state.composableBuilder(
+      column: $state.table.itemsDiscount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get billDiscount => $state.composableBuilder(
+      column: $state.table.billDiscount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get netBill => $state.composableBuilder(
+      column: $state.table.netBill,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get totalVat => $state.composableBuilder(
+      column: $state.table.totalVat,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get billFinalCost => $state.composableBuilder(
+      column: $state.table.billFinalCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get freeQtyCost => $state.composableBuilder(
+      column: $state.table.freeQtyCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get totalAvragCost => $state.composableBuilder(
+      column: $state.table.totalAvragCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get paidAmount => $state.composableBuilder(
+      column: $state.table.paidAmount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$BillDetailsTableTableCreateCompanionBuilder
+    = BillDetailsTableCompanion Function({
+  Value<int> id,
+  required int billID,
+  required int itemId,
+  required int itemUnitID,
+  required int unitFactor,
+  required int quantity,
+  required int freeQty,
+  required double avrageCost,
+  required double sellPrice,
+  required double totalSellPrice,
+  required double discountPre,
+  required double netSellPrice,
+  required String expirDate,
+  required int taxRate,
+  required String itemNote,
+  required double freeQtyCost,
+});
+typedef $$BillDetailsTableTableUpdateCompanionBuilder
+    = BillDetailsTableCompanion Function({
+  Value<int> id,
+  Value<int> billID,
+  Value<int> itemId,
+  Value<int> itemUnitID,
+  Value<int> unitFactor,
+  Value<int> quantity,
+  Value<int> freeQty,
+  Value<double> avrageCost,
+  Value<double> sellPrice,
+  Value<double> totalSellPrice,
+  Value<double> discountPre,
+  Value<double> netSellPrice,
+  Value<String> expirDate,
+  Value<int> taxRate,
+  Value<String> itemNote,
+  Value<double> freeQtyCost,
+});
+
+class $$BillDetailsTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $BillDetailsTableTable,
+    BillDetailsModel,
+    $$BillDetailsTableTableFilterComposer,
+    $$BillDetailsTableTableOrderingComposer,
+    $$BillDetailsTableTableCreateCompanionBuilder,
+    $$BillDetailsTableTableUpdateCompanionBuilder> {
+  $$BillDetailsTableTableTableManager(
+      _$AppDatabase db, $BillDetailsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$BillDetailsTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$BillDetailsTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> billID = const Value.absent(),
+            Value<int> itemId = const Value.absent(),
+            Value<int> itemUnitID = const Value.absent(),
+            Value<int> unitFactor = const Value.absent(),
+            Value<int> quantity = const Value.absent(),
+            Value<int> freeQty = const Value.absent(),
+            Value<double> avrageCost = const Value.absent(),
+            Value<double> sellPrice = const Value.absent(),
+            Value<double> totalSellPrice = const Value.absent(),
+            Value<double> discountPre = const Value.absent(),
+            Value<double> netSellPrice = const Value.absent(),
+            Value<String> expirDate = const Value.absent(),
+            Value<int> taxRate = const Value.absent(),
+            Value<String> itemNote = const Value.absent(),
+            Value<double> freeQtyCost = const Value.absent(),
+          }) =>
+              BillDetailsTableCompanion(
+            id: id,
+            billID: billID,
+            itemId: itemId,
+            itemUnitID: itemUnitID,
+            unitFactor: unitFactor,
+            quantity: quantity,
+            freeQty: freeQty,
+            avrageCost: avrageCost,
+            sellPrice: sellPrice,
+            totalSellPrice: totalSellPrice,
+            discountPre: discountPre,
+            netSellPrice: netSellPrice,
+            expirDate: expirDate,
+            taxRate: taxRate,
+            itemNote: itemNote,
+            freeQtyCost: freeQtyCost,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int billID,
+            required int itemId,
+            required int itemUnitID,
+            required int unitFactor,
+            required int quantity,
+            required int freeQty,
+            required double avrageCost,
+            required double sellPrice,
+            required double totalSellPrice,
+            required double discountPre,
+            required double netSellPrice,
+            required String expirDate,
+            required int taxRate,
+            required String itemNote,
+            required double freeQtyCost,
+          }) =>
+              BillDetailsTableCompanion.insert(
+            id: id,
+            billID: billID,
+            itemId: itemId,
+            itemUnitID: itemUnitID,
+            unitFactor: unitFactor,
+            quantity: quantity,
+            freeQty: freeQty,
+            avrageCost: avrageCost,
+            sellPrice: sellPrice,
+            totalSellPrice: totalSellPrice,
+            discountPre: discountPre,
+            netSellPrice: netSellPrice,
+            expirDate: expirDate,
+            taxRate: taxRate,
+            itemNote: itemNote,
+            freeQtyCost: freeQtyCost,
+          ),
+        ));
+}
+
+class $$BillDetailsTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $BillDetailsTableTable> {
+  $$BillDetailsTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get billID => $state.composableBuilder(
+      column: $state.table.billID,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get itemUnitID => $state.composableBuilder(
+      column: $state.table.itemUnitID,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get unitFactor => $state.composableBuilder(
+      column: $state.table.unitFactor,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get quantity => $state.composableBuilder(
+      column: $state.table.quantity,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get freeQty => $state.composableBuilder(
+      column: $state.table.freeQty,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get avrageCost => $state.composableBuilder(
+      column: $state.table.avrageCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get sellPrice => $state.composableBuilder(
+      column: $state.table.sellPrice,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get totalSellPrice => $state.composableBuilder(
+      column: $state.table.totalSellPrice,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get discountPre => $state.composableBuilder(
+      column: $state.table.discountPre,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get netSellPrice => $state.composableBuilder(
+      column: $state.table.netSellPrice,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get expirDate => $state.composableBuilder(
+      column: $state.table.expirDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get taxRate => $state.composableBuilder(
+      column: $state.table.taxRate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get itemNote => $state.composableBuilder(
+      column: $state.table.itemNote,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get freeQtyCost => $state.composableBuilder(
+      column: $state.table.freeQtyCost,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$BillDetailsTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $BillDetailsTableTable> {
+  $$BillDetailsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get billID => $state.composableBuilder(
+      column: $state.table.billID,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemId => $state.composableBuilder(
+      column: $state.table.itemId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get itemUnitID => $state.composableBuilder(
+      column: $state.table.itemUnitID,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get unitFactor => $state.composableBuilder(
+      column: $state.table.unitFactor,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get quantity => $state.composableBuilder(
+      column: $state.table.quantity,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get freeQty => $state.composableBuilder(
+      column: $state.table.freeQty,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get avrageCost => $state.composableBuilder(
+      column: $state.table.avrageCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get sellPrice => $state.composableBuilder(
+      column: $state.table.sellPrice,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get totalSellPrice => $state.composableBuilder(
+      column: $state.table.totalSellPrice,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get discountPre => $state.composableBuilder(
+      column: $state.table.discountPre,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get netSellPrice => $state.composableBuilder(
+      column: $state.table.netSellPrice,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get expirDate => $state.composableBuilder(
+      column: $state.table.expirDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get taxRate => $state.composableBuilder(
+      column: $state.table.taxRate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get itemNote => $state.composableBuilder(
+      column: $state.table.itemNote,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get freeQtyCost => $state.composableBuilder(
+      column: $state.table.freeQtyCost,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
@@ -7961,4 +10199,8 @@ class $AppDatabaseManager {
       $$AccountTableTableTableManager(_db, _db.accountTable);
   $$StoreOperationTableTableTableManager get storeOperationTable =>
       $$StoreOperationTableTableTableManager(_db, _db.storeOperationTable);
+  $$BillTableTableTableManager get billTable =>
+      $$BillTableTableTableManager(_db, _db.billTable);
+  $$BillDetailsTableTableTableManager get billDetailsTable =>
+      $$BillDetailsTableTableTableManager(_db, _db.billDetailsTable);
 }

@@ -88,6 +88,7 @@ class DependencyInjection {
         getCompanyUsecase: Get.find(),
         getAllPaymentsUsecase: Get.find(),
         getAllSystemDocsUsecase: Get.find(),
+        getAllAccountsUseCase: Get.find(),
       ),
       fenix: true,
     );
@@ -305,7 +306,7 @@ class DependencyInjection {
         fenix: true);
     //Usecases
     Get.lazyPut(
-      () => GetAccountsUseCase(accountsRepository: Get.find()),
+      () => GetAllAccountsUseCase(accountsRepository: Get.find()),
       fenix: true,
     );
     Get.lazyPut(
