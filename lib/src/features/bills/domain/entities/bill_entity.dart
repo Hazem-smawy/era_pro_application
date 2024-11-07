@@ -1,3 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
+import 'package:equatable/equatable.dart';
+
 /*
 {
     "id": 11,
@@ -64,7 +69,7 @@ import '../../../../core/utils/date_time_converter.dart';
 class BillEntity extends Equatable {
   int? id;
   final int branchId;
-  final int billNumber;
+  int billNumber;
   final int billType;
   @DateTimeConverter()
   final DateTime billDate;
@@ -83,7 +88,7 @@ class BillEntity extends Equatable {
   final int salesPerson;
   final bool hasVat;
   final bool hasSalesTax;
-  final int salesTaxRate;
+  final double salesTaxRate;
   final int numOfitems;
   final double totalBill;
   final double itemsDiscount;
@@ -94,6 +99,42 @@ class BillEntity extends Equatable {
   final double freeQtyCost;
   final double totalAvragCost;
   final double paidAmount;
+  @override
+  // TODO: implement props
+  List<Object> get props {
+    return [
+      id = -1,
+      branchId,
+      billNumber,
+      billType,
+      billDate,
+      refNumber,
+      customerNumber,
+      currencyId,
+      currencyValue,
+      fundNumber,
+      paymentMethed,
+      storeId,
+      storeCurValue,
+      billNote,
+      itemCalcMethod,
+      dueDate,
+      salesPerson,
+      hasVat,
+      hasSalesTax,
+      salesTaxRate,
+      numOfitems,
+      totalBill,
+      itemsDiscount,
+      billDiscount,
+      netBill,
+      totalVat,
+      billFinalCost,
+      freeQtyCost,
+      totalAvragCost,
+      paidAmount,
+    ];
+  }
 
   BillEntity(
       {required this.id,
@@ -127,38 +168,72 @@ class BillEntity extends Equatable {
       required this.totalAvragCost,
       required this.paidAmount});
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => [
-        id,
-        branchId,
-        billNumber,
-        billType,
-        billDate,
-        refNumber,
-        customerNumber,
-        currencyId,
-        currencyValue,
-        fundNumber,
-        paymentMethed,
-        storeId,
-        storeCurValue,
-        billNote,
-        itemCalcMethod,
-        dueDate,
-        salesPerson,
-        hasVat,
-        hasSalesTax,
-        salesTaxRate,
-        numOfitems,
-        totalBill,
-        itemsDiscount,
-        billDiscount,
-        netBill,
-        totalVat,
-        billFinalCost,
-        freeQtyCost,
-        totalAvragCost,
-        paidAmount,
-      ];
+  // BillEntity copyWith({
+  //   int? id,
+  //   int? branchId,
+  //   int? billNumber,
+  //   int? billType,
+  //   DateTime? billDate,
+  //   String? refNumber,
+  //   int? customerNumber,
+  //   int? currencyId,
+  //   double? currencyValue,
+  //   int? fundNumber,
+  //   int? paymentMethed,
+  //   int? storeId,
+  //   double? storeCurValue,
+  //   String? billNote,
+  //   int? itemCalcMethod,
+  //   DateTime? dueDate,
+  //   int? salesPerson,
+  //   bool? hasVat,
+  //   bool? hasSalesTax,
+  //   double? salesTaxRate,
+  //   int? numOfitems,
+  //   double? totalBill,
+  //   double? itemsDiscount,
+  //   double? billDiscount,
+  //   double? netBill,
+  //   double? totalVat,
+  //   double? billFinalCost,
+  //   double? freeQtyCost,
+  //   double? totalAvragCost,
+  //   double? paidAmount,
+  // }) {
+  //   return BillEntity(
+  //     id ?? this.id,
+  //     branchId ?? this.branchId,
+  //     billNumber ?? this.billNumber,
+  //     billType ?? this.billType,
+  //     billDate ?? this.billDate,
+  //     refNumber ?? this.refNumber,
+  //     customerNumber ?? this.customerNumber,
+  //     currencyId ?? this.currencyId,
+  //     currencyValue ?? this.currencyValue,
+  //     fundNumber ?? this.fundNumber,
+  //     paymentMethed ?? this.paymentMethed,
+  //     storeId ?? this.storeId,
+  //     storeCurValue ?? this.storeCurValue,
+  //     billNote ?? this.billNote,
+  //     itemCalcMethod ?? this.itemCalcMethod,
+  //     dueDate ?? this.dueDate,
+  //     salesPerson ?? this.salesPerson,
+  //     hasVat ?? this.hasVat,
+  //     hasSalesTax ?? this.hasSalesTax,
+  //     salesTaxRate ?? this.salesTaxRate,
+  //     numOfitems ?? this.numOfitems,
+  //     totalBill ?? this.totalBill,
+  //     itemsDiscount ?? this.itemsDiscount,
+  //     billDiscount ?? this.billDiscount,
+  //     netBill ?? this.netBill,
+  //     totalVat ?? this.totalVat,
+  //     billFinalCost ?? this.billFinalCost,
+  //     freeQtyCost ?? this.freeQtyCost,
+  //     totalAvragCost ?? this.totalAvragCost,
+  //     paidAmount ?? this.paidAmount,
+  //   );
+  // }
+
+  // @override
+  // bool get stringify => true;
 }

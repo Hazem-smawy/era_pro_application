@@ -1,6 +1,5 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/utils/dialogs.dart';
-import 'package:era_pro_application/src/core/utils/validatators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

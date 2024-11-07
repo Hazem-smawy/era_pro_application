@@ -9,7 +9,6 @@ import 'package:era_pro_application/src/core/widgets/categories_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/pages/item_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../../../../core/widgets/search_bar_widget.dart';
 import '../widgets/store_item_widget.dart';

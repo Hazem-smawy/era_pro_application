@@ -15,7 +15,7 @@ class CategoriesWithSearchWidget extends StatefulWidget {
 class _CategoriesWithSearchWidgetState
     extends State<CategoriesWithSearchWidget> {
   bool isSearchFieldOpen = false;
-  ItemController itemController = Get.find();
+  BillController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ part 'bill_details_model.g.dart';
 
 @JsonSerializable()
 class BillDetailsModel extends BillDetailsEntity {
-  BillDetailsModel(
+  const BillDetailsModel(
       {required super.id,
       required super.billID,
       required super.itemId,
@@ -33,7 +33,7 @@ class BillDetailsModel extends BillDetailsEntity {
 
   BillDetailsTableCompanion toCompanion() {
     return BillDetailsTableCompanion(
-      id: Value(id ?? -1),
+      id: const Value.absent(),
       billID: Value(billID),
       itemId: Value(itemId),
       itemUnitID: Value(itemUnitID),
@@ -50,5 +50,30 @@ class BillDetailsModel extends BillDetailsEntity {
       itemNote: Value(itemNote),
       freeQtyCost: Value(freeQtyCost),
     );
+  }
+
+  static BillDetailsModel fromEntity(BillDetailsEntity entity) {
+    return BillDetailsModel(
+      id: entity.id,
+      billID: entity.billID,
+      itemId: entity.itemId,
+      itemUnitID: entity.itemUnitID,
+      unitFactor: entity.unitFactor,
+      quantity: entity.quantity,
+      freeQty: entity.freeQty,
+      avrageCost: entity.avrageCost,
+      sellPrice: entity.sellPrice,
+      totalSellPrice: entity.totalSellPrice,
+      discountPre: entity.discountPre,
+      netSellPrice: entity.netSellPrice,
+      expirDate: entity.expirDate,
+      taxRate: entity.taxRate,
+      itemNote: entity.itemNote,
+      freeQtyCost: entity.freeQtyCost,
+    );
+  }
+
+  static List<BillDetailsModel> fromEntityArray(List entities) {
+    return entities.map((value) => BillDetailsModel.fromEntity(value)).toList();
   }
 }

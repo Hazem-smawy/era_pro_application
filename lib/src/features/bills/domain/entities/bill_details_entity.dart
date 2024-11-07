@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class BillDetailsEntity extends Equatable {
-  int? id;
+  final int? id;
   final int billID;
   final int itemId;
   final int itemUnitID;
@@ -13,31 +13,70 @@ class BillDetailsEntity extends Equatable {
   final double totalSellPrice;
   final double discountPre;
   final double netSellPrice;
-  final String expirDate;
-  final int taxRate;
+  final String? expirDate;
+  final double taxRate;
   final String itemNote;
   final double freeQtyCost;
 
-  BillDetailsEntity(
-      {required this.id,
-      required this.billID,
-      required this.itemId,
-      required this.itemUnitID,
-      required this.unitFactor,
-      required this.quantity,
-      required this.freeQty,
-      required this.avrageCost,
-      required this.sellPrice,
-      required this.totalSellPrice,
-      required this.discountPre,
-      required this.netSellPrice,
-      required this.expirDate,
-      required this.taxRate,
-      required this.itemNote,
-      required this.freeQtyCost});
+  const BillDetailsEntity({
+    this.id,
+    required this.billID,
+    required this.itemId,
+    required this.itemUnitID,
+    required this.unitFactor,
+    required this.quantity,
+    required this.freeQty,
+    required this.avrageCost,
+    required this.sellPrice,
+    required this.totalSellPrice,
+    required this.discountPre,
+    required this.netSellPrice,
+    this.expirDate,
+    required this.taxRate,
+    required this.itemNote,
+    required this.freeQtyCost,
+  });
+
+  // The copyWith method to create a new instance with updated fields
+  BillDetailsEntity copyWith({
+    int? id,
+    int? billID,
+    int? itemId,
+    int? itemUnitID,
+    int? unitFactor,
+    int? quantity,
+    int? freeQty,
+    double? avrageCost,
+    double? sellPrice,
+    double? totalSellPrice,
+    double? discountPre,
+    double? netSellPrice,
+    String? expirDate,
+    double? taxRate,
+    String? itemNote,
+    double? freeQtyCost,
+  }) {
+    return BillDetailsEntity(
+      id: id ?? this.id,
+      billID: billID ?? this.billID,
+      itemId: itemId ?? this.itemId,
+      itemUnitID: itemUnitID ?? this.itemUnitID,
+      unitFactor: unitFactor ?? this.unitFactor,
+      quantity: quantity ?? this.quantity,
+      freeQty: freeQty ?? this.freeQty,
+      avrageCost: avrageCost ?? this.avrageCost,
+      sellPrice: sellPrice ?? this.sellPrice,
+      totalSellPrice: totalSellPrice ?? this.totalSellPrice,
+      discountPre: discountPre ?? this.discountPre,
+      netSellPrice: netSellPrice ?? this.netSellPrice,
+      expirDate: expirDate ?? this.expirDate,
+      taxRate: taxRate ?? this.taxRate,
+      itemNote: itemNote ?? this.itemNote,
+      freeQtyCost: freeQtyCost ?? this.freeQtyCost,
+    );
+  }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         id,
         billID,

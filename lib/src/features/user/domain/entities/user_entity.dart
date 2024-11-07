@@ -20,7 +20,7 @@ class UserEntity extends Equatable {
   @Uint8ListConverter()
   final Uint8List? image;
 
-  UserEntity({
+  const UserEntity({
     required this.id,
     required this.userName,
     required this.password,

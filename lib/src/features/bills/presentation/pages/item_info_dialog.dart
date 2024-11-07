@@ -1,15 +1,12 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_application/src/core/widgets/custom_text_field_with_label_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_getx.dart';
-import 'package:era_pro_application/src/features/bills/presentation/widgets/free_quantity_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/item_dialog_info_discount_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/item_dialog_info_name_and_unit_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/item_dialog_info_price_and_total_units_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/item_info_dialog_tax_and_notes_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/bill_ui_entity.dart';
@@ -24,7 +21,7 @@ class ItemInfoDialg extends StatefulWidget {
 }
 
 class _ItemInfoDialgState extends State<ItemInfoDialg> {
-  ItemController itemController = Get.find();
+  BillController itemController = Get.find();
   @override
   void initState() {
     // TODO: implement initState
@@ -82,6 +79,80 @@ class _ItemInfoDialgState extends State<ItemInfoDialg> {
                   context.g4,
                   ItemInfoDialogTaxAndNotesWidget(
                     item: widget.item,
+                  ),
+                  context.g8,
+                  Obx(
+                    () => SizedBox(
+                      height: 40,
+                      child: Row(
+                        children: [
+                          FittedBox(
+                            child: Text(
+                              widget.item.value.clearPrice.toString(),
+                              style: context.titleLarge,
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              reverse: true,
+                              // mainAxisAlignment: MainAxisAlignment.end,
+                              children: itemController.items
+                                  .firstWhere(
+                                      (e) => e.id == widget.item.value.id)
+                                  .unitDetails
+                                  .map((e) => e.updatedQuantity > 0
+                                      ? Center(
+                                          child: Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 10),
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              color: Colors.green
+                                                  .withOpacity(0.07),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  e.name,
+                                                  style: context.bodySmall
+                                                      ?.copyWith(
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Text(
+                                                  e.updatedQuantity.toString(),
+                                                  style: context.bodySmall
+                                                      ?.copyWith(
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox())
+                                  .toList(),
+                            ).ph(10),
+                          ),
+                          Text(
+                            'الإجمالي',
+                            style: context.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                   context.g16,
                   const ItemInfoDialogBtnWidget()

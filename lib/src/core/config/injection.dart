@@ -12,6 +12,12 @@ import 'package:era_pro_application/src/features/accounts/presentation/getX/acco
 import 'package:era_pro_application/src/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/auth/presentation/getX/auth_controller.dart';
+import 'package:era_pro_application/src/features/bills/data/sources/bill_local_datasource.dart';
+import 'package:era_pro_application/src/features/bills/domain/repositories/bill_repository.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/add_bill_details_usecase.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/add_new_bill_usecase.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/get_last_id_usecase.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
 import 'package:era_pro_application/src/features/main_info/data/implements/main_info_implements.dart';
 import 'package:era_pro_application/src/features/main_info/data/sources/main_info_local_datasource.dart';
 import 'package:era_pro_application/src/features/store/data/implements/store_implements.dart';
@@ -32,6 +38,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/accounts/domain/usecases/add_account_usecase.dart';
 import '../../features/auth/data/implements/auth_implements.dart';
 import '../../features/auth/domain/repositories/repositories.dart';
+import '../../features/bills/data/implements/implements.dart';
 import '../../features/main_info/data/sources/main_info_remote_datasource.dart';
 import '../../features/main_info/domain/repositories/main_info_repository.dart';
 import '../../features/main_info/presentation/getX/main_info_controller.dart';
@@ -336,6 +343,44 @@ class DependencyInjection {
 
     Get.lazyPut<AccountsLocalDatasource>(
       () => AccountsLocalDatasourceImpl(),
+      fenix: true,
+    );
+
+    //! Features - bills
+    //controller
+    Get.lazyPut(
+        () => BillController(
+              getLastIdUsecase: Get.find(),
+              addNewBillUsecase: Get.find(),
+              addBillDetailsUsecase: Get.find(),
+            ),
+        fenix: true);
+    //Usecases
+    Get.lazyPut(
+      () => GetLastIdUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => AddBillDetailsUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => AddNewBillUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+
+    //Repository
+    Get.lazyPut<BillsRepository>(
+      () => BillRepositoryImp(
+        billLocalDatasource: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    //Datasources
+
+    Get.lazyPut<BillLocalDatasource>(
+      () => BillLocalDatasourceImp(),
       fenix: true,
     );
   }

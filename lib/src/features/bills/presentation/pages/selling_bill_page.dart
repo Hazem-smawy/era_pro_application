@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/widgets/header_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/categoryies_and_search_widget.dart';
@@ -732,7 +733,7 @@ class SellingBillPage extends StatelessWidget {
 
   final TextEditingController nameController = TextEditingController();
   final StoreController storeController = Get.find();
-  final ItemController itemController = Get.put(ItemController());
+  final BillController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -751,7 +752,7 @@ class SellingBillPage extends StatelessWidget {
                   context.g4,
                   const HeaderWidget(
                     title: 'فاتورة بيع',
-                  ),
+                  ).pr(10),
                   context.g12,
                   const CategoriesWithSearchWidget(),
                   context.g4,
@@ -770,7 +771,7 @@ class SellingBillPage extends StatelessWidget {
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 0.63,
+                                  childAspectRatio: 0.78,
                                   crossAxisSpacing: 12,
                                   mainAxisSpacing: 12,
                                 ),

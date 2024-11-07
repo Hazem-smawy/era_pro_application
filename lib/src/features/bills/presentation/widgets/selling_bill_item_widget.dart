@@ -4,7 +4,7 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:era_pro_application/src/core/extensions/image_with_error_extension.dart';
 import 'package:era_pro_application/src/core/widgets/custom_text_field_with_label_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_getx.dart';
-import 'package:era_pro_application/src/features/bills/presentation/widgets/item_info_dialog.dart';
+import 'package:era_pro_application/src/features/bills/presentation/pages/item_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -28,7 +28,7 @@ class SellingBillItemWiget extends StatefulWidget {
 
 class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
   bool isInputQuantityOpen = false;
-  final ItemController itemController = Get.find();
+  final BillController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -43,80 +43,118 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
               borderRadius: BorderRadius.circular(10),
               child: CustomImage.memoryWithError(
                 widget.item.value.image,
-                h: 180,
+                h: 120,
               ),
             ),
             Container(
-              height: 180,
-              padding: const EdgeInsets.all(10),
-              child: Column(
+              height: 120,
+              padding: const EdgeInsets.all(5),
+              width: double.infinity,
+              child: Row(
+                textDirection: TextDirection.ltr,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  // if (widget.item.value.unitDetails
+                  //     .where((e) => e.updatedQuantity > 0)
+                  //     .toList()
+                  //     .isEmpty)
+                  ItemShortcutsBtnsWidget(
+                    isInputQuantityOpen: isInputQuantityOpen,
+                    widget: widget,
+                    isCard: widget.isCart,
+                    action: () {
+                      setState(() {
+                        isInputQuantityOpen = !isInputQuantityOpen;
+                      });
+                    },
+                  ),
+                  const Spacer(),
+                  if (widget.item.value.unitDetails
+                          .where((e) => e.updatedQuantity > 0)
+                          .toList()
+                          .length >
+                      1)
+                    SizedBox(
+                      width: 36,
+                      height: 36,
+                      child: GlassContainer(
+                        child: Center(
+                          child: Text(
+                            widget.item.value.unitDetails
+                                .where((e) => e.updatedQuantity > 0)
+                                .toList()
+                                .length
+                                .toString(),
+                            style: context.bodyLarge?.copyWith(
+                              color: context.wightColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  context.g8,
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ItemShortcutsBtnsWidget(
-                        isInputQuantityOpen: isInputQuantityOpen,
-                        widget: widget,
-                        isCard: widget.isCart,
-                        action: () {
-                          setState(() {
-                            isInputQuantityOpen = !isInputQuantityOpen;
-                          });
+                      GestureDetector(
+                        onTap: () {
+                          Get.dialog(
+                            ItemInfoDialg(
+                              item: widget.item,
+                            ),
+                          );
                         },
+                        child: SizedBox(
+                          height: 36,
+                          width: 36,
+                          child: GlassContainer(
+                            child: FaIcon(
+                              Icons.more_vert_rounded,
+                              color: context.wightColor,
+                              size: 16,
+                            ),
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isInputQuantityOpen = false;
-                      });
-                      itemController.nextUnitDetails(widget.item.value);
-                    },
-                    child: SizedBox(
-                      height: 36,
-                      width: 36,
-                      child: Stack(
+                      context.g8,
+                      Row(
                         children: [
-                          GlassContainer(
-                            child: Center(
-                              child: Text(
-                                'x${widget.item.value.selectedUnit.unitFactor}',
-                                style: context.bodySmall?.copyWith(
-                                  color: widget.item.value.selectedUnit
-                                              .updatedQuantity >
-                                          0
-                                      ? Colors.green
-                                      : Colors.white,
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isInputQuantityOpen = false;
+                              });
+                              itemController.nextUnitDetails(widget.item.value);
+                            },
+                            child: SizedBox(
+                              height: 36,
+                              width: 36,
+                              child: GlassContainer(
+                                child: Center(
+                                  child: Text(
+                                    'x${widget.item.value.selectedUnit.unitFactor}',
+                                    style: context.bodySmall?.copyWith(
+                                      color: widget.item.value.selectedUnit
+                                                  .updatedQuantity >
+                                              0
+                                          ? Colors.green
+                                          : Colors.white,
+                                      fontWeight: widget.item.value.selectedUnit
+                                                  .updatedQuantity >
+                                              0
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-
-                          // if (widget.item.value.selectedUnit.updatedQuantity >
-                          //     0)
-                          //   Positioned(
-                          //     bottom: 0,
-                          //     right: 0,
-                          //     left: 0,
-                          //     child: Container(
-                          //       height: 8,
-                          //       width: 8,
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: Border.all(
-                          //           color: Colors.green,
-                          //         ),
-                          //         color: Colors.green,
-                          //       ),
-                          //     ),
-                          //   ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -146,7 +184,7 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
 
   final bool isInputQuantityOpen;
   final SellingBillItemWiget widget;
-  final ItemController itemController;
+  final BillController itemController;
   bool isNumber(String input) {
     return num.tryParse(input) != null;
   }
@@ -366,27 +404,6 @@ class ItemShortcutsBtnsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
-          onTap: () {
-            Get.dialog(
-              ItemInfoDialg(
-                item: widget.item,
-              ),
-            );
-          },
-          child: SizedBox(
-            height: 36,
-            width: 36,
-            child: GlassContainer(
-              child: FaIcon(
-                Icons.more_vert_rounded,
-                color: context.wightColor,
-                size: 16,
-              ),
-            ),
-          ),
-        ),
-        if (!isCard) context.g12,
         if (!isCard)
           GestureDetector(
             onTap: action,
@@ -406,7 +423,7 @@ class ItemShortcutsBtnsWidget extends StatelessWidget {
               ),
             ),
           ),
-        context.g8,
+        if (!isCard) context.g8,
         if (getItemStatus())
           Container(
             width: 12,
@@ -437,45 +454,6 @@ class ItemShortcutsBtnsWidget extends StatelessWidget {
         null;
   }
 }
-
-// class GlassContainer extends StatelessWidget {
-//   final Widget child;
-//   final double blur;
-//   final double opacity;
-//   final BoxDecoration decoration;
-
-//   const GlassContainer({
-//     super.key,
-//     required this.child,
-//     this.blur = 15,
-//     this.opacity = 0.1,
-//     this.decoration = const BoxDecoration(
-//       color: Colors.white,
-//     ),
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ClipOval(
-//       // borderRadius:
-//       //     BorderRadius.circular(36 / 2), // Optional: add border radius
-//       child: Container(
-//         decoration: BoxDecoration(
-//             border: Border.all(
-//           color: context.bg.withOpacity(0.2),
-//         )),
-//         child: BackdropFilter(
-//           filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-//           child: Container(
-//             decoration: decoration.copyWith(
-//                 color: decoration.color!.withOpacity(opacity)),
-//             child: Center(child: child),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class GlassContainer extends StatelessWidget {
   final Widget child;

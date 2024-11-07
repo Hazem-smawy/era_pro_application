@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
-import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +8,6 @@ import 'package:era_pro_application/src/core/utils/usecase_helper.dart';
 import 'package:era_pro_application/src/features/main_info/domain/usecases/main_info_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_item_details_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_store_operation_usecase.dart';
-import 'package:sqlite3/common.dart';
 
 import '../../../../core/types/status_types.dart';
 import '../../domain/entities/store_entity.dart';

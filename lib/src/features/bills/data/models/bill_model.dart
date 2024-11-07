@@ -8,9 +8,9 @@ import '../../../../core/utils/date_time_converter.dart';
 part 'bill_model.g.dart';
 
 @JsonSerializable()
-class BillsModel extends BillEntity {
-  BillsModel(
-      {required super.id,
+class BillModel extends BillEntity {
+  BillModel(
+      {super.id,
       required super.branchId,
       required super.billNumber,
       required super.billType,
@@ -41,28 +41,14 @@ class BillsModel extends BillEntity {
       required super.totalAvragCost,
       required super.paidAmount});
 
-  factory BillsModel.fromJson(Map<String, dynamic> json) =>
-      _$BillsModelFromJson(json);
+  factory BillModel.fromJson(Map<String, dynamic> json) =>
+      _$BillModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BillsModelToJson(this);
-  //   BranchTableCompanion toCompanion() {
-  //   return BranchTableCompanion(
-  //     id: Value(id),
-  //     companyId: Value(companyId),
-  //     name: Value(name),
-  //     address: Value(address ?? ''),
-  //     email: Value(email ?? ''),
-  //     phone: Value(phone ?? ''),
-  //     enReportHeader: Value(enReportHeader ?? ''),
-  //     arReportHeader: Value(arReportHeader ?? ''),
-  //     note: Value(note ?? ''),
-  //     logo: Value(logo ?? Uint8List(0)),
-  //   );
-  // }
+  Map<String, dynamic> toJson() => _$BillModelToJson(this);
 
   BillTableCompanion toCompanion() {
     return BillTableCompanion(
-      id: Value(id ?? -1),
+      id: const Value.absent(),
       branchId: Value(branchId),
       billNumber: Value(billNumber),
       billType: Value(billType),
@@ -93,5 +79,39 @@ class BillsModel extends BillEntity {
       totalAvragCost: Value(totalAvragCost),
       paidAmount: Value(paidAmount),
     );
+  }
+
+  factory BillModel.fromEntity(BillEntity entity) {
+    return BillModel(
+        id: entity.id,
+        branchId: entity.branchId,
+        billNumber: entity.billNumber,
+        billType: entity.billType,
+        billDate: entity.billDate,
+        refNumber: entity.refNumber,
+        customerNumber: entity.customerNumber,
+        currencyId: entity.currencyId,
+        currencyValue: entity.currencyValue,
+        fundNumber: entity.fundNumber,
+        paymentMethed: entity.paymentMethed,
+        storeId: entity.storeId,
+        storeCurValue: entity.storeCurValue,
+        billNote: entity.billNote,
+        itemCalcMethod: entity.itemCalcMethod,
+        dueDate: entity.dueDate,
+        salesPerson: entity.salesPerson,
+        hasVat: entity.hasVat,
+        hasSalesTax: entity.hasSalesTax,
+        salesTaxRate: entity.salesTaxRate,
+        numOfitems: entity.numOfitems,
+        totalBill: entity.totalBill,
+        itemsDiscount: entity.itemsDiscount,
+        billDiscount: entity.billDiscount,
+        netBill: entity.netBill,
+        totalVat: entity.totalVat,
+        billFinalCost: entity.billFinalCost,
+        freeQtyCost: entity.freeQtyCost,
+        totalAvragCost: entity.totalAvragCost,
+        paidAmount: entity.paidAmount);
   }
 }

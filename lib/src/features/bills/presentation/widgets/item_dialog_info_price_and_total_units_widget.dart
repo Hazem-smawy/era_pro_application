@@ -14,7 +14,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
   final sellingPriceController = TextEditingController();
   final totalPriceController = TextEditingController();
   final ItemUI item;
-  ItemController itemController = Get.find();
+  BillController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,14 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.wightColor,
+                    color: context.wightColor.withOpacity(0.5),
                   ),
                   child: Center(
                     child: FittedBox(
                       child: Text(
                         itemController.items
                             .firstWhere((e) => e.id == item.id)
-                            .unitDetails[0]
+                            .selectedUnit
                             .selectedPrice
                             .toString(),
                         style: context.titleMedium,
@@ -122,14 +122,13 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
             ],
           ),
           context.g12,
-
-          // Text(
-          //   'الكمية',
-          //   style: context.bodySmall,
-          // ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
+          Text(
+            'الكمية',
+            style: context.bodySmall,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               // Expanded(
@@ -152,7 +151,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.wightColor,
+                    color: context.wightColor.withOpacity(0.5),
                   ),
                   child: Center(
                     child: FittedBox(
@@ -200,72 +199,6 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
               //
               //
             ],
-          ),
-          context.g8,
-          Obx(
-            () => SizedBox(
-              height: 40,
-              child: Row(
-                children: [
-                  FittedBox(
-                    child: Text(
-                      item.totalPriceBeforeDiscountAndTax.toString(),
-                      style: context.titleLarge,
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      reverse: true,
-                      // mainAxisAlignment: MainAxisAlignment.end,
-                      children: item.unitDetails
-                          .map((e) => e.updatedQuantity > 0
-                              ? Center(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: Colors.green.withOpacity(0.07),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          e.name,
-                                          style: context.bodySmall?.copyWith(
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
-                                        Text(
-                                          e.updatedQuantity.toString(),
-                                          style: context.bodySmall?.copyWith(
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox())
-                          .toList(),
-                    ).ph(10),
-                  ),
-                  Text(
-                    'الإجمالي',
-                    style: context.bodySmall,
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
       );

@@ -88,6 +88,7 @@ class AppDatabase extends _$AppDatabase {
         batch.insertAllOnConflictUpdate(table, models);
       });
     } catch (e) {
+      print(e.toString());
       throw LocalStorageException(message: e.toString());
     }
   }

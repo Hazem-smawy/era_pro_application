@@ -33,8 +33,8 @@ class BillDetailsTable extends Table {
   RealColumn get totalSellPrice => real()();
   RealColumn get discountPre => real()();
   RealColumn get netSellPrice => real()();
-  TextColumn get expirDate => text()();
-  IntColumn get taxRate => integer()();
+  TextColumn get expirDate => text().nullable()();
+  RealColumn get taxRate => real()();
   TextColumn get itemNote => text()();
   RealColumn get freeQtyCost => real()();
 

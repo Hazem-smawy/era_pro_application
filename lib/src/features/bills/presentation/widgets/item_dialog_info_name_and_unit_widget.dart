@@ -1,5 +1,9 @@
+import 'package:era_pro_application/src/core/constants/strings.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
+import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
+import 'package:era_pro_application/src/features/store/presentation/pages/item_details_page.dart';
+import 'package:era_pro_application/src/features/store/presentation/pages/store_info_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -8,21 +12,29 @@ import '../../domain/entities/bill_ui_entity.dart';
 
 class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
   ItemDialogInfoNameAndUnitWidget({super.key, required this.item});
-  ItemController itemController = Get.find();
+  BillController itemController = Get.find();
   ItemUI item;
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Row(
-        children: [
-          const FaIcon(FontAwesomeIcons.circleInfo),
-          context.g12,
-          const Spacer(),
-          Text(
-            item.name,
-            style: context.titleMedium,
-          ),
-        ],
+      GestureDetector(
+        onTap: () async {
+          final itemDetails = await itemController.getItemStoreDetails(item);
+          Get.to(ItemDetailsPage(
+            storeItemDetailsEntity: itemDetails,
+          ));
+        },
+        child: Row(
+          children: [
+            const FaIcon(FontAwesomeIcons.circleInfo),
+            context.g12,
+            const Spacer(),
+            Text(
+              item.name,
+              style: context.titleMedium,
+            ),
+          ],
+        ),
       ),
       context.g12,
       Obx(
@@ -38,7 +50,7 @@ class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  Get.find<ItemController>()
+                  Get.find<BillController>()
                       .items
                       .firstWhere((e) => e.id == item.id)
                       .selectedUnit
@@ -77,12 +89,7 @@ class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
                   );
                 }).toList(),
                 onChanged: (value) {
-                  itemController.items
-                      .firstWhere(
-                        (element) => element.id == item.id,
-                      )
-                      .selectedUnit = value ?? item.unitDetails[0];
-                  itemController.refreshItemBillInfo(item);
+                  itemController.changeUnit(value, item);
                 },
                 hint: Text(
                   item.unitDetails

@@ -4784,7 +4784,7 @@ class StoreOperationTableCompanion
 }
 
 class $BillTableTable extends BillTable
-    with TableInfo<$BillTableTable, BillsModel> {
+    with TableInfo<$BillTableTable, BillModel> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -4910,9 +4910,9 @@ class $BillTableTable extends BillTable
   static const VerificationMeta _salesTaxRateMeta =
       const VerificationMeta('salesTaxRate');
   @override
-  late final GeneratedColumn<int> salesTaxRate = GeneratedColumn<int>(
+  late final GeneratedColumn<double> salesTaxRate = GeneratedColumn<double>(
       'sales_tax_rate', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.double, requiredDuringInsert: true);
   static const VerificationMeta _numOfitemsMeta =
       const VerificationMeta('numOfitems');
   @override
@@ -5012,7 +5012,7 @@ class $BillTableTable extends BillTable
   String get actualTableName => $name;
   static const String $name = 'bill_table';
   @override
-  VerificationContext validateIntegrity(Insertable<BillsModel> instance,
+  VerificationContext validateIntegrity(Insertable<BillModel> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -5235,9 +5235,9 @@ class $BillTableTable extends BillTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  BillsModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+  BillModel map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return BillsModel(
+    return BillModel(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       branchId: attachedDatabase.typeMapping
@@ -5277,7 +5277,7 @@ class $BillTableTable extends BillTable
       hasSalesTax: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}has_sales_tax'])!,
       salesTaxRate: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}sales_tax_rate'])!,
+          .read(DriftSqlType.double, data['${effectivePrefix}sales_tax_rate'])!,
       numOfitems: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}num_ofitems'])!,
       totalBill: attachedDatabase.typeMapping
@@ -5307,7 +5307,7 @@ class $BillTableTable extends BillTable
   }
 }
 
-class BillTableCompanion extends UpdateCompanion<BillsModel> {
+class BillTableCompanion extends UpdateCompanion<BillModel> {
   final Value<int> id;
   final Value<int> branchId;
   final Value<int> billNumber;
@@ -5327,7 +5327,7 @@ class BillTableCompanion extends UpdateCompanion<BillsModel> {
   final Value<int> salesPerson;
   final Value<bool> hasVat;
   final Value<bool> hasSalesTax;
-  final Value<int> salesTaxRate;
+  final Value<double> salesTaxRate;
   final Value<int> numOfitems;
   final Value<double> totalBill;
   final Value<double> itemsDiscount;
@@ -5390,7 +5390,7 @@ class BillTableCompanion extends UpdateCompanion<BillsModel> {
     required int salesPerson,
     required bool hasVat,
     required bool hasSalesTax,
-    required int salesTaxRate,
+    required double salesTaxRate,
     required int numOfitems,
     required double totalBill,
     required double itemsDiscount,
@@ -5430,7 +5430,7 @@ class BillTableCompanion extends UpdateCompanion<BillsModel> {
         freeQtyCost = Value(freeQtyCost),
         totalAvragCost = Value(totalAvragCost),
         paidAmount = Value(paidAmount);
-  static Insertable<BillsModel> custom({
+  static Insertable<BillModel> custom({
     Expression<int>? id,
     Expression<int>? branchId,
     Expression<int>? billNumber,
@@ -5450,7 +5450,7 @@ class BillTableCompanion extends UpdateCompanion<BillsModel> {
     Expression<int>? salesPerson,
     Expression<bool>? hasVat,
     Expression<bool>? hasSalesTax,
-    Expression<int>? salesTaxRate,
+    Expression<double>? salesTaxRate,
     Expression<int>? numOfitems,
     Expression<double>? totalBill,
     Expression<double>? itemsDiscount,
@@ -5516,7 +5516,7 @@ class BillTableCompanion extends UpdateCompanion<BillsModel> {
       Value<int>? salesPerson,
       Value<bool>? hasVat,
       Value<bool>? hasSalesTax,
-      Value<int>? salesTaxRate,
+      Value<double>? salesTaxRate,
       Value<int>? numOfitems,
       Value<double>? totalBill,
       Value<double>? itemsDiscount,
@@ -5622,7 +5622,7 @@ class BillTableCompanion extends UpdateCompanion<BillsModel> {
       map['has_sales_tax'] = Variable<bool>(hasSalesTax.value);
     }
     if (salesTaxRate.present) {
-      map['sales_tax_rate'] = Variable<int>(salesTaxRate.value);
+      map['sales_tax_rate'] = Variable<double>(salesTaxRate.value);
     }
     if (numOfitems.present) {
       map['num_ofitems'] = Variable<int>(numOfitems.value);
@@ -5774,14 +5774,14 @@ class $BillDetailsTableTable extends BillDetailsTable
       const VerificationMeta('expirDate');
   @override
   late final GeneratedColumn<String> expirDate = GeneratedColumn<String>(
-      'expir_date', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'expir_date', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _taxRateMeta =
       const VerificationMeta('taxRate');
   @override
-  late final GeneratedColumn<int> taxRate = GeneratedColumn<int>(
+  late final GeneratedColumn<double> taxRate = GeneratedColumn<double>(
       'tax_rate', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.double, requiredDuringInsert: true);
   static const VerificationMeta _itemNoteMeta =
       const VerificationMeta('itemNote');
   @override
@@ -5907,8 +5907,6 @@ class $BillDetailsTableTable extends BillDetailsTable
     if (data.containsKey('expir_date')) {
       context.handle(_expirDateMeta,
           expirDate.isAcceptableOrUnknown(data['expir_date']!, _expirDateMeta));
-    } else if (isInserting) {
-      context.missing(_expirDateMeta);
     }
     if (data.containsKey('tax_rate')) {
       context.handle(_taxRateMeta,
@@ -5964,9 +5962,9 @@ class $BillDetailsTableTable extends BillDetailsTable
       netSellPrice: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}net_sell_price'])!,
       expirDate: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}expir_date'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}expir_date']),
       taxRate: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}tax_rate'])!,
+          .read(DriftSqlType.double, data['${effectivePrefix}tax_rate'])!,
       itemNote: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}item_note'])!,
       freeQtyCost: attachedDatabase.typeMapping
@@ -5993,8 +5991,8 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
   final Value<double> totalSellPrice;
   final Value<double> discountPre;
   final Value<double> netSellPrice;
-  final Value<String> expirDate;
-  final Value<int> taxRate;
+  final Value<String?> expirDate;
+  final Value<double> taxRate;
   final Value<String> itemNote;
   final Value<double> freeQtyCost;
   const BillDetailsTableCompanion({
@@ -6028,8 +6026,8 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
     required double totalSellPrice,
     required double discountPre,
     required double netSellPrice,
-    required String expirDate,
-    required int taxRate,
+    this.expirDate = const Value.absent(),
+    required double taxRate,
     required String itemNote,
     required double freeQtyCost,
   })  : billID = Value(billID),
@@ -6043,7 +6041,6 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
         totalSellPrice = Value(totalSellPrice),
         discountPre = Value(discountPre),
         netSellPrice = Value(netSellPrice),
-        expirDate = Value(expirDate),
         taxRate = Value(taxRate),
         itemNote = Value(itemNote),
         freeQtyCost = Value(freeQtyCost);
@@ -6061,7 +6058,7 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
     Expression<double>? discountPre,
     Expression<double>? netSellPrice,
     Expression<String>? expirDate,
-    Expression<int>? taxRate,
+    Expression<double>? taxRate,
     Expression<String>? itemNote,
     Expression<double>? freeQtyCost,
   }) {
@@ -6098,8 +6095,8 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
       Value<double>? totalSellPrice,
       Value<double>? discountPre,
       Value<double>? netSellPrice,
-      Value<String>? expirDate,
-      Value<int>? taxRate,
+      Value<String?>? expirDate,
+      Value<double>? taxRate,
       Value<String>? itemNote,
       Value<double>? freeQtyCost}) {
     return BillDetailsTableCompanion(
@@ -6165,7 +6162,7 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
       map['expir_date'] = Variable<String>(expirDate.value);
     }
     if (taxRate.present) {
-      map['tax_rate'] = Variable<int>(taxRate.value);
+      map['tax_rate'] = Variable<double>(taxRate.value);
     }
     if (itemNote.present) {
       map['item_note'] = Variable<String>(itemNote.value);
@@ -9365,7 +9362,7 @@ typedef $$BillTableTableCreateCompanionBuilder = BillTableCompanion Function({
   required int salesPerson,
   required bool hasVat,
   required bool hasSalesTax,
-  required int salesTaxRate,
+  required double salesTaxRate,
   required int numOfitems,
   required double totalBill,
   required double itemsDiscount,
@@ -9397,7 +9394,7 @@ typedef $$BillTableTableUpdateCompanionBuilder = BillTableCompanion Function({
   Value<int> salesPerson,
   Value<bool> hasVat,
   Value<bool> hasSalesTax,
-  Value<int> salesTaxRate,
+  Value<double> salesTaxRate,
   Value<int> numOfitems,
   Value<double> totalBill,
   Value<double> itemsDiscount,
@@ -9413,7 +9410,7 @@ typedef $$BillTableTableUpdateCompanionBuilder = BillTableCompanion Function({
 class $$BillTableTableTableManager extends RootTableManager<
     _$AppDatabase,
     $BillTableTable,
-    BillsModel,
+    BillModel,
     $$BillTableTableFilterComposer,
     $$BillTableTableOrderingComposer,
     $$BillTableTableCreateCompanionBuilder,
@@ -9446,7 +9443,7 @@ class $$BillTableTableTableManager extends RootTableManager<
             Value<int> salesPerson = const Value.absent(),
             Value<bool> hasVat = const Value.absent(),
             Value<bool> hasSalesTax = const Value.absent(),
-            Value<int> salesTaxRate = const Value.absent(),
+            Value<double> salesTaxRate = const Value.absent(),
             Value<int> numOfitems = const Value.absent(),
             Value<double> totalBill = const Value.absent(),
             Value<double> itemsDiscount = const Value.absent(),
@@ -9510,7 +9507,7 @@ class $$BillTableTableTableManager extends RootTableManager<
             required int salesPerson,
             required bool hasVat,
             required bool hasSalesTax,
-            required int salesTaxRate,
+            required double salesTaxRate,
             required int numOfitems,
             required double totalBill,
             required double itemsDiscount,
@@ -9655,7 +9652,7 @@ class $$BillTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get salesTaxRate => $state.composableBuilder(
+  ColumnFilters<double> get salesTaxRate => $state.composableBuilder(
       column: $state.table.salesTaxRate,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
@@ -9809,7 +9806,7 @@ class $$BillTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get salesTaxRate => $state.composableBuilder(
+  ColumnOrderings<double> get salesTaxRate => $state.composableBuilder(
       column: $state.table.salesTaxRate,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
@@ -9879,8 +9876,8 @@ typedef $$BillDetailsTableTableCreateCompanionBuilder
   required double totalSellPrice,
   required double discountPre,
   required double netSellPrice,
-  required String expirDate,
-  required int taxRate,
+  Value<String?> expirDate,
+  required double taxRate,
   required String itemNote,
   required double freeQtyCost,
 });
@@ -9898,8 +9895,8 @@ typedef $$BillDetailsTableTableUpdateCompanionBuilder
   Value<double> totalSellPrice,
   Value<double> discountPre,
   Value<double> netSellPrice,
-  Value<String> expirDate,
-  Value<int> taxRate,
+  Value<String?> expirDate,
+  Value<double> taxRate,
   Value<String> itemNote,
   Value<double> freeQtyCost,
 });
@@ -9934,8 +9931,8 @@ class $$BillDetailsTableTableTableManager extends RootTableManager<
             Value<double> totalSellPrice = const Value.absent(),
             Value<double> discountPre = const Value.absent(),
             Value<double> netSellPrice = const Value.absent(),
-            Value<String> expirDate = const Value.absent(),
-            Value<int> taxRate = const Value.absent(),
+            Value<String?> expirDate = const Value.absent(),
+            Value<double> taxRate = const Value.absent(),
             Value<String> itemNote = const Value.absent(),
             Value<double> freeQtyCost = const Value.absent(),
           }) =>
@@ -9970,8 +9967,8 @@ class $$BillDetailsTableTableTableManager extends RootTableManager<
             required double totalSellPrice,
             required double discountPre,
             required double netSellPrice,
-            required String expirDate,
-            required int taxRate,
+            Value<String?> expirDate = const Value.absent(),
+            required double taxRate,
             required String itemNote,
             required double freeQtyCost,
           }) =>
@@ -10064,7 +10061,7 @@ class $$BillDetailsTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<int> get taxRate => $state.composableBuilder(
+  ColumnFilters<double> get taxRate => $state.composableBuilder(
       column: $state.table.taxRate,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
@@ -10148,7 +10145,7 @@ class $$BillDetailsTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get taxRate => $state.composableBuilder(
+  ColumnOrderings<double> get taxRate => $state.composableBuilder(
       column: $state.table.taxRate,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));

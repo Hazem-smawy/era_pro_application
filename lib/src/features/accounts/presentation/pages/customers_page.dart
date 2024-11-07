@@ -1,7 +1,4 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_application/src/core/widgets/future_builder_widget.dart';
-import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/account_details_page.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/add_new_customer_sheet.dart';
@@ -9,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/widgets/search_bar_widget.dart';
 import '../widgets/account_item_widget.dart';
 
 class AccountsPage extends StatelessWidget {

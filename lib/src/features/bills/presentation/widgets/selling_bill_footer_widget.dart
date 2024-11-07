@@ -17,7 +17,7 @@ class SellingFooterWidget extends StatefulWidget {
 }
 
 class _SellingFooterWidgetState extends State<SellingFooterWidget> {
-  ItemController itemController = Get.find();
+  BillController itemController = Get.find();
   String result = '';
 
   @override

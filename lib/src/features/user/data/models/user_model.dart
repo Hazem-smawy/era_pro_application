@@ -11,7 +11,7 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel extends UserEntity {
-  UserModel({
+  const UserModel({
     required super.id,
     required super.userName,
     required super.password,

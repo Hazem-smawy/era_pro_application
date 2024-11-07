@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:era_pro_application/src/core/routes/app_pages.dart';
 import 'package:get/get.dart';

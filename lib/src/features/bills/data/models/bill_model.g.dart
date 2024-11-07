@@ -6,7 +6,7 @@ part of 'bill_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BillsModel _$BillsModelFromJson(Map<String, dynamic> json) => BillsModel(
+BillModel _$BillModelFromJson(Map<String, dynamic> json) => BillModel(
       id: (json['id'] as num?)?.toInt(),
       branchId: (json['branchId'] as num).toInt(),
       billNumber: (json['billNumber'] as num).toInt(),
@@ -26,7 +26,7 @@ BillsModel _$BillsModelFromJson(Map<String, dynamic> json) => BillsModel(
       salesPerson: (json['salesPerson'] as num).toInt(),
       hasVat: json['hasVat'] as bool,
       hasSalesTax: json['hasSalesTax'] as bool,
-      salesTaxRate: (json['salesTaxRate'] as num).toInt(),
+      salesTaxRate: (json['salesTaxRate'] as num).toDouble(),
       numOfitems: (json['numOfitems'] as num).toInt(),
       totalBill: (json['totalBill'] as num).toDouble(),
       itemsDiscount: (json['itemsDiscount'] as num).toDouble(),
@@ -39,8 +39,7 @@ BillsModel _$BillsModelFromJson(Map<String, dynamic> json) => BillsModel(
       paidAmount: (json['paidAmount'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$BillsModelToJson(BillsModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BillModelToJson(BillModel instance) => <String, dynamic>{
       'id': instance.id,
       'branchId': instance.branchId,
       'billNumber': instance.billNumber,

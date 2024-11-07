@@ -36,9 +36,9 @@ required this.id,
 import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/features/bills/data/models/bill_model.dart';
 
-@UseRowClass(BillsModel)
+@UseRowClass(BillModel)
 class BillTable extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
   IntColumn get branchId => integer()();
   IntColumn get billNumber => integer()();
   IntColumn get billType => integer()();
@@ -57,7 +57,7 @@ class BillTable extends Table {
   IntColumn get salesPerson => integer()();
   BoolColumn get hasVat => boolean()();
   BoolColumn get hasSalesTax => boolean()();
-  IntColumn get salesTaxRate => integer()();
+  RealColumn get salesTaxRate => real()();
   IntColumn get numOfitems => integer()();
   RealColumn get totalBill => real()();
   RealColumn get itemsDiscount => real()();

@@ -27,25 +27,29 @@ class CustomTextFieldWidget extends StatelessWidget {
             style: context.bodyLarge,
           ),
         if (label.isNotEmpty) Gaps.g8,
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: isNumber ? TextInputType.number : TextInputType.name,
-            textAlign: TextAlign.right,
-            textDirection: isNumber ? TextDirection.ltr : TextDirection.rtl,
-            style: context.bodyLarge,
-            validator: validator,
-            decoration: InputDecoration(
-              fillColor: context.wightColor,
-              hintStyle: context.bodySmall?.copyWith(
-                fontWeight: FontWeight.normal,
-              ),
-              hintText: hint,
-              filled: true,
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+        SizedBox(
+          height: 55,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: TextFormField(
+              controller: controller,
+              keyboardType:
+                  isNumber ? TextInputType.number : TextInputType.name,
+              textAlign: TextAlign.right,
+              textDirection: isNumber ? TextDirection.ltr : TextDirection.rtl,
+              style: context.bodyLarge,
+              validator: validator,
+              decoration: InputDecoration(
+                fillColor: context.wightColor,
+                hintStyle: context.bodySmall?.copyWith(
+                  fontWeight: FontWeight.normal,
+                ),
+                hintText: hint,
+                filled: true,
+                floatingLabelAlignment: FloatingLabelAlignment.center,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
           ),

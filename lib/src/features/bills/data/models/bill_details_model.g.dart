@@ -20,8 +20,8 @@ BillDetailsModel _$BillDetailsModelFromJson(Map<String, dynamic> json) =>
       totalSellPrice: (json['totalSellPrice'] as num).toDouble(),
       discountPre: (json['discountPre'] as num).toDouble(),
       netSellPrice: (json['netSellPrice'] as num).toDouble(),
-      expirDate: json['expirDate'] as String,
-      taxRate: (json['taxRate'] as num).toInt(),
+      expirDate: json['expirDate'] as String?,
+      taxRate: (json['taxRate'] as num).toDouble(),
       itemNote: json['itemNote'] as String,
       freeQtyCost: (json['freeQtyCost'] as num).toDouble(),
     );

@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/usecases.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/core/error/error.dart';
@@ -26,13 +27,20 @@ class MainInfoController extends GetxController {
   var allAccount = Rx<List<AccountEntity>>([]);
 
   var allCurencies = Rx<List<CurencyEntity>>([]);
+  final selecteCurency = Rx<CurencyEntity?>(null);
+
+  CurencyEntity get storCurency {
+    return allCurencies.value.firstWhere((e) => e.storeCurrency);
+  }
 
   var allPaymentsMethod = Rx<List<PaymentEntity>>([]);
   var selectedPaymentsMethod = Rx<PaymentEntity?>(null);
   final paymentType = true.obs;
-  final selectedPaymentsMethodDetails = ''.obs;
+  final paymentAmountTextEditingController = TextEditingController().obs;
+  final selectedPaymentsMethodDetails = Rx<AccountEntity?>(null);
   final paymentsMethodDetails = [].obs;
   var allSystemDocs = Rx<List<SystemDocEntity>>([]);
+
   // var status = RxStatus.empty();
 
   final errorMessage = ''.obs;
@@ -101,6 +109,9 @@ class MainInfoController extends GetxController {
       errorMessageTarget: errorMessage,
     );
 
+    selecteCurency.value =
+        allCurencies.value.firstWhere((e) => e.storeCurrency);
+
     return allCurencies.value;
   }
 
@@ -130,16 +141,14 @@ class MainInfoController extends GetxController {
 
     selectedPaymentsMethod.value = newValue;
 
-    final newPaymentMethodDetails = allAccount.value
-        .where((e) => e.accCatagory == newValue.id)
-        .map((e) => e.accName)
-        .toList();
+    final newPaymentMethodDetails =
+        allAccount.value.where((e) => e.accCatagory == newValue.id).toList();
 
     if (newPaymentMethodDetails.isNotEmpty) {
       paymentsMethodDetails.value = newPaymentMethodDetails;
       selectedPaymentsMethodDetails.value = paymentsMethodDetails.first;
     } else {
-      selectedPaymentsMethodDetails.value = '';
+      selectedPaymentsMethodDetails.value = null;
     }
   }
 }
