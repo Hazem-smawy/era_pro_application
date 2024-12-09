@@ -6,16 +6,20 @@ import 'package:era_pro_application/src/features/accounts/presentation/getX/acco
 import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
+import 'package:era_pro_application/src/features/user/presentation/getX/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/routes/app_pages.dart';
 
 class AuthController extends GetxController {
+  //controllers
   MainInfoController mainInfoController = Get.find();
   StoreController storeController = Get.find();
   AccountsController accountsController = Get.find();
-  TextEditingController nameController = TextEditingController();
+  UserController userController = Get.find();
+
+  final nameController = TextEditingController().obs;
   TextEditingController passwordController = TextEditingController();
   TextEditingController ipController = TextEditingController();
   TextEditingController portController = TextEditingController();
@@ -30,6 +34,13 @@ class AuthController extends GetxController {
     required this.authUseCase,
   });
 
+  void authInit() {
+    nameController.value.text = userController.user.value?.userName ?? '';
+
+    ipController.text = apiConnection.getIp ?? '';
+    portController.text = apiConnection.getPort ?? '';
+  }
+
   void auth() async {
     errorMessage.value = '';
     if (formKey.currentState!.validate()) {
@@ -38,18 +49,18 @@ class AuthController extends GetxController {
       apiConnection.setIp = ipController.text.trim();
       apiConnection.setPort = portController.text.trim();
       var result = await authUseCase(
-        Tuple2(nameController.text.trim(), passwordController.text.trim()),
+        Tuple2(
+          nameController.value.text.trim(),
+          passwordController.text.trim(),
+        ),
       );
       result.fold((l) {
         errorMessage.value = l.message;
         authState.value = Status.ERROR;
       }, (r) async {
         try {
-          await mainInfoController.getAllMainInfo();
-          await storeController.getAllStoreInfo();
-          await accountsController.getAllAccounts();
-          Get.offAllNamed(Routes.BOTTOMNAVIGATIONBAR);
           authState.value = Status.SUCCESS;
+          Get.offAllNamed(Routes.LOADING);
         } catch (e) {
           errorMessage.value = e.toString();
           authState.value = Status.ERROR;
@@ -58,10 +69,21 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<bool> refreshLogin() async {
+    final res = await authUseCase(
+      const Tuple2('', ''),
+    );
+
+    return res.fold((e) {
+      print(e.message);
+      return false;
+    }, (_) => true);
+  }
+
   @override
   void onClose() {
     super.onClose();
-    nameController.dispose();
+    nameController.value.dispose();
     ipController.dispose();
     portController.dispose();
     passwordController.dispose();

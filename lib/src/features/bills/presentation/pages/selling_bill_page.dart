@@ -2,8 +2,12 @@
 
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/core/types/status_types.dart';
 import 'package:era_pro_application/src/core/widgets/header_widget.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
+import 'package:era_pro_application/src/core/widgets/loading_widget.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
+import 'package:era_pro_application/src/features/bills/presentation/pages/all_bills_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/categoryies_and_search_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/selling_bill_footer_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
@@ -728,17 +732,45 @@ class BillSammaryItemWidget extends StatelessWidget {
 //   }
 // }
 
-class SellingBillPage extends StatelessWidget {
-  SellingBillPage({super.key});
+class SellingBillPage extends StatefulWidget {
+  const SellingBillPage({super.key});
 
+  @override
+  State<SellingBillPage> createState() => _SellingBillPageState();
+}
+
+class _SellingBillPageState extends State<SellingBillPage> {
+  int type = 0;
   final TextEditingController nameController = TextEditingController();
+
   final StoreController storeController = Get.find();
-  final BillController itemController = Get.find();
+
+  final ItemController itemController = Get.find();
+  final BillController billController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      billController.getBillDetailsInfo();
+      itemController.getItems();
+    });
+
+    // type of bill
+    final arguments = Get.arguments;
+    if (arguments != null && arguments is Map<String, dynamic>) {
+      type = arguments["type"] as int;
+
+      billController.newBill.value.type = type;
+      itemController.billType.value = type;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.wightColor,
+      backgroundColor: context.whiteColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: GestureDetector(
@@ -750,44 +782,68 @@ class SellingBillPage extends StatelessWidget {
               Column(
                 children: [
                   context.g4,
-                  const HeaderWidget(
-                    title: 'فاتورة بيع',
+                  HeaderWidget(
+                    sortAction: () {
+                      itemController.sortItem();
+                    },
+                    filterAction: () {
+                      itemController.itemWithQuantity();
+                    },
+                    title: type == 8
+                        ? billController.billTypeForTitle.value == 0
+                            ? 'فاتورة بيع'
+                            : 'تعديل فاتورة بيع'
+                        : billController.billTypeForTitle.value == 0
+                            ? 'فاتورة مرتجع'
+                            : 'تعديل فاتورة مرتجع',
                   ).pr(10),
                   context.g12,
                   const CategoriesWithSearchWidget(),
                   context.g4,
                   Expanded(
-                    child: Obx(
-                      () => itemController.items.isEmpty
-                          ? const EmptyWidget(
-                              imageName: Assets.assetsImagesCurencies,
-                              label: "لاتوجد اي منتجات",
-                            )
-                          : Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: GridView.builder(
-                                padding: const EdgeInsets.only(
-                                    left: 20, right: 20, top: 10, bottom: 160),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.78,
-                                  crossAxisSpacing: 12,
-                                  mainAxisSpacing: 12,
-                                ),
-                                itemCount: itemController.items.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  var item = itemController.items[index];
-                                  var rxItem = Rx(item);
-                                  return SellingBillItemWiget(
-                                    index: index,
-                                    item: rxItem,
-                                    isCart: false,
-                                  );
-                                },
+                    child: Obx(() {
+                      switch (itemController.currentStatus) {
+                        case ItemStatus.loading:
+                          return const LoadingWidget();
+                        case ItemStatus.success:
+                          return Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: GridView.builder(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10, bottom: 160),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.78,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
                               ),
+                              itemCount: itemController.items.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                var item = itemController.items[index];
+
+                                return SellingBillItemWiget(
+                                  key: ValueKey(item.id),
+                                  index: index,
+                                  item: item,
+                                  isCart: false,
+                                );
+                              },
                             ),
-                    ),
+                          );
+                        case ItemStatus.error:
+                          return const EmptyWidget(
+                            imageName: Assets.assetsImagesCurencies,
+                            label: "لاتوجد اي منتجات",
+                          );
+
+                        default:
+                          return const EmptyWidget(
+                            imageName: Assets.assetsImagesCurencies,
+                            label: "لاتوجد اي منتجات",
+                          );
+                      }
+                    }),
                   ),
                 ],
               ),
@@ -796,7 +852,7 @@ class SellingBillPage extends StatelessWidget {
                 right: 0,
                 left: 0,
                 child: Obx(
-                  () => itemController.cart.isEmpty
+                  () => itemController.card.value!.items.isEmpty
                       ? const SizedBox()
                       : const SellingFooterWidget(),
                 ),

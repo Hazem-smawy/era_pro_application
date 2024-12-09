@@ -1,6 +1,5 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/counter_item_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/price_dialog_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
   final sellingPriceController = TextEditingController();
   final totalPriceController = TextEditingController();
   final ItemUI item;
-  BillController itemController = Get.find();
+  final ItemController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.wightColor.withOpacity(0.5),
+                    color: context.whiteColor.withOpacity(0.5),
                   ),
                   child: Center(
                     child: FittedBox(
@@ -117,7 +116,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
               context.g8,
               Text(
                 'سعر البيع',
-                style: context.bodyMeduim,
+                style: context.bodyMedium,
               ),
             ],
           ),
@@ -151,7 +150,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.wightColor.withOpacity(0.5),
+                    color: context.whiteColor.withOpacity(0.5),
                   ),
                   child: Center(
                     child: FittedBox(

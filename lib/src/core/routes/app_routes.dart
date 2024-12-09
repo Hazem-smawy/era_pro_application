@@ -8,10 +8,13 @@ abstract class Routes {
 
   static const BOTTOMNAVIGATIONBAR = '/bottomNavigation';
   static const COMPANYINFO = '/companyInfo';
-  static const BILLS = '/bills';
+  static const SELLINGPAGE = '/sellingPage';
   static const CURRENCIES = '/curencies';
   static const STORE = '/store';
   static const STOREDETAILS = '/storeDetails';
   static const UNTIS = '/units';
   static const ACCOUNTS = '/accounts';
+  static const ALLBILLS = '/allBills';
+  static const EXCHANGE = '/exchange';
+  static const LOADING = '/loadingScreen';
 }

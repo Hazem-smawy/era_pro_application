@@ -32,7 +32,7 @@ class EmptyWidget extends StatelessWidget {
           ),
           Text(
             label,
-            style: context.bodyLarge?.copyWith(
+            style: context.bodyLarge.copyWith(
               fontWeight: FontWeight.normal,
             ),
           ),

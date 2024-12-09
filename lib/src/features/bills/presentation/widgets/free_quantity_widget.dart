@@ -1,11 +1,9 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/utils/perecent_caculator.dart';
-import '../../../../core/widgets/custom_text_field_with_label_widget.dart';
 import '../../domain/entities/bill_ui_entity.dart';
 
 class FreeQuantityWidget extends StatefulWidget {
@@ -16,14 +14,14 @@ class FreeQuantityWidget extends StatefulWidget {
   });
 
   final ItemUI item;
-  final BillController itemController;
+  final ItemController itemController;
 
   @override
   State<FreeQuantityWidget> createState() => _FreeQuantityWidgetState();
 }
 
 class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
-  BillController itemController = Get.find();
+  ItemController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +114,7 @@ class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
           Container(
             width: 40,
             decoration: BoxDecoration(
-              color: context.wightColor,
+              color: context.whiteColor,
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -124,8 +122,7 @@ class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
                 onPressed: () {
                   if (itemController.items
                           .firstWhere((e) => e.id == widget.item.id)
-                          .unitDetails
-                          .firstWhere((e) => e.id == widget.item.freeUnitId)
+                          .selectedUnit
                           .freeQuantity >
                       0) {
                     itemController.updateQuantity(widget.item.id, 0, -1);
@@ -145,8 +142,7 @@ class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
             child: Text(
               itemController.items
                   .firstWhere((e) => e.id == widget.item.id)
-                  .unitDetails
-                  .firstWhere((e) => e.id == widget.item.freeUnitId)
+                  .selectedUnit
                   .freeQuantity
                   .toString(),
               style: context.titleMedium,
@@ -156,7 +152,7 @@ class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
           Container(
             width: 40,
             decoration: BoxDecoration(
-              color: context.wightColor,
+              color: context.whiteColor,
               shape: BoxShape.circle,
             ),
             child: Center(

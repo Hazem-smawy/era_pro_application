@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:era_pro_application/src/core/api/api.dart';
-import 'package:era_pro_application/src/core/api/methods.dart';
 import 'package:era_pro_application/src/core/constants/share_pref_keys.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
+import '../../../../core/api/methods.dart';
 import '../models/models.dart';
 
 abstract class StoreRemoteDatasource {
@@ -37,7 +37,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<ItemGroupModel>>(
       apiConnection.itemGroupsUrl,
       (data) => ItemGroupModel.fromJsonArray(data),
-      SharedPrefKeys.ITEMGROUP_KEY,
+      SharedPrefKeys.DATETIME_ITEMGROUP_KEY,
     );
   }
 
@@ -46,7 +46,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<UnitModel>>(
       apiConnection.unitsUrl,
       (data) => UnitModel.fromJsonArray(data),
-      SharedPrefKeys.UNITS_KEY,
+      SharedPrefKeys.DATETIME_UNITS_KEY,
     );
   }
 
@@ -55,7 +55,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<ItemUnitsModel>>(
       apiConnection.itemUnitsUrl,
       (data) => ItemUnitsModel.fromJsonArray(data),
-      SharedPrefKeys.ITEMUNITS_KEY,
+      SharedPrefKeys.DATETIME_ITEMUNITS_KEY,
     );
   }
 
@@ -64,7 +64,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<ItemModel>>(
       apiConnection.itemsUrl,
       (data) => ItemModel.fromJsonArray(data),
-      SharedPrefKeys.ITEMS_KEY,
+      SharedPrefKeys.DATETIME_ITEMS_KEY,
     );
   }
 
@@ -73,7 +73,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<BarcodeModel>>(
       apiConnection.itemBarcodesUrl,
       (data) => BarcodeModel.fromJsonArray(data),
-      SharedPrefKeys.ITEMBARCODE_KEY,
+      SharedPrefKeys.DATETIME_ITEMBARCODE_KEY,
     );
   }
 
@@ -82,7 +82,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<ItemAlterModel>>(
       apiConnection.itemAlterUrl,
       (data) => ItemAlterModel.fromJsonArray(data),
-      SharedPrefKeys.ITEMALTER_KEY,
+      SharedPrefKeys.DATETIME_ITEMALTER_KEY,
     );
   }
 
@@ -91,7 +91,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest(
       apiConnection.userStoreUrl,
       (data) => UserStoreModel.fromJson(data),
-      SharedPrefKeys.USERSTORE_KEY,
+      SharedPrefKeys.DATETIME_USERSTORE_KEY,
     );
   }
 
@@ -100,7 +100,7 @@ class StoreRemoteDatasourceImp extends StoreRemoteDatasource {
     return httpMethod.handleRequest<List<StoreOperationModel>>(
       apiConnection.storeOperation,
       (data) => StoreOperationModel.fromJsonArray(data),
-      SharedPrefKeys.STOREOPERATION_KEY,
+      SharedPrefKeys.DATETIME_STOREOPERATION_KEY,
     );
   }
 }

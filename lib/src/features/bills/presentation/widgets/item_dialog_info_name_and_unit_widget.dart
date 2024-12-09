@@ -1,9 +1,6 @@
-import 'package:era_pro_application/src/core/constants/strings.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
-import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
 import 'package:era_pro_application/src/features/store/presentation/pages/item_details_page.dart';
-import 'package:era_pro_application/src/features/store/presentation/pages/store_info_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -12,8 +9,8 @@ import '../../domain/entities/bill_ui_entity.dart';
 
 class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
   ItemDialogInfoNameAndUnitWidget({super.key, required this.item});
-  BillController itemController = Get.find();
-  ItemUI item;
+  final ItemController itemController = Get.find();
+  final ItemUI item;
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -50,14 +47,14 @@ class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  Get.find<BillController>()
+                  Get.find<ItemController>()
                       .items
                       .firstWhere((e) => e.id == item.id)
                       .selectedUnit
                       .quantityRemaining
                       .toString(),
-                  style: context.titleMedium?.copyWith(
-                    color: context.wightColor,
+                  style: context.titleMedium.copyWith(
+                    color: context.whiteColor,
                   ),
                 ),
               ),

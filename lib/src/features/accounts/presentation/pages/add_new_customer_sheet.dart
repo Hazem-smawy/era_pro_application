@@ -23,7 +23,7 @@ class AddNewAccountSheet extends StatelessWidget {
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          color: context.bg,
+          color: context.backgroundColor,
         ),
         child: Form(
           key: accountsController.formKey,

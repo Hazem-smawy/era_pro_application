@@ -71,26 +71,45 @@ class UserRepositoryImp extends UserRepository {
 
   @override
   Future<Either<Failure, UserSettingModel>> getUserSettings() {
-    return fetchSingleData(
+    return fetchSingleDataFromLocalStorage(
       sharedPreferencesService: sharedPreferencesService,
       fetchLocalData: userLocalDataSource.getUserSettings,
-      fetchRemoteData: userRemoteDataSource.getUserSettings,
-      saveLocalData: userLocalDataSource.saveUserSettings,
       sharedPrefKey: SharedPrefKeys.USERSETTING_KEY,
-      dateTimeShredPreKey: SharedPrefKeys.DATETIME_USERSETTING_KEY,
     );
   }
 
   @override
   Future<Either<Failure, UserModel>> getUser() {
-    return fetchSingleData(
+    return fetchSingleDataFromLocalStorage(
       sharedPreferencesService: sharedPreferencesService,
       fetchLocalData: userLocalDataSource.getUser,
-      fetchRemoteData: userRemoteDataSource.getUser,
-      saveLocalData: userLocalDataSource.saveUser,
-      sharedPrefKey: SharedPrefKeys.USERINFO_KEY,
-      dateTimeShredPreKey: SharedPrefKeys.DATETIME_USERINFO_KEY,
+      sharedPrefKey: SharedPrefKeys.USERID_KEY,
       isUserInfo: true,
     );
+  }
+
+  @override
+  Future<Either<Failure, bool>> fetchUserInfo() async {
+    try {
+      await fetchSingleDataFromRemote(
+        sharedPreferencesService: sharedPreferencesService,
+        fetchRemoteData: userRemoteDataSource.getUser,
+        saveLocalData: userLocalDataSource.saveUser,
+        sharedPrefKey: SharedPrefKeys.USERINFO_KEY,
+        dateTimeShredPreKey: SharedPrefKeys.DATETIME_USERINFO_KEY,
+        isUserInfo: true,
+      );
+      await fetchSingleDataFromRemote(
+        sharedPreferencesService: sharedPreferencesService,
+        fetchRemoteData: userRemoteDataSource.getUserSettings,
+        saveLocalData: userLocalDataSource.saveUserSettings,
+        sharedPrefKey: SharedPrefKeys.USERSETTING_KEY,
+        dateTimeShredPreKey: SharedPrefKeys.DATETIME_USERSETTING_KEY,
+      );
+
+      return const Right(true);
+    } catch (e) {
+      return Left(ServerFailures(message: e.toString()));
+    }
   }
 }

@@ -9,4 +9,5 @@ abstract class MainInfoRepository {
 
   Future<Either<Failure, List<PaymentEntity>>> getPaymentMethods();
   Future<Either<Failure, List<SystemDocEntity>>> getSystemDocs();
+  Future<Either<Failure, bool>> fetchAllMainInfo();
 }

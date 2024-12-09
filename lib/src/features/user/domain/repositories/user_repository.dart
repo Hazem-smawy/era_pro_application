@@ -8,4 +8,5 @@ abstract class UserRepository {
   Future<Either<Failure, UserEntity>> getUser();
 
   Future<Either<Failure, UserSettingEntity>> getUserSettings();
+  Future<Either<Failure, bool>> fetchUserInfo();
 }

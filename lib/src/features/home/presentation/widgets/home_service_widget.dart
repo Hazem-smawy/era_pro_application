@@ -2,6 +2,7 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/types/services_type.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/utils.dart';
 
 class ServiceWidget extends StatelessWidget {
@@ -15,14 +16,14 @@ class ServiceWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: context.wightColor,
+        color: context.whiteColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             'الخدمات',
-            style: context.displayMeduim,
+            style: context.displayMedium,
           ).ph(context.sp20).pt(context.sp16),
           Align(
             child: Wrap(
@@ -69,26 +70,30 @@ class ServiceItemWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: context.width / 5.2,
-            height: 80,
+            height: context.width / 5.6,
+            width: context.width / 5.6,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: color.withOpacity(0.1),
+              shape: BoxShape.circle,
+              color: color.withOpacity(0.07),
             ),
             child: Icon(
               icon,
               color: color,
-              size: 30,
+              size: 23,
             ),
           ),
-          context.g12,
+          context.g4,
           SizedBox(
-            width: 100,
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.fade,
-              style: context.bodySmall,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.fade,
+                style: context.bodyMedium.copyWith(
+                  color: context.blackColor,
+                ),
+              ),
             ),
           )
         ],
@@ -96,3 +101,52 @@ class ServiceItemWidget extends StatelessWidget {
     );
   }
 }
+
+
+// class ServiceItemWidget extends StatelessWidget {
+//   const ServiceItemWidget({
+//     super.key,
+//     required this.color,
+//     required this.action,
+//     required this.label,
+//     required this.icon,
+//   });
+//   final Color color;
+//   final String label;
+//   final VoidCallback action;
+//   final IconData icon;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => action(),
+//       child: Column(
+//         children: [
+//           Container(
+//             width: context.width / 5.2,
+//             height: 80,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(15),
+//               color: color.withOpacity(0.1),
+//             ),
+//             child: Icon(
+//               icon,
+//               color: color,
+//               size: 30,
+//             ),
+//           ),
+//           context.g12,
+//           SizedBox(
+//             width: 100,
+//             child: Text(
+//               label,
+//               textAlign: TextAlign.center,
+//               overflow: TextOverflow.fade,
+//               style: context.bodySmall,
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

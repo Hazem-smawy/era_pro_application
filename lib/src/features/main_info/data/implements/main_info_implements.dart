@@ -24,140 +24,95 @@ class MainInfoRepositoryImp implements MainInfoRepository {
     required this.sharedPreferencesService,
   });
 
-/*
-  // @override
-  // Future<Either<Failure, BranchEntity>> getBranchInfo() async {
-  //   try {
-  //     var branchId = sharedPreferencesService.getString('branchId');
-  //     if (branchId != null) {
-  //       final branch =
-  //           await mainInfoLocalDatasource.getBranchInfo(int.parse(branchId));
-  //       if (branch != null) {
-  //         return Right(branch);
-  //       } else {
-  //         throw LocalStorageException();
-  //       }
-  //     } else {
-  //       final branch = await mainInfoRemoteDatasource.getBranchInfo();
-  //       await sharedPreferencesService.setString(
-  //           'branchId', branch.id.toString());
-  //       await mainInfoLocalDatasource.saveBranchInfo(branch);
-  //       return Right(branch);
-  //     }
-  //   } on LocalStorageException {
-  //     return const Left(
-  //         LocalStorageFailures(message: "can't get branch info from local"));
-  //   } on ServerException {
-  //     return const Left(
-  //         ServerFailures(message: "can't get branch inf from server"));
-  //   } catch (e) {
-  //     return const Left(ServerFailures(message: "server failures"));
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, CompanyEntity>> getCompnayInfo() async {
-  //   try {
-  //     var companyId = sharedPreferencesService.getString('companyId');
-  //     if (companyId != null) {
-  //       final company =
-  //           await mainInfoLocalDatasource.getCompanyInfo(int.parse(companyId));
-  //       if (company != null) {
-  //         return Right(company);
-  //       } else {
-  //         throw LocalStorageException();
-  //       }
-  //     } else {
-  //       final company = await mainInfoRemoteDatasource.getCompanyInfo();
-  //       await sharedPreferencesService.setString(
-  //           'companyId', company.id.toString());
-  //       await mainInfoLocalDatasource.saveCompanyInfo(company);
-  //       return Right(company);
-  //     }
-  //   } on LocalStorageException {
-  //     return const Left(
-  //         LocalStorageFailures(message: "can't get company info from local"));
-  //   } on ServerException {
-  //     return const Left(
-  //         ServerFailures(message: "can't get company inf from server"));
-  //   } catch (e) {
-  //     return const Left(ServerFailures(message: "server failures"));
-  //   }
-  // }
-  */
-
   @override
   Future<Either<Failure, BranchModel>> getBranchInfo() async {
-    return fetchSingleData(
-        sharedPreferencesService: sharedPreferencesService,
-        fetchLocalData: mainInfoLocalDatasource.getBranchInfo,
-        fetchRemoteData: mainInfoRemoteDatasource.getBranchInfo,
-        saveLocalData: mainInfoLocalDatasource.saveBranchInfo,
-        sharedPrefKey: SharedPrefKeys.BRANCHINFO_KEY,
-        dateTimeShredPreKey: SharedPrefKeys.DATETIME_BRANCHINFO_KEY);
+    return fetchSingleDataFromLocalStorage(
+      sharedPreferencesService: sharedPreferencesService,
+      fetchLocalData: mainInfoLocalDatasource.getBranchInfo,
+      sharedPrefKey: SharedPrefKeys.BRANCHINFO_KEY,
+    );
   }
 
   @override
   Future<Either<Failure, CompanyModel>> getCompnayInfo() async {
-    return fetchSingleData(
-        sharedPreferencesService: sharedPreferencesService,
-        fetchLocalData: mainInfoLocalDatasource.getCompanyInfo,
-        fetchRemoteData: mainInfoRemoteDatasource.getCompanyInfo,
-        saveLocalData: mainInfoLocalDatasource.saveCompanyInfo,
-        sharedPrefKey: SharedPrefKeys.COMPANY_KEY,
-        dateTimeShredPreKey: SharedPrefKeys.DATETIME_COMPANY_KEY);
+    return fetchSingleDataFromLocalStorage(
+      sharedPreferencesService: sharedPreferencesService,
+      fetchLocalData: mainInfoLocalDatasource.getCompanyInfo,
+      sharedPrefKey: SharedPrefKeys.COMPANY_KEY,
+    );
   }
 
   //curencies
 
   @override
   Future<Either<Failure, List<CurencyModel>>> getAllCurencies() async {
-    return fetchArrayOfData<CurencyModel>(
-      cacheKey: SharedPrefKeys.CURENCIES_KEY,
-      dateTimeSharePrefKey: SharedPrefKeys.DATETIME_CURENCIES_KEY,
-      sharedPreferencesService: sharedPreferencesService,
+    return fetchArrayOfDataFromLocalStorage<CurencyModel>(
       fetchFromLocal: mainInfoLocalDatasource.getAllCurency,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllCurency,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllCurency,
       localError: "Failed to retrieve curency information from local storage.",
-      remoteError: "Failed to retrieve curency information from the server.",
-      genericError:
-          "An unexpected error occurred while retrieving curency information.",
     );
   }
 
   @override
   Future<Either<Failure, List<PaymentModel>>> getPaymentMethods() {
-    return fetchArrayOfData<PaymentModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: SharedPrefKeys.PAYMETHODS_KEY,
-      dateTimeSharePrefKey: SharedPrefKeys.DATETIME_PAYMETHODS_KEY,
+    return fetchArrayOfDataFromLocalStorage<PaymentModel>(
       fetchFromLocal: mainInfoLocalDatasource.getAllPaymentMethod,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllPaymentMethods,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllPaymentMethod,
       localError: "can't get payments info from local",
-      remoteError: "can't get itpaymentsem info from server",
-      genericError: "server failures to get payments",
     );
   }
 
   @override
   Future<Either<Failure, List<SystemDocModel>>> getSystemDocs() {
-    return fetchArrayOfData<SystemDocModel>(
-      sharedPreferencesService: sharedPreferencesService,
-      cacheKey: SharedPrefKeys.SYSTEMDOCS_KEY,
-      dateTimeSharePrefKey: SharedPrefKeys.DATETIME_SYSTEMDOCS_KEY,
+    return fetchArrayOfDataFromLocalStorage<SystemDocModel>(
       fetchFromLocal: mainInfoLocalDatasource.getAllSystemDocs,
-      fetchFromRemote: mainInfoRemoteDatasource.getAllSystemDocs,
-      saveDataToLocal: mainInfoLocalDatasource.saveAllSystemDocs,
       localError: "can't get system_doc info from local",
-      remoteError: "can't get system_doc info from server",
-      genericError: "server failures to get system_doc",
     );
   }
-}
-/**
- 
 
- 
- */
+  @override
+  Future<Either<Failure, bool>> fetchAllMainInfo() async {
+    try {
+      await fetchArrayOfDataFromRemote<PaymentModel>(
+        sharedPreferencesService: sharedPreferencesService,
+        cacheKey: SharedPrefKeys.PAYMETHODS_KEY,
+        dateTimeSharePrefKey: SharedPrefKeys.DATETIME_PAYMETHODS_KEY,
+        fetchFromRemote: mainInfoRemoteDatasource.getAllPaymentMethods,
+        saveDataToLocal: mainInfoLocalDatasource.saveAllPaymentMethod,
+        remoteError: "can't get itpaymentsem info from server",
+      );
+      await fetchSingleDataFromRemote(
+        sharedPreferencesService: sharedPreferencesService,
+        sharedPrefKey: SharedPrefKeys.BRANCHINFO_KEY,
+        fetchRemoteData: mainInfoRemoteDatasource.getBranchInfo,
+        saveLocalData: mainInfoLocalDatasource.saveBranchInfo,
+        dateTimeShredPreKey: SharedPrefKeys.DATETIME_BRANCHINFO_KEY,
+      );
+      await fetchSingleDataFromRemote(
+        sharedPreferencesService: sharedPreferencesService,
+        fetchRemoteData: mainInfoRemoteDatasource.getCompanyInfo,
+        saveLocalData: mainInfoLocalDatasource.saveCompanyInfo,
+        sharedPrefKey: SharedPrefKeys.COMPANY_KEY,
+        dateTimeShredPreKey: SharedPrefKeys.DATETIME_COMPANY_KEY,
+      );
+      await fetchArrayOfDataFromRemote<CurencyModel>(
+        cacheKey: SharedPrefKeys.CURENCIES_KEY,
+        dateTimeSharePrefKey: SharedPrefKeys.DATETIME_CURENCIES_KEY,
+        sharedPreferencesService: sharedPreferencesService,
+        fetchFromRemote: mainInfoRemoteDatasource.getAllCurency,
+        saveDataToLocal: mainInfoLocalDatasource.saveAllCurency,
+        remoteError: "Failed to retrieve curency information from the server.",
+      );
+      await fetchArrayOfDataFromRemote<SystemDocModel>(
+        sharedPreferencesService: sharedPreferencesService,
+        cacheKey: SharedPrefKeys.SYSTEMDOCS_KEY,
+        dateTimeSharePrefKey: SharedPrefKeys.DATETIME_SYSTEMDOCS_KEY,
+        fetchFromRemote: mainInfoRemoteDatasource.getAllSystemDocs,
+        saveDataToLocal: mainInfoLocalDatasource.saveAllSystemDocs,
+        remoteError: "can't get system_doc info from server",
+      );
+
+      return const Right(true);
+    } catch (e) {
+      return Left(ServerFailures(message: e.toString()));
+    }
+  }
+}

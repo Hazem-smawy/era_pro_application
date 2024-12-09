@@ -6,10 +6,10 @@ import 'package:get/route_manager.dart';
 import '../routes/app_pages.dart';
 
 enum ServicesType {
+  // receipt,
   exchange,
-  receipt,
-  salesInvoice,
   backInvoice,
+  salesInvoice,
   statistics,
   reports,
   box,
@@ -19,9 +19,9 @@ extension CustomIconExtension on ServicesType {
   String get name {
     switch (this) {
       case ServicesType.exchange:
-        return 'سند صرف';
-      case ServicesType.receipt:
-        return 'سند قبض';
+        return 'السندات';
+      // case ServicesType.receipt:
+      //   return 'سند قبض';
       case ServicesType.backInvoice:
         return 'فاتورة مرتجع';
       case ServicesType.salesInvoice:
@@ -39,9 +39,9 @@ extension CustomIconExtension on ServicesType {
   IconData get icon {
     switch (this) {
       case ServicesType.exchange:
-        return FontAwesomeIcons.arrowTrendUp;
-      case ServicesType.receipt:
-        return FontAwesomeIcons.arrowTrendDown;
+        return FontAwesomeIcons.arrowRightArrowLeft;
+      // case ServicesType.receipt:
+      // return FontAwesomeIcons.arrowTrendDown;
       case ServicesType.backInvoice:
         return FontAwesomeIcons.arrowTurnDown;
       case ServicesType.salesInvoice:
@@ -59,9 +59,9 @@ extension CustomIconExtension on ServicesType {
   Color get color {
     switch (this) {
       case ServicesType.exchange:
-        return Colors.red;
-      case ServicesType.receipt:
-        return Colors.green;
+        return Colors.purple;
+      // case ServicesType.receipt:
+      //   return Colors.green;
       case ServicesType.backInvoice:
         return Colors.red;
       case ServicesType.salesInvoice:
@@ -79,14 +79,18 @@ extension CustomIconExtension on ServicesType {
   Function get action {
     switch (this) {
       case ServicesType.exchange:
-        return () {};
-      case ServicesType.receipt:
-        return () {};
+        return () {
+          Get.toNamed(Routes.EXCHANGE);
+        };
+      // case ServicesType.receipt:
+      //   return () {};
       case ServicesType.backInvoice:
-        return () {};
+        return () {
+          Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 9});
+        };
       case ServicesType.salesInvoice:
         return () {
-          Get.toNamed(Routes.BILLS);
+          Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 8});
         };
       case ServicesType.statistics:
         return () {};

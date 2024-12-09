@@ -70,6 +70,6 @@ class BillTable extends Table {
   RealColumn get paidAmount => real()();
 
   ///Specifying which from the field above is the primary key
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 }

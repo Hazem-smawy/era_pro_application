@@ -1,3 +1,4 @@
+import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/types/main_info_types.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class MainInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.whiteColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -19,7 +21,7 @@ class MainInfoPage extends StatelessWidget {
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 15,
                 crossAxisCount: 2,
-                childAspectRatio: .8,
+                childAspectRatio: 0.8,
                 children: MainInfoTypes.items
                     .map((e) => MainInfoItemWidget(
                           color: e.color,

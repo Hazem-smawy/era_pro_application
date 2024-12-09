@@ -15,7 +15,6 @@ class AppThemData {
       scaffoldBackgroundColor: AppColors.bg,
       highlightColor: Colors.transparent,
       focusColor: colorScheme.primary,
-      // fontFamily: Assets.fontFamily,
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderSide: BorderSide(

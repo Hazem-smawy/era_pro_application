@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/delete_account_operation_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/delete_store_operation_usecase.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/get_item_image_usecase.dart';
 import 'package:get/get.dart';
+import 'dart:typed_data';
 
 import 'package:era_pro_application/src/core/error/error.dart';
 import 'package:era_pro_application/src/core/utils/usecase_helper.dart';
@@ -10,6 +14,7 @@ import 'package:era_pro_application/src/features/store/domain/usecases/get_all_i
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_store_operation_usecase.dart';
 
 import '../../../../core/types/status_types.dart';
+import '../../../../core/usecases/usecases.dart';
 import '../../domain/entities/store_entity.dart';
 import '../../domain/usecases/store_usecases.dart';
 
@@ -28,6 +33,9 @@ class StoreController extends GetxController {
   GetUserStoreInfoUsecase getUserStoreInfoUsecase;
   GetAllStoreOperationUsecase getAllStoreOperationUsecase;
   GetAllItemWithDetailsUsecase getAllItemWithDetailsUsecase;
+  SaveStoreOperationUsecase saveStoreOperationUsecase;
+  DeleteStoreOperationUsecase deleteStoreOperationUsecase;
+  GetItemImageUsecase getItemImageUsecase;
   StoreController({
     required this.getAllItemsUsecase,
     required this.getAllItemAlterUsecase,
@@ -38,6 +46,9 @@ class StoreController extends GetxController {
     required this.getUserStoreInfoUsecase,
     required this.getAllStoreOperationUsecase,
     required this.getAllItemWithDetailsUsecase,
+    required this.saveStoreOperationUsecase,
+    required this.deleteStoreOperationUsecase,
+    required this.getItemImageUsecase,
   });
 
   var allItemBarcode = Rx<List<BarcodeEntity>>([]);
@@ -60,12 +71,6 @@ class StoreController extends GetxController {
   var selectedPrices = <int, Rx<double>>{}.obs;
   var selectedPriceIndex = <int, RxInt>{}.obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await getAllStoreInfo();
-  }
-
   StoreStatus get currentStatus {
     if (storeStatus.value.isEmpty) return StoreStatus.empty;
     if (storeStatus.value.isLoading) return StoreStatus.loading;
@@ -81,8 +86,6 @@ class StoreController extends GetxController {
 
       await getAllItemGroupsInfo();
 
-      await getAllItems();
-
       await getAllItemsUnit();
 
       await getAllItemAlter();
@@ -94,6 +97,7 @@ class StoreController extends GetxController {
       await getStoreOperations();
 
       await getAllItemsWithDetails();
+      await getAllItems();
 
       storeStatus.value = RxStatus.success();
     } catch (e) {
@@ -139,6 +143,16 @@ class StoreController extends GetxController {
     );
 
     return allStoreOperations.value;
+  }
+
+  Future<void> saveStoreOperations(List<StoreOperationEntity> storeOperations,
+      int? billId, OperationType op) async {
+    if (billId != null) {
+      await deleteStoreOperationUsecase.call(Params(op));
+    }
+    final params = Params<List<StoreOperationEntity>>(storeOperations);
+
+    await saveStoreOperationUsecase.call(params);
   }
 
   Future<List<BarcodeEntity>> getAllItemBarcode() async {
@@ -187,11 +201,20 @@ class StoreController extends GetxController {
       errorMessageTarget: errorMessage,
     );
 
-    if (allItems.value.isEmpty) {
-      throw EmptyCashException(message: errorMessage.value);
-    }
+    // if (allItems.value.isEmpty) {
+    //   throw EmptyCashException(message: errorMessage.value);
+    // }
 
     return allItems.value;
+  }
+
+  Future<Uint8List?> getItemImage(int id) async {
+    final res = await getItemImageUsecase.call(Params(id));
+
+    return res.fold(
+      (failure) => null, // Handle failure and return null
+      (imageData) => imageData, // Handle success and return the image data
+    );
   }
 
   Future<List<ItemUnitsEntity>> getAllItemsUnit() async {

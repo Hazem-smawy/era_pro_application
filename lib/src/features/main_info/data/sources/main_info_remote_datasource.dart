@@ -1,20 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:era_pro_application/src/core/api/api.dart';
-import 'package:era_pro_application/src/core/api/methods.dart';
 import 'package:era_pro_application/src/core/constants/share_pref_keys.dart';
 import 'package:era_pro_application/src/core/services/shared_preferences.dart';
+import '../../../../core/api/methods.dart';
 import '../models/main_info_model.dart';
 
 abstract class MainInfoRemoteDatasource {
   Future<CompanyModel> getCompanyInfo();
   Future<BranchModel> getBranchInfo();
   Future<List<CurencyModel>> getAllCurency();
-  Future<List<UnitModel>> getAllUnits();
 
   Future<List<PaymentModel>> getAllPaymentMethods();
   Future<List<SystemDocModel>> getAllSystemDocs();
-
-  //feature
 }
 
 class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
@@ -33,20 +30,17 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
     return httpMethod.handleRequest(
       apiConnection.branchUrl,
       (data) => BranchModel.fromJson(data),
-      SharedPrefKeys.BRANCHINFO_KEY,
+      SharedPrefKeys.DATETIME_BRANCHINFO_KEY,
     );
   }
 
   @override
   Future<CompanyModel> getCompanyInfo() async {
-    return httpMethod.handleRequest(apiConnection.companUrl,
-        (data) => CompanyModel.fromJson(data), SharedPrefKeys.COMPANY_KEY);
-  }
-
-  @override
-  Future<List<UnitModel>> getAllUnits() async {
-    return httpMethod.handleRequest<List<UnitModel>>(apiConnection.unitsUrl,
-        (data) => UnitModel.fromJsonArray(data), SharedPrefKeys.UNITS_KEY);
+    return httpMethod.handleRequest(
+      apiConnection.companUrl,
+      (data) => CompanyModel.fromJson(data),
+      SharedPrefKeys.DATETIME_COMPANY_KEY,
+    );
   }
 
   @override
@@ -54,7 +48,7 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
     return httpMethod.handleRequest<List<CurencyModel>>(
       apiConnection.curencyUrl,
       (data) => CurencyModel.fromJsonArray(data),
-      SharedPrefKeys.CURENCIES_KEY,
+      SharedPrefKeys.DATETIME_CURENCIES_KEY,
     );
   }
 
@@ -63,14 +57,15 @@ class MainInfoRemoteDatasourceImp extends MainInfoRemoteDatasource {
     return httpMethod
         .handleRequest<List<PaymentModel>>(apiConnection.paymentsUrl, (data) {
       return PaymentModel.fromJsonArray(data);
-    }, SharedPrefKeys.PAYMETHODS_KEY);
+    }, SharedPrefKeys.DATETIME_PAYMETHODS_KEY);
   }
 
   @override
   Future<List<SystemDocModel>> getAllSystemDocs() {
     return httpMethod.handleRequest<List<SystemDocModel>>(
-        apiConnection.systemDocsUrl,
-        (data) => SystemDocModel.fromJsonArray(data),
-        SharedPrefKeys.SYSTEMDOCS_KEY);
+      apiConnection.systemDocsUrl,
+      (data) => SystemDocModel.fromJsonArray(data),
+      SharedPrefKeys.DATETIME_SYSTEMDOCS_KEY,
+    );
   }
 }

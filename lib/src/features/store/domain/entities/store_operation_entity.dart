@@ -24,25 +24,25 @@ import 'package:era_pro_application/src/core/utils/date_time_converter.dart';
 // ignore: must_be_immutable
 class StoreOperationEntity extends Equatable {
   int id;
-  final int operationId;
-  final int operationType;
+  final int operationId; //bill id
+  final int operationType; //bill type
   @DateTimeConverter()
   final DateTime operationDate;
-  final bool operationIn;
+  final bool operationIn; //0 q-out  //1 1-in
   final int storeId;
   final int itemId;
   final int unitId;
-  final int quantity;
-  final double averageCost;
-  final double unitCost;
-  final double totalCost;
+  final int quantity; //q + free_q (-)
+  final double averageCost; //item initails price
+  final double unitCost; // netsellprice / quantity
+  final double totalCost; // netsellprice + freeqconst
   final int unitFactor;
-  final int qtyConvert;
+  final int qtyConvert; //(-) unitfactor *( quanity + free
   final String expirDate;
   final int addBranch;
 
   StoreOperationEntity({
-    this.id = -1,
+    this.id = 1,
     required this.operationId,
     required this.operationType,
     required this.operationDate,

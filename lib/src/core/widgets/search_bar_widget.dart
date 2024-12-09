@@ -6,8 +6,10 @@ class SearchAppbarWidget extends StatelessWidget {
   const SearchAppbarWidget({
     super.key,
     required this.action,
+    this.color,
   });
   final Function(String) action;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,7 +19,7 @@ class SearchAppbarWidget extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              color: context.wightColor,
+              color: color ?? context.whiteColor,
             ),
             child: Row(
               children: [
@@ -26,7 +28,7 @@ class SearchAppbarWidget extends StatelessWidget {
                     //initialValue: widget.placeHolder ?? "",
                     textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
-                    style: context.bodyLarge?.copyWith(
+                    style: context.bodyLarge.copyWith(
                       color: context.blackColor,
                       fontWeight: FontWeight.bold,
                     ),
@@ -37,7 +39,7 @@ class SearchAppbarWidget extends StatelessWidget {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'البحث عن',
-                      hintStyle: context.bodyMeduim?.copyWith(
+                      hintStyle: context.bodyMedium.copyWith(
                         fontWeight: FontWeight.normal,
                       ),
                       focusedBorder: const OutlineInputBorder(

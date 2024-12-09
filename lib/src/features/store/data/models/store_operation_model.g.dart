@@ -8,7 +8,7 @@ part of 'store_operation_model.dart';
 
 StoreOperationModel _$StoreOperationModelFromJson(Map<String, dynamic> json) =>
     StoreOperationModel(
-      id: (json['id'] as num?)?.toInt() ?? -1,
+      id: (json['id'] as num?)?.toInt() ?? 1,
       operationId: (json['operationId'] as num).toInt(),
       operationType: (json['operationType'] as num).toInt(),
       operationDate:

@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/delete_account_operation_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
 
 import '../../../../core/error/failures.dart';
 import '../entities/store_entity.dart';
+import 'dart:typed_data';
 
 abstract class StoreRepository {
   // Future<User> getUser(String userId);
@@ -15,7 +17,12 @@ abstract class StoreRepository {
   Future<Either<Failure, List<ItemUnitsEntity>>> getItemUnits();
   Future<Either<Failure, UserStoreEntity>> getUserStoreInfo();
   Future<Either<Failure, List<StoreOperationEntity>>> getStoreOperations();
+  Future<Either<Failure, bool>> saveStoreOperations(
+      List<StoreOperationEntity> list);
   // Future<Either<Failure, StoreItemDetailsEntity>> getItemDetails(int id);
   Future<Either<Failure, List<StoreItemDetailsEntity>>>
       getAllItemsWithDetails();
+  Future<Either<Failure, int>> deleteStoreOperations(OperationType op);
+  Future<Either<Failure, bool>> fetchAllStoreComponents();
+  Future<Either<Failure,Uint8List?>> getItemImage(int id);
 }

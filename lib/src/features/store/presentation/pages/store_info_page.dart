@@ -13,14 +13,25 @@ import 'package:get/get.dart';
 import '../../../../core/widgets/search_bar_widget.dart';
 import '../widgets/store_item_widget.dart';
 
-class StoreInfoPage extends StatelessWidget {
-  StoreInfoPage({super.key});
+class StoreInfoPage extends StatefulWidget {
+  const StoreInfoPage({super.key});
+
+  @override
+  State<StoreInfoPage> createState() => _StoreInfoPageState();
+}
+
+class _StoreInfoPageState extends State<StoreInfoPage> {
   StoreController storeController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    storeController.getAllStoreInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.bg,
+      backgroundColor: context.backgroundColor,
       body: SafeArea(
           child: Column(
         children: [
@@ -125,7 +136,7 @@ class StoreInfoPage extends StatelessWidget {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 1 / 0.9,
+                              childAspectRatio: 1 / 1,
                               mainAxisSpacing: context.sp12,
                               crossAxisSpacing: context.sp12,
                             ),

@@ -208,7 +208,7 @@ class ItemDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.wightColor,
+      backgroundColor: context.whiteColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -272,12 +272,12 @@ class ItemDetailsPage extends StatelessWidget {
             children: [
               Text(
                 storeItemDetailsEntity.item.name,
-                style: context.displayMeduim,
+                style: context.displayMedium,
               ),
               context.g4,
               Text(
                 storeItemDetailsEntity.item.itemDescription,
-                style: context.bodyMeduim,
+                style: context.bodyMedium,
               ),
             ],
           ),
@@ -408,7 +408,7 @@ class ItemUnitsDetailsWidget extends StatelessWidget {
                                 itemUnitDetails.prices,
                               ).toStringAsFixed(2)}',
                           style: context.titleSmall
-                              ?.copyWith(color: context.blackColor),
+                              .copyWith(color: context.blackColor),
                         ),
                       ],
                     ),

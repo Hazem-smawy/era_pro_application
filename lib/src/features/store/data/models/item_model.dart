@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/core/services/db/db.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_entity.dart';
+import 'package:get/get.dart' as Get;
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/utils/image_converter.dart';
@@ -36,8 +37,16 @@ class ItemModel extends ItemEntity {
       _$ItemModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemModelToJson(this);
-  static List<ItemModel> fromJsonArray(List jsonArray) {
-    return jsonArray.map((value) => ItemModel.fromJson(value)).toList();
+  // static List<ItemModel> fromJsonArray(List jsonArray) {
+  //   return jsonArray.map((value) => ItemModel.fromJson(value)).toList();
+  // }
+  static List<ItemModel> fromJsonArray(dynamic data) {
+    try {
+      return (data as List).map((item) => ItemModel.fromJson(item)).toList();
+    } catch (e) {
+      Get.Get.snackbar('error from json', 'product');
+      return [];
+    }
   }
 
   ItemTableCompanion toCompanion() {

@@ -6,6 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'account_model.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class AccountModel extends AccountEntity {
   AccountModel({
     super.id,

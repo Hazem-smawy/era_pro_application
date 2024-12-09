@@ -14,7 +14,7 @@ class AccountAddOperationSheet extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: context.wightColor.withOpacity(0.7),
+          color: context.whiteColor.withOpacity(0.7),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -25,7 +25,7 @@ class StoreInfoDetailsPage extends StatelessWidget {
               margin: const EdgeInsets.all(Spaces.sp12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: context.wightColor,
+                color: context.whiteColor,
               ),
               child: Obx(
                 () => Column(
@@ -95,7 +95,7 @@ class StoreDetailsInfoWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: context.wightColor,
+        color: context.whiteColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

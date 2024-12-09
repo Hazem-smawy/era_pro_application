@@ -9,11 +9,22 @@ import 'package:era_pro_application/src/features/auth/presentation/getX/auth_get
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginSheet extends StatelessWidget {
-  LoginSheet({
+class LoginSheet extends StatefulWidget {
+  const LoginSheet({
     super.key,
   });
+
+  @override
+  State<LoginSheet> createState() => _LoginSheetState();
+}
+
+class _LoginSheetState extends State<LoginSheet> {
   final AuthController authController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    authController.authInit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,67 +40,67 @@ class LoginSheet extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(Spaces.sp16),
         child: SafeArea(
-          child: Form(
-            key: authController.formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Gaps.g20,
-                Text(
-                  loginSheetTitle,
-                  style: context.displayLarge,
-                ),
-                Gaps.g28,
-                CustomTextFieldWidget(
-                  controller: authController.nameController,
-                  label: 'اسم الموزع',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'اسم الموزع مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-                Gaps.g20,
-                CustomTextFieldWidget(
-                  controller: authController.passwordController,
-                  label: 'كلمة المرور',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'كلمة المرور  مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-                Gaps.g16,
-                CustomTextFieldWidget(
-                  controller: authController.ipController,
-                  label: 'عنوان الاتصال',
-                  isNumber: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'عنوان الاتصال مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-                Gaps.g16,
-                CustomTextFieldWidget(
-                  controller: authController.portController,
-                  label: 'رقم المنفذ',
-                  isNumber: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'رقم المنفذ مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-                Gaps.g16,
-                Obx(
-                  () => Column(
+          child: Obx(
+            () => Form(
+              key: authController.formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Gaps.g20,
+                  Text(
+                    loginSheetTitle,
+                    style: context.displayLarge,
+                  ),
+                  Gaps.g28,
+                  CustomTextFieldWidget(
+                    controller: authController.nameController.value,
+                    label: 'اسم الموزع',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'اسم الموزع مطلوب';
+                      }
+                      return null;
+                    },
+                  ),
+                  Gaps.g20,
+                  CustomTextFieldWidget(
+                    controller: authController.passwordController,
+                    label: 'كلمة المرور',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'كلمة المرور  مطلوب';
+                      }
+                      return null;
+                    },
+                  ),
+                  Gaps.g16,
+                  CustomTextFieldWidget(
+                    controller: authController.ipController,
+                    label: 'عنوان الاتصال',
+                    isNumber: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'عنوان الاتصال مطلوب';
+                      }
+                      return null;
+                    },
+                  ),
+                  Gaps.g16,
+                  CustomTextFieldWidget(
+                    controller: authController.portController,
+                    label: 'رقم المنفذ',
+                    isNumber: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'رقم المنفذ مطلوب';
+                      }
+                      return null;
+                    },
+                  ),
+                  Gaps.g16,
+                  Column(
                     children: [
                       ElevatedButtonExtension.primary(
                         label: loginSheetTitle,
@@ -98,19 +109,15 @@ class LoginSheet extends StatelessWidget {
                         },
                       ).status(authController.authState.value.isLoading()),
                       Gaps.g16,
-                      if (authController.authState.value.isLoading())
-                        const SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: CircularProgressIndicator(),
-                        ),
                       if (authController.errorMessage.value != '')
-                        Text(authController.errorMessage.value),
+                        Text(
+                          authController.errorMessage.value,
+                        ),
                     ],
                   ),
-                ),
-                Gaps.g36,
-              ],
+                  Gaps.g36,
+                ],
+              ),
             ),
           ),
         ),

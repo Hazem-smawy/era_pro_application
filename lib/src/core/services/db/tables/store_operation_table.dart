@@ -24,7 +24,7 @@ import '../../../../features/store/data/models/models.dart';
 
 @UseRowClass(StoreOperationModel)
 class StoreOperationTable extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
   IntColumn get operationId => integer()();
   IntColumn get operationType => integer()();
   DateTimeColumn get operationDate => dateTime()();
@@ -41,6 +41,6 @@ class StoreOperationTable extends Table {
   TextColumn get expirDate => text()();
   IntColumn get addBranch => integer()();
 
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 }

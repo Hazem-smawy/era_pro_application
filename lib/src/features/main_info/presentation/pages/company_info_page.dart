@@ -10,10 +10,21 @@ import 'package:get/get.dart';
 import '../../../../core/widgets/title_info_widget.dart';
 
 // ignore: must_be_immutable
-class CompanyAndBranchInfoPage extends StatelessWidget {
-  CompanyAndBranchInfoPage({super.key});
+class CompanyAndBranchInfoPage extends StatefulWidget {
+  const CompanyAndBranchInfoPage({super.key});
 
+  @override
+  State<CompanyAndBranchInfoPage> createState() =>
+      _CompanyAndBranchInfoPageState();
+}
+
+class _CompanyAndBranchInfoPageState extends State<CompanyAndBranchInfoPage> {
   final MainInfoController mainInfoController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    mainInfoController.getAllMainInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +77,7 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.wightColor,
+                    color: context.whiteColor,
                   ),
                   child: Column(
                     children: [
@@ -117,7 +128,7 @@ class CompanyAndBranchInfoPage extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.wightColor,
+                    color: context.whiteColor,
                   ),
                   child: Column(
                     children: [

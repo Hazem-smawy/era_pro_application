@@ -66,7 +66,7 @@ class AccountsPage extends StatelessWidget {
         },
         child: FaIcon(
           FontAwesomeIcons.plus,
-          color: context.wightColor,
+          color: context.whiteColor,
         ),
       ),
     );

@@ -2,21 +2,21 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:flutter/material.dart';
 
 class CounterItemWidget extends StatelessWidget {
-  CounterItemWidget({
+  const CounterItemWidget({
     super.key,
     required this.icon,
     required this.action,
   });
 
   final IconData icon;
-  Function action;
+  final Function action;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 40,
       decoration: BoxDecoration(
-        color: context.wightColor,
+        color: context.whiteColor,
         shape: BoxShape.circle,
       ),
       child: Center(

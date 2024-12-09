@@ -43,7 +43,9 @@ class MainInfoTypes {
       title: 'الفواتير',
       color: const Color(0xff37B6BD),
       icon: FontAwesomeIcons.fileInvoice,
-      action: () {},
+      action: () {
+        Get.toNamed(Routes.ALLBILLS);
+      },
     ),
     MainInfoItemTypes(
       id: 3,

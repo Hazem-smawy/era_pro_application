@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 
 extension ElevatedButtonExtension on ElevatedButton {
   static ButtonStyle primaryStyle = ElevatedButton.styleFrom(
+    elevation: 0,
     backgroundColor: AppColors.primaryColor, // Background color // Text color
     minimumSize: const Size.fromHeight(50),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: BorderSide(
+        color: AppColors.containerColor.withOpacity(0.5),
+      ),
+    ),
   );
 
   static ButtonStyle secondaryStyle = ElevatedButton.styleFrom(
@@ -26,10 +33,19 @@ extension ElevatedButtonExtension on ElevatedButton {
   );
 
   static ButtonStyle dangerStyle = ElevatedButton.styleFrom(
-    foregroundColor: Colors.white,
     backgroundColor: Colors.red,
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+    elevation: 0,
+    padding: const EdgeInsets.symmetric(
+      horizontal: Spaces.sp16,
+      vertical: Spaces.sp8,
+    ),
+    minimumSize: const Size.fromHeight(50),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: BorderSide(
+        color: AppColors.containerColor.withOpacity(0.5),
+      ),
+    ),
   );
 
   static ElevatedButton primary(

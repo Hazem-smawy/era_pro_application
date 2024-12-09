@@ -10,7 +10,7 @@ part 'bill_model.g.dart';
 @JsonSerializable()
 class BillModel extends BillEntity {
   BillModel(
-      {super.id,
+      {required super.id,
       required super.branchId,
       required super.billNumber,
       required super.billType,
@@ -48,7 +48,7 @@ class BillModel extends BillEntity {
 
   BillTableCompanion toCompanion() {
     return BillTableCompanion(
-      id: const Value.absent(),
+      id: id == -1 ? const Value.absent() : Value(id),
       branchId: Value(branchId),
       billNumber: Value(billNumber),
       billType: Value(billType),

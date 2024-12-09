@@ -33,7 +33,7 @@ class PriceDialogWidget extends StatelessWidget {
         child: Center(
           child: Text(
             number.toString(),
-            style: context.bodyMeduim?.copyWith(
+            style: context.bodyMedium.copyWith(
               color: isSelected ? Colors.white : Colors.black,
             ),
           ),

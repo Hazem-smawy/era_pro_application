@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:era_pro_application/src/core/api/api.dart';
-import 'package:era_pro_application/src/core/api/methods.dart';
 import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
 
+import '../../../../core/api/methods.dart';
 import '../../../../core/constants/share_pref_keys.dart';
 import '../../../../core/services/shared_preferences.dart';
 import '../../../main_info/data/models/main_info_model.dart';
@@ -29,7 +29,7 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
     return httpMethod.handleRequest(
       apiConnection.userUrl,
       (data) => UserModel.fromJson(data),
-      SharedPrefKeys.USERINFO_KEY,
+      SharedPrefKeys.DATETIME_USERINFO_KEY,
     );
   }
 
@@ -38,7 +38,7 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
     return httpMethod.handleRequest(
       apiConnection.userSettingsUrl,
       (data) => UserSettingModel.fromJson(data),
-      SharedPrefKeys.USERSTORE_KEY,
+      SharedPrefKeys.DATETIME_USERSETTING_KEY,
     );
   }
 }

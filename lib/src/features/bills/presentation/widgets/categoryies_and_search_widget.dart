@@ -1,8 +1,9 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_getx.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+import '../getX/item_controller.dart';
 
 class CategoriesWithSearchWidget extends StatefulWidget {
   const CategoriesWithSearchWidget({super.key});
@@ -15,7 +16,7 @@ class CategoriesWithSearchWidget extends StatefulWidget {
 class _CategoriesWithSearchWidgetState
     extends State<CategoriesWithSearchWidget> {
   bool isSearchFieldOpen = false;
-  BillController itemController = Get.find();
+  ItemController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -53,23 +54,21 @@ class _CategoriesWithSearchWidgetState
                 ),
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            context.g4,
             if (isSearchFieldOpen)
               Expanded(
                 child: AnimatedContainer(
                   duration: const Duration(microseconds: 200),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.bg,
+                    color: context.backgroundColor,
                   ),
                   child: TextFormField(
                     //initialValue: widget.placeHolder ?? "",
                     textAlign: TextAlign.right,
 
                     textDirection: TextDirection.rtl,
-                    style: context.titleSmall?.copyWith(
+                    style: context.titleSmall.copyWith(
                       color: context.blackColor,
                       fontWeight: FontWeight.bold,
                     ),
@@ -80,7 +79,7 @@ class _CategoriesWithSearchWidgetState
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'البحث عن',
-                      hintStyle: context.bodySmall?.copyWith(
+                      hintStyle: context.bodySmall.copyWith(
                         fontWeight: FontWeight.normal,
                       ),
                       contentPadding: const EdgeInsets.only(
@@ -131,10 +130,10 @@ class _CategoriesWithSearchWidgetState
                             child: Center(
                               child: Text(
                                 group.name,
-                                style: context.bodySmall?.copyWith(
+                                style: context.bodySmall.copyWith(
                                   color: itemController.selectedGroupId.value ==
                                           group.code
-                                      ? context.wightColor
+                                      ? context.whiteColor
                                       : context.secondaryTextColor,
                                 ),
                               ),
@@ -203,9 +202,9 @@ class _CategoriesWithSearchWidgetState
                   child: Center(
                     child: Text(
                       'الكل',
-                      style: context.bodySmall?.copyWith(
+                      style: context.bodySmall.copyWith(
                         color: itemController.selectedGroupId.value == 0
-                            ? context.wightColor
+                            ? context.whiteColor
                             : context.secondaryTextColor,
                         fontWeight: FontWeight.bold,
                       ),

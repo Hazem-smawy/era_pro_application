@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
-import 'package:era_pro_application/src/features/accounts/domain/usecases/usecases.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_accounts_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,8 +29,22 @@ class MainInfoController extends GetxController {
   var allCurencies = Rx<List<CurencyEntity>>([]);
   final selecteCurency = Rx<CurencyEntity?>(null);
 
-  CurencyEntity get storCurency {
-    return allCurencies.value.firstWhere((e) => e.storeCurrency);
+  CurencyEntity? get storCurency {
+    if (allCurencies.value.isNotEmpty) {
+      return allCurencies.value.firstWhereOrNull((e) => e.storeCurrency) ??
+          allCurencies.value.first;
+    } else {
+      return null;
+    }
+  }
+
+  CurencyEntity? get localCurency {
+    if (allCurencies.value.isNotEmpty) {
+      return allCurencies.value.firstWhereOrNull((e) => e.localCurrency) ??
+          allCurencies.value.first;
+    } else {
+      return null;
+    }
   }
 
   var allPaymentsMethod = Rx<List<PaymentEntity>>([]);
@@ -55,16 +69,10 @@ class MainInfoController extends GetxController {
   });
 
   @override
-  void onInit() async {
+  onInit() {
     super.onInit();
-    await getAllMainInfo();
-    await getAllAccounts();
+    getAllCurenciesInfo();
   }
-
-  // @override
-  // void onReady() {
-  //   getAllPaymentsMethod();
-  // }
 
   Future<void> changeSelectedPaymentMethodsDetails(List list) async {
     paymentsMethodDetails.value = list;
@@ -86,7 +94,6 @@ class MainInfoController extends GetxController {
   }
 
   Future<void> getBranchInfo() async {
-    // status(RxStatus.error());
     await handleUsecase(
       usecase: getBranchUsecase.call,
       target: branch,
@@ -109,8 +116,8 @@ class MainInfoController extends GetxController {
       errorMessageTarget: errorMessage,
     );
 
-    selecteCurency.value =
-        allCurencies.value.firstWhere((e) => e.storeCurrency);
+    // selecteCurency.value =
+    //     allCurencies.value.firstWhereOrNull((e) => e.storeCurrency);
 
     return allCurencies.value;
   }
@@ -121,7 +128,10 @@ class MainInfoController extends GetxController {
       target: allPaymentsMethod,
       errorMessageTarget: errorMessage,
     );
-    selectedPaymentsMethod.value = allPaymentsMethod.value.first;
+    if (allPaymentsMethod.value.isNotEmpty &&
+        selectedPaymentsMethod.value == null) {
+      selectedPaymentsMethod.value = allPaymentsMethod.value.first;
+    }
   }
 
   Future<void> getAllSystemDocs() async {
@@ -133,6 +143,7 @@ class MainInfoController extends GetxController {
   }
 
   Future<void> changePaymentMethod(PaymentEntity? value) async {
+    await getAllPaymentsMethod();
     final newValue = value ??
         allPaymentsMethod.value.firstWhere(
           (method) => method.id != 0,

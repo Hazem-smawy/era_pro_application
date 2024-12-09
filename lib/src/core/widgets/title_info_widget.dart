@@ -40,7 +40,7 @@ class TitleInfoWidget extends StatelessWidget {
                 child: Text(
                   subTitle,
                   textAlign: TextAlign.end,
-                  style: context.titleSmall?.copyWith(
+                  style: context.titleSmall.copyWith(
                     color: context.blackColor,
                   ),
                 ),

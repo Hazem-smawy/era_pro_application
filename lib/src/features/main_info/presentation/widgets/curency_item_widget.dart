@@ -108,7 +108,7 @@ class CurencyCheckBoxWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: context.bodySmall?.copyWith(
+          style: context.bodySmall.copyWith(
             color:
                 isChecked ? context.primaryColor : context.secondaryTextColor,
             fontWeight: isChecked ? FontWeight.bold : null,
@@ -155,7 +155,7 @@ class CurencyAttributeWidget extends StatelessWidget {
                   ),
               child: Text(
                 value,
-                style: context.bodyMeduim?.copyWith(
+                style: context.bodyMedium.copyWith(
                   color: context.blackColor,
                 ),
               ),

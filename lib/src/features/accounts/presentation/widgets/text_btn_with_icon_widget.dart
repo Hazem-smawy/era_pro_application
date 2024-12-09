@@ -22,7 +22,7 @@ class TextBtnWithIconWidget extends StatelessWidget {
         children: [
           Text(
             label,
-            style: context.bodyMeduim?.copyWith(
+            style: context.bodyMedium.copyWith(
               color: color,
             ),
           ),

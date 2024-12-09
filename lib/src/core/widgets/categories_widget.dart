@@ -66,7 +66,7 @@ class CategoriesWidget<T> extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: selectedId == 0 ? context.secondary : context.wightColor,
+                color: selectedId == 0 ? context.secondary : context.whiteColor,
                 border: Border.all(
                   color: context.secondaryTextColor.withOpacity(0.2),
                 ),
@@ -74,9 +74,9 @@ class CategoriesWidget<T> extends StatelessWidget {
               child: Center(
                 child: Text(
                   'الكل',
-                  style: context.bodyMeduim?.copyWith(
+                  style: context.bodyMedium.copyWith(
                     color: selectedId == 0
-                        ? context.wightColor
+                        ? context.whiteColor
                         : context.secondaryTextColor,
                   ),
                 ),
@@ -106,13 +106,13 @@ class CategoryItemWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: isSelected ? context.secondary : context.wightColor,
+        color: isSelected ? context.secondary : context.whiteColor,
       ),
       child: Center(
         child: Text(
           name,
-          style: context.bodySmall?.copyWith(
-            color: isSelected ? context.wightColor : context.secondaryTextColor,
+          style: context.bodySmall.copyWith(
+            color: isSelected ? context.whiteColor : context.secondaryTextColor,
           ),
         ),
       ),

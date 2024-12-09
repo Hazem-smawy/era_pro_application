@@ -7,7 +7,7 @@ part of 'bill_model.dart';
 // **************************************************************************
 
 BillModel _$BillModelFromJson(Map<String, dynamic> json) => BillModel(
-      id: (json['id'] as num?)?.toInt(),
+      id: (json['id'] as num).toInt(),
       branchId: (json['branchId'] as num).toInt(),
       billNumber: (json['billNumber'] as num).toInt(),
       billType: (json['billType'] as num).toInt(),

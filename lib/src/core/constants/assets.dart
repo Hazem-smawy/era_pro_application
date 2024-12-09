@@ -1,18 +1,39 @@
+// ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
 
+  /// Assets for assetsFontsCairoBold
+  /// assets/fonts/Cairo-Bold.ttf
+  static const String assetsFontsCairoBold = "assets/fonts/Cairo-Bold.ttf";
+
+  /// Assets for assetsFontsCairoLight
+  /// assets/fonts/Cairo-Light.ttf
+  static const String assetsFontsCairoLight = "assets/fonts/Cairo-Light.ttf";
+
+  /// Assets for assetsFontsCairoMedium
+  /// assets/fonts/Cairo-Medium.ttf
+  static const String assetsFontsCairoMedium = "assets/fonts/Cairo-Medium.ttf";
+
+  /// Assets for assetsFontsCairoRegular
+  /// assets/fonts/Cairo-Regular.ttf
+  static const String assetsFontsCairoRegular =
+      "assets/fonts/Cairo-Regular.ttf";
+
   /// Assets for assetsFontsNtaqat
   /// assets/fonts/ntaqat.ttf
-  static const String fontFamily = "Cairo";
+  static const String assetsFontsNtaqat = "assets/fonts/ntaqat.ttf";
 
   /// Assets for assetsImagesAvatar1
   /// assets/images/avatar1.jpg
   static const String assetsImagesAvatar1 = "assets/images/avatar1.jpg";
-  static const String assetsImagesCurencies = "assets/images/curencies.png";
 
   /// Assets for assetsImagesAvatar2
   /// assets/images/avatar2.jpg
   static const String assetsImagesAvatar2 = "assets/images/avatar2.jpg";
+
+  /// Assets for assetsImagesCurencies
+  /// assets/images/curencies.png
+  static const String assetsImagesCurencies = "assets/images/curencies.png";
 
   /// Assets for assetsImagesCustomer1
   /// assets/images/customer1.png
@@ -25,6 +46,10 @@ class Assets {
   /// Assets for assetsImagesEmptyFile
   /// assets/images/empty_file.png
   static const String assetsImagesEmptyFile = "assets/images/empty_file.png";
+
+  /// Assets for assetsImagesEmpyt
+  /// assets/images/empyt.jpg
+  static const String assetsImagesEmpyt = "assets/images/empyt.jpg";
 
   /// Assets for assetsImagesLogin
   /// assets/images/login.png

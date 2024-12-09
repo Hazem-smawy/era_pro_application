@@ -30,10 +30,8 @@ class UserEntity extends Equatable {
     required this.note,
     required this.image,
   });
-  
+
   @override
-  // TODO: implement props
-  List<Object?> get props => [
-    id,userName,password,userAcctype,branchId,groupId,note,image
-  ];
+  List<Object?> get props =>
+      [id, userName, password, userAcctype, branchId, groupId, note, image];
 }

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:device_info_plus/device_info_plus.dart';
 
 class DeviceInfo {
@@ -30,13 +29,14 @@ class DeviceInfo {
       deviceId = deviceData['androidId'];
       deviceName = deviceData['brand'];
       model = deviceData['model'];
-      version = "1"; //deviceData['version.release'];
+      version = deviceData['version.release']; // Use actual version
       platform = "android";
     } else {
-      deviceId = deviceData['model'];
+      deviceId =
+          deviceData['identifierForVendor']; // Use identifierForVendor for iOS
       deviceName = deviceData['name'];
       model = deviceData['model'];
-      version = "1"; //deviceData['utsname.release'];
+      version = deviceData['systemVersion']; // Use actual version
       platform = "ios";
     }
 

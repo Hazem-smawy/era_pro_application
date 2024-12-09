@@ -1,7 +1,10 @@
 import 'package:era_pro_application/src/core/middleware/auth_middleware.dart';
+import 'package:era_pro_application/src/features/async/presentation/pages/loading_page.dart';
 import 'package:era_pro_application/src/features/auth/presentation/getX/auth_binding.dart';
 import 'package:era_pro_application/src/features/auth/presentation/pages/auth_page.dart';
+import 'package:era_pro_application/src/features/bills/presentation/pages/all_bills_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/selling_bill_page.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/presentation/pages/exchange_page.dart';
 import 'package:era_pro_application/src/features/home/presentation/pages/home_page.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/pages/company_info_page.dart';
 import 'package:era_pro_application/src/features/home/presentation/pages/bottom_navigation_bar.dart';
@@ -39,11 +42,11 @@ class AppPages {
     ),
     GetPage(
       name: Routes.COMPANYINFO,
-      page: () => CompanyAndBranchInfoPage(),
+      page: () => const CompanyAndBranchInfoPage(),
     ),
     GetPage(
-      name: Routes.BILLS,
-      page: () => SellingBillPage(),
+      name: Routes.SELLINGPAGE,
+      page: () => const SellingBillPage(),
     ),
     GetPage(
       name: Routes.CURRENCIES,
@@ -51,7 +54,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.STORE,
-      page: () => StoreInfoPage(),
+      page: () => const StoreInfoPage(),
     ),
     GetPage(
       name: Routes.STOREDETAILS,
@@ -63,7 +66,19 @@ class AppPages {
     ),
     GetPage(
       name: Routes.ACCOUNTS,
-      page: () => AcountsTabviewPage(),
+      page: () => const AcountsTabviewPage(),
+    ),
+    GetPage(
+      name: Routes.ALLBILLS,
+      page: () => const AllBillsPage(),
+    ),
+    GetPage(
+      name: Routes.EXCHANGE,
+      page: () => const AllExhangePage(),
+    ),
+    GetPage(
+      name: Routes.LOADING,
+      page: () => const LoadingPage(),
     ),
   ];
 }

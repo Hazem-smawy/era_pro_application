@@ -13,12 +13,12 @@ class OfflineException implements Exception {
   });
 }
 
-class EmptyCashException implements Exception {
-  final String? message;
-  EmptyCashException({
-    this.message,
-  });
-}
+// class EmptyCashException implements Exception {
+//   final String? message;
+//   EmptyCashException({
+//     this.message,
+//   });
+// }
 
 class LocalStorageException implements Exception {
   final String? message;

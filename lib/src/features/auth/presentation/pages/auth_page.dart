@@ -18,19 +18,22 @@ class AuthPage extends StatelessWidget {
         children: [
           const Spacer(),
           const Icon(
-            Icons.ac_unit_sharp,
+            Icons.circle_outlined,
             size: 60,
             color: Colors.white,
           ),
-          Gaps.g8,
+          Gaps.g28,
           Text(
             intoAppNameString,
-            style: context.titleLarge?.copyWith(color: context.wightColor),
+            style: context.displayLarge.copyWith(
+              color: context.whiteColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          Gaps.g4,
+          Gaps.g16,
           Text(
             intoAppDescriptionString,
-            style: context.titleSmall?.copyWith(
+            style: context.titleSmall.copyWith(
               color: context.containerColor,
             ),
           ),
@@ -41,7 +44,7 @@ class AuthPage extends StatelessWidget {
                 label: intoBtnString,
                 onPressed: () {
                   Get.bottomSheet(
-                    LoginSheet(),
+                    const LoginSheet(),
                     isScrollControlled: true,
                   );
                 },

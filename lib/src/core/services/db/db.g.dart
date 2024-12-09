@@ -4277,7 +4277,11 @@ class $StoreOperationTableTable extends StoreOperationTable
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _operationIdMeta =
       const VerificationMeta('operationId');
   @override
@@ -4793,7 +4797,11 @@ class $BillTableTable extends BillTable
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _branchIdMeta =
       const VerificationMeta('branchId');
   @override
@@ -6197,6 +6205,1645 @@ class BillDetailsTableCompanion extends UpdateCompanion<BillDetailsModel> {
   }
 }
 
+class $AccountOperationTableTable extends AccountOperationTable
+    with TableInfo<$AccountOperationTableTable, AccountOperationModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AccountOperationTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _operationDateMeta =
+      const VerificationMeta('operationDate');
+  @override
+  late final GeneratedColumn<DateTime> operationDate =
+      GeneratedColumn<DateTime>('operation_date', aliasedName, false,
+          type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _operationTypeMeta =
+      const VerificationMeta('operationType');
+  @override
+  late final GeneratedColumn<int> operationType = GeneratedColumn<int>(
+      'operation_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _operationIdMeta =
+      const VerificationMeta('operationId');
+  @override
+  late final GeneratedColumn<int> operationId = GeneratedColumn<int>(
+      'operation_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _operationRefMeta =
+      const VerificationMeta('operationRef');
+  @override
+  late final GeneratedColumn<String> operationRef = GeneratedColumn<String>(
+      'operation_ref', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accountNumberMeta =
+      const VerificationMeta('accountNumber');
+  @override
+  late final GeneratedColumn<int> accountNumber = GeneratedColumn<int>(
+      'account_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _operationDebitMeta =
+      const VerificationMeta('operationDebit');
+  @override
+  late final GeneratedColumn<double> operationDebit = GeneratedColumn<double>(
+      'operation_debit', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _operationCreditMeta =
+      const VerificationMeta('operationCredit');
+  @override
+  late final GeneratedColumn<double> operationCredit = GeneratedColumn<double>(
+      'operation_credit', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _currencyIdMeta =
+      const VerificationMeta('currencyId');
+  @override
+  late final GeneratedColumn<int> currencyId = GeneratedColumn<int>(
+      'currency_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _currencyValueMeta =
+      const VerificationMeta('currencyValue');
+  @override
+  late final GeneratedColumn<double> currencyValue = GeneratedColumn<double>(
+      'currency_value', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _operationStatementMeta =
+      const VerificationMeta('operationStatement');
+  @override
+  late final GeneratedColumn<String> operationStatement =
+      GeneratedColumn<String>('operation_statement', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        operationDate,
+        operationType,
+        operationId,
+        operationRef,
+        accountNumber,
+        operationDebit,
+        operationCredit,
+        currencyId,
+        currencyValue,
+        operationStatement
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'account_operation_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<AccountOperationModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('operation_date')) {
+      context.handle(
+          _operationDateMeta,
+          operationDate.isAcceptableOrUnknown(
+              data['operation_date']!, _operationDateMeta));
+    } else if (isInserting) {
+      context.missing(_operationDateMeta);
+    }
+    if (data.containsKey('operation_type')) {
+      context.handle(
+          _operationTypeMeta,
+          operationType.isAcceptableOrUnknown(
+              data['operation_type']!, _operationTypeMeta));
+    } else if (isInserting) {
+      context.missing(_operationTypeMeta);
+    }
+    if (data.containsKey('operation_id')) {
+      context.handle(
+          _operationIdMeta,
+          operationId.isAcceptableOrUnknown(
+              data['operation_id']!, _operationIdMeta));
+    } else if (isInserting) {
+      context.missing(_operationIdMeta);
+    }
+    if (data.containsKey('operation_ref')) {
+      context.handle(
+          _operationRefMeta,
+          operationRef.isAcceptableOrUnknown(
+              data['operation_ref']!, _operationRefMeta));
+    } else if (isInserting) {
+      context.missing(_operationRefMeta);
+    }
+    if (data.containsKey('account_number')) {
+      context.handle(
+          _accountNumberMeta,
+          accountNumber.isAcceptableOrUnknown(
+              data['account_number']!, _accountNumberMeta));
+    } else if (isInserting) {
+      context.missing(_accountNumberMeta);
+    }
+    if (data.containsKey('operation_debit')) {
+      context.handle(
+          _operationDebitMeta,
+          operationDebit.isAcceptableOrUnknown(
+              data['operation_debit']!, _operationDebitMeta));
+    } else if (isInserting) {
+      context.missing(_operationDebitMeta);
+    }
+    if (data.containsKey('operation_credit')) {
+      context.handle(
+          _operationCreditMeta,
+          operationCredit.isAcceptableOrUnknown(
+              data['operation_credit']!, _operationCreditMeta));
+    } else if (isInserting) {
+      context.missing(_operationCreditMeta);
+    }
+    if (data.containsKey('currency_id')) {
+      context.handle(
+          _currencyIdMeta,
+          currencyId.isAcceptableOrUnknown(
+              data['currency_id']!, _currencyIdMeta));
+    } else if (isInserting) {
+      context.missing(_currencyIdMeta);
+    }
+    if (data.containsKey('currency_value')) {
+      context.handle(
+          _currencyValueMeta,
+          currencyValue.isAcceptableOrUnknown(
+              data['currency_value']!, _currencyValueMeta));
+    } else if (isInserting) {
+      context.missing(_currencyValueMeta);
+    }
+    if (data.containsKey('operation_statement')) {
+      context.handle(
+          _operationStatementMeta,
+          operationStatement.isAcceptableOrUnknown(
+              data['operation_statement']!, _operationStatementMeta));
+    } else if (isInserting) {
+      context.missing(_operationStatementMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AccountOperationModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AccountOperationModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      operationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}operation_date'])!,
+      operationType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}operation_type'])!,
+      operationId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}operation_id'])!,
+      operationRef: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}operation_ref'])!,
+      accountNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}account_number'])!,
+      operationDebit: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}operation_debit'])!,
+      operationCredit: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}operation_credit'])!,
+      currencyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}currency_id'])!,
+      currencyValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}currency_value'])!,
+      operationStatement: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}operation_statement'])!,
+    );
+  }
+
+  @override
+  $AccountOperationTableTable createAlias(String alias) {
+    return $AccountOperationTableTable(attachedDatabase, alias);
+  }
+}
+
+class AccountOperationTableCompanion
+    extends UpdateCompanion<AccountOperationModel> {
+  final Value<int> id;
+  final Value<DateTime> operationDate;
+  final Value<int> operationType;
+  final Value<int> operationId;
+  final Value<String> operationRef;
+  final Value<int> accountNumber;
+  final Value<double> operationDebit;
+  final Value<double> operationCredit;
+  final Value<int> currencyId;
+  final Value<double> currencyValue;
+  final Value<String> operationStatement;
+  const AccountOperationTableCompanion({
+    this.id = const Value.absent(),
+    this.operationDate = const Value.absent(),
+    this.operationType = const Value.absent(),
+    this.operationId = const Value.absent(),
+    this.operationRef = const Value.absent(),
+    this.accountNumber = const Value.absent(),
+    this.operationDebit = const Value.absent(),
+    this.operationCredit = const Value.absent(),
+    this.currencyId = const Value.absent(),
+    this.currencyValue = const Value.absent(),
+    this.operationStatement = const Value.absent(),
+  });
+  AccountOperationTableCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime operationDate,
+    required int operationType,
+    required int operationId,
+    required String operationRef,
+    required int accountNumber,
+    required double operationDebit,
+    required double operationCredit,
+    required int currencyId,
+    required double currencyValue,
+    required String operationStatement,
+  })  : operationDate = Value(operationDate),
+        operationType = Value(operationType),
+        operationId = Value(operationId),
+        operationRef = Value(operationRef),
+        accountNumber = Value(accountNumber),
+        operationDebit = Value(operationDebit),
+        operationCredit = Value(operationCredit),
+        currencyId = Value(currencyId),
+        currencyValue = Value(currencyValue),
+        operationStatement = Value(operationStatement);
+  static Insertable<AccountOperationModel> custom({
+    Expression<int>? id,
+    Expression<DateTime>? operationDate,
+    Expression<int>? operationType,
+    Expression<int>? operationId,
+    Expression<String>? operationRef,
+    Expression<int>? accountNumber,
+    Expression<double>? operationDebit,
+    Expression<double>? operationCredit,
+    Expression<int>? currencyId,
+    Expression<double>? currencyValue,
+    Expression<String>? operationStatement,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (operationDate != null) 'operation_date': operationDate,
+      if (operationType != null) 'operation_type': operationType,
+      if (operationId != null) 'operation_id': operationId,
+      if (operationRef != null) 'operation_ref': operationRef,
+      if (accountNumber != null) 'account_number': accountNumber,
+      if (operationDebit != null) 'operation_debit': operationDebit,
+      if (operationCredit != null) 'operation_credit': operationCredit,
+      if (currencyId != null) 'currency_id': currencyId,
+      if (currencyValue != null) 'currency_value': currencyValue,
+      if (operationStatement != null) 'operation_statement': operationStatement,
+    });
+  }
+
+  AccountOperationTableCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? operationDate,
+      Value<int>? operationType,
+      Value<int>? operationId,
+      Value<String>? operationRef,
+      Value<int>? accountNumber,
+      Value<double>? operationDebit,
+      Value<double>? operationCredit,
+      Value<int>? currencyId,
+      Value<double>? currencyValue,
+      Value<String>? operationStatement}) {
+    return AccountOperationTableCompanion(
+      id: id ?? this.id,
+      operationDate: operationDate ?? this.operationDate,
+      operationType: operationType ?? this.operationType,
+      operationId: operationId ?? this.operationId,
+      operationRef: operationRef ?? this.operationRef,
+      accountNumber: accountNumber ?? this.accountNumber,
+      operationDebit: operationDebit ?? this.operationDebit,
+      operationCredit: operationCredit ?? this.operationCredit,
+      currencyId: currencyId ?? this.currencyId,
+      currencyValue: currencyValue ?? this.currencyValue,
+      operationStatement: operationStatement ?? this.operationStatement,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (operationDate.present) {
+      map['operation_date'] = Variable<DateTime>(operationDate.value);
+    }
+    if (operationType.present) {
+      map['operation_type'] = Variable<int>(operationType.value);
+    }
+    if (operationId.present) {
+      map['operation_id'] = Variable<int>(operationId.value);
+    }
+    if (operationRef.present) {
+      map['operation_ref'] = Variable<String>(operationRef.value);
+    }
+    if (accountNumber.present) {
+      map['account_number'] = Variable<int>(accountNumber.value);
+    }
+    if (operationDebit.present) {
+      map['operation_debit'] = Variable<double>(operationDebit.value);
+    }
+    if (operationCredit.present) {
+      map['operation_credit'] = Variable<double>(operationCredit.value);
+    }
+    if (currencyId.present) {
+      map['currency_id'] = Variable<int>(currencyId.value);
+    }
+    if (currencyValue.present) {
+      map['currency_value'] = Variable<double>(currencyValue.value);
+    }
+    if (operationStatement.present) {
+      map['operation_statement'] = Variable<String>(operationStatement.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AccountOperationTableCompanion(')
+          ..write('id: $id, ')
+          ..write('operationDate: $operationDate, ')
+          ..write('operationType: $operationType, ')
+          ..write('operationId: $operationId, ')
+          ..write('operationRef: $operationRef, ')
+          ..write('accountNumber: $accountNumber, ')
+          ..write('operationDebit: $operationDebit, ')
+          ..write('operationCredit: $operationCredit, ')
+          ..write('currencyId: $currencyId, ')
+          ..write('currencyValue: $currencyValue, ')
+          ..write('operationStatement: $operationStatement')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RefAccountTableTable extends RefAccountTable
+    with TableInfo<$RefAccountTableTable, RefAccountModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RefAccountTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _accTagMeta = const VerificationMeta('accTag');
+  @override
+  late final GeneratedColumn<int> accTag = GeneratedColumn<int>(
+      'acc_tag', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accNameMeta =
+      const VerificationMeta('accName');
+  @override
+  late final GeneratedColumn<String> accName = GeneratedColumn<String>(
+      'acc_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accNumberMeta =
+      const VerificationMeta('accNumber');
+  @override
+  late final GeneratedColumn<int> accNumber = GeneratedColumn<int>(
+      'acc_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, accTag, accName, accNumber];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'ref_account_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<RefAccountModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('acc_tag')) {
+      context.handle(_accTagMeta,
+          accTag.isAcceptableOrUnknown(data['acc_tag']!, _accTagMeta));
+    } else if (isInserting) {
+      context.missing(_accTagMeta);
+    }
+    if (data.containsKey('acc_name')) {
+      context.handle(_accNameMeta,
+          accName.isAcceptableOrUnknown(data['acc_name']!, _accNameMeta));
+    } else if (isInserting) {
+      context.missing(_accNameMeta);
+    }
+    if (data.containsKey('acc_number')) {
+      context.handle(_accNumberMeta,
+          accNumber.isAcceptableOrUnknown(data['acc_number']!, _accNumberMeta));
+    } else if (isInserting) {
+      context.missing(_accNumberMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RefAccountModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RefAccountModel(
+      attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_tag'])!,
+      attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}acc_name'])!,
+      attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_number'])!,
+    );
+  }
+
+  @override
+  $RefAccountTableTable createAlias(String alias) {
+    return $RefAccountTableTable(attachedDatabase, alias);
+  }
+}
+
+class RefAccountTableCompanion extends UpdateCompanion<RefAccountModel> {
+  final Value<int> id;
+  final Value<int> accTag;
+  final Value<String> accName;
+  final Value<int> accNumber;
+  const RefAccountTableCompanion({
+    this.id = const Value.absent(),
+    this.accTag = const Value.absent(),
+    this.accName = const Value.absent(),
+    this.accNumber = const Value.absent(),
+  });
+  RefAccountTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int accTag,
+    required String accName,
+    required int accNumber,
+  })  : accTag = Value(accTag),
+        accName = Value(accName),
+        accNumber = Value(accNumber);
+  static Insertable<RefAccountModel> custom({
+    Expression<int>? id,
+    Expression<int>? accTag,
+    Expression<String>? accName,
+    Expression<int>? accNumber,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (accTag != null) 'acc_tag': accTag,
+      if (accName != null) 'acc_name': accName,
+      if (accNumber != null) 'acc_number': accNumber,
+    });
+  }
+
+  RefAccountTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? accTag,
+      Value<String>? accName,
+      Value<int>? accNumber}) {
+    return RefAccountTableCompanion(
+      id: id ?? this.id,
+      accTag: accTag ?? this.accTag,
+      accName: accName ?? this.accName,
+      accNumber: accNumber ?? this.accNumber,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (accTag.present) {
+      map['acc_tag'] = Variable<int>(accTag.value);
+    }
+    if (accName.present) {
+      map['acc_name'] = Variable<String>(accName.value);
+    }
+    if (accNumber.present) {
+      map['acc_number'] = Variable<int>(accNumber.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RefAccountTableCompanion(')
+          ..write('id: $id, ')
+          ..write('accTag: $accTag, ')
+          ..write('accName: $accName, ')
+          ..write('accNumber: $accNumber')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MidAccountTableTable extends MidAccountTable
+    with TableInfo<$MidAccountTableTable, MidAccountModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MidAccountTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _accTagMeta = const VerificationMeta('accTag');
+  @override
+  late final GeneratedColumn<int> accTag = GeneratedColumn<int>(
+      'acc_tag', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _accNameMeta =
+      const VerificationMeta('accName');
+  @override
+  late final GeneratedColumn<String> accName = GeneratedColumn<String>(
+      'acc_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accNumberMeta =
+      const VerificationMeta('accNumber');
+  @override
+  late final GeneratedColumn<int> accNumber = GeneratedColumn<int>(
+      'acc_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _branchIdMeta =
+      const VerificationMeta('branchId');
+  @override
+  late final GeneratedColumn<int> branchId = GeneratedColumn<int>(
+      'branch_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, accTag, accName, accNumber, branchId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'mid_account_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<MidAccountModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('acc_tag')) {
+      context.handle(_accTagMeta,
+          accTag.isAcceptableOrUnknown(data['acc_tag']!, _accTagMeta));
+    } else if (isInserting) {
+      context.missing(_accTagMeta);
+    }
+    if (data.containsKey('acc_name')) {
+      context.handle(_accNameMeta,
+          accName.isAcceptableOrUnknown(data['acc_name']!, _accNameMeta));
+    } else if (isInserting) {
+      context.missing(_accNameMeta);
+    }
+    if (data.containsKey('acc_number')) {
+      context.handle(_accNumberMeta,
+          accNumber.isAcceptableOrUnknown(data['acc_number']!, _accNumberMeta));
+    } else if (isInserting) {
+      context.missing(_accNumberMeta);
+    }
+    if (data.containsKey('branch_id')) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableOrUnknown(data['branch_id']!, _branchIdMeta));
+    } else if (isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MidAccountModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MidAccountModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      accTag: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_tag'])!,
+      accName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}acc_name'])!,
+      accNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_number'])!,
+      branchId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}branch_id'])!,
+    );
+  }
+
+  @override
+  $MidAccountTableTable createAlias(String alias) {
+    return $MidAccountTableTable(attachedDatabase, alias);
+  }
+}
+
+class MidAccountTableCompanion extends UpdateCompanion<MidAccountModel> {
+  final Value<int> id;
+  final Value<int> accTag;
+  final Value<String> accName;
+  final Value<int> accNumber;
+  final Value<int> branchId;
+  const MidAccountTableCompanion({
+    this.id = const Value.absent(),
+    this.accTag = const Value.absent(),
+    this.accName = const Value.absent(),
+    this.accNumber = const Value.absent(),
+    this.branchId = const Value.absent(),
+  });
+  MidAccountTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int accTag,
+    required String accName,
+    required int accNumber,
+    required int branchId,
+  })  : accTag = Value(accTag),
+        accName = Value(accName),
+        accNumber = Value(accNumber),
+        branchId = Value(branchId);
+  static Insertable<MidAccountModel> custom({
+    Expression<int>? id,
+    Expression<int>? accTag,
+    Expression<String>? accName,
+    Expression<int>? accNumber,
+    Expression<int>? branchId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (accTag != null) 'acc_tag': accTag,
+      if (accName != null) 'acc_name': accName,
+      if (accNumber != null) 'acc_number': accNumber,
+      if (branchId != null) 'branch_id': branchId,
+    });
+  }
+
+  MidAccountTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? accTag,
+      Value<String>? accName,
+      Value<int>? accNumber,
+      Value<int>? branchId}) {
+    return MidAccountTableCompanion(
+      id: id ?? this.id,
+      accTag: accTag ?? this.accTag,
+      accName: accName ?? this.accName,
+      accNumber: accNumber ?? this.accNumber,
+      branchId: branchId ?? this.branchId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (accTag.present) {
+      map['acc_tag'] = Variable<int>(accTag.value);
+    }
+    if (accName.present) {
+      map['acc_name'] = Variable<String>(accName.value);
+    }
+    if (accNumber.present) {
+      map['acc_number'] = Variable<int>(accNumber.value);
+    }
+    if (branchId.present) {
+      map['branch_id'] = Variable<int>(branchId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MidAccountTableCompanion(')
+          ..write('id: $id, ')
+          ..write('accTag: $accTag, ')
+          ..write('accName: $accName, ')
+          ..write('accNumber: $accNumber, ')
+          ..write('branchId: $branchId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExchangesTableTable extends ExchangesTable
+    with TableInfo<$ExchangesTableTable, ExchangeModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExchangesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _sandTypeMeta =
+      const VerificationMeta('sandType');
+  @override
+  late final GeneratedColumn<int> sandType = GeneratedColumn<int>(
+      'sand_type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _isCashMeta = const VerificationMeta('isCash');
+  @override
+  late final GeneratedColumn<bool> isCash = GeneratedColumn<bool>(
+      'is_cash', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_cash" IN (0, 1))'));
+  static const VerificationMeta _branchIdMeta =
+      const VerificationMeta('branchId');
+  @override
+  late final GeneratedColumn<int> branchId = GeneratedColumn<int>(
+      'branch_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _sandNumberMeta =
+      const VerificationMeta('sandNumber');
+  @override
+  late final GeneratedColumn<int> sandNumber = GeneratedColumn<int>(
+      'sand_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _sandDateMeta =
+      const VerificationMeta('sandDate');
+  @override
+  late final GeneratedColumn<DateTime> sandDate = GeneratedColumn<DateTime>(
+      'sand_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _fundNumberMeta =
+      const VerificationMeta('fundNumber');
+  @override
+  late final GeneratedColumn<int> fundNumber = GeneratedColumn<int>(
+      'fund_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _currencyIdMeta =
+      const VerificationMeta('currencyId');
+  @override
+  late final GeneratedColumn<int> currencyId = GeneratedColumn<int>(
+      'currency_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _currencyValueMeta =
+      const VerificationMeta('currencyValue');
+  @override
+  late final GeneratedColumn<double> currencyValue = GeneratedColumn<double>(
+      'currency_value', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _reciepentNameMeta =
+      const VerificationMeta('reciepentName');
+  @override
+  late final GeneratedColumn<String> reciepentName = GeneratedColumn<String>(
+      'reciepent_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _totalAmountMeta =
+      const VerificationMeta('totalAmount');
+  @override
+  late final GeneratedColumn<double> totalAmount = GeneratedColumn<double>(
+      'total_amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _sandNoteMeta =
+      const VerificationMeta('sandNote');
+  @override
+  late final GeneratedColumn<String> sandNote = GeneratedColumn<String>(
+      'sand_note', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _refNumberMeta =
+      const VerificationMeta('refNumber');
+  @override
+  late final GeneratedColumn<String> refNumber = GeneratedColumn<String>(
+      'ref_number', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        sandType,
+        isCash,
+        branchId,
+        sandNumber,
+        sandDate,
+        fundNumber,
+        currencyId,
+        currencyValue,
+        reciepentName,
+        totalAmount,
+        sandNote,
+        refNumber
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'exchanges_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<ExchangeModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('sand_type')) {
+      context.handle(_sandTypeMeta,
+          sandType.isAcceptableOrUnknown(data['sand_type']!, _sandTypeMeta));
+    } else if (isInserting) {
+      context.missing(_sandTypeMeta);
+    }
+    if (data.containsKey('is_cash')) {
+      context.handle(_isCashMeta,
+          isCash.isAcceptableOrUnknown(data['is_cash']!, _isCashMeta));
+    } else if (isInserting) {
+      context.missing(_isCashMeta);
+    }
+    if (data.containsKey('branch_id')) {
+      context.handle(_branchIdMeta,
+          branchId.isAcceptableOrUnknown(data['branch_id']!, _branchIdMeta));
+    } else if (isInserting) {
+      context.missing(_branchIdMeta);
+    }
+    if (data.containsKey('sand_number')) {
+      context.handle(
+          _sandNumberMeta,
+          sandNumber.isAcceptableOrUnknown(
+              data['sand_number']!, _sandNumberMeta));
+    } else if (isInserting) {
+      context.missing(_sandNumberMeta);
+    }
+    if (data.containsKey('sand_date')) {
+      context.handle(_sandDateMeta,
+          sandDate.isAcceptableOrUnknown(data['sand_date']!, _sandDateMeta));
+    } else if (isInserting) {
+      context.missing(_sandDateMeta);
+    }
+    if (data.containsKey('fund_number')) {
+      context.handle(
+          _fundNumberMeta,
+          fundNumber.isAcceptableOrUnknown(
+              data['fund_number']!, _fundNumberMeta));
+    } else if (isInserting) {
+      context.missing(_fundNumberMeta);
+    }
+    if (data.containsKey('currency_id')) {
+      context.handle(
+          _currencyIdMeta,
+          currencyId.isAcceptableOrUnknown(
+              data['currency_id']!, _currencyIdMeta));
+    } else if (isInserting) {
+      context.missing(_currencyIdMeta);
+    }
+    if (data.containsKey('currency_value')) {
+      context.handle(
+          _currencyValueMeta,
+          currencyValue.isAcceptableOrUnknown(
+              data['currency_value']!, _currencyValueMeta));
+    } else if (isInserting) {
+      context.missing(_currencyValueMeta);
+    }
+    if (data.containsKey('reciepent_name')) {
+      context.handle(
+          _reciepentNameMeta,
+          reciepentName.isAcceptableOrUnknown(
+              data['reciepent_name']!, _reciepentNameMeta));
+    } else if (isInserting) {
+      context.missing(_reciepentNameMeta);
+    }
+    if (data.containsKey('total_amount')) {
+      context.handle(
+          _totalAmountMeta,
+          totalAmount.isAcceptableOrUnknown(
+              data['total_amount']!, _totalAmountMeta));
+    } else if (isInserting) {
+      context.missing(_totalAmountMeta);
+    }
+    if (data.containsKey('sand_note')) {
+      context.handle(_sandNoteMeta,
+          sandNote.isAcceptableOrUnknown(data['sand_note']!, _sandNoteMeta));
+    } else if (isInserting) {
+      context.missing(_sandNoteMeta);
+    }
+    if (data.containsKey('ref_number')) {
+      context.handle(_refNumberMeta,
+          refNumber.isAcceptableOrUnknown(data['ref_number']!, _refNumberMeta));
+    } else if (isInserting) {
+      context.missing(_refNumberMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExchangeModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExchangeModel(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      sandType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sand_type'])!,
+      isCash: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_cash'])!,
+      branchId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}branch_id'])!,
+      sandNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sand_number'])!,
+      sandDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}sand_date'])!,
+      fundNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}fund_number'])!,
+      currencyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}currency_id'])!,
+      currencyValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}currency_value'])!,
+      reciepentName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reciepent_name'])!,
+      totalAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}total_amount'])!,
+      sandNote: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sand_note'])!,
+      refNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}ref_number'])!,
+    );
+  }
+
+  @override
+  $ExchangesTableTable createAlias(String alias) {
+    return $ExchangesTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExchangesTableCompanion extends UpdateCompanion<ExchangeModel> {
+  final Value<int> id;
+  final Value<int> sandType;
+  final Value<bool> isCash;
+  final Value<int> branchId;
+  final Value<int> sandNumber;
+  final Value<DateTime> sandDate;
+  final Value<int> fundNumber;
+  final Value<int> currencyId;
+  final Value<double> currencyValue;
+  final Value<String> reciepentName;
+  final Value<double> totalAmount;
+  final Value<String> sandNote;
+  final Value<String> refNumber;
+  const ExchangesTableCompanion({
+    this.id = const Value.absent(),
+    this.sandType = const Value.absent(),
+    this.isCash = const Value.absent(),
+    this.branchId = const Value.absent(),
+    this.sandNumber = const Value.absent(),
+    this.sandDate = const Value.absent(),
+    this.fundNumber = const Value.absent(),
+    this.currencyId = const Value.absent(),
+    this.currencyValue = const Value.absent(),
+    this.reciepentName = const Value.absent(),
+    this.totalAmount = const Value.absent(),
+    this.sandNote = const Value.absent(),
+    this.refNumber = const Value.absent(),
+  });
+  ExchangesTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int sandType,
+    required bool isCash,
+    required int branchId,
+    required int sandNumber,
+    required DateTime sandDate,
+    required int fundNumber,
+    required int currencyId,
+    required double currencyValue,
+    required String reciepentName,
+    required double totalAmount,
+    required String sandNote,
+    required String refNumber,
+  })  : sandType = Value(sandType),
+        isCash = Value(isCash),
+        branchId = Value(branchId),
+        sandNumber = Value(sandNumber),
+        sandDate = Value(sandDate),
+        fundNumber = Value(fundNumber),
+        currencyId = Value(currencyId),
+        currencyValue = Value(currencyValue),
+        reciepentName = Value(reciepentName),
+        totalAmount = Value(totalAmount),
+        sandNote = Value(sandNote),
+        refNumber = Value(refNumber);
+  static Insertable<ExchangeModel> custom({
+    Expression<int>? id,
+    Expression<int>? sandType,
+    Expression<bool>? isCash,
+    Expression<int>? branchId,
+    Expression<int>? sandNumber,
+    Expression<DateTime>? sandDate,
+    Expression<int>? fundNumber,
+    Expression<int>? currencyId,
+    Expression<double>? currencyValue,
+    Expression<String>? reciepentName,
+    Expression<double>? totalAmount,
+    Expression<String>? sandNote,
+    Expression<String>? refNumber,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sandType != null) 'sand_type': sandType,
+      if (isCash != null) 'is_cash': isCash,
+      if (branchId != null) 'branch_id': branchId,
+      if (sandNumber != null) 'sand_number': sandNumber,
+      if (sandDate != null) 'sand_date': sandDate,
+      if (fundNumber != null) 'fund_number': fundNumber,
+      if (currencyId != null) 'currency_id': currencyId,
+      if (currencyValue != null) 'currency_value': currencyValue,
+      if (reciepentName != null) 'reciepent_name': reciepentName,
+      if (totalAmount != null) 'total_amount': totalAmount,
+      if (sandNote != null) 'sand_note': sandNote,
+      if (refNumber != null) 'ref_number': refNumber,
+    });
+  }
+
+  ExchangesTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? sandType,
+      Value<bool>? isCash,
+      Value<int>? branchId,
+      Value<int>? sandNumber,
+      Value<DateTime>? sandDate,
+      Value<int>? fundNumber,
+      Value<int>? currencyId,
+      Value<double>? currencyValue,
+      Value<String>? reciepentName,
+      Value<double>? totalAmount,
+      Value<String>? sandNote,
+      Value<String>? refNumber}) {
+    return ExchangesTableCompanion(
+      id: id ?? this.id,
+      sandType: sandType ?? this.sandType,
+      isCash: isCash ?? this.isCash,
+      branchId: branchId ?? this.branchId,
+      sandNumber: sandNumber ?? this.sandNumber,
+      sandDate: sandDate ?? this.sandDate,
+      fundNumber: fundNumber ?? this.fundNumber,
+      currencyId: currencyId ?? this.currencyId,
+      currencyValue: currencyValue ?? this.currencyValue,
+      reciepentName: reciepentName ?? this.reciepentName,
+      totalAmount: totalAmount ?? this.totalAmount,
+      sandNote: sandNote ?? this.sandNote,
+      refNumber: refNumber ?? this.refNumber,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (sandType.present) {
+      map['sand_type'] = Variable<int>(sandType.value);
+    }
+    if (isCash.present) {
+      map['is_cash'] = Variable<bool>(isCash.value);
+    }
+    if (branchId.present) {
+      map['branch_id'] = Variable<int>(branchId.value);
+    }
+    if (sandNumber.present) {
+      map['sand_number'] = Variable<int>(sandNumber.value);
+    }
+    if (sandDate.present) {
+      map['sand_date'] = Variable<DateTime>(sandDate.value);
+    }
+    if (fundNumber.present) {
+      map['fund_number'] = Variable<int>(fundNumber.value);
+    }
+    if (currencyId.present) {
+      map['currency_id'] = Variable<int>(currencyId.value);
+    }
+    if (currencyValue.present) {
+      map['currency_value'] = Variable<double>(currencyValue.value);
+    }
+    if (reciepentName.present) {
+      map['reciepent_name'] = Variable<String>(reciepentName.value);
+    }
+    if (totalAmount.present) {
+      map['total_amount'] = Variable<double>(totalAmount.value);
+    }
+    if (sandNote.present) {
+      map['sand_note'] = Variable<String>(sandNote.value);
+    }
+    if (refNumber.present) {
+      map['ref_number'] = Variable<String>(refNumber.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExchangesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('sandType: $sandType, ')
+          ..write('isCash: $isCash, ')
+          ..write('branchId: $branchId, ')
+          ..write('sandNumber: $sandNumber, ')
+          ..write('sandDate: $sandDate, ')
+          ..write('fundNumber: $fundNumber, ')
+          ..write('currencyId: $currencyId, ')
+          ..write('currencyValue: $currencyValue, ')
+          ..write('reciepentName: $reciepentName, ')
+          ..write('totalAmount: $totalAmount, ')
+          ..write('sandNote: $sandNote, ')
+          ..write('refNumber: $refNumber')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SandDetailsTableTable extends SandDetailsTable
+    with TableInfo<$SandDetailsTableTable, SandDetailEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SandDetailsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _sandIdMeta = const VerificationMeta('sandId');
+  @override
+  late final GeneratedColumn<int> sandId = GeneratedColumn<int>(
+      'sand_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES exchanges_table (id)'));
+  static const VerificationMeta _accNumberMeta =
+      const VerificationMeta('accNumber');
+  @override
+  late final GeneratedColumn<int> accNumber = GeneratedColumn<int>(
+      'acc_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _currencyIdMeta =
+      const VerificationMeta('currencyId');
+  @override
+  late final GeneratedColumn<int> currencyId = GeneratedColumn<int>(
+      'currency_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _currencyValueMeta =
+      const VerificationMeta('currencyValue');
+  @override
+  late final GeneratedColumn<double> currencyValue = GeneratedColumn<double>(
+      'currency_value', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, sandId, accNumber, amount, currencyId, currencyValue];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sand_details_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<SandDetailEntity> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('sand_id')) {
+      context.handle(_sandIdMeta,
+          sandId.isAcceptableOrUnknown(data['sand_id']!, _sandIdMeta));
+    } else if (isInserting) {
+      context.missing(_sandIdMeta);
+    }
+    if (data.containsKey('acc_number')) {
+      context.handle(_accNumberMeta,
+          accNumber.isAcceptableOrUnknown(data['acc_number']!, _accNumberMeta));
+    } else if (isInserting) {
+      context.missing(_accNumberMeta);
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('currency_id')) {
+      context.handle(
+          _currencyIdMeta,
+          currencyId.isAcceptableOrUnknown(
+              data['currency_id']!, _currencyIdMeta));
+    } else if (isInserting) {
+      context.missing(_currencyIdMeta);
+    }
+    if (data.containsKey('currency_value')) {
+      context.handle(
+          _currencyValueMeta,
+          currencyValue.isAcceptableOrUnknown(
+              data['currency_value']!, _currencyValueMeta));
+    } else if (isInserting) {
+      context.missing(_currencyValueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SandDetailEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SandDetailEntity(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      sandId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sand_id'])!,
+      accNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}acc_number'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      currencyId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}currency_id'])!,
+      currencyValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}currency_value'])!,
+    );
+  }
+
+  @override
+  $SandDetailsTableTable createAlias(String alias) {
+    return $SandDetailsTableTable(attachedDatabase, alias);
+  }
+}
+
+class SandDetailsTableCompanion extends UpdateCompanion<SandDetailEntity> {
+  final Value<int> id;
+  final Value<int> sandId;
+  final Value<int> accNumber;
+  final Value<double> amount;
+  final Value<int> currencyId;
+  final Value<double> currencyValue;
+  const SandDetailsTableCompanion({
+    this.id = const Value.absent(),
+    this.sandId = const Value.absent(),
+    this.accNumber = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.currencyId = const Value.absent(),
+    this.currencyValue = const Value.absent(),
+  });
+  SandDetailsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int sandId,
+    required int accNumber,
+    required double amount,
+    required int currencyId,
+    required double currencyValue,
+  })  : sandId = Value(sandId),
+        accNumber = Value(accNumber),
+        amount = Value(amount),
+        currencyId = Value(currencyId),
+        currencyValue = Value(currencyValue);
+  static Insertable<SandDetailEntity> custom({
+    Expression<int>? id,
+    Expression<int>? sandId,
+    Expression<int>? accNumber,
+    Expression<double>? amount,
+    Expression<int>? currencyId,
+    Expression<double>? currencyValue,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sandId != null) 'sand_id': sandId,
+      if (accNumber != null) 'acc_number': accNumber,
+      if (amount != null) 'amount': amount,
+      if (currencyId != null) 'currency_id': currencyId,
+      if (currencyValue != null) 'currency_value': currencyValue,
+    });
+  }
+
+  SandDetailsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? sandId,
+      Value<int>? accNumber,
+      Value<double>? amount,
+      Value<int>? currencyId,
+      Value<double>? currencyValue}) {
+    return SandDetailsTableCompanion(
+      id: id ?? this.id,
+      sandId: sandId ?? this.sandId,
+      accNumber: accNumber ?? this.accNumber,
+      amount: amount ?? this.amount,
+      currencyId: currencyId ?? this.currencyId,
+      currencyValue: currencyValue ?? this.currencyValue,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (sandId.present) {
+      map['sand_id'] = Variable<int>(sandId.value);
+    }
+    if (accNumber.present) {
+      map['acc_number'] = Variable<int>(accNumber.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (currencyId.present) {
+      map['currency_id'] = Variable<int>(currencyId.value);
+    }
+    if (currencyValue.present) {
+      map['currency_value'] = Variable<double>(currencyValue.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SandDetailsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('sandId: $sandId, ')
+          ..write('accNumber: $accNumber, ')
+          ..write('amount: $amount, ')
+          ..write('currencyId: $currencyId, ')
+          ..write('currencyValue: $currencyValue')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CheckOperationsTableTable extends CheckOperationsTable
+    with TableInfo<$CheckOperationsTableTable, CheckOperationEntity> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CheckOperationsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _sandIdMeta = const VerificationMeta('sandId');
+  @override
+  late final GeneratedColumn<int> sandId = GeneratedColumn<int>(
+      'sand_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES exchanges_table (id)'));
+  static const VerificationMeta _operationNumberMeta =
+      const VerificationMeta('operationNumber');
+  @override
+  late final GeneratedColumn<String> operationNumber = GeneratedColumn<String>(
+      'operation_number', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _operationDateMeta =
+      const VerificationMeta('operationDate');
+  @override
+  late final GeneratedColumn<DateTime> operationDate =
+      GeneratedColumn<DateTime>('operation_date', aliasedName, false,
+          type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _paymentMethedMeta =
+      const VerificationMeta('paymentMethed');
+  @override
+  late final GeneratedColumn<int> paymentMethed = GeneratedColumn<int>(
+      'payment_methed', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _operationStateMeta =
+      const VerificationMeta('operationState');
+  @override
+  late final GeneratedColumn<bool> operationState = GeneratedColumn<bool>(
+      'operation_state', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("operation_state" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        sandId,
+        operationNumber,
+        operationDate,
+        paymentMethed,
+        operationState
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'check_operations_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<CheckOperationEntity> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('sand_id')) {
+      context.handle(_sandIdMeta,
+          sandId.isAcceptableOrUnknown(data['sand_id']!, _sandIdMeta));
+    } else if (isInserting) {
+      context.missing(_sandIdMeta);
+    }
+    if (data.containsKey('operation_number')) {
+      context.handle(
+          _operationNumberMeta,
+          operationNumber.isAcceptableOrUnknown(
+              data['operation_number']!, _operationNumberMeta));
+    } else if (isInserting) {
+      context.missing(_operationNumberMeta);
+    }
+    if (data.containsKey('operation_date')) {
+      context.handle(
+          _operationDateMeta,
+          operationDate.isAcceptableOrUnknown(
+              data['operation_date']!, _operationDateMeta));
+    } else if (isInserting) {
+      context.missing(_operationDateMeta);
+    }
+    if (data.containsKey('payment_methed')) {
+      context.handle(
+          _paymentMethedMeta,
+          paymentMethed.isAcceptableOrUnknown(
+              data['payment_methed']!, _paymentMethedMeta));
+    } else if (isInserting) {
+      context.missing(_paymentMethedMeta);
+    }
+    if (data.containsKey('operation_state')) {
+      context.handle(
+          _operationStateMeta,
+          operationState.isAcceptableOrUnknown(
+              data['operation_state']!, _operationStateMeta));
+    } else if (isInserting) {
+      context.missing(_operationStateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CheckOperationEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CheckOperationEntity(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      sandId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sand_id'])!,
+      operationNumber: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}operation_number'])!,
+      operationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}operation_date'])!,
+      paymentMethed: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}payment_methed'])!,
+      operationState: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}operation_state'])!,
+    );
+  }
+
+  @override
+  $CheckOperationsTableTable createAlias(String alias) {
+    return $CheckOperationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class CheckOperationsTableCompanion
+    extends UpdateCompanion<CheckOperationEntity> {
+  final Value<int> id;
+  final Value<int> sandId;
+  final Value<String> operationNumber;
+  final Value<DateTime> operationDate;
+  final Value<int> paymentMethed;
+  final Value<bool> operationState;
+  const CheckOperationsTableCompanion({
+    this.id = const Value.absent(),
+    this.sandId = const Value.absent(),
+    this.operationNumber = const Value.absent(),
+    this.operationDate = const Value.absent(),
+    this.paymentMethed = const Value.absent(),
+    this.operationState = const Value.absent(),
+  });
+  CheckOperationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int sandId,
+    required String operationNumber,
+    required DateTime operationDate,
+    required int paymentMethed,
+    required bool operationState,
+  })  : sandId = Value(sandId),
+        operationNumber = Value(operationNumber),
+        operationDate = Value(operationDate),
+        paymentMethed = Value(paymentMethed),
+        operationState = Value(operationState);
+  static Insertable<CheckOperationEntity> custom({
+    Expression<int>? id,
+    Expression<int>? sandId,
+    Expression<String>? operationNumber,
+    Expression<DateTime>? operationDate,
+    Expression<int>? paymentMethed,
+    Expression<bool>? operationState,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sandId != null) 'sand_id': sandId,
+      if (operationNumber != null) 'operation_number': operationNumber,
+      if (operationDate != null) 'operation_date': operationDate,
+      if (paymentMethed != null) 'payment_methed': paymentMethed,
+      if (operationState != null) 'operation_state': operationState,
+    });
+  }
+
+  CheckOperationsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? sandId,
+      Value<String>? operationNumber,
+      Value<DateTime>? operationDate,
+      Value<int>? paymentMethed,
+      Value<bool>? operationState}) {
+    return CheckOperationsTableCompanion(
+      id: id ?? this.id,
+      sandId: sandId ?? this.sandId,
+      operationNumber: operationNumber ?? this.operationNumber,
+      operationDate: operationDate ?? this.operationDate,
+      paymentMethed: paymentMethed ?? this.paymentMethed,
+      operationState: operationState ?? this.operationState,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (sandId.present) {
+      map['sand_id'] = Variable<int>(sandId.value);
+    }
+    if (operationNumber.present) {
+      map['operation_number'] = Variable<String>(operationNumber.value);
+    }
+    if (operationDate.present) {
+      map['operation_date'] = Variable<DateTime>(operationDate.value);
+    }
+    if (paymentMethed.present) {
+      map['payment_methed'] = Variable<int>(paymentMethed.value);
+    }
+    if (operationState.present) {
+      map['operation_state'] = Variable<bool>(operationState.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CheckOperationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('sandId: $sandId, ')
+          ..write('operationNumber: $operationNumber, ')
+          ..write('operationDate: $operationDate, ')
+          ..write('paymentMethed: $paymentMethed, ')
+          ..write('operationState: $operationState')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6221,6 +7868,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $BillTableTable billTable = $BillTableTable(this);
   late final $BillDetailsTableTable billDetailsTable =
       $BillDetailsTableTable(this);
+  late final $AccountOperationTableTable accountOperationTable =
+      $AccountOperationTableTable(this);
+  late final $RefAccountTableTable refAccountTable =
+      $RefAccountTableTable(this);
+  late final $MidAccountTableTable midAccountTable =
+      $MidAccountTableTable(this);
+  late final $ExchangesTableTable exchangesTable = $ExchangesTableTable(this);
+  late final $SandDetailsTableTable sandDetailsTable =
+      $SandDetailsTableTable(this);
+  late final $CheckOperationsTableTable checkOperationsTable =
+      $CheckOperationsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6243,7 +7901,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         accountTable,
         storeOperationTable,
         billTable,
-        billDetailsTable
+        billDetailsTable,
+        accountOperationTable,
+        refAccountTable,
+        midAccountTable,
+        exchangesTable,
+        sandDetailsTable,
+        checkOperationsTable
       ];
 }
 
@@ -7755,6 +9419,32 @@ class $$ItemTableTableFilterComposer
         builder: (joinBuilder, parentComposers) =>
             $$ItemUnitTableTableFilterComposer(ComposerState($state.db,
                 $state.db.itemUnitTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter UniqueItemId(
+      ComposableFilter Function($$ItemAlterTableTableFilterComposer f) f) {
+    final $$ItemAlterTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.itemAlterTable,
+        getReferencedColumn: (t) => t.itemId,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemAlterTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemAlterTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter UniqueItemAlterId(
+      ComposableFilter Function($$ItemAlterTableTableFilterComposer f) f) {
+    final $$ItemAlterTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.itemAlterTable,
+        getReferencedColumn: (t) => t.itemAlterId,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemAlterTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemAlterTable, joinBuilder, parentComposers)));
     return f(composer);
   }
 
@@ -10161,6 +11851,1046 @@ class $$BillDetailsTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+typedef $$AccountOperationTableTableCreateCompanionBuilder
+    = AccountOperationTableCompanion Function({
+  Value<int> id,
+  required DateTime operationDate,
+  required int operationType,
+  required int operationId,
+  required String operationRef,
+  required int accountNumber,
+  required double operationDebit,
+  required double operationCredit,
+  required int currencyId,
+  required double currencyValue,
+  required String operationStatement,
+});
+typedef $$AccountOperationTableTableUpdateCompanionBuilder
+    = AccountOperationTableCompanion Function({
+  Value<int> id,
+  Value<DateTime> operationDate,
+  Value<int> operationType,
+  Value<int> operationId,
+  Value<String> operationRef,
+  Value<int> accountNumber,
+  Value<double> operationDebit,
+  Value<double> operationCredit,
+  Value<int> currencyId,
+  Value<double> currencyValue,
+  Value<String> operationStatement,
+});
+
+class $$AccountOperationTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $AccountOperationTableTable,
+    AccountOperationModel,
+    $$AccountOperationTableTableFilterComposer,
+    $$AccountOperationTableTableOrderingComposer,
+    $$AccountOperationTableTableCreateCompanionBuilder,
+    $$AccountOperationTableTableUpdateCompanionBuilder> {
+  $$AccountOperationTableTableTableManager(
+      _$AppDatabase db, $AccountOperationTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$AccountOperationTableTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$AccountOperationTableTableOrderingComposer(
+              ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<DateTime> operationDate = const Value.absent(),
+            Value<int> operationType = const Value.absent(),
+            Value<int> operationId = const Value.absent(),
+            Value<String> operationRef = const Value.absent(),
+            Value<int> accountNumber = const Value.absent(),
+            Value<double> operationDebit = const Value.absent(),
+            Value<double> operationCredit = const Value.absent(),
+            Value<int> currencyId = const Value.absent(),
+            Value<double> currencyValue = const Value.absent(),
+            Value<String> operationStatement = const Value.absent(),
+          }) =>
+              AccountOperationTableCompanion(
+            id: id,
+            operationDate: operationDate,
+            operationType: operationType,
+            operationId: operationId,
+            operationRef: operationRef,
+            accountNumber: accountNumber,
+            operationDebit: operationDebit,
+            operationCredit: operationCredit,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+            operationStatement: operationStatement,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required DateTime operationDate,
+            required int operationType,
+            required int operationId,
+            required String operationRef,
+            required int accountNumber,
+            required double operationDebit,
+            required double operationCredit,
+            required int currencyId,
+            required double currencyValue,
+            required String operationStatement,
+          }) =>
+              AccountOperationTableCompanion.insert(
+            id: id,
+            operationDate: operationDate,
+            operationType: operationType,
+            operationId: operationId,
+            operationRef: operationRef,
+            accountNumber: accountNumber,
+            operationDebit: operationDebit,
+            operationCredit: operationCredit,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+            operationStatement: operationStatement,
+          ),
+        ));
+}
+
+class $$AccountOperationTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $AccountOperationTableTable> {
+  $$AccountOperationTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get operationDate => $state.composableBuilder(
+      column: $state.table.operationDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get operationType => $state.composableBuilder(
+      column: $state.table.operationType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get operationId => $state.composableBuilder(
+      column: $state.table.operationId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get operationRef => $state.composableBuilder(
+      column: $state.table.operationRef,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accountNumber => $state.composableBuilder(
+      column: $state.table.accountNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get operationDebit => $state.composableBuilder(
+      column: $state.table.operationDebit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get operationCredit => $state.composableBuilder(
+      column: $state.table.operationCredit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get operationStatement => $state.composableBuilder(
+      column: $state.table.operationStatement,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$AccountOperationTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $AccountOperationTableTable> {
+  $$AccountOperationTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get operationDate => $state.composableBuilder(
+      column: $state.table.operationDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get operationType => $state.composableBuilder(
+      column: $state.table.operationType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get operationId => $state.composableBuilder(
+      column: $state.table.operationId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get operationRef => $state.composableBuilder(
+      column: $state.table.operationRef,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accountNumber => $state.composableBuilder(
+      column: $state.table.accountNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get operationDebit => $state.composableBuilder(
+      column: $state.table.operationDebit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get operationCredit => $state.composableBuilder(
+      column: $state.table.operationCredit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get operationStatement => $state.composableBuilder(
+      column: $state.table.operationStatement,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$RefAccountTableTableCreateCompanionBuilder = RefAccountTableCompanion
+    Function({
+  Value<int> id,
+  required int accTag,
+  required String accName,
+  required int accNumber,
+});
+typedef $$RefAccountTableTableUpdateCompanionBuilder = RefAccountTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> accTag,
+  Value<String> accName,
+  Value<int> accNumber,
+});
+
+class $$RefAccountTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $RefAccountTableTable,
+    RefAccountModel,
+    $$RefAccountTableTableFilterComposer,
+    $$RefAccountTableTableOrderingComposer,
+    $$RefAccountTableTableCreateCompanionBuilder,
+    $$RefAccountTableTableUpdateCompanionBuilder> {
+  $$RefAccountTableTableTableManager(
+      _$AppDatabase db, $RefAccountTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$RefAccountTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$RefAccountTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> accTag = const Value.absent(),
+            Value<String> accName = const Value.absent(),
+            Value<int> accNumber = const Value.absent(),
+          }) =>
+              RefAccountTableCompanion(
+            id: id,
+            accTag: accTag,
+            accName: accName,
+            accNumber: accNumber,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int accTag,
+            required String accName,
+            required int accNumber,
+          }) =>
+              RefAccountTableCompanion.insert(
+            id: id,
+            accTag: accTag,
+            accName: accName,
+            accNumber: accNumber,
+          ),
+        ));
+}
+
+class $$RefAccountTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $RefAccountTableTable> {
+  $$RefAccountTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accTag => $state.composableBuilder(
+      column: $state.table.accTag,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get accName => $state.composableBuilder(
+      column: $state.table.accName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$RefAccountTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $RefAccountTableTable> {
+  $$RefAccountTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accTag => $state.composableBuilder(
+      column: $state.table.accTag,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get accName => $state.composableBuilder(
+      column: $state.table.accName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$MidAccountTableTableCreateCompanionBuilder = MidAccountTableCompanion
+    Function({
+  Value<int> id,
+  required int accTag,
+  required String accName,
+  required int accNumber,
+  required int branchId,
+});
+typedef $$MidAccountTableTableUpdateCompanionBuilder = MidAccountTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> accTag,
+  Value<String> accName,
+  Value<int> accNumber,
+  Value<int> branchId,
+});
+
+class $$MidAccountTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $MidAccountTableTable,
+    MidAccountModel,
+    $$MidAccountTableTableFilterComposer,
+    $$MidAccountTableTableOrderingComposer,
+    $$MidAccountTableTableCreateCompanionBuilder,
+    $$MidAccountTableTableUpdateCompanionBuilder> {
+  $$MidAccountTableTableTableManager(
+      _$AppDatabase db, $MidAccountTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$MidAccountTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$MidAccountTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> accTag = const Value.absent(),
+            Value<String> accName = const Value.absent(),
+            Value<int> accNumber = const Value.absent(),
+            Value<int> branchId = const Value.absent(),
+          }) =>
+              MidAccountTableCompanion(
+            id: id,
+            accTag: accTag,
+            accName: accName,
+            accNumber: accNumber,
+            branchId: branchId,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int accTag,
+            required String accName,
+            required int accNumber,
+            required int branchId,
+          }) =>
+              MidAccountTableCompanion.insert(
+            id: id,
+            accTag: accTag,
+            accName: accName,
+            accNumber: accNumber,
+            branchId: branchId,
+          ),
+        ));
+}
+
+class $$MidAccountTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $MidAccountTableTable> {
+  $$MidAccountTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accTag => $state.composableBuilder(
+      column: $state.table.accTag,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get accName => $state.composableBuilder(
+      column: $state.table.accName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$MidAccountTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $MidAccountTableTable> {
+  $$MidAccountTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accTag => $state.composableBuilder(
+      column: $state.table.accTag,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get accName => $state.composableBuilder(
+      column: $state.table.accName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$ExchangesTableTableCreateCompanionBuilder = ExchangesTableCompanion
+    Function({
+  Value<int> id,
+  required int sandType,
+  required bool isCash,
+  required int branchId,
+  required int sandNumber,
+  required DateTime sandDate,
+  required int fundNumber,
+  required int currencyId,
+  required double currencyValue,
+  required String reciepentName,
+  required double totalAmount,
+  required String sandNote,
+  required String refNumber,
+});
+typedef $$ExchangesTableTableUpdateCompanionBuilder = ExchangesTableCompanion
+    Function({
+  Value<int> id,
+  Value<int> sandType,
+  Value<bool> isCash,
+  Value<int> branchId,
+  Value<int> sandNumber,
+  Value<DateTime> sandDate,
+  Value<int> fundNumber,
+  Value<int> currencyId,
+  Value<double> currencyValue,
+  Value<String> reciepentName,
+  Value<double> totalAmount,
+  Value<String> sandNote,
+  Value<String> refNumber,
+});
+
+class $$ExchangesTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ExchangesTableTable,
+    ExchangeModel,
+    $$ExchangesTableTableFilterComposer,
+    $$ExchangesTableTableOrderingComposer,
+    $$ExchangesTableTableCreateCompanionBuilder,
+    $$ExchangesTableTableUpdateCompanionBuilder> {
+  $$ExchangesTableTableTableManager(
+      _$AppDatabase db, $ExchangesTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ExchangesTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ExchangesTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> sandType = const Value.absent(),
+            Value<bool> isCash = const Value.absent(),
+            Value<int> branchId = const Value.absent(),
+            Value<int> sandNumber = const Value.absent(),
+            Value<DateTime> sandDate = const Value.absent(),
+            Value<int> fundNumber = const Value.absent(),
+            Value<int> currencyId = const Value.absent(),
+            Value<double> currencyValue = const Value.absent(),
+            Value<String> reciepentName = const Value.absent(),
+            Value<double> totalAmount = const Value.absent(),
+            Value<String> sandNote = const Value.absent(),
+            Value<String> refNumber = const Value.absent(),
+          }) =>
+              ExchangesTableCompanion(
+            id: id,
+            sandType: sandType,
+            isCash: isCash,
+            branchId: branchId,
+            sandNumber: sandNumber,
+            sandDate: sandDate,
+            fundNumber: fundNumber,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+            reciepentName: reciepentName,
+            totalAmount: totalAmount,
+            sandNote: sandNote,
+            refNumber: refNumber,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int sandType,
+            required bool isCash,
+            required int branchId,
+            required int sandNumber,
+            required DateTime sandDate,
+            required int fundNumber,
+            required int currencyId,
+            required double currencyValue,
+            required String reciepentName,
+            required double totalAmount,
+            required String sandNote,
+            required String refNumber,
+          }) =>
+              ExchangesTableCompanion.insert(
+            id: id,
+            sandType: sandType,
+            isCash: isCash,
+            branchId: branchId,
+            sandNumber: sandNumber,
+            sandDate: sandDate,
+            fundNumber: fundNumber,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+            reciepentName: reciepentName,
+            totalAmount: totalAmount,
+            sandNote: sandNote,
+            refNumber: refNumber,
+          ),
+        ));
+}
+
+class $$ExchangesTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ExchangesTableTable> {
+  $$ExchangesTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get sandType => $state.composableBuilder(
+      column: $state.table.sandType,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get isCash => $state.composableBuilder(
+      column: $state.table.isCash,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get sandNumber => $state.composableBuilder(
+      column: $state.table.sandNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get sandDate => $state.composableBuilder(
+      column: $state.table.sandDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get fundNumber => $state.composableBuilder(
+      column: $state.table.fundNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get reciepentName => $state.composableBuilder(
+      column: $state.table.reciepentName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get totalAmount => $state.composableBuilder(
+      column: $state.table.totalAmount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get sandNote => $state.composableBuilder(
+      column: $state.table.sandNote,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get refNumber => $state.composableBuilder(
+      column: $state.table.refNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ComposableFilter sandDetailsTableRefs(
+      ComposableFilter Function($$SandDetailsTableTableFilterComposer f) f) {
+    final $$SandDetailsTableTableFilterComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $state.db.sandDetailsTable,
+            getReferencedColumn: (t) => t.sandId,
+            builder: (joinBuilder, parentComposers) =>
+                $$SandDetailsTableTableFilterComposer(ComposerState($state.db,
+                    $state.db.sandDetailsTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+
+  ComposableFilter checkOperationsTableRefs(
+      ComposableFilter Function($$CheckOperationsTableTableFilterComposer f)
+          f) {
+    final $$CheckOperationsTableTableFilterComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $state.db.checkOperationsTable,
+            getReferencedColumn: (t) => t.sandId,
+            builder: (joinBuilder, parentComposers) =>
+                $$CheckOperationsTableTableFilterComposer(ComposerState(
+                    $state.db,
+                    $state.db.checkOperationsTable,
+                    joinBuilder,
+                    parentComposers)));
+    return f(composer);
+  }
+}
+
+class $$ExchangesTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ExchangesTableTable> {
+  $$ExchangesTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get sandType => $state.composableBuilder(
+      column: $state.table.sandType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get isCash => $state.composableBuilder(
+      column: $state.table.isCash,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get branchId => $state.composableBuilder(
+      column: $state.table.branchId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get sandNumber => $state.composableBuilder(
+      column: $state.table.sandNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get sandDate => $state.composableBuilder(
+      column: $state.table.sandDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get fundNumber => $state.composableBuilder(
+      column: $state.table.fundNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get reciepentName => $state.composableBuilder(
+      column: $state.table.reciepentName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get totalAmount => $state.composableBuilder(
+      column: $state.table.totalAmount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get sandNote => $state.composableBuilder(
+      column: $state.table.sandNote,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get refNumber => $state.composableBuilder(
+      column: $state.table.refNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$SandDetailsTableTableCreateCompanionBuilder
+    = SandDetailsTableCompanion Function({
+  Value<int> id,
+  required int sandId,
+  required int accNumber,
+  required double amount,
+  required int currencyId,
+  required double currencyValue,
+});
+typedef $$SandDetailsTableTableUpdateCompanionBuilder
+    = SandDetailsTableCompanion Function({
+  Value<int> id,
+  Value<int> sandId,
+  Value<int> accNumber,
+  Value<double> amount,
+  Value<int> currencyId,
+  Value<double> currencyValue,
+});
+
+class $$SandDetailsTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $SandDetailsTableTable,
+    SandDetailEntity,
+    $$SandDetailsTableTableFilterComposer,
+    $$SandDetailsTableTableOrderingComposer,
+    $$SandDetailsTableTableCreateCompanionBuilder,
+    $$SandDetailsTableTableUpdateCompanionBuilder> {
+  $$SandDetailsTableTableTableManager(
+      _$AppDatabase db, $SandDetailsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$SandDetailsTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$SandDetailsTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> sandId = const Value.absent(),
+            Value<int> accNumber = const Value.absent(),
+            Value<double> amount = const Value.absent(),
+            Value<int> currencyId = const Value.absent(),
+            Value<double> currencyValue = const Value.absent(),
+          }) =>
+              SandDetailsTableCompanion(
+            id: id,
+            sandId: sandId,
+            accNumber: accNumber,
+            amount: amount,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int sandId,
+            required int accNumber,
+            required double amount,
+            required int currencyId,
+            required double currencyValue,
+          }) =>
+              SandDetailsTableCompanion.insert(
+            id: id,
+            sandId: sandId,
+            accNumber: accNumber,
+            amount: amount,
+            currencyId: currencyId,
+            currencyValue: currencyValue,
+          ),
+        ));
+}
+
+class $$SandDetailsTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $SandDetailsTableTable> {
+  $$SandDetailsTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get amount => $state.composableBuilder(
+      column: $state.table.amount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ExchangesTableTableFilterComposer get sandId {
+    final $$ExchangesTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.sandId,
+        referencedTable: $state.db.exchangesTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ExchangesTableTableFilterComposer(ComposerState($state.db,
+                $state.db.exchangesTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$SandDetailsTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $SandDetailsTableTable> {
+  $$SandDetailsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get accNumber => $state.composableBuilder(
+      column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get amount => $state.composableBuilder(
+      column: $state.table.amount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get currencyId => $state.composableBuilder(
+      column: $state.table.currencyId,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get currencyValue => $state.composableBuilder(
+      column: $state.table.currencyValue,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ExchangesTableTableOrderingComposer get sandId {
+    final $$ExchangesTableTableOrderingComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.sandId,
+            referencedTable: $state.db.exchangesTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder, parentComposers) =>
+                $$ExchangesTableTableOrderingComposer(ComposerState($state.db,
+                    $state.db.exchangesTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+typedef $$CheckOperationsTableTableCreateCompanionBuilder
+    = CheckOperationsTableCompanion Function({
+  Value<int> id,
+  required int sandId,
+  required String operationNumber,
+  required DateTime operationDate,
+  required int paymentMethed,
+  required bool operationState,
+});
+typedef $$CheckOperationsTableTableUpdateCompanionBuilder
+    = CheckOperationsTableCompanion Function({
+  Value<int> id,
+  Value<int> sandId,
+  Value<String> operationNumber,
+  Value<DateTime> operationDate,
+  Value<int> paymentMethed,
+  Value<bool> operationState,
+});
+
+class $$CheckOperationsTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $CheckOperationsTableTable,
+    CheckOperationEntity,
+    $$CheckOperationsTableTableFilterComposer,
+    $$CheckOperationsTableTableOrderingComposer,
+    $$CheckOperationsTableTableCreateCompanionBuilder,
+    $$CheckOperationsTableTableUpdateCompanionBuilder> {
+  $$CheckOperationsTableTableTableManager(
+      _$AppDatabase db, $CheckOperationsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer: $$CheckOperationsTableTableFilterComposer(
+              ComposerState(db, table)),
+          orderingComposer: $$CheckOperationsTableTableOrderingComposer(
+              ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> sandId = const Value.absent(),
+            Value<String> operationNumber = const Value.absent(),
+            Value<DateTime> operationDate = const Value.absent(),
+            Value<int> paymentMethed = const Value.absent(),
+            Value<bool> operationState = const Value.absent(),
+          }) =>
+              CheckOperationsTableCompanion(
+            id: id,
+            sandId: sandId,
+            operationNumber: operationNumber,
+            operationDate: operationDate,
+            paymentMethed: paymentMethed,
+            operationState: operationState,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int sandId,
+            required String operationNumber,
+            required DateTime operationDate,
+            required int paymentMethed,
+            required bool operationState,
+          }) =>
+              CheckOperationsTableCompanion.insert(
+            id: id,
+            sandId: sandId,
+            operationNumber: operationNumber,
+            operationDate: operationDate,
+            paymentMethed: paymentMethed,
+            operationState: operationState,
+          ),
+        ));
+}
+
+class $$CheckOperationsTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $CheckOperationsTableTable> {
+  $$CheckOperationsTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get operationNumber => $state.composableBuilder(
+      column: $state.table.operationNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get operationDate => $state.composableBuilder(
+      column: $state.table.operationDate,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get paymentMethed => $state.composableBuilder(
+      column: $state.table.paymentMethed,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get operationState => $state.composableBuilder(
+      column: $state.table.operationState,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ExchangesTableTableFilterComposer get sandId {
+    final $$ExchangesTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.sandId,
+        referencedTable: $state.db.exchangesTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$ExchangesTableTableFilterComposer(ComposerState($state.db,
+                $state.db.exchangesTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$CheckOperationsTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $CheckOperationsTableTable> {
+  $$CheckOperationsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get operationNumber => $state.composableBuilder(
+      column: $state.table.operationNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get operationDate => $state.composableBuilder(
+      column: $state.table.operationDate,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get paymentMethed => $state.composableBuilder(
+      column: $state.table.paymentMethed,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get operationState => $state.composableBuilder(
+      column: $state.table.operationState,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ExchangesTableTableOrderingComposer get sandId {
+    final $$ExchangesTableTableOrderingComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.sandId,
+            referencedTable: $state.db.exchangesTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder, parentComposers) =>
+                $$ExchangesTableTableOrderingComposer(ComposerState($state.db,
+                    $state.db.exchangesTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
@@ -10200,4 +12930,16 @@ class $AppDatabaseManager {
       $$BillTableTableTableManager(_db, _db.billTable);
   $$BillDetailsTableTableTableManager get billDetailsTable =>
       $$BillDetailsTableTableTableManager(_db, _db.billDetailsTable);
+  $$AccountOperationTableTableTableManager get accountOperationTable =>
+      $$AccountOperationTableTableTableManager(_db, _db.accountOperationTable);
+  $$RefAccountTableTableTableManager get refAccountTable =>
+      $$RefAccountTableTableTableManager(_db, _db.refAccountTable);
+  $$MidAccountTableTableTableManager get midAccountTable =>
+      $$MidAccountTableTableTableManager(_db, _db.midAccountTable);
+  $$ExchangesTableTableTableManager get exchangesTable =>
+      $$ExchangesTableTableTableManager(_db, _db.exchangesTable);
+  $$SandDetailsTableTableTableManager get sandDetailsTable =>
+      $$SandDetailsTableTableTableManager(_db, _db.sandDetailsTable);
+  $$CheckOperationsTableTableTableManager get checkOperationsTable =>
+      $$CheckOperationsTableTableTableManager(_db, _db.checkOperationsTable);
 }

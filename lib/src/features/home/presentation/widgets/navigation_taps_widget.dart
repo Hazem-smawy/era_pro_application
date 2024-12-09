@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:get/get.dart';
 
 class NavigationTapsWidget extends StatelessWidget {
   const NavigationTapsWidget({
@@ -19,57 +20,87 @@ class NavigationTapsWidget extends StatelessWidget {
     return Positioned(
       bottom: 15,
       right: 20,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            height: 80,
-            width: 240,
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: context.wightColor,
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: context.blackColor.withOpacity(0.1),
-                  offset: const Offset(1, 1),
-                  blurRadius: 10,
-                )
-              ],
+      child: SizedBox(
+        width: context.width - 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                pageController.animateToPage(
+                  3,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: context.containerColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Icon(
+                  FontAwesomeIcons.cloud,
+                  color:
+                      index == 3 ? context.primary : context.secondaryTextColor,
+                ),
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                //const SizedBox(width: 20),
-                NavigationTapWidget(
-                  pageController: pageController,
-                  index: index,
-                  icon: FontAwesomeIcons.gear,
-                  animateToPage: 2,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                NavigationTapWidget(
-                  pageController: pageController,
-                  index: index,
-                  icon: FontAwesomeIcons.bars,
-                  animateToPage: 1,
-                ),
+                Container(
+                  height: 70,
+                  width: 240,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: context.whiteColor,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.blackColor.withOpacity(0.07),
+                        offset: const Offset(1, 1),
+                        blurRadius: 10,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //const SizedBox(width: 20),
+                      NavigationTapWidget(
+                        pageController: pageController,
+                        index: index,
+                        icon: FontAwesomeIcons.gear,
+                        animateToPage: 2,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      NavigationTapWidget(
+                        pageController: pageController,
+                        index: index,
+                        icon: FontAwesomeIcons.bars,
+                        animateToPage: 1,
+                      ),
 
-                const SizedBox(
-                  width: 10,
-                ),
-                NavigationTapWidget(
-                  pageController: pageController,
-                  index: index,
-                  icon: FontAwesomeIcons.house,
-                  animateToPage: 0,
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      NavigationTapWidget(
+                        pageController: pageController,
+                        index: index,
+                        icon: FontAwesomeIcons.house,
+                        animateToPage: 0,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -100,10 +131,10 @@ class NavigationTapWidget extends StatelessWidget {
         );
       },
       child: Container(
-        width: 66,
-        height: 66,
+        width: 50,
+        height: 50,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(20),
           color: index == animateToPage
               ? context.primaryColor
               : context.containerColor.withOpacity(0),
@@ -113,7 +144,7 @@ class NavigationTapWidget extends StatelessWidget {
             icon,
             size: 22,
             color: index == animateToPage
-                ? context.wightColor
+                ? context.whiteColor
                 : context.blackColor,
           ),
         ),

@@ -16,7 +16,7 @@ class UnitsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.wightColor,
+      backgroundColor: context.whiteColor,
       body: SafeArea(
           child: Column(
         children: [

@@ -4,13 +4,14 @@ import 'package:era_pro_application/src/core/extensions/context_extensions.dart'
 import 'package:flutter/material.dart';
 
 class CompleteSellingBillSummaryItemWidget extends StatelessWidget {
-  const CompleteSellingBillSummaryItemWidget({
-    super.key,
-    required this.label,
-    required this.value,
-  });
+  const CompleteSellingBillSummaryItemWidget(
+      {super.key,
+      required this.label,
+      required this.value,
+      this.isTotal = false});
   final String label;
   final String value;
+  final bool isTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,12 @@ class CompleteSellingBillSummaryItemWidget extends StatelessWidget {
         children: [
           Text(
             value,
-            style: context.titleMedium,
+            style: isTotal ? context.displayMedium : context.titleMedium,
           ),
           const Spacer(),
           Text(
             label,
-            style: context.bodyLarge,
+            style: isTotal ? context.titleMedium : context.bodyLarge,
           ),
         ],
       ),

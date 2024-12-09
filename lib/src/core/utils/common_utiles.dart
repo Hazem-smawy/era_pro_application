@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'logger.dart';
+// import 'logger.dart';
 
 class CommonUtil {
   factory CommonUtil() {
@@ -11,7 +11,7 @@ class CommonUtil {
 
   static final CommonUtil _singleton = CommonUtil._internal();
   CommonUtil._internal() {
-    Logger.write('hello');
+    // Logger.write('hello');
   }
 
   void keyboardHide(BuildContext context) {

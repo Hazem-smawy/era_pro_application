@@ -2,12 +2,22 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:era_pro_application/src/core/services/db/tables/account_operation_table.dart';
 import 'package:era_pro_application/src/core/services/db/tables/bill_details_table.dart';
 import 'package:era_pro_application/src/core/services/db/tables/bill_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/exhange_tables.dart';
+import 'package:era_pro_application/src/core/services/db/tables/mid_account_table.dart';
+import 'package:era_pro_application/src/core/services/db/tables/ref_account_table.dart';
 import '../../../features/accounts/data/models/account_model.dart';
 import 'package:era_pro_application/src/features/user/data/models/user_model.dart';
+import '../../../features/accounts/data/models/account_operation_model.dart';
+import '../../../features/accounts/data/models/mid_account_model.dart';
+import '../../../features/accounts/data/models/ref_account_model.dart';
 import '../../../features/bills/data/models/bill_details_model.dart';
 import '../../../features/bills/data/models/bill_model.dart';
+import '../../../features/exchange_receipt/data/models/exchange_model.dart';
+import '../../../features/exchange_receipt/domain/entities/check_operation_entity.dart';
+import '../../../features/exchange_receipt/domain/entities/sand_details_entity.dart';
 import '../../../features/main_info/data/models/main_info_model.dart';
 import '../../../features/store/data/models/models.dart';
 
@@ -42,6 +52,12 @@ part 'db.g.dart';
     StoreOperationTable,
     BillTable,
     BillDetailsTable,
+    AccountOperationTable,
+    RefAccountTable,
+    MidAccountTable,
+    ExchangesTable,
+    SandDetailsTable,
+    CheckOperationsTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -88,7 +104,21 @@ class AppDatabase extends _$AppDatabase {
         batch.insertAllOnConflictUpdate(table, models);
       });
     } catch (e) {
-      print(e.toString());
+      throw LocalStorageException(message: e.toString());
+    }
+  }
+
+  Future<void> saveAllWithNoConflict<T extends Table, D>(
+    TableInfo<T, D> table,
+    List<Insertable<D>> models,
+  ) async {
+    try {
+      final db = AppDatabase.instance();
+      await db.batch((batch) {
+        // Use `insertAll` to strictly insert new rows without updates
+        batch.insertAll(table, models, mode: InsertMode.insert);
+      });
+    } catch (e) {
       throw LocalStorageException(message: e.toString());
     }
   }
@@ -100,6 +130,44 @@ class AppDatabase extends _$AppDatabase {
     } catch (e) {
       throw LocalStorageException(message: e.toString());
     }
+  }
+
+  //item
+
+  // Get all item information without the image
+  Future<List<ItemModel>> getAllItemsWithoutImages() async {
+    final query = select(itemTable)
+      ..addColumns([
+        itemTable.id,
+        itemTable.itemGroupId,
+        itemTable.itemCode,
+        itemTable.name,
+        itemTable.enName,
+        itemTable.type,
+        itemTable.itemLimit,
+        itemTable.isExpire,
+        itemTable.notifyBefore,
+        itemTable.freeQuantityAllow,
+        itemTable.hasTax,
+        itemTable.taxRate,
+        itemTable.itemCompany,
+        itemTable.orignalCountry,
+        itemTable.itemDescription,
+        itemTable.note,
+        itemTable.hasAlternated,
+        itemTable.newData,
+      ]);
+    final result = await query.get();
+    return result.toList();
+  }
+
+  Future<Uint8List?> getItemImage(int itemId) async {
+    final query = selectOnly(itemTable)
+      ..addColumns([itemTable.itemImage])
+      ..where(itemTable.id.equals(itemId));
+
+    final result = await query.getSingleOrNull();
+    return result?.read(itemTable.itemImage);
   }
 
   @override

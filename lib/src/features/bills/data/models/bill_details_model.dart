@@ -7,8 +7,9 @@ import '../../domain/entities/bill_details_entity.dart';
 part 'bill_details_model.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class BillDetailsModel extends BillDetailsEntity {
-  const BillDetailsModel(
+  BillDetailsModel(
       {required super.id,
       required super.billID,
       required super.itemId,

@@ -21,7 +21,7 @@ class HomeSummaryItemWidget extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: context.wightColor,
+          color: context.whiteColor,
         ),
         child: Column(
           children: [
@@ -49,7 +49,7 @@ class HomeSummaryItemWidget extends StatelessWidget {
               children: [
                 Text(
                   '\$567,098',
-                  style: context.titleMedium?.copyWith(
+                  style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -79,7 +79,7 @@ class HomeSummaryItemWidget extends StatelessWidget {
                   child: FittedBox(
                     child: Text(
                       '\$567,098',
-                      style: context.bodyLarge?.copyWith(
+                      style: context.bodyLarge.copyWith(
                         fontWeight: FontWeight.normal,
                       ),
                     ),

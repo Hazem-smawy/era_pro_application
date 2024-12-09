@@ -3,12 +3,12 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/widgets/header_widget.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/complete_selling_bill_page.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../getX/bills_controller.dart';
+import '../getX/item_controller.dart';
 import '../widgets/selling_bill_item_widget.dart';
 
 // ignore: must_be_immutable
@@ -84,24 +84,32 @@ import '../widgets/selling_bill_item_widget.dart';
 // }
 class SelectedItemsScreen extends StatelessWidget {
   SelectedItemsScreen({super.key});
-  final BillController itemController = Get.find();
+  final ItemController itemController = Get.find();
+  final BillController billController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.wightColor,
+      backgroundColor: context.whiteColor,
       body: SafeArea(
         child: Obx(
           () => Column(
             children: [
               context.g4,
-              const HeaderWidget(
-                title: 'فاتورة بيع',
+              HeaderWidget(
+                title: itemController.billType.value == 8
+                    ? billController.billTypeForTitle.value == 0
+                        ? 'فاتورة بيع'
+                        : 'تعديل فاتورة'
+                    : 'فاتورة مرتجع',
               ).pr(10),
+              // const HeaderWidget(
+              //   title: 'فاتورة بيع',
+              // ).pr(10),
               Expanded(
                 child: Stack(
                   children: [
-                    if (itemController.cart.isEmpty)
+                    if (itemController.card.value!.items.isEmpty)
                       Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -118,12 +126,12 @@ class SelectedItemsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    if (itemController.cart.isNotEmpty)
+                    if (itemController.card.value!.items.isNotEmpty)
                       Directionality(
                         textDirection: TextDirection.rtl,
                         child: GridView.builder(
                           padding: const EdgeInsets.only(
-                            bottom: 50,
+                            bottom: 150,
                             right: 15,
                             left: 15,
                             top: 20,
@@ -135,9 +143,12 @@ class SelectedItemsScreen extends StatelessWidget {
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
                           ),
-                          itemCount: itemController.cart.length,
+                          itemCount:
+                              itemController.card.value?.items.length ?? 0,
                           itemBuilder: (BuildContext context, int index) {
-                            final item = Rx(itemController.cart[index]);
+                            final item =
+                                itemController.card.value?.items[index];
+                            if (item == null) return const SizedBox();
                             return IntrinsicHeight(
                               child: SellingBillItemWiget(
                                 index: index,
@@ -168,7 +179,7 @@ class SelectedItemsScreen extends StatelessWidget {
 class CompleteSellingFooterWidget extends StatelessWidget {
   CompleteSellingFooterWidget({super.key});
 
-  BillController billController = Get.find();
+  final ItemController itemController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -203,10 +214,9 @@ class CompleteSellingFooterWidget extends StatelessWidget {
                         ),
                         FittedBox(
                           child: Text(
-                            billController.newBill.value?.totalPrice
-                                    .toString() ??
+                            itemController.card.value?.totalPrice.toString() ??
                                 "0",
-                            style: context.titleSmall?.copyWith(
+                            style: context.titleSmall.copyWith(
                               fontWeight: FontWeight.bold,
                               color: context.blackColor,
                             ),
@@ -233,10 +243,8 @@ class CompleteSellingFooterWidget extends StatelessWidget {
                           style: context.bodySmall,
                         ),
                         Text(
-                          billController.newBill.value?.numberOfItems
-                                  .toString() ??
-                              '0',
-                          style: context.titleSmall?.copyWith(
+                          itemController.card.value?.length.toString() ?? '0',
+                          style: context.titleSmall.copyWith(
                             fontWeight: FontWeight.bold,
                             color: context.blackColor,
                           ),
@@ -250,14 +258,15 @@ class CompleteSellingFooterWidget extends StatelessWidget {
           ),
         ),
         context.g12,
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: const Row(
-            children: [
-              SellingBillBtnWidget(),
-            ],
+        if (itemController.card.value?.items.isNotEmpty ?? true)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                SellingBillBtnWidget(),
+              ],
+            ),
           ),
-        ),
         context.g20,
       ],
     );
@@ -265,7 +274,8 @@ class CompleteSellingFooterWidget extends StatelessWidget {
 }
 
 class SellingBillBtnWidget extends StatelessWidget {
-  const SellingBillBtnWidget({
+  final ItemController itemController = Get.find();
+  SellingBillBtnWidget({
     super.key,
   });
 
@@ -274,7 +284,9 @@ class SellingBillBtnWidget extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          Get.to(() => CompleteSellingBillPage());
+          Get.to(() => CompleteSellingBillPage(
+                card: itemController.card.value!,
+              ));
         },
         child: Container(
           height: 45,
@@ -286,8 +298,8 @@ class SellingBillBtnWidget extends StatelessWidget {
             child: Text(
               'دفع الفاتورة',
               // textAlign: TextAlign.center,
-              style: context.titleLarge?.copyWith(
-                color: context.wightColor,
+              style: context.titleLarge.copyWith(
+                color: context.whiteColor,
               ),
             ),
           ),

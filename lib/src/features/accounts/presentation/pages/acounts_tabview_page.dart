@@ -7,9 +7,20 @@ import 'package:get/get.dart';
 
 import '../../../../core/widgets/search_bar_widget.dart';
 
-class AcountsTabviewPage extends StatelessWidget {
-  AcountsTabviewPage({super.key});
+class AcountsTabviewPage extends StatefulWidget {
+  const AcountsTabviewPage({super.key});
+
+  @override
+  State<AcountsTabviewPage> createState() => _AcountsTabviewPageState();
+}
+
+class _AcountsTabviewPageState extends State<AcountsTabviewPage> {
   final AccountsController accountsController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    accountsController.getAccountInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +54,7 @@ class AcountsTabviewPage extends StatelessWidget {
             ),
             bottom: TabBar(
               dividerColor: context.secondaryTextColor.withOpacity(0.3),
-              labelStyle: context.titleMedium?.copyWith(color: context.primary),
+              labelStyle: context.titleMedium.copyWith(color: context.primary),
               unselectedLabelColor: context.secondaryTextColor,
               tabs: const [
                 Tab(

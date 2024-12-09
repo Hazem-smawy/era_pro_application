@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 extension CustomImage on Image {
   // static Widget memoryWithError(Uint8List? imageData,
@@ -92,8 +91,8 @@ extension CustomImage on Image {
   static Widget memoryWithErorrAndLoading(Uint8List? imageData,
       {required ImageProvider fallbackImage, double w = 50, double h = 50}) {
     return SizedBox(
-      width: w.w,
-      height: h.h,
+      width: w,
+      height: h,
       child: FutureBuilder<Uint8List>(
         future: Future.value(imageData ?? Uint8List(0)),
         builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {

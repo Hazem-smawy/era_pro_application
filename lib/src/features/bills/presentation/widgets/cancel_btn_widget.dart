@@ -28,7 +28,7 @@ class CancelBtnWidget extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: context.titleMedium?.copyWith(
+            style: context.titleMedium.copyWith(
               color: Colors.red,
             ),
           ),

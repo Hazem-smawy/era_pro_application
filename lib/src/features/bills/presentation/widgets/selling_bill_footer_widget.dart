@@ -1,5 +1,4 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_getx.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/complete_selling_bill_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/selected_item_page.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,8 @@ import 'package:get/get.dart';
 
 import 'package:qrscan/qrscan.dart' as scanner;
 
+import '../getX/item_controller.dart';
+
 class SellingFooterWidget extends StatefulWidget {
   const SellingFooterWidget({super.key});
 
@@ -17,7 +18,7 @@ class SellingFooterWidget extends StatefulWidget {
 }
 
 class _SellingFooterWidgetState extends State<SellingFooterWidget> {
-  BillController itemController = Get.find();
+  ItemController itemController = Get.find();
   String result = '';
 
   @override
@@ -59,10 +60,10 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                             ),
                             FittedBox(
                               child: Text(
-                                itemController.newBill.value?.totalPrice
+                                itemController.card.value?.totalPrice
                                         .toString() ??
                                     "0",
-                                style: context.titleSmall?.copyWith(
+                                style: context.titleSmall.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: context.blackColor,
                                 ),
@@ -89,10 +90,9 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                               style: context.bodySmall,
                             ),
                             Text(
-                              itemController.newBill.value?.numberOfItems
-                                      .toString() ??
+                              itemController.card.value?.length.toString() ??
                                   '0',
-                              style: context.titleSmall?.copyWith(
+                              style: context.titleSmall.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: context.blackColor,
                               ),
@@ -116,8 +116,8 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                       child: Center(
                         child: Text(
                           result.length > 2 ? result : "عرض الفاتورة",
-                          style: context.bodySmall?.copyWith(
-                            color: context.bg,
+                          style: context.bodySmall.copyWith(
+                            color: context.backgroundColor,
                           ),
                         ),
                       ),
@@ -143,7 +143,9 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                 ),
                 FooterBtnWidget(
                   action: () {
-                    Get.to(() => CompleteSellingBillPage());
+                    Get.to(() => CompleteSellingBillPage(
+                          card: itemController.card.value!,
+                        ));
                   },
                   icon: FontAwesomeIcons.moneyBill,
                   label: 'دفع الفاتورة',
@@ -158,7 +160,7 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
 }
 
 class FooterBtnWidget extends StatelessWidget {
-  FooterBtnWidget({
+  const FooterBtnWidget({
     super.key,
     required this.icon,
     required this.label,
@@ -166,7 +168,7 @@ class FooterBtnWidget extends StatelessWidget {
   });
   final IconData icon;
   final String label;
-  VoidCallback action;
+  final VoidCallback action;
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +189,8 @@ class FooterBtnWidget extends StatelessWidget {
             ),
             Text(
               label,
-              style: context.bodyMeduim?.copyWith(
-                color: context.wightColor,
+              style: context.bodyMedium.copyWith(
+                color: context.whiteColor,
               ),
             ),
             const SizedBox(
@@ -196,7 +198,7 @@ class FooterBtnWidget extends StatelessWidget {
             ),
             Icon(
               icon,
-              color: context.wightColor,
+              color: context.whiteColor,
               size: 20,
             ),
             const SizedBox(

@@ -1,6 +1,5 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomOutLineBtnWidget extends StatelessWidget {
   const CustomOutLineBtnWidget({
@@ -26,11 +25,11 @@ class CustomOutLineBtnWidget extends StatelessWidget {
             color: context.containerColor.withOpacity(0.5),
           ),
         ),
-        minimumSize: Size.fromHeight(40.h),
+        minimumSize: const Size.fromHeight(40),
       ),
       child: Text(
         label,
-        style: context.titleLarge?.copyWith(
+        style: context.titleLarge.copyWith(
           color: Colors.white,
         ),
       ),

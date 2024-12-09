@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
@@ -62,12 +61,11 @@ import 'package:equatable/equatable.dart';
 
 */
 
-import 'package:equatable/equatable.dart';
-
 import '../../../../core/utils/date_time_converter.dart';
 
+// ignore: must_be_immutable
 class BillEntity extends Equatable {
-  int? id;
+  final int id;
   final int branchId;
   int billNumber;
   final int billType;
@@ -100,10 +98,9 @@ class BillEntity extends Equatable {
   final double totalAvragCost;
   final double paidAmount;
   @override
-  // TODO: implement props
   List<Object> get props {
     return [
-      id = -1,
+      id,
       branchId,
       billNumber,
       billType,

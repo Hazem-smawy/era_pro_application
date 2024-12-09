@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Spaces {
   static const double sp4 = 4;
@@ -13,36 +12,36 @@ class Spaces {
 }
 
 class Gaps {
-  static Widget g4 = SizedBox(
-    width: 4.w,
-    height: 4.h,
+  static Widget g4 = const SizedBox(
+    width: 4,
+    height: 4,
   );
-  static Widget g8 = SizedBox(
-    width: 8.w,
-    height: 8.h,
+  static Widget g8 = const SizedBox(
+    width: 8,
+    height: 8,
   );
-  static Widget g12 = SizedBox(
-    width: 12.w,
-    height: 12.h,
+  static Widget g12 = const SizedBox(
+    width: 12,
+    height: 12,
   );
-  static Widget g16 = SizedBox(
-    width: 16.w,
-    height: 16.h,
+  static Widget g16 = const SizedBox(
+    width: 16,
+    height: 16,
   );
-  static Widget g20 = SizedBox(
-    width: 20.w,
-    height: 20.h,
+  static Widget g20 = const SizedBox(
+    width: 20,
+    height: 20,
   );
-  static Widget g28 = SizedBox(
-    width: 28.w,
-    height: 38.h,
+  static Widget g28 = const SizedBox(
+    width: 28,
+    height: 38,
   );
-  static Widget g36 = SizedBox(
-    width: 36.w,
-    height: 36.h,
+  static Widget g36 = const SizedBox(
+    width: 36,
+    height: 36,
   );
-  static Widget g44 = SizedBox(
-    width: 44.w,
-    height: 44.h,
+  static Widget g44 = const SizedBox(
+    width: 44,
+    height: 44,
   );
 }

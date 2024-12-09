@@ -7,8 +7,15 @@ import 'package:era_pro_application/src/features/accounts/data/implements/accoun
 import 'package:era_pro_application/src/features/accounts/data/sources/accounts_local_datasource.dart';
 import 'package:era_pro_application/src/features/accounts/data/sources/accounts_remote_datasource.dart';
 import 'package:era_pro_application/src/features/accounts/domain/repositories/repositories.dart';
-import 'package:era_pro_application/src/features/accounts/domain/usecases/usecases.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/add_list_accounts_operations_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/delete_account_operation_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/fetch_accounts_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_accounts_operation_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_accounts_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_mid_account_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_ref_account_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
+import 'package:era_pro_application/src/features/async/presentation/getX/async_controller.dart';
 import 'package:era_pro_application/src/features/auth/data/sources/auth_remote_data_source.dart';
 import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/auth/presentation/getX/auth_controller.dart';
@@ -16,20 +23,40 @@ import 'package:era_pro_application/src/features/bills/data/sources/bill_local_d
 import 'package:era_pro_application/src/features/bills/domain/repositories/bill_repository.dart';
 import 'package:era_pro_application/src/features/bills/domain/usecases/add_bill_details_usecase.dart';
 import 'package:era_pro_application/src/features/bills/domain/usecases/add_new_bill_usecase.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/delete_bill_details_usecase.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/get_all_bills_usecase.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/get_bill_details_ui_usecase.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/get_bill_details_usecase.dart';
 import 'package:era_pro_application/src/features/bills/domain/usecases/get_last_id_usecase.dart';
-import 'package:era_pro_application/src/features/bills/presentation/getX/bills_controller.dart';
+import 'package:era_pro_application/src/features/bills/domain/usecases/get_recent_bills.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
+import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/data/implements/implements.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/data/sources/exhange_local_datasource.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/domain/repositories/repositories.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/domain/usecases/delete_all_exchange_usecase.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/domain/usecases/get_all_exchange_usecase.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/domain/usecases/get_last_category_usecase.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/domain/usecases/save_exchange_usecase.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/presentation/getX/exchange_receipt_controller.dart';
+import 'package:era_pro_application/src/features/home/presentation/getX/home_controller.dart';
 import 'package:era_pro_application/src/features/main_info/data/implements/main_info_implements.dart';
 import 'package:era_pro_application/src/features/main_info/data/sources/main_info_local_datasource.dart';
+import 'package:era_pro_application/src/features/main_info/domain/usecases/fetch_all_main_info_usecase.dart';
 import 'package:era_pro_application/src/features/store/data/implements/store_implements.dart';
 import 'package:era_pro_application/src/features/store/data/sources/store_local_datasource.dart';
 import 'package:era_pro_application/src/features/store/data/sources/store_remote_datasource.dart';
 import 'package:era_pro_application/src/features/store/domain/repositories/store_repositories.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/delete_store_operation_usecase.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/fetch_all_store_from_remote_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_item_details_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/get_all_store_operation_usecase.dart';
+import 'package:era_pro_application/src/features/store/domain/usecases/get_item_image_usecase.dart';
 import 'package:era_pro_application/src/features/store/domain/usecases/store_usecases.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
 import 'package:era_pro_application/src/features/user/data/implements/user_implements.dart';
 import 'package:era_pro_application/src/features/user/domain/repositories/user_repository.dart';
+import 'package:era_pro_application/src/features/user/domain/usecases/fetch_user_info_usecase.dart';
 import 'package:era_pro_application/src/features/user/presentation/getX/user_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -162,6 +189,7 @@ class DependencyInjection {
     //?controller
     Get.lazyPut(
       () => StoreController(
+        deleteStoreOperationUsecase: Get.find(),
         getAllItemWithDetailsUsecase: Get.find(),
         getAllStoreOperationUsecase: Get.find(),
         getUserStoreInfoUsecase: Get.find(),
@@ -171,11 +199,31 @@ class DependencyInjection {
         getAllItemUnitsUsecase: Get.find(),
         getAllUnitsUsecase: Get.find(),
         getAllItemsUsecase: Get.find(),
+        saveStoreOperationUsecase: Get.find(),
+        getItemImageUsecase: Get.find(),
       ),
       fenix: true,
     );
 
     //?usecase
+    Get.lazyPut(
+      () => GetItemImageUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => DeleteStoreOperationUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => SaveStoreOperationUsecase(
+        storeRepository: Get.find(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(
       () => GetAllItemWithDetailsUsecase(
         storeRepository: Get.find(),
@@ -309,11 +357,36 @@ class DependencyInjection {
         () => AccountsController(
               getAccountsUseCase: Get.find(),
               addAccountUsecase: Get.find(),
+              getAllMidAccountUsecase: Get.find(),
+              getAllRefAccountUsecase: Get.find(),
+              getAllAccountsOperationUsecase: Get.find(),
+              addListAccountsOperationsUsecase: Get.find(),
+              deleteAccountOperationUsecase: Get.find(),
             ),
         fenix: true);
     //Usecases
     Get.lazyPut(
       () => GetAllAccountsUseCase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => DeleteAccountOperationUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => AddListAccountsOperationsUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllAccountsOperationUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllRefAccountUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllMidAccountUsecase(accountsRepository: Get.find()),
       fenix: true,
     );
     Get.lazyPut(
@@ -353,11 +426,37 @@ class DependencyInjection {
               getLastIdUsecase: Get.find(),
               addNewBillUsecase: Get.find(),
               addBillDetailsUsecase: Get.find(),
+              getAllBillsUsecase: Get.find(),
+              getBillDetailsUsecase: Get.find(),
+              getBillDetailsUiUsecase: Get.find(),
+              deleteBillDetailsUsecase: Get.find(),
+              getRecentBillsUsecase: Get.find(),
+            ),
+        fenix: true);
+    Get.lazyPut(
+        () => ItemController(
+              getItemImageUsecase: Get.find(),
             ),
         fenix: true);
     //Usecases
     Get.lazyPut(
       () => GetLastIdUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => DeleteBillDetailsUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetBillDetailsUIUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetBillDetailsUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllBillsUsecase(billsRepository: Get.find()),
       fenix: true,
     );
     Get.lazyPut(
@@ -381,6 +480,91 @@ class DependencyInjection {
 
     Get.lazyPut<BillLocalDatasource>(
       () => BillLocalDatasourceImp(),
+      fenix: true,
+    );
+
+    //! snads
+    //controller
+    Get.lazyPut(
+        () => ExchangeReceiptController(
+              getLastIdUsecase: Get.find(),
+              saveExchangeUsecase: Get.find(),
+              getAllExchangeUsecase: Get.find(),
+              deleteAllExchangeUsecase: Get.find(),
+            ),
+        fenix: true);
+    //Usecases
+    Get.lazyPut(
+      () => GetLastCategoryUsecase(receiptRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => DeleteAllExchangeUsecase(receiptRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetAllExchangeUsecase(receiptRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => SaveExchangeUsecase(receiptRepository: Get.find()),
+      fenix: true,
+    );
+
+    //Repository
+    Get.lazyPut<ExchangeReceiptRepository>(
+      () => ExchangeReceiptRepositoryImp(localDatasource: Get.find()),
+      fenix: true,
+    );
+
+    //Datasources
+
+    Get.lazyPut<ExchangeLocalDatasource>(
+      () => ExhangeLocalDatasourceImp(),
+      fenix: true,
+    );
+
+    //! async - feature
+    //controllers
+    Get.lazyPut(
+        () => AsyncController(
+              fetchAccountsUsecase: Get.find(),
+              fetchAllMainInfoUsecase: Get.find(),
+              fetchAllStoreFromRemoteUsecase: Get.find(),
+              fetchUserInfoUsecase: Get.find(),
+            ),
+        fenix: true);
+
+    //usecase
+    Get.lazyPut(
+      () => FetchUserInfoUsecase(userRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => FetchAllMainInfoUsecase(mainInfoRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => FetchAccountsUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => FetchAllStoreFromRemoteUsecase(storeRepository: Get.find()),
+      fenix: true,
+    );
+
+    //! Home - feature
+    //controllers
+    Get.lazyPut(
+        () => HomeController(
+              getRecentBillsUsecase: Get.find(),
+              getAllExchangeUsecase: Get.find(),
+            ),
+        fenix: true);
+
+    //usecase
+    Get.lazyPut(
+      () => GetRecentBillsUsecase(billsRepository: Get.find()),
       fenix: true,
     );
   }

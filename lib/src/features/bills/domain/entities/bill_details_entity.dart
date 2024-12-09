@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class BillDetailsEntity extends Equatable {
-  final int? id;
+  int? id;
   final int billID;
   final int itemId;
   final int itemUnitID;
@@ -18,7 +19,7 @@ class BillDetailsEntity extends Equatable {
   final String itemNote;
   final double freeQtyCost;
 
-  const BillDetailsEntity({
+  BillDetailsEntity({
     this.id,
     required this.billID,
     required this.itemId,

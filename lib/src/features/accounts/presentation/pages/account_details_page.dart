@@ -21,7 +21,7 @@ class AccountDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.bg,
+      backgroundColor: context.backgroundColor,
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -74,7 +74,7 @@ class AccountDetailsPage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: context.wightColor.withOpacity(0.9),
+                color: context.whiteColor.withOpacity(0.9),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

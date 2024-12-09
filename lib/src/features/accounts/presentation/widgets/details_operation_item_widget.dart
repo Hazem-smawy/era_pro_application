@@ -12,7 +12,7 @@ class DetailsOperationItemWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: context.wightColor,
+        color: context.whiteColor,
       ),
       child: Row(
         children: [
@@ -21,7 +21,7 @@ class DetailsOperationItemWidget extends StatelessWidget {
             children: [
               Text(
                 '\$989.55',
-                style: context.titleLarge?.copyWith(
+                style: context.titleLarge.copyWith(
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
                 ),
@@ -43,7 +43,7 @@ class DetailsOperationItemWidget extends StatelessWidget {
                 context.g4,
                 Text(
                   'إرسال أموال',
-                  style: context.bodySmall?.copyWith(
+                  style: context.bodySmall.copyWith(
                     color: Colors.blue,
                   ),
                 ),

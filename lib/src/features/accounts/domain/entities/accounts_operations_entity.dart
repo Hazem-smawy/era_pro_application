@@ -1,21 +1,58 @@
 /*
-   "id": 50171,
-        "operationId": 3,
-        "operationType": 13,
-        "operationDate": "2024-08-27",
-        "operationIn": true,
-        "storeId": 4,
-        "itemId": 5,
-        "unitId": 2,
-        "quantity": 10,
-        "averageCost": 208.333,
-        "unitCost": 208.333,
-        "totalCost": 2083.33,
-        "unitFactor": 1,
-        "qtyConvert": 10,
-        "expirDate": "2024-12",
-        "addBranch": 1
+"id":1
+"operationDate": "2024-08-27",
+"operationType": 13,
+"operationId": 3,
+"operationRef": "",
+"accountNumber": 10204010002,
+"operationDebit": 2083.33,
+"operationCredit": 0,
+"currencyId": 1,
+"currencyValue": 1,
+"operationStatement": ""
 */
-class AccountsOperationsEntity {
-  
+import 'package:equatable/equatable.dart';
+import 'package:era_pro_application/src/core/utils/date_time_converter.dart';
+
+class AccountsOperationsEntity extends Equatable {
+  int? id;
+  @DateTimeConverter()
+  final DateTime operationDate;
+  final int operationType;
+  final int operationId;
+  final String operationRef;
+  final int accountNumber;
+  final double operationDebit;
+  final double operationCredit;
+  final int currencyId;
+  final double currencyValue;
+  final String operationStatement;
+
+  AccountsOperationsEntity(
+      {this.id,
+      required this.operationDate,
+      required this.operationType,
+      required this.operationId,
+      required this.operationRef,
+      required this.accountNumber,
+      required this.operationDebit,
+      required this.operationCredit,
+      required this.currencyId,
+      required this.currencyValue,
+      required this.operationStatement});
+
+  @override
+  List<Object?> get props => [
+        id,
+        operationDate,
+        operationType,
+        operationId,
+        operationRef,
+        accountNumber,
+        operationDebit,
+        operationCredit,
+        currencyId,
+        currencyValue,
+        operationStatement,
+      ];
 }
