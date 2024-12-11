@@ -5,7 +5,6 @@ import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/bills/domain/entities/bill_entity.dart';
 import 'package:era_pro_application/src/features/bills/domain/entities/bill_ui_entity.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
-import 'package:era_pro_application/src/features/bills/presentation/pages/all_bills_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/bill_widget/bill_type_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/bill_widget/pyment_method_widget.dart';
 import 'package:era_pro_application/src/features/main_info/domain/entities/main_info_entity.dart';

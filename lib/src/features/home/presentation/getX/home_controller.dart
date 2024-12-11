@@ -23,7 +23,7 @@ class HomeController extends GetxController {
     await fetchRecentBills();
     await fetchAllExchange();
 
-    allBills.isEmpty || allExchange.isEmpty
+    allBills.isEmpty && allExchange.isEmpty
         ? recentBillStatus.value = RxStatus.empty()
         : recentBillStatus.value = RxStatus.success();
   }
@@ -31,9 +31,7 @@ class HomeController extends GetxController {
   Future<void> fetchRecentBills() async {
     final res = await getRecentBillsUsecase.call();
 
-    res.fold((f) {
-      print(f.message);
-    }, (r) {
+    res.fold((f) {}, (r) {
       allBills.value = r;
     });
   }
@@ -41,9 +39,7 @@ class HomeController extends GetxController {
   Future<void> fetchAllExchange() async {
     final res = await getAllExchangeUsecase.call();
 
-    res.fold((f) {
-      print(f.message);
-    }, (r) {
+    res.fold((f) {}, (r) {
       allExchange.value = r;
     });
   }

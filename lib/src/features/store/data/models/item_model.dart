@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:era_pro_application/src/core/services/db/db.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_entity.dart';
-import 'package:get/get.dart' as Get;
+import 'package:get/get.dart' as getx;
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/utils/image_converter.dart';
@@ -44,7 +44,7 @@ class ItemModel extends ItemEntity {
     try {
       return (data as List).map((item) => ItemModel.fromJson(item)).toList();
     } catch (e) {
-      Get.Get.snackbar('error from json', 'product');
+      getx.Get.snackbar('error from json', 'product');
       return [];
     }
   }

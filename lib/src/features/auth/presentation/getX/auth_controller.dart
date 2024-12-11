@@ -75,7 +75,6 @@ class AuthController extends GetxController {
     );
 
     return res.fold((e) {
-      print(e.message);
       return false;
     }, (_) => true);
   }

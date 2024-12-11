@@ -10,6 +10,7 @@ import 'package:era_pro_application/src/features/accounts/domain/repositories/re
 import 'package:era_pro_application/src/features/accounts/domain/usecases/add_list_accounts_operations_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/delete_account_operation_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/fetch_accounts_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_account_operation_for_customer_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_accounts_operation_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_accounts_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_mid_account_usecase.dart';
@@ -354,17 +355,24 @@ class DependencyInjection {
     //! Features - accounts
     //controller
     Get.lazyPut(
-        () => AccountsController(
-              getAccountsUseCase: Get.find(),
-              addAccountUsecase: Get.find(),
-              getAllMidAccountUsecase: Get.find(),
-              getAllRefAccountUsecase: Get.find(),
-              getAllAccountsOperationUsecase: Get.find(),
-              addListAccountsOperationsUsecase: Get.find(),
-              deleteAccountOperationUsecase: Get.find(),
-            ),
-        fenix: true);
+      () => AccountsController(
+        getAccountsUseCase: Get.find(),
+        addAccountUsecase: Get.find(),
+        getAllMidAccountUsecase: Get.find(),
+        getAllRefAccountUsecase: Get.find(),
+        getAllAccountsOperationUsecase: Get.find(),
+        addListAccountsOperationsUsecase: Get.find(),
+        deleteAccountOperationUsecase: Get.find(),
+        getAccountOperationForCustomerUsecase: Get.find(),
+      ),
+      fenix: true,
+    );
     //Usecases
+    Get.lazyPut(
+      () =>
+          GetAccountOperationForCustomerUsecase(accountsRepository: Get.find()),
+      fenix: true,
+    );
     Get.lazyPut(
       () => GetAllAccountsUseCase(accountsRepository: Get.find()),
       fenix: true,

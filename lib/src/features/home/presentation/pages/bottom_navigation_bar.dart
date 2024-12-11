@@ -14,18 +14,17 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  late List<Widget> pages;
-
+  List<Widget> pages = [
+    HomePage(),
+    const MainInfoPage(),
+    const SettingPage(),
+    const AsyncPage(),
+  ];
   late int index;
   @override
   void initState() {
     super.initState();
-    pages = [
-      HomePage(),
-      const MainInfoPage(),
-      const SettingPage(),
-      const AsyncPage(),
-    ];
+
     setState(() {
       index = 0;
     });

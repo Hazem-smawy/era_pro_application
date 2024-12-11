@@ -38,18 +38,7 @@ class UserController extends GetxController {
     if (usersettingCustomergroupKey == null) {
       final res = await getUserSettingsUsecase();
       res.fold((f) {}, (r) {
-        sharedPreferencesService.setString(
-          SharedPrefKeys.USERSETTING_CUSTOMERGROUP_KEY,
-          r.custGroup.toString(),
-        );
-        sharedPreferencesService.setString(
-          SharedPrefKeys.USERSETTING_PARENT_KEY,
-          r.custParent.toString(),
-        );
-        sharedPreferencesService.setString(
-          SharedPrefKeys.USERSETTING_GENERATED_KEY,
-          r.generateCode.toString(),
-        );
+        print('the user setting fetched correctly');
       });
     }
   }

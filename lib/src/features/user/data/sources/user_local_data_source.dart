@@ -27,7 +27,6 @@ class UserLocalDataSourceImp implements UserLocalDataSource {
 
   @override
   Future<UserModel?> getUser(int userId) async {
-    print(userId);
     AppDatabase db = AppDatabase.instance();
     return await db.getSingle(db.userTable, (tbl) => tbl.id, userId);
   }

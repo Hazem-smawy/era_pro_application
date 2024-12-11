@@ -25,7 +25,6 @@ class AccountItemWidget extends StatelessWidget {
         vertical: 10,
       ),
       decoration: BoxDecoration(
-       
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -79,7 +78,9 @@ class AccountItemWidget extends StatelessWidget {
                 color: context.primary,
                 action: () {
                   Get.bottomSheet(
-                    const AccountAddOperationSheet(),
+                    AccountAddOperationSheet(
+                      account: accountEntity,
+                    ),
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                   );

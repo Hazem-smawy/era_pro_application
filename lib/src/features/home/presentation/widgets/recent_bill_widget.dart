@@ -11,7 +11,7 @@ class RecentBillWidget extends StatelessWidget {
   RecentBillWidget({
     super.key,
   });
-  HomeController homeController = Get.find();
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {

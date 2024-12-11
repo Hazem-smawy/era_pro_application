@@ -43,7 +43,7 @@ class HeaderWidget extends StatelessWidget {
           const SizedBox(
             width: 50,
           ),
-        if (sortAction == null) const Spacer(),
+        // if (sortAction == null) const Spacer(),
         const Spacer(),
         Text(
           title,

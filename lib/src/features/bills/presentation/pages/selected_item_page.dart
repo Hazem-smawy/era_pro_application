@@ -151,6 +151,7 @@ class SelectedItemsScreen extends StatelessWidget {
                             if (item == null) return const SizedBox();
                             return IntrinsicHeight(
                               child: SellingBillItemWiget(
+                                key: ValueKey(item.id),
                                 index: index,
                                 item: item,
                                 isCart: true,

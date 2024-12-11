@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:currency_textfield/currency_textfield.dart';
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:era_pro_application/src/core/utils/dialogs.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';

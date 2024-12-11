@@ -3782,7 +3782,9 @@ class $AccountTableTable extends AccountTable
   @override
   late final GeneratedColumn<int> accNumber = GeneratedColumn<int>(
       'acc_number', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
   static const VerificationMeta _accNameMeta =
       const VerificationMeta('accName');
   @override

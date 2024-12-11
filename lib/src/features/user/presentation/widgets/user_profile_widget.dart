@@ -20,7 +20,6 @@ class UserProfileWidget extends StatefulWidget {
 class _UserProfileWidgetState extends State<UserProfileWidget> {
   final UserController userController = Get.find();
   final AsyncController asyncController = Get.find();
-  bool? connected;
 
   @override
   void initState() {
@@ -30,9 +29,9 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
 
   Future<void> _checkConnection() async {
     if (widget.fromSync) {
-      connected = await asyncController.login();
+      await asyncController.testConnect();
     } else {
-      connected = null;
+      asyncController.isConnect.value = null;
     }
     setState(() {});
   }
@@ -111,24 +110,29 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
             ),
           ),
         ),
-        if (connected != null)
-          Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: Container(
-              width: 15,
-              height: 15,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: context.whiteColor,
-                  width: 2,
+        Obx(
+          () => asyncController.isConnect.value == null
+              ? const SizedBox()
+              : Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: context.whiteColor,
+                        width: 2,
+                      ),
+                      shape: BoxShape.circle,
+                      color: asyncController.isConnect.value ?? false
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                  ),
                 ),
-                shape: BoxShape.circle,
-                color: connected! ? Colors.green : Colors.red,
-              ),
-            ),
-          ),
+        )
       ],
     );
   }

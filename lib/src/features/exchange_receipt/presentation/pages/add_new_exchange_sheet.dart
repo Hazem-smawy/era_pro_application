@@ -20,7 +20,8 @@ import '../../../main_info/domain/entities/payment_entity.dart';
 
 class AddNewExhangeSheet extends StatefulWidget {
   final ExchangeEntity? exchange;
-  const AddNewExhangeSheet({super.key, this.exchange});
+  final int? customerId;
+  const AddNewExhangeSheet({super.key, this.exchange, this.customerId});
 
   @override
   State<AddNewExhangeSheet> createState() => _AddNewExhangeSheetState();
@@ -34,6 +35,7 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
   @override
   void initState() {
     super.initState();
+
     initPaymentsMethod();
   }
 
@@ -60,6 +62,15 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
       exchangeReceiptController.updateExchange(widget.exchange!);
     } else {
       exchangeReceiptController.reset();
+      if (widget.customerId != null) {
+        exchangeReceiptController.accNumber = widget.customerId;
+        exchangeReceiptController.updateValue(
+          'name',
+          accountsController.customers.value
+              .firstWhere((e) => e.accNumber == widget.customerId)
+              .accName,
+        );
+      }
     }
   }
 
@@ -144,9 +155,12 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
                     ),
                     context.g8,
                     SearchDropdownWidget(
-                      initialId: widget.exchange != null
-                          ? widget.exchange?.sandDetails?.first.accNumber ?? 0
-                          : 0,
+                      initialId: widget.customerId != null
+                          ? widget.customerId!
+                          : widget.exchange != null
+                              ? widget.exchange?.sandDetails?.first.accNumber ??
+                                  0
+                              : 0,
                       action: (p0) {
                         exchangeReceiptController.updateValue(
                           'name',

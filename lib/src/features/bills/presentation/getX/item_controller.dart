@@ -182,7 +182,7 @@ class ItemController extends GetxController {
     return ItemStatus.empty;
   }
 
-  Future<void> getItems1() async {
+  Future<void> getItems() async {
     // var arguments = Get.arguments as Map<String, dynamic>;
 
     itemStatus.value = RxStatus.loading();
@@ -198,7 +198,7 @@ class ItemController extends GetxController {
       bill = null;
     }
     items.clear();
-    if (storeController.allItems.value.isEmpty) {
+    if (storeController.allItems.value.isEmpty || updatedItems != null) {
       await storeController.getAllStoreInfo();
     }
 
@@ -225,7 +225,6 @@ class ItemController extends GetxController {
               for (var oldUnit in oldItem.unitDetails) {
                 if (oldUnit.id == itemUint.id) {
                   oldUnitDetails = oldUnit;
-
                   break;
                 }
               }
@@ -320,7 +319,7 @@ class ItemController extends GetxController {
     itemStatus.value = items.isNotEmpty ? RxStatus.success() : RxStatus.empty();
   }
 
-  // Utility method for grouping a list by a key
+  // // Utility method for grouping a list by a key
   Map<K, List<V>> groupBy<K, V>(List<V> list, K Function(V) keyFunction) {
     final Map<K, List<V>> map = {};
     for (var element in list) {
@@ -329,133 +328,8 @@ class ItemController extends GetxController {
     }
     return map;
   }
-
-  Future<void> getItems() async {
-    itemStatus.value = RxStatus.loading();
-
-    // Retrieve arguments
-    final arguments = Get.arguments;
-    final updatedItems = arguments != null && arguments is Map<String, dynamic>
-        ? arguments["updatedItems"] as List<ItemUI>?
-        : null;
-    final bill = arguments != null && arguments is Map<String, dynamic>
-        ? arguments["bill"] as BillEntity?
-        : null;
-
-    items.clear();
-
-    // Ensure all store data is loaded
-    if (storeController.allItems.value.isEmpty) {
-      await storeController.getAllStoreInfo();
-    }
-
-    final storeItems = storeController.allItems.value;
-    final unitsMap = {
-      for (var unit in storeController.units.value) unit.id: unit
-    };
-
-    final itemUnitsMap =
-        groupBy(storeController.allItemsUnits.value, (unit) => unit.itemId);
-    final operationsMap =
-        groupBy(storeController.allStoreOperations.value, (op) => op.itemId);
-
-    groups.value = storeController.allItemGroups.value;
-    final updatedItemsMap = updatedItems?.asMap() ?? {};
-    // final List<ItemUI> totalItem = [];
-
-    for (var item in storeItems) {
-      final unitsDetails = <UnitDetailsUI>[];
-      final newItemUnits = itemUnitsMap[item.id] ?? [];
-      final operationsForItem = operationsMap[item.id] ?? [];
-
-      for (var itemUnit in newItemUnits) {
-        final unit = unitsMap[itemUnit.itemUnitId];
-        if (unit == null) continue;
-
-        final totalQuantity = operationsForItem
-            .where((op) => op.unitId == unit.id)
-            .fold(0, (sum, op) => sum + op.quantity);
-
-        final oldUnitDetails = updatedItemsMap[item.id]
-            ?.unitDetails
-            .firstWhereOrNull((oldUnit) => oldUnit.id == itemUnit.id);
-
-        final quantityRemaining = (totalQuantity +
-                (billType.value == 8 ? 0 : (oldUnitDetails?.backQuantity ?? 0)))
-            .abs();
-
-        if (quantityRemaining > 0 ||
-            (oldUnitDetails?.backQuantity ?? 0) > 0 ||
-            billType.value == 9) {
-          unitsDetails.add(UnitDetailsUI(
-            backQuantity: oldUnitDetails?.backQuantity ?? 0,
-            preDiscount: itemUnit.itemDiscount,
-            note: oldUnitDetails?.note ?? '',
-            discountPercent: oldUnitDetails?.discountPercent ?? 0,
-            discount: oldUnitDetails?.discount ?? 0,
-            taxPercent: oldUnitDetails?.taxPercent ?? 0,
-            intialCost: itemUnit.intialCost,
-            freeQuantity: oldUnitDetails?.freeQuantity ?? 0,
-            updatedQuantity: oldUnitDetails?.updatedQuantity ?? 0,
-            id: itemUnit.id,
-            name: unit.name,
-            quantityRemaining: quantityRemaining,
-            totalPrice: oldUnitDetails?.totalPrice ?? 0,
-            tax: oldUnitDetails?.tax ?? 0,
-            price: itemUnit.retailPrice,
-            selectedPrice: itemUnit.retailPrice,
-            firstPrice: itemUnit.retailPrice,
-            secondPrice: itemUnit.spacialPrice,
-            thirdPrice: itemUnit.wholeSaleprice,
-            unitFactor: itemUnit.unitFactor,
-          ));
-        }
-      }
-
-      if (unitsDetails.isNotEmpty) {
-        final totalQuantity = unitsDetails.fold(
-            0,
-            (sum, detail) =>
-                sum + (detail.quantityRemaining * detail.unitFactor));
-
-        for (var detail in unitsDetails) {
-          detail.quantityRemaining = totalQuantity ~/ detail.unitFactor;
-        }
-
-        final oldItem = updatedItemsMap[item.id];
-
-        totalItem.add(ItemUI(
-          hasTax: item.hasTax,
-          preTax: item.taxRate,
-          allQuantityOfItem: totalQuantity,
-          clearPrice: oldItem?.clearPrice ?? 0,
-          id: item.id,
-          name: item.name,
-          image: item.itemImage,
-          unitDetails: unitsDetails,
-          selectedUnit: unitsDetails.firstWhere((e) => e.unitFactor == 1),
-          indexOfUnitDetails: 0,
-          groupId: item.itemGroupId,
-        ));
-      }
-    }
-
-    items.value = totalItem;
-
-    if (updatedItems != null) {
-      card.value = CardUI(
-        items: items
-            .where((e) =>
-                e.unitDetails.any((detail) => detail.updatedQuantity > 0))
-            .toList(),
-        addedDiscount: bill?.billDiscount ?? 0,
-        addedTax: bill?.totalVat ?? 0,
-      );
-      card.refresh();
-    }
-
-    itemStatus.value = items.isNotEmpty ? RxStatus.success() : RxStatus.empty();
-  }
+// final itemUnitsMap = groupBy(storeController.allItemsUnits.value, (unit) => unit.itemId);
+// final operationsMap = groupBy(storeController.allStoreOperations.value, (op) => op.itemId);
 
   void nextUnitDetails(ItemUI item) {
     // Find the current item index based on the ID
@@ -469,6 +343,47 @@ class ItemController extends GetxController {
       // If it's the last item, loop back to the first item's ID
       item.selectedUnit = item.unitDetails[0];
     }
+    items.refresh();
+  }
+
+  Map<int, int> currentPriceIndexMap =
+      {}; // Map to store current price index for each item
+
+  Future updateNextSelectedPrice(int itemId, int itemUnitId) async {
+    final itemUnits = await storeController.getAllItemsUnit();
+
+    ItemUI updatedItem = items.firstWhere((e) => e.id == itemId);
+    final selectedItemUnit = itemUnits.firstWhere((e) => e.id == itemUnitId);
+    UnitDetailsUI unitDetails =
+        updatedItem.unitDetails.firstWhere((e) => e.id == selectedItemUnit.id);
+
+    // Initialize the current price index for the item if it doesn't exist
+    currentPriceIndexMap.putIfAbsent(itemId, () => 0);
+
+    // Cycle through the prices
+    currentPriceIndexMap[itemId] =
+        (currentPriceIndexMap[itemId]! + 1) % 3; // Increment and wrap around
+
+    switch (currentPriceIndexMap[itemId]!) {
+      case 0:
+        unitDetails.selectedPrice = unitDetails.firstPrice;
+        break;
+      case 1:
+        unitDetails.selectedPrice = unitDetails.secondPrice;
+        break;
+      case 2:
+        unitDetails.selectedPrice = unitDetails.thirdPrice;
+        break;
+    }
+
+    // updatedItem.itemTotalPrice = unitDetails.selectedPrice;
+
+    refreshItemCardInfo(updatedItem);
+
+    updatePercentWhenPriceChange(updatedItem);
+
+    refreshItemCardInfo(updatedItem);
+
     items.refresh();
   }
 
@@ -596,6 +511,7 @@ class ItemController extends GetxController {
           e.quantityRemaining = updatedItem.allQuantityOfItem ~/ e.unitFactor;
           // e.constantQuantity = updatedItem.allQuantityOfItem ~/ e.unitFactor;
         }
+        refreshItemCardInfo(updatedItem);
       }
     } else if (quantity == -1) {
       if (billType.value != 9) {
@@ -649,6 +565,7 @@ class ItemController extends GetxController {
         updatedItem,
         updatedItem.selectedUnit,
       );
+      refreshItemCardInfo(updatedItem);
     }
 
     updatePercentWhenPriceChange(updatedItem);
@@ -715,9 +632,10 @@ class ItemController extends GetxController {
             updatedItem.selectedUnit.updatedQuantity;
 
     //caculated Discount
-    updatedItem.clearPrice = updatedItem.unitDetails
-        .map((unit) => unit.clearPrice)
-        .reduce((value, element) => value + element);
+    updatedItem.clearPrice =
+        updatedItem.unitDetails.map((unit) => unit.clearPrice).reduce(
+              (value, element) => value + element,
+            );
 
     //update cart
     if (updatedItem.unitDetails.any((item) => item.updatedQuantity > 0)) {
@@ -729,14 +647,14 @@ class ItemController extends GetxController {
       }
     } else {
       card.value!.items.remove(updatedItem);
-      CustomDialog.customSnackBar(
-        'تم حذف المنتج من السلة',
-        SnackPosition.TOP,
-        false,
-      );
-      if (Get.isDialogOpen ?? false) {
-        Get.back();
-      }
+      // CustomDialog.customSnackBar(
+      //   'تم حذف المنتج من السلة',
+      //   SnackPosition.TOP,
+      //   false,
+      // );
+      // if (Get.isDialogOpen ?? false) {
+      //   Get.back();
+      // }
     }
 
     items.refresh();

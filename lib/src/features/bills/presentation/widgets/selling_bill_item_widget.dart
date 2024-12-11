@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/core/extensions/image_with_error_extension.dart';
 import 'package:era_pro_application/src/core/widgets/custom_text_field_with_label_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/item_info_dialog.dart';
 
@@ -341,20 +340,26 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
             ],
           ),
         ),
-        Row(
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                widget.item.selectedUnit.selectedPrice.toString(),
-                style: context.titleSmall.copyWith(
-                  color: context.blackColor,
-                  // fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            itemController.updateNextSelectedPrice(
+                widget.item.id, widget.item.selectedUnit.id);
+          },
+          child: Row(
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.item.selectedUnit.selectedPrice.toString(),
+                  style: context.titleSmall.copyWith(
+                    color: context.blackColor,
+                    // fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -541,120 +546,6 @@ class GlassContainer extends StatelessWidget {
   }
 }
 
-// class ItemImageWidget extends StatefulWidget {
-//   const ItemImageWidget({
-//     super.key,
-//     required this.widget,
-//   });
-//   final SellingBillItemWiget widget;
-
-//   @override
-//   State<ItemImageWidget> createState() => _ItemImageWidgetState();
-// }
-
-// class _ItemImageWidgetState extends State<ItemImageWidget> {
-//   ItemController itemController = Get.find();
-//   late Uint8List? imageData;
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     itemController.getItemImage(widget.widget.item.id).then((value) {
-//       setState(() {
-//         imageData = value;
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: context.secondaryTextColor.withOpacity(
-//             0.2,
-//           ),
-//         ),
-//         color: context.containerColor,
-//         borderRadius: BorderRadius.circular(10),
-//       ),
-//       child: ClipRRect(
-//         borderRadius: BorderRadius.circular(10),
-//         child: CustomImage.memoryWithError(
-//           imageData,
-//           h: 120,
-//         ),
-//       ),
-//     );
-//   }
-// }
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
-// class ItemImageWidget extends StatefulWidget {
-//   const ItemImageWidget({
-//     super.key,
-//     required this.widget,
-//   });
-//   final SellingBillItemWiget widget;
-
-//   @override
-//   State<ItemImageWidget> createState() => _ItemImageWidgetState();
-// }
-
-// class _ItemImageWidgetState extends State<ItemImageWidget>
-//     with AutomaticKeepAliveClientMixin {
-//   ItemController itemController = Get.find();
-//   late Future<Uint8List?> _imageFuture;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _imageFuture = itemController.getItemImage(widget.widget.item.id);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     super.build(context); // Required for AutomaticKeepAliveClientMixin
-//     return Container(
-//       width: double.infinity,
-
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: context.secondaryTextColor.withOpacity(0.2),
-//         ),
-//         color: context.containerColor,
-//         borderRadius: BorderRadius.circular(10),
-//       ),
-//       child: ClipRRect(
-//         borderRadius: BorderRadius.circular(10),
-//         child: FutureBuilder<Uint8List?>(
-//           future: _imageFuture,
-//           builder: (context, snapshot) {
-//             if (snapshot.connectionState == ConnectionState.waiting) {
-//               return const Center(
-//                 child: CircularProgressIndicator(),
-//               );
-//             } else if (snapshot.hasData && snapshot.data != null) {
-//               return Image.memory(
-//                 snapshot.data!,
-//                 height: 120,
-//                 fit: BoxFit.cover,
-//               );
-//             } else {
-//               return const Icon(Icons.error);
-//             }
-//           },
-//         ),
-//       ),
-//     );
-//   }
-
-//   @override
-//   bool get wantKeepAlive => true;
-// }
-
 class ItemImageWidget extends StatefulWidget {
   const ItemImageWidget({
     super.key,
@@ -696,8 +587,16 @@ class _ItemImageWidgetState extends State<ItemImageWidget>
           future: _imageFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return const SizedBox(
+                width: double.infinity,
+                height: 120,
+                child: Center(
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
               );
             } else if (snapshot.hasData && snapshot.data != null) {
               return Image.memory(
@@ -733,10 +632,10 @@ class _ItemImageWidgetState extends State<ItemImageWidget>
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.2),
-                          width: 1,
-                        ),
+                        // border: Border.all(
+                        //   color: Colors.white.withOpacity(0.2),
+                        //   width: 1,
+                        // ),
                       ),
                       // child: const Center(
                       //   child: Icon(

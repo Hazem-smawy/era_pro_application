@@ -1,4 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:era_pro_application/src/core/constants/share_pref_keys.dart';
+import 'package:era_pro_application/src/core/services/shared_preferences.dart';
 import 'package:era_pro_application/src/features/accounts/data/models/account_model.dart';
 import 'package:era_pro_application/src/features/accounts/data/models/account_operation_model.dart';
 import 'package:era_pro_application/src/features/accounts/data/models/mid_account_model.dart';
@@ -6,8 +8,8 @@ import 'package:era_pro_application/src/features/accounts/data/models/ref_accoun
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/delete_account_operation_usecase.dart';
 import 'package:era_pro_application/src/features/user/domain/entities/user_setting_entity.dart';
+import 'package:get/get.dart' as getx;
 
-import '../../../../core/error/error.dart';
 import '../../../../core/services/db/db.dart';
 
 abstract class AccountsLocalDatasource {
@@ -19,10 +21,10 @@ abstract class AccountsLocalDatasource {
   Future<void> saveAllRefAccount(List<RefAccountModel> items);
   Future<void> saveAllMidAccount(List<MidAccountModel> items);
   Future<void> saveAllAccountOperation(List<AccountOperationModel> items);
-  Future<int> addNewAccount(UserSettingEntity userSetting,
-      AccountEntity account, int userId, int branchId);
+  Future<int> addNewAccount(AccountEntity account, int userId, int branchId);
   // Future<void> addListAccountsOperation(List<AccountOperationModel> item);
   Future<void> deleteAccountOperations(OperationType op);
+  Future<List<AccountOperationModel>> getAccountOperationById(int id);
 }
 
 class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
@@ -33,55 +35,142 @@ class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
     return await db.getAll(db.accountTable);
   }
 
-  @override
-  Future<void> saveAllAccounts(List<AccountModel> items) async {
-    AppDatabase db = AppDatabase.instance();
-    await db.saveAll(
-      db.accountTable,
-      items.map((item) => item.toCompanion()).toList(),
-    );
-  }
+  // @override
+  // Future<void> saveAllAccounts(List<AccountModel> items) async {
+  //   AppDatabase db = AppDatabase.instance();
+  //   await db.saveAll(
+  //     db.accountTable,
+  //     items.map((item) => item.toCompanion()).toList(),
+  //   );
+  // }
+
+  // @override
+  // Future<int> addNewAccount(
+  //     AccountEntity account, int userId, int branchId) async {
+  //   AppDatabase db = AppDatabase.instance();
+  //   final userSetting = await db.select(db.userSettingTable).getSingleOrNull();
+  //   if (userSetting == null) {
+  //     throw Exception("User settings not configured.");
+  //   }
+  //   // Fetch the current maximum custom ID
+  //   final lastAccount = await (db.select(db.accountTable)
+  //         ..orderBy([
+  //           (t) =>
+  //               OrderingTerm(expression: t.accNumber, mode: OrderingMode.desc)
+  //         ])
+  //         ..limit(1))
+  //       .getSingleOrNull();
+
+  //   // Determine the next ID
+  //   int accountNumber = lastAccount?.accNumber ??
+  //       int.parse(
+  //           '${userSetting.generateCode}001'); // Start at 5001 if no users exist
+  //   accountNumber += 1;
+  //   var newAccount = AccountTableCompanion(
+  //     id: const Value.absent(),
+  //     accCatId: const Value(0),
+  //     branchId: Value(branchId),
+  //     accNumber: Value(accountNumber),
+  //     accName: Value(account.accName),
+  //     accPhone: Value(account.accPhone),
+  //     email: Value(account.email),
+  //     address: Value(account.address),
+  //     accCatagory: const Value(3),
+  //     accType: const Value(1),
+  //     accLimit: Value(account.accLimit),
+  //     accParent: Value(userSetting.custParent),
+  //     accStoped: const Value(false),
+  //     newData: const Value(true),
+  //     note: const Value(''),
+  //     paymentType: const Value(0),
+  //   );
+
+  //   // Insert the new user with the incremented custom ID
+  //   return await db.into(db.accountTable).insert(newAccount);
+  // }
 
   @override
-  Future<int> addNewAccount(UserSettingEntity userSetting,
+  Future<int> addNewAccount(
       AccountEntity account, int userId, int branchId) async {
     AppDatabase db = AppDatabase.instance();
 
-    // Fetch the current maximum custom ID
-    final lastAccount = await (db.select(db.accountTable)
-          ..orderBy([
-            (t) =>
-                OrderingTerm(expression: t.accNumber, mode: OrderingMode.desc)
-          ])
-          ..limit(1))
+    final userSetting = await db.select(db.userSettingTable).getSingleOrNull();
+    if (userSetting == null) {
+      throw Exception("User settings not configured.");
+    }
+
+    // Check if the account already exists by a unique identifier (e.g., account number or email)
+    final existingAccount = await (db.select(db.accountTable)
+          ..where((t) => t.accNumber.equals(account.accNumber)))
         .getSingleOrNull();
 
-    // Determine the next ID
-    int accountNumber = lastAccount?.accNumber ??
-        int.parse(
-            '${userSetting.generateCode}001'); // Start at 5001 if no users exist
-    accountNumber += 1;
-    var newAccount = AccountTableCompanion(
-      id: const Value.absent(),
-      accCatId: const Value(0),
-      branchId: Value(branchId),
-      accNumber: Value(accountNumber),
-      accName: Value(account.accName),
-      accPhone: Value(account.accPhone),
-      email: Value(account.email),
-      address: Value(account.address),
-      accCatagory: const Value(3),
-      accType: const Value(1),
-      accLimit: Value(account.accLimit),
-      accParent: Value(userSetting.custParent),
-      accStoped: const Value(false),
-      newData: const Value(true),
-      note: const Value(''),
-      paymentType: const Value(0),
-    );
+    if (existingAccount != null) {
+      print('update');
+      // Update the existing account
+      final updatedAccount = AccountTableCompanion(
+        id: Value(existingAccount.id ?? 0),
+        accCatId: Value(existingAccount.accCatId),
+        branchId: Value(branchId),
+        accNumber: Value(existingAccount.accNumber),
+        accName: Value(account.accName),
+        accPhone: Value(account.accPhone),
+        email: Value(account.email),
+        address: Value(account.address),
+        accCatagory: Value(existingAccount.accCatagory),
+        accType: Value(existingAccount.accType),
+        accLimit: Value(account.accLimit),
+        accParent: Value(existingAccount.accParent),
+        accStoped: Value(existingAccount.accStoped),
+        newData: Value(existingAccount.newData),
+        note: Value(account.note),
+        paymentType: Value(existingAccount.paymentType),
+      );
 
-    // Insert the new user with the incremented custom ID
-    return await db.into(db.accountTable).insert(newAccount);
+      // Perform the update
+      await (db.update(db.accountTable)
+            ..where((t) => t.accNumber.equals(existingAccount.accNumber)))
+          .write(updatedAccount);
+
+      return existingAccount.id ?? 0;
+    } else {
+      print('new');
+      // Fetch the current maximum custom ID
+      final lastAccount = await (db.select(db.accountTable)
+            ..orderBy([
+              (t) =>
+                  OrderingTerm(expression: t.accNumber, mode: OrderingMode.desc)
+            ])
+            ..limit(1))
+          .getSingleOrNull();
+
+      // Determine the next ID
+      int accountNumber =
+          lastAccount?.accNumber ?? int.parse('${userSetting.generateCode}001');
+      accountNumber += 1;
+
+      // Create a new account
+      final newAccount = AccountTableCompanion(
+        id: const Value.absent(),
+        accCatId: const Value(0),
+        branchId: Value(branchId),
+        accNumber: Value(accountNumber),
+        accName: Value(account.accName),
+        accPhone: Value(account.accPhone),
+        email: Value(account.email),
+        address: Value(account.address),
+        accCatagory: const Value(3),
+        accType: const Value(1),
+        accLimit: Value(account.accLimit),
+        accParent: Value(userSetting.custParent),
+        accStoped: const Value(false),
+        newData: const Value(true),
+        note: const Value(''),
+        paymentType: const Value(0),
+      );
+
+      // Insert the new account
+      return await db.into(db.accountTable).insert(newAccount);
+    }
   }
 
   @override
@@ -148,5 +237,106 @@ class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
     } catch (e) {
       throw Exception('Failed to delete account operation: $e');
     }
+  }
+
+  @override
+  Future<List<AccountOperationModel>> getAccountOperationById(int id) {
+    final db = AppDatabase.instance();
+    return (db.select(db.accountOperationTable)
+          ..where(
+            (operation) => operation.accountNumber.equals(id),
+          ))
+        .get();
+  }
+
+  @override
+  Future<void> saveAllAccounts(List<AccountModel> accounts) async {
+    SharedPreferencesService sharedPreferencesService = getx.Get.find();
+    String? stringId =
+        sharedPreferencesService.getString(SharedPrefKeys.USERSETTING_KEY);
+
+    int id = int.parse(stringId ?? '0');
+
+    try {
+      final db = AppDatabase.instance();
+      final userSettings =
+          await db.getSingle(db.userSettingTable, (tbl) => tbl.id, id);
+      print(userSettings);
+      if (userSettings == null) {
+        throw Exception("User settings not configured.");
+      }
+
+      final custParent = userSettings.custParent;
+      final startCode = userSettings.generateCode;
+
+      final lastAccount = await (db.select(db.accountTable)
+            ..orderBy([
+              (t) =>
+                  OrderingTerm(expression: t.accNumber, mode: OrderingMode.desc)
+            ])
+            ..limit(1))
+          .getSingleOrNull();
+
+      // Determine the next ID
+      int accountNumber =
+          lastAccount?.accNumber ?? int.parse('${startCode}001');
+      await db.batch((batch) {
+        for (final account in accounts) {
+          accountNumber += 1;
+          final newAccount = account.copyWith(
+            accParent: custParent,
+            accNumber: accountNumber,
+          );
+
+          batch.insert(
+            db.accountTable,
+            newAccount.toCompanion(),
+            mode: InsertMode.insertOrReplace,
+          );
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+}
+
+extension AccountModelCopy on AccountModel {
+  AccountModel copyWith({
+    int? id,
+    int? accNumber,
+    String? accName,
+    int? accParent,
+    int? accType,
+    String? note,
+    int? accCatagory,
+    int? accCatId,
+    String? accPhone,
+    String? address,
+    String? email,
+    int? accLimit,
+    int? paymentType,
+    int? branchId,
+    bool? accStoped,
+    bool? newData,
+  }) {
+    return AccountModel(
+      id: id ?? this.id,
+      accNumber: accNumber ?? this.accNumber,
+      accName: accName ?? this.accName,
+      accParent: accParent ?? this.accParent,
+      accType: accType ?? this.accType,
+      note: note ?? this.note,
+      accCatagory: accCatagory ?? this.accCatagory,
+      accCatId: accCatId ?? this.accCatId,
+      accPhone: accPhone ?? this.accPhone,
+      address: address ?? this.address,
+      email: email ?? this.email,
+      accLimit: accLimit ?? this.accLimit,
+      paymentType: paymentType ?? this.paymentType,
+      branchId: branchId ?? this.branchId,
+      accStoped: accStoped ?? this.accStoped,
+      newData: newData ?? this.newData,
+    );
   }
 }

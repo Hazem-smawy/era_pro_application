@@ -1,6 +1,5 @@
 library text_style;
 
-import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 

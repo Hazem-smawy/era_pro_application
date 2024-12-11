@@ -81,60 +81,60 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
     );
   }
 
+  // // @override
   // @override
-  @override
-  Future<List<ItemModel>> getAllItems2() async {
-    AppDatabase db = AppDatabase.instance();
+  // Future<List<ItemModel>> getAllItems2() async {
+  //   AppDatabase db = AppDatabase.instance();
 
-    final query = db.selectOnly(db.itemTable)
-      ..addColumns([
-        db.itemTable.id,
-        db.itemTable.itemGroupId,
-        db.itemTable.itemCode,
-        db.itemTable.name,
-        db.itemTable.enName,
-        db.itemTable.type,
-        db.itemTable.itemLimit,
-        db.itemTable.isExpire,
-        db.itemTable.notifyBefore,
-        db.itemTable.freeQuantityAllow,
-        db.itemTable.hasTax,
-        db.itemTable.taxRate,
-        db.itemTable.itemCompany,
-        db.itemTable.orignalCountry,
-        db.itemTable.itemDescription,
-        db.itemTable.note,
-        db.itemTable.hasAlternated,
-        db.itemTable.newData
-      ]);
+  //   final query = db.selectOnly(db.itemTable)
+  //     ..addColumns([
+  //       db.itemTable.id,
+  //       db.itemTable.itemGroupId,
+  //       db.itemTable.itemCode,
+  //       db.itemTable.name,
+  //       db.itemTable.enName,
+  //       db.itemTable.type,
+  //       db.itemTable.itemLimit,
+  //       db.itemTable.isExpire,
+  //       db.itemTable.notifyBefore,
+  //       db.itemTable.freeQuantityAllow,
+  //       db.itemTable.hasTax,
+  //       db.itemTable.taxRate,
+  //       db.itemTable.itemCompany,
+  //       db.itemTable.orignalCountry,
+  //       db.itemTable.itemDescription,
+  //       db.itemTable.note,
+  //       db.itemTable.hasAlternated,
+  //       db.itemTable.newData
+  //     ]);
 
-    final result = await query.get();
+  //   final result = await query.get();
 
-    final itemList = result.map((row) {
-      return ItemModel(
-        id: row.read(db.itemTable.id)!,
-        itemGroupId: row.read(db.itemTable.itemGroupId)!,
-        itemCode: row.read(db.itemTable.itemCode)!,
-        name: row.read(db.itemTable.name)!,
-        enName: row.read(db.itemTable.enName)!,
-        type: row.read(db.itemTable.type)!,
-        itemLimit: row.read(db.itemTable.itemLimit)!,
-        isExpire: row.read(db.itemTable.isExpire)!,
-        notifyBefore: row.read(db.itemTable.notifyBefore)!,
-        freeQuantityAllow: row.read(db.itemTable.freeQuantityAllow)!,
-        hasTax: row.read(db.itemTable.hasTax)!,
-        taxRate: row.read(db.itemTable.taxRate)!,
-        itemCompany: row.read(db.itemTable.itemCompany)!,
-        orignalCountry: row.read(db.itemTable.orignalCountry)!,
-        itemDescription: row.read(db.itemTable.itemDescription)!,
-        note: row.read(db.itemTable.note)!,
-        hasAlternated: row.read(db.itemTable.hasAlternated)!,
-        newData: row.read(db.itemTable.newData)!,
-      );
-    }).toList();
+  //   final itemList = result.map((row) {
+  //     return ItemModel(
+  //       id: row.read(db.itemTable.id)!,
+  //       itemGroupId: row.read(db.itemTable.itemGroupId)!,
+  //       itemCode: row.read(db.itemTable.itemCode)!,
+  //       name: row.read(db.itemTable.name)!,
+  //       enName: row.read(db.itemTable.enName)!,
+  //       type: row.read(db.itemTable.type)!,
+  //       itemLimit: row.read(db.itemTable.itemLimit)!,
+  //       isExpire: row.read(db.itemTable.isExpire)!,
+  //       notifyBefore: row.read(db.itemTable.notifyBefore)!,
+  //       freeQuantityAllow: row.read(db.itemTable.freeQuantityAllow)!,
+  //       hasTax: row.read(db.itemTable.hasTax)!,
+  //       taxRate: row.read(db.itemTable.taxRate)!,
+  //       itemCompany: row.read(db.itemTable.itemCompany)!,
+  //       orignalCountry: row.read(db.itemTable.orignalCountry)!,
+  //       itemDescription: row.read(db.itemTable.itemDescription)!,
+  //       note: row.read(db.itemTable.note)!,
+  //       hasAlternated: row.read(db.itemTable.hasAlternated)!,
+  //       newData: row.read(db.itemTable.newData)!,
+  //     );
+  //   }).toList();
 
-    return itemList;
-  }
+  //   return itemList;
+  // }
 
   // Execute the query and process the results
 
@@ -322,8 +322,8 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
             quantity: totalQuantity,
             prices: [
               itemUnit.wholeSaleprice,
-              itemUnit.retailPrice,
               itemUnit.spacialPrice,
+              itemUnit.retailPrice,
             ],
           ));
         }

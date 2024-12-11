@@ -3,7 +3,6 @@ import 'package:era_pro_application/src/core/widgets/empty_widget.dart';
 import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/bills/domain/repositories/bill_repository.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
-import 'package:era_pro_application/src/features/bills/presentation/pages/all_bills_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/bill_details_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/bill_widget/bill_item_widget.dart';
 import 'package:flutter/material.dart';

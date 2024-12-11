@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
@@ -7,7 +7,6 @@ import 'package:era_pro_application/src/core/widgets/header_widget.dart';
 import 'package:era_pro_application/src/core/widgets/loading_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
-import 'package:era_pro_application/src/features/bills/presentation/pages/all_bills_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/categoryies_and_search_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/selling_bill_footer_widget.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
@@ -18,713 +17,132 @@ import '../../../../core/constants/assets.dart';
 import '../../../../core/widgets/empty_widget.dart';
 import '../widgets/selling_bill_item_widget.dart';
 
-// class SellingBillScreen extends StatelessWidget {
-//   const SellingBillScreen({super.key});
+// class SellingBillPage extends StatefulWidget {
+//   const SellingBillPage({super.key});
+
+//   @override
+//   State<SellingBillPage> createState() => _SellingBillPageState();
+// }
+
+// class _SellingBillPageState extends State<SellingBillPage> {
+//   int type = 0;
+//   final TextEditingController nameController = TextEditingController();
+
+//   final StoreController storeController = Get.find();
+
+//   final ItemController itemController = Get.find();
+//   final BillController billController = Get.find();
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       billController.getBillDetailsInfo();
+//       itemController.getItems();
+//     });
+
+//     // type of bill
+//     final arguments = Get.arguments;
+//     if (arguments != null && arguments is Map<String, dynamic>) {
+//       type = arguments["type"] as int;
+
+//       billController.newBill.value.type = type;
+//       itemController.billType.value = type;
+//     }
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
+//       backgroundColor: context.whiteColor,
 //       resizeToAvoidBottomInset: false,
 //       body: SafeArea(
-//         top: false,
-//         child: Column(
-//           children: [
-//             Container(
-//               padding: const EdgeInsets.only(top: 10),
-//               color: const Color(0xffEBEEF3),
-//               child: SafeArea(
-//                 bottom: false,
-//                 child: Column(
-//                   children: [
-//                     Row(
-//                       children: [
-//                         IconButton(
-//                           onPressed: () {
-//                             //Get.back();
-//                           },
-//                           icon: const Icon(
-//                             Icons.more_vert_rounded,
-//                             size: 27,
-//                             color: MyColors.secondaryTextColor,
-//                           ),
-//                         ),
-//                         IconButton(
-//                           onPressed: () {
-//                             Get.back();
-//                           },
-//                           icon: const Icon(
-//                             FontAwesomeIcons.barcode,
-//                             size: 25,
-//                             color: MyColors.secondaryTextColor,
-//                           ),
-//                         ),
-//                         const SizedBox(
-//                           width: 10,
-//                         ),
-//                         Expanded(
-//                           child: Container(
-//                             height: 40,
-//                             decoration: BoxDecoration(
-//                               borderRadius: BorderRadius.circular(30),
-//                               color: MyColors.whiteColor,
-//                             ),
-//                             child: Row(
-//                               children: [
-//                                 Expanded(
-//                                   child: TextFormField(
-//                                     //initialValue: widget.placeHolder ?? "",
-//                                     textAlign: TextAlign.right,
-//                                     textDirection: TextDirection.rtl,
-//                                     style: MyTextStyles.subTitle.copyWith(
-//                                       color: MyColors.blackColor,
-//                                       fontWeight: FontWeight.bold,
-//                                     ),
-//                                     onChanged: (value) {},
-//                                     onTap: () {},
-//                                     decoration: InputDecoration(
-//                                       border: InputBorder.none,
-//                                       hintText: 'البحث عن',
-//                                       hintStyle: MyTextStyles.body.copyWith(
-//                                           fontWeight: FontWeight.normal),
-//                                       contentPadding:
-//                                           const EdgeInsets.symmetric(
-//                                               horizontal: 10),
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 // const SizedBox(
-//                                 //   width: 5,
-//                                 // ),
-//                                 const Icon(
-//                                   Icons.search,
-//                                   size: 20,
-//                                   color: MyColors.secondaryTextColor,
-//                                 ),
-//                                 const SizedBox(
-//                                   width: 10,
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         IconButton(
-//                           onPressed: () {
-//                             Get.back();
-//                           },
-//                           icon: const Icon(
-//                             Icons.chevron_right_outlined,
-//                             size: 27,
-//                             color: MyColors.secondaryTextColor,
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                     const SizedBox(
-//                       height: 15,
-//                     ),
-//                     const Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                       children: [
-//                         Text(
-//                           'السعر الاجمالي',
-//                           style: MyTextStyles.subTitle,
-//                         ),
-//                         Text(
-//                           'سعر الحبة',
-//                           style: MyTextStyles.subTitle,
-//                         ),
-//                         Text(
-//                           'الوحدة',
-//                           style: MyTextStyles.subTitle,
-//                         ),
-//                         Text(
-//                           'الكمية',
-//                           style: MyTextStyles.subTitle,
-//                         ),
-//                       ],
-//                     ),
-//                     const SizedBox(
-//                       height: 10,
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             Expanded(
-//               child: ListView(
-//                 padding: const EdgeInsets.symmetric(vertical: 10),
-//                 children: const [
-//                   BillItemWidget(),
-//                   BillItemWidget(),
-//                 ],
-//               ),
-//             ),
-//             Container(
-//               margin: const EdgeInsets.only(top: 20, right: 15, left: 15),
-//               padding: const EdgeInsets.all(15),
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(20),
-//                 border: Border.all(
-//                   color: MyColors.secondaryTextColor.withOpacity(0.3),
-//                 ),
-//               ),
-//               child: Column(
+//         child: GestureDetector(
+//           onTap: () {
+//             FocusScope.of(context).unfocus();
+//           },
+//           child: Stack(
+//             children: [
+//               Column(
 //                 children: [
-//                   const BillSammaryItemWidget(
-//                     summaryKey: 'عدد القطع',
-//                     summaryValue: '150 قطعة',
-//                   ),
-//                   const SizedBox(
-//                     height: 5,
-//                   ),
-//                   const BillSammaryItemWidget(
-//                     summaryKey: 'السعر الاجمالي ',
-//                     summaryValue: '2000',
-//                   ),
-//                   const SizedBox(
-//                     height: 10,
-//                   ),
-//                   Container(
-//                     // margin: const EdgeInsets.all(5),
-//                     child: Row(
-//                       children: [
-//                         Expanded(
-//                           child: GestureDetector(
-//                             onTap: () {
-//                               Get.to(() => const CompleteSellingBillScreen());
-//                             },
-//                             child: Container(
-//                               padding: const EdgeInsets.all(10),
-//                               decoration: BoxDecoration(
-//                                 borderRadius: BorderRadius.circular(25),
-//                                 color: MyColors.primaryColor,
-//                               ),
-//                               child: Center(
-//                                 child: Text(
-//                                   "متابعة",
-//                                   style: MyTextStyles.title2
-//                                       .copyWith(color: MyColors.whiteColor),
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                         const SizedBox(
-//                           width: 10,
-//                         ),
-//                         GestureDetector(
-//                           onTap: () {
-//                             Get.bottomSheet(const AddItemsBottomSheet());
-//                           },
-//                           child: Container(
-//                             width: 40,
-//                             height: 40,
-//                             decoration: BoxDecoration(
-//                               shape: BoxShape.circle,
-//                               border: Border.all(
-//                                 color: MyColors.secondaryTextColor
-//                                     .withOpacity(0.3),
-//                               ),
-//                             ),
-//                             child: const Center(
-//                               child: FaIcon(
-//                                 FontAwesomeIcons.shapes,
-//                                 size: 18,
-//                                 color: MyColors.blackColor,
-//                               ),
-//                             ),
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//             const SizedBox(
-//               height: 20,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class AddItemsBottomSheet extends StatefulWidget {
-//   const AddItemsBottomSheet({super.key});
-
-//   @override
-//   State<AddItemsBottomSheet> createState() => _AddItemsBottomSheetState();
-// }
-
-// class _AddItemsBottomSheetState extends State<AddItemsBottomSheet> {
-//   bool isSearchFieldOpen = false;
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedContainer(
-//       duration: const Duration(microseconds: 200),
-//       padding: const EdgeInsets.all(5),
-//       decoration: const BoxDecoration(
-//         borderRadius: BorderRadius.only(
-//           topLeft: Radius.circular(20),
-//           topRight: Radius.circular(20),
-//         ),
-//         color: MyColors.containerColor,
-//       ),
-//       child: Column(
-//         children: [
-//           SizedBox(
-//             height: 40,
-//             child: Row(
-//               children: [
-//                 GestureDetector(
-//                   onTap: () {
-//                     setState(() {
-//                       isSearchFieldOpen = !isSearchFieldOpen;
-//                     });
-//                   },
-//                   child: Container(
-//                     height: 40,
-//                     width: 40,
-//                     padding: const EdgeInsets.symmetric(
-//                       horizontal: 10,
-//                       vertical: 5,
-//                     ),
-//                     decoration: BoxDecoration(
-//                       shape: BoxShape.circle,
-//                       border: Border.all(
-//                         color: MyColors.secondaryTextColor.withOpacity(0.2),
-//                       ),
-//                     ),
-//                     child: const Center(
-//                       child: FaIcon(
-//                         FontAwesomeIcons.magnifyingGlass,
-//                         color: MyColors.secondaryTextColor,
-//                         size: 20,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(
-//                   width: 10,
-//                 ),
-//                 if (isSearchFieldOpen)
-//                   Expanded(
-//                     child: AnimatedContainer(
-//                       duration: const Duration(microseconds: 200),
-//                       padding: const EdgeInsets.only(right: 10),
-//                       decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20),
-//                         color: MyColors.whiteColor,
-//                       ),
-//                       child: TextFormField(
-//                         //initialValue: widget.placeHolder ?? "",
-//                         textAlign: TextAlign.right,
-
-//                         textDirection: TextDirection.rtl,
-//                         style: MyTextStyles.subTitle.copyWith(
-//                           color: MyColors.blackColor,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                         onChanged: (value) {},
-//                         onTap: () {},
-//                         decoration: InputDecoration(
-//                           border: InputBorder.none,
-//                           hintText: 'البحث عن',
-//                           hintStyle: MyTextStyles.body
-//                               .copyWith(fontWeight: FontWeight.normal),
-//                           contentPadding: const EdgeInsets.only(
-//                             right: 10,
-//                             left: 10,
-//                             bottom: 5,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 if (!isSearchFieldOpen)
-//                   Expanded(
-//                     child: AnimatedContainer(
-//                       duration: const Duration(microseconds: 200),
-//                       decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20),
-//                         // color: const Color(0xff777777),
-//                       ),
-//                       child: ListView.separated(
-//                         scrollDirection: Axis.horizontal,
-//                         reverse: true,
-//                         itemCount: 5,
-//                         separatorBuilder: (BuildContext context, int index) {
-//                           return const SizedBox(
-//                             width: 5,
-//                           );
-//                         },
-//                         itemBuilder: (BuildContext context, int index) {
-//                           return Container(
-//                             height: 40,
-//                             padding: const EdgeInsets.symmetric(
-//                               horizontal: 10,
-//                               vertical: 5,
-//                             ),
-//                             decoration: BoxDecoration(
-//                               borderRadius: BorderRadius.circular(25),
-//                               border: Border.all(
-//                                 color: MyColors.secondaryTextColor
-//                                     .withOpacity(0.2),
-//                               ),
-//                             ),
-//                             child: const Center(
-//                               child: Text(
-//                                 "كل التصنيفات",
-//                                 style: MyTextStyles.subTitle,
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                   ),
-//                 const SizedBox(
-//                   width: 5,
-//                 ),
-//                 if (isSearchFieldOpen)
-//                   GestureDetector(
-//                     onTap: () {
-//                       setState(() {
-//                         isSearchFieldOpen = false;
-//                       });
+//                   context.g4,
+//                   HeaderWidget(
+//                     sortAction: () {
+//                       itemController.sortItem();
 //                     },
-//                     child: AnimatedContainer(
-//                       duration: const Duration(microseconds: 200),
-//                       height: 40,
-//                       width: 40,
-//                       padding: const EdgeInsets.symmetric(
-//                         horizontal: 10,
-//                         vertical: 5,
-//                       ),
-//                       decoration: BoxDecoration(
-//                         shape: BoxShape.circle,
-//                         border: Border.all(
-//                           color: MyColors.secondaryTextColor.withOpacity(0.2),
-//                         ),
-//                       ),
-//                       child: const Center(
-//                         child: FaIcon(
-//                           FontAwesomeIcons.chevronRight,
-//                           color: MyColors.secondaryTextColor,
-//                           size: 20,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 if (!isSearchFieldOpen)
-//                   Container(
-//                     height: 40,
-//                     padding: const EdgeInsets.symmetric(
-//                       horizontal: 10,
-//                       vertical: 5,
-//                     ),
-//                     decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(25),
-//                       color: MyColors.primaryColor,
-//                       border: Border.all(
-//                         color: MyColors.secondaryTextColor.withOpacity(0.2),
-//                       ),
-//                     ),
-//                     child: Center(
-//                       child: Text(
-//                         'الكل',
-//                         style: MyTextStyles.subTitle.copyWith(
-//                           color: MyColors.whiteColor,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//               ],
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 20,
-//           ),
-//           Expanded(
-//             child: GridView.builder(
-//               padding: const EdgeInsets.all(10),
-//               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                 crossAxisCount: 3,
-//                 mainAxisSpacing: 15,
-//                 crossAxisSpacing: 10,
-//                 childAspectRatio: 0.7,
-//               ),
-//               itemCount: 5,
-//               itemBuilder: (BuildContext context, int index) {
-//                 return AddItemsBottomSheetItemWidget(
-//                   isSelected: index == 0,
-//                   isNotSelected: index == 2,
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+//                     filterAction: () {
+//                       itemController.itemWithQuantity();
+//                     },
+//                     title: type == 8
+//                         ? billController.billTypeForTitle.value == 0
+//                             ? 'فاتورة بيع'
+//                             : 'تعديل فاتورة بيع'
+//                         : billController.billTypeForTitle.value == 0
+//                             ? 'فاتورة مرتجع'
+//                             : 'تعديل فاتورة مرتجع',
+//                   ).pr(10),
+//                   context.g12,
+//                   const CategoriesWithSearchWidget(),
+//                   context.g4,
+//                   Expanded(
+//                     child: Obx(() {
+//                       switch (itemController.currentStatus) {
+//                         case ItemStatus.loading:
+//                           return const LoadingWidget();
+//                         case ItemStatus.success:
+//                           return Directionality(
+//                             textDirection: TextDirection.rtl,
+//                             child: GridView.builder(
+//                               padding: const EdgeInsets.only(
+//                                   left: 20, right: 20, top: 10, bottom: 160),
+//                               gridDelegate:
+//                                   const SliverGridDelegateWithFixedCrossAxisCount(
+//                                 crossAxisCount: 2,
+//                                 childAspectRatio: 0.78,
+//                                 crossAxisSpacing: 12,
+//                                 mainAxisSpacing: 12,
+//                               ),
+//                               itemCount: itemController.items.length,
+//                               itemBuilder: (BuildContext context, int index) {
+//                                 var item = itemController.items[index];
 
-// class AddItemsBottomSheetItemWidget extends StatelessWidget {
-//   final bool isSelected;
-//   final bool isNotSelected;
-//   const AddItemsBottomSheetItemWidget({
-//     super.key,
-//     required this.isSelected,
-//     required this.isNotSelected,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(
-//       children: [
-//         Column(
-//           children: [
-//             Stack(
-//               children: [
-//                 SizedBox(
-//                   height: 100,
-//                   child: ClipRRect(
-//                     borderRadius: BorderRadius.circular(20),
-//                     child: Image.asset(
-//                       'assets/images/avatar1.jpg',
-//                       width: double.infinity,
-//                       fit: BoxFit.cover,
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             const SizedBox(
-//               height: 10,
-//             ),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.end,
-//               children: [
-//                 Container(
-//                   width: 30,
-//                   height: 30,
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(12),
-//                     color: const Color(0xffF7BC56).withOpacity(0.5),
-//                   ),
-//                   child: const Center(
-//                     child: Text(
-//                       '4',
-//                       style: MyTextStyles.title2,
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(
-//                   width: 5,
-//                 ),
-//                 const Expanded(
-//                   child: Text(
-//                     'سكر السعيد',
-//                     textAlign: TextAlign.end,
-//                     style: MyTextStyles.title2,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//         if (isNotSelected)
-//           Positioned.fill(
-//             child: Column(
-//               children: [
-//                 Expanded(
-//                   child: Container(
-//                     width: double.infinity,
-//                     decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(20),
-//                       color: MyColors.blackColor.withOpacity(0.5),
-//                     ),
-//                     child: Column(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         const Text(
-//                           '100',
-//                           style: TextStyle(
-//                             fontSize: 30,
-//                             color: Colors.white70,
-//                           ),
-//                         ),
-//                         Container(
-//                           width: double.infinity,
-//                           padding: const EdgeInsets.all(10),
-//                           decoration: BoxDecoration(
-//                             borderRadius: BorderRadius.circular(18),
-//                             // color: MyColors.blackColor.withOpacity(0.4),
-//                           ),
-//                           child: const Center(
-//                             child: FaIcon(
-//                               FontAwesomeIcons.plus,
-//                               size: 20,
-//                               color: Colors.white60,
+//                                 return SellingBillItemWiget(
+//                                   key: ValueKey(item.id),
+//                                   index: index,
+//                                   item: item,
+//                                   isCart: false,
+//                                 );
+//                               },
 //                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(
-//                   height: 4,
-//                 ),
-//                 Container(
-//                   padding: const EdgeInsets.all(3),
-//                   width: double.infinity,
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(20),
-//                     color: Colors.black.withOpacity(0.2),
-//                   ),
-//                   child: const Center(
-//                     child: FaIcon(
-//                       FontAwesomeIcons.minus,
-//                       size: 20,
-//                       color: Colors.white60,
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(
-//                   height: 5,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         if (isSelected)
-//           Positioned.fill(
-//             child: Container(
-//               width: double.infinity,
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(20),
-//                 color: MyColors.blackColor.withOpacity(0.5),
-//               ),
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   const Text(
-//                     '86',
-//                     style: TextStyle(
-//                       fontSize: 30,
-//                       color: Colors.white70,
-//                     ),
-//                   ),
-//                   Container(
-//                     padding: const EdgeInsets.all(10),
-//                     decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(20),
-//                       border: Border.all(
-//                         color: MyColors.secondaryTextColor.withOpacity(0.2),
-//                       ),
-//                     ),
-//                     child: const FaIcon(
-//                       FontAwesomeIcons.plus,
-//                       size: 20,
-//                       color: Colors.white60,
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 5,
+//                           );
+//                         case ItemStatus.error:
+//                           return const EmptyWidget(
+//                             imageName: Assets.assetsImagesCurencies,
+//                             label: "لاتوجد اي منتجات",
+//                           );
+
+//                         default:
+//                           return const EmptyWidget(
+//                             imageName: Assets.assetsImagesCurencies,
+//                             label: "لاتوجد اي منتجات",
+//                           );
+//                       }
+//                     }),
 //                   ),
 //                 ],
 //               ),
-//             ),
-//           ),
-//         if (isSelected)
-//           Positioned(
-//             right: 5,
-//             bottom: 5,
-//             child: Container(
-//               width: 35,
-//               height: 35,
-//               padding: const EdgeInsets.all(5),
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(20),
-//                 color: Colors.black.withOpacity(0.6),
-//               ),
-//               child: const Center(
-//                 child: FaIcon(
-//                   FontAwesomeIcons.minus,
-//                   size: 20,
-//                   color: Colors.white54,
+//               Positioned(
+//                 bottom: 10,
+//                 right: 0,
+//                 left: 0,
+//                 child: Obx(
+//                   () => itemController.card.value!.items.isEmpty
+//                       ? const SizedBox()
+//                       : const SellingFooterWidget(),
 //                 ),
-//               ),
-//             ),
-//           )
-//       ],
-//     );
-//   }
-// }
-
-class BillSammaryItemWidget extends StatelessWidget {
-  const BillSammaryItemWidget({
-    super.key,
-    required this.summaryKey,
-    required this.summaryValue,
-  });
-
-  final String summaryKey;
-  final String summaryValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            // border: Border.all(
-            //   color: MyColors.secondaryTextColor.withOpacity(0.3),
-            // ),
-          ),
-          child: Text(
-            summaryValue,
-            style: context.titleMedium,
-          ),
-        ),
-        const Spacer(),
-        Container(
-          decoration: const BoxDecoration(),
-          child: Text(
-            summaryKey,
-            style: context.titleLarge,
-          ),
-        )
-      ],
-    );
-  }
-}
-
-// class CustomBoxWidget extends StatelessWidget {
-//   const CustomBoxWidget({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Padding(
-//           padding: const EdgeInsets.all(20.0),
-//           child: CustomPaint(
-//             painter: MyPainter(),
-//             child: Container(
-//               margin: const EdgeInsets.all(20),
-//               width: double.infinity,
-//               height: 100,
-//               // Box background color
-//               child: const Center(),
-//             ),
+//               )
+//             ],
 //           ),
 //         ),
 //       ),
@@ -739,18 +157,34 @@ class SellingBillPage extends StatefulWidget {
   State<SellingBillPage> createState() => _SellingBillPageState();
 }
 
-class _SellingBillPageState extends State<SellingBillPage> {
+class _SellingBillPageState extends State<SellingBillPage>
+    with SingleTickerProviderStateMixin {
   int type = 0;
   final TextEditingController nameController = TextEditingController();
 
   final StoreController storeController = Get.find();
-
   final ItemController itemController = Get.find();
   final BillController billController = Get.find();
+
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       billController.getBillDetailsInfo();
@@ -764,7 +198,18 @@ class _SellingBillPageState extends State<SellingBillPage> {
 
       billController.newBill.value.type = type;
       itemController.billType.value = type;
+
+      if (arguments["customerId"] != null) {
+        print(arguments["customerId"]);
+        billController.newBill.value.customerNumber = arguments["customerId"];
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -810,7 +255,11 @@ class _SellingBillPageState extends State<SellingBillPage> {
                             textDirection: TextDirection.rtl,
                             child: GridView.builder(
                               padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10, bottom: 160),
+                                left: 20,
+                                right: 20,
+                                top: 10,
+                                bottom: 160,
+                              ),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -852,9 +301,26 @@ class _SellingBillPageState extends State<SellingBillPage> {
                 right: 0,
                 left: 0,
                 child: Obx(
-                  () => itemController.card.value!.items.isEmpty
-                      ? const SizedBox()
-                      : const SellingFooterWidget(),
+                  () {
+                    if (itemController.card.value!.items.isNotEmpty) {
+                      _controller.forward();
+                    } else {
+                      _controller.reverse();
+                    }
+
+                    return AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        return SlideTransition(
+                          position: _slideAnimation,
+                          child: Opacity(
+                            opacity: _controller.value,
+                            child: const SellingFooterWidget(),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               )
             ],

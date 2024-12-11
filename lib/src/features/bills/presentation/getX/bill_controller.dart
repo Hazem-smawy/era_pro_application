@@ -403,7 +403,7 @@ class BillController extends GetxController {
       final newSellingBill =
           createNewSellingBill(billDetails, newBill.value.billId);
 
-      final result = await getLastIdUsecase.call(newBill.value.type ?? 0);
+      final result = await getLastIdUsecase.call(newBill.value.type);
       result.fold(
         (failure) => errorMessage.value = failure.message,
         (lastId) async {
@@ -505,7 +505,7 @@ class BillController extends GetxController {
       id: billId ?? -1,
       branchId: branchId,
       billNumber: 0,
-      billType: newBill.value.type ?? 0,
+      billType: newBill.value.type,
       billDate: newBill.value.dueDate ?? DateTime.now(),
       refNumber: '1',
       customerNumber: newBill.value.customerNumber,
@@ -524,12 +524,12 @@ class BillController extends GetxController {
       salesTaxRate: (newBill.value.addedTax / netBill) * 100,
       numOfitems: billDetails.length,
       totalBill: totalPrice,
-      itemsDiscount: newBill.value.discount ?? 0,
-      billDiscount: newBill.value.addedDiscount ?? 0,
+      itemsDiscount: newBill.value.discount,
+      billDiscount: newBill.value.addedDiscount,
       netBill:
           totalPrice - newBill.value.addedDiscount - newBill.value.discount,
       totalVat: newBill.value.tax,
-      billFinalCost: newBill.value.clearPrice ?? 0,
+      billFinalCost: newBill.value.clearPrice,
       freeQtyCost: freeQuantityCost,
       totalAvragCost: averagePrice,
       paidAmount: double.tryParse(
@@ -594,7 +594,7 @@ class BillController extends GetxController {
                   )
                   .accNumber,
       amount: amount,
-      type: newBill.value.type ?? 0,
+      type: newBill.value.type,
       salesCost: salesCost,
       freQTYConst: newSellingBill.freeQtyCost,
       totalDiscount: totalDiscount,
@@ -628,7 +628,7 @@ class BillController extends GetxController {
         unitId: unitId,
         quantity: newBill.value.type == 8
             ? -(element.quantity + element.freeQty)
-            : -(element.quantity + element.freeQty),
+            : (element.quantity + element.freeQty),
         averageCost: element.avrageCost,
         unitCost: element.netSellPrice / element.quantity,
         totalCost: element.netSellPrice + element.freeQtyCost,

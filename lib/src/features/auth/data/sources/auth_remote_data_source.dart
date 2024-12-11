@@ -148,9 +148,6 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
       final refreshTokenValue = tokenResponse['refreshToken'] as String?;
       final userIdValue = data['userid'] as String?;
 
-      print("tokenValue: $tokenValue");
-      print("refreshTokenValue: $refreshTokenValue");
-      print("userIdValue: $userIdValue");
       if (tokenValue == null ||
           refreshTokenValue == null ||
           userIdValue == null) {

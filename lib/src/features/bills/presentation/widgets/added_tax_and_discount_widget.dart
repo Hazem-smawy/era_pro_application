@@ -3,7 +3,6 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../core/utils/perecent_caculator.dart';
 import '../../../../core/widgets/custom_text_field_with_label_widget.dart';

@@ -20,4 +20,6 @@ abstract class AccountsRepository {
 
   Future<Either<Failure, int>> deleteAccountOperations(OperationType type);
   Future<Either<Failure, bool>> fetchAccounts();
+  Future<Either<Failure, List<AccountsOperationsEntity>>>
+      getAccountOperationForCustomer(int id);
 }

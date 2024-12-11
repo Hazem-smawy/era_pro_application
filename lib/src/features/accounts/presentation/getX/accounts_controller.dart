@@ -3,7 +3,9 @@ import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/accounts_operations_entity.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/add_list_accounts_operations_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/delete_account_operation_usecase.dart';
+import 'package:era_pro_application/src/features/accounts/domain/usecases/get_account_operation_for_customer_usecase.dart';
 import 'package:era_pro_application/src/features/main_info/domain/entities/main_info_entity.dart';
+import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +19,12 @@ import 'package:era_pro_application/src/features/accounts/domain/usecases/get_al
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_mid_account_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_ref_account_usecase.dart';
 
+enum CustomerOperationStatus {
+  loading,
+  empty,
+  success,
+}
+
 class AccountsController extends GetxController {
   GetAllAccountsUseCase getAccountsUseCase;
   GetAllMidAccountUsecase getAllMidAccountUsecase;
@@ -25,6 +33,7 @@ class AccountsController extends GetxController {
   AddAccountUsecase addAccountUsecase;
   AddListAccountsOperationsUsecase addListAccountsOperationsUsecase;
   DeleteAccountOperationUsecase deleteAccountOperationUsecase;
+  GetAccountOperationForCustomerUsecase getAccountOperationForCustomerUsecase;
 
   final allAccounts = Rx<List<AccountEntity>>([]);
   final refAccounts = Rx<List<RefAccountEntity>>([]);
@@ -32,8 +41,13 @@ class AccountsController extends GetxController {
   final refAllAccounts = Rx<List<AccountEntity>>([]);
   final specialAccounts = Rx<List<AccountEntity>>([]);
   final accountsOperation = Rx<List<AccountsOperationsEntity>>([]);
+  final accountsOperationForCustomer = Rx<List<AccountsOperationsEntity>>([]);
+  final filteredAccountsOperationForCustomer =
+      Rx<List<AccountsOperationsEntity>>([]);
   final customers = Rx<List<AccountEntity>>([]);
+  final currencies = Rx<List<CurencyEntity>>([]);
   final errorMessage = ''.obs;
+  final selectedOperationType = 0.obs;
 
   AccountsController({
     required this.getAccountsUseCase,
@@ -43,14 +57,18 @@ class AccountsController extends GetxController {
     required this.addAccountUsecase,
     required this.addListAccountsOperationsUsecase,
     required this.deleteAccountOperationUsecase,
+    required this.getAccountOperationForCustomerUsecase,
   });
 
-  TextEditingController name = TextEditingController();
+  final name = TextEditingController().obs;
   TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController limit = TextEditingController();
   TextEditingController email = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  final customerOperationStatus =
+      Rx<CustomerOperationStatus>(CustomerOperationStatus.loading);
 
   Future<void> getAccountInfo() async {
     await getAllAccounts();
@@ -58,6 +76,22 @@ class AccountsController extends GetxController {
     await getAllMidAccounts();
     await getAllAccountsOperation();
     await getSpecailAccounts();
+  }
+
+  Future<void> isEditFunc(AccountEntity? account) async {
+    if (account == null) {
+      name.value.clear();
+      phone.clear();
+      address.clear();
+      limit.clear();
+      email.clear();
+    } else {
+      name.value.text = account.accName;
+      phone.text = account.accPhone;
+      address.text = account.address;
+      limit.text = account.accLimit.toString();
+      email.text = account.email;
+    }
   }
 
   Future<List<AccountEntity>> getAllAccounts() async {
@@ -76,6 +110,48 @@ class AccountsController extends GetxController {
     } catch (e) {
       return [];
     }
+  }
+
+  Future<void> getOperationForCustomer(int id) async {
+    MainInfoController mainInfoController = Get.find();
+
+    customerOperationStatus.value = CustomerOperationStatus.loading;
+    currencies.value = await mainInfoController.getAllCurenciesInfo();
+
+    final res = await getAccountOperationForCustomerUsecase(Params(id));
+    res.fold((f) {
+      customerOperationStatus.value = CustomerOperationStatus.empty;
+    }, (r) {
+      customerOperationStatus.value = r.isEmpty
+          ? CustomerOperationStatus.empty
+          : CustomerOperationStatus.success;
+      accountsOperationForCustomer.value = r;
+      filteredAccountsOperationForCustomer.value =
+          accountsOperationForCustomer.value;
+      selectedOperationType.value = 0;
+    });
+  }
+
+  Future<void> filterdOperationForCustomer(int id) async {
+    if (id == 1) {
+      filteredAccountsOperationForCustomer.value = accountsOperationForCustomer
+          .value
+          .where((o) => o.operationType == 1 || o.operationType == 2)
+          .toList();
+    } else if (id == 2) {
+      filteredAccountsOperationForCustomer.value = accountsOperationForCustomer
+          .value
+          .where((o) => o.operationType == 8 || o.operationType == 9)
+          .toList();
+    } else {
+      filteredAccountsOperationForCustomer.value =
+          accountsOperationForCustomer.value;
+    }
+
+    customerOperationStatus.value =
+        filteredAccountsOperationForCustomer.value.isEmpty
+            ? CustomerOperationStatus.empty
+            : CustomerOperationStatus.success;
   }
 
   Future<List<RefAccountEntity>> getAllRefAccounts() async {
@@ -125,16 +201,17 @@ class AccountsController extends GetxController {
     }
   }
 
-  Future<void> addAccount() async {
+  Future<void> addAccount(AccountEntity? updatedAccount) async {
     if (formKey.currentState!.validate()) {
       final account = AccountEntity(
-        accNumber: 1,
-        accName: name.text.trim(),
-        accParent: 1,
-        accType: 1,
-        note: '',
+        id: updatedAccount?.id,
+        accNumber: updatedAccount?.accNumber ?? 0,
+        accName: name.value.text.trim(),
+        accParent: updatedAccount?.accParent ?? 0,
+        accType: updatedAccount?.accType ?? 1,
+        note: updatedAccount?.note ?? '',
         accCatagory: 3,
-        accCatId: 1,
+        accCatId: updatedAccount?.accCatId ?? 0,
         accPhone: phone.text.trim(),
         address: address.text.trim(),
         email: email.text.trim() == '' ? 'لايوجد' : email.text.trim(),
@@ -146,13 +223,21 @@ class AccountsController extends GetxController {
       );
 
       final result = await addAccountUsecase(account);
-      result.fold((f) => errorMessage.value = f.message, (r) {
-        getAllAccounts();
-        phone.clear();
-        name.clear();
-        address.clear();
-        limit.clear();
+      result.fold((f) {
+        print(f.message);
+      }, (r) async {
+        await getAllAccounts();
+
+        // if (updatedAccount != null) {
+        // int index = customers.value
+        //     .indexWhere((e) => e.accNumber == updatedAccount.accNumber);
+        // customers.value[index] = allAccounts.value
+        //     .firstWhere((e) => e.accNumber == updatedAccount.accNumber);
+
+        allAccounts.refresh();
+
         Get.back();
+        // }
       });
     } else {}
   }
@@ -408,17 +493,12 @@ class AccountsController extends GetxController {
         ]);
       }
 
-      final result =
-          await addListAccountsOperationsUsecase.call(Params(operations));
+      await addListAccountsOperationsUsecase.call(Params(operations));
       // print(operations.length);
-      result.fold(
-        (failure) {
-          print(failure.message);
-        },
-        (_) {
-          print('successfull added');
-        },
-      );
+      // result.fold(
+      //   (failure) {},
+      //   (_) {},
+      // );
     } else {}
   }
 
@@ -448,7 +528,7 @@ class AccountsController extends GetxController {
   @override
   void dispose() {
     super.dispose();
-    name.dispose();
+    name.value.dispose();
     phone.dispose();
     address.dispose();
     limit.dispose();

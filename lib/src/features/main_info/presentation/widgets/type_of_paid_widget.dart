@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/core/widgets/custom_text_filed_widget.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:era_pro_application/src/features/main_info/domain/entities/main_info_entity.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
@@ -147,8 +146,6 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
   }
 
   Widget _buildCashPayment(BuildContext context) {
-    print(mainInfoController.selectedPaymentsMethod.value);
-    print(mainInfoController.selectedPaymentsMethodDetails.value);
     return Column(
       children: [
         context.g16,

@@ -1,12 +1,7 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
-import 'package:era_pro_application/src/core/widgets/loading_widget.dart';
 import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
-import 'package:era_pro_application/src/features/bills/presentation/pages/all_bills_page.dart';
-import 'package:era_pro_application/src/features/bills/presentation/widgets/bill_widget/bill_item_widget.dart';
-import 'package:era_pro_application/src/features/home/presentation/getX/home_controller.dart';
-import 'package:era_pro_application/src/features/home/presentation/widgets/daily_chart.dart';
 import 'package:era_pro_application/src/features/home/presentation/widgets/dialy_weekly_chart.dart';
 import 'package:era_pro_application/src/features/home/presentation/widgets/home_service_widget.dart';
 import 'package:era_pro_application/src/features/home/presentation/widgets/service_sheet.dart';
@@ -16,7 +11,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/types/services_type.dart';
-import '../widgets/show_charts.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

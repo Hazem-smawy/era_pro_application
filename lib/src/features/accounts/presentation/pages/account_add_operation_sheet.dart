@@ -1,10 +1,18 @@
 import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
+import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+
+import '../../../../core/routes/app_pages.dart';
+import '../../../exchange_receipt/presentation/pages/add_new_exchange_sheet.dart';
 
 class AccountAddOperationSheet extends StatelessWidget {
-  const AccountAddOperationSheet({super.key});
+  AccountAddOperationSheet({super.key, required this.account});
+  AccountEntity account;
+  AccountsController accountsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,7 @@ class AccountAddOperationSheet extends StatelessWidget {
               height: 5,
             ),
             Text(
-              'محمد علي',
+              account.accName,
               style: context.titleLarge,
             ),
             const SizedBox(
@@ -66,24 +74,57 @@ class AccountAddOperationSheet extends StatelessWidget {
                       size: 20,
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CustomerAddSheetItemWidget(
                           icon: FontAwesomeIcons.arrowTurnDown,
-                          label: 'مردود',
+                          label: 'فاتورة مرتجع',
                           color: Colors.black87,
+                          action: () {
+                            Get.back();
+                            Get.toNamed(Routes.SELLINGPAGE, arguments: {
+                              'type': 9,
+                              'customerId': account.accNumber
+                            })?.then((value) {
+                              accountsController
+                                  .getOperationForCustomer(account.accNumber);
+                            });
+                          },
                         ),
                         CustomerAddSheetItemWidget(
-                          icon: FontAwesomeIcons.arrowTrendDown,
-                          label: 'سند قبض',
+                          icon: FontAwesomeIcons.arrowUpFromBracket,
+                          label: 'فاتورة بيع',
                           color: Colors.black87,
+                          action: () {
+                            Get.back();
+                            Get.toNamed(Routes.SELLINGPAGE, arguments: {
+                              'type': 8,
+                              'customerId': account.accNumber
+                            })?.then((value) {
+                              accountsController
+                                  .getOperationForCustomer(account.accNumber);
+                            });
+                          },
                         ),
                         CustomerAddSheetItemWidget(
-                          icon: FontAwesomeIcons.arrowTrendUp,
-                          label: 'سند صرف',
+                          icon: FontAwesomeIcons.arrowRightArrowLeft,
+                          label: 'سند',
                           color: Colors.black87,
+                          action: () {
+                            Get.back();
+                            Get.bottomSheet(
+                              AddNewExhangeSheet(
+                                customerId: account.accNumber,
+                              ),
+                              isScrollControlled: true,
+                              elevation: 0,
+                            ).then((value) {
+                              accountsController
+                                  .getOperationForCustomer(account.accNumber);
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -103,34 +144,41 @@ class CustomerAddSheetItemWidget extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.color,
+    required this.action,
     super.key,
   });
   final IconData icon;
   final String label;
   final Color color;
+  final Function action;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          FaIcon(
-            icon,
-            color: color,
-            size: 20,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            label,
-            style: context.bodyLarge,
-          )
-        ],
+    return GestureDetector(
+      onTap: () {
+        action();
+      },
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            FaIcon(
+              icon,
+              color: color,
+              size: 20,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              label,
+              style: context.bodyLarge,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -30,33 +30,14 @@ class AccountsRepositoryImp implements AccountsRepository {
   @override
   Future<Either<Failure, List<AccountModel>>> getAllAccounts() {
     return fetchArrayOfDataFromLocalStorage<AccountModel>(
-      // cacheKey: SharedPrefKeys.ACCOUNTS_KEY,
-      // sharedPreferencesService: sharedPreferencesService,
       fetchFromLocal: accountsLocalDatasource.getAllAccounts,
-      // fetchFromRemote: accountsRemoteDatasource.getAllAccounts,
-      // saveDataToLocal: accountsLocalDatasource.saveAllAccounts,
-      // dateTimeSharePrefKey: SharedPrefKeys.DATETIME_ACCOUNTS_KEY,
       localError: "can't get accounts info from local",
-      // remoteError: "can't get accounts info from server",
-      // genericError: "server failures to get accounts",
     );
   }
 
   @override
   Future<Either<Failure, int>> addAccount(AccountEntity account) async {
     try {
-      UserSettingEntity userSettings = UserSettingEntity(
-        custParent: int.parse(sharedPreferencesService
-                .getString(SharedPrefKeys.USERSETTING_PARENT_KEY) ??
-            '0'),
-        generateCode: sharedPreferencesService
-                .getString(SharedPrefKeys.USERSETTING_PARENT_KEY) ??
-            '0',
-        custGroup: int.parse(sharedPreferencesService
-                .getString(SharedPrefKeys.USERSETTING_GENERATED_KEY) ??
-            '0'),
-      );
-
       String userId =
           sharedPreferencesService.getString(SharedPrefKeys.USERID_KEY) ?? '0';
       String branchId =
@@ -64,7 +45,6 @@ class AccountsRepositoryImp implements AccountsRepository {
               '0';
 
       int id = await accountsLocalDatasource.addNewAccount(
-        userSettings,
         account,
         int.parse(userId),
         int.parse(branchId),
@@ -79,30 +59,16 @@ class AccountsRepositoryImp implements AccountsRepository {
   @override
   Future<Either<Failure, List<MidAccountModel>>> getAllMidAccount() {
     return fetchArrayOfDataFromLocalStorage<MidAccountModel>(
-      // cacheKey: SharedPrefKeys.MID_ACCOUNTS_KEY,
-      // sharedPreferencesService: sharedPreferencesService,
       fetchFromLocal: accountsLocalDatasource.getAllMidAccounts,
-      // fetchFromRemote: accountsRemoteDatasource.getAllMidAccounts,
-      // saveDataToLocal: accountsLocalDatasource.saveAllMidAccount,
-      // dateTimeSharePrefKey: SharedPrefKeys.DATETIME_MID_ACCOUNTS_KEY,
       localError: "can't get mid accounts info from local",
-      // remoteError: "can't get mid accounts info from server",
-      // genericError: "server failures to get mid accounts",
     );
   }
 
   @override
   Future<Either<Failure, List<RefAccountModel>>> getAllRefAccounts() {
     return fetchArrayOfDataFromLocalStorage<RefAccountModel>(
-      // cacheKey: SharedPrefKeys.REF_ACCOUNTS_KEY,
-      // sharedPreferencesService: sharedPreferencesService,
       fetchFromLocal: accountsLocalDatasource.getAllRefAccounts,
-      // fetchFromRemote: accountsRemoteDatasource.getAllRefAccounts,
-      // saveDataToLocal: accountsLocalDatasource.saveAllRefAccount,
-      // dateTimeSharePrefKey: SharedPrefKeys.DATETIME_REF_ACCOUNTS_KEY,
       localError: "can't get ref accounts info from local",
-      // remoteError: "can't get ref accounts info from server",
-      // genericError: "server failures to get ref accounts",
     );
   }
 
@@ -110,15 +76,8 @@ class AccountsRepositoryImp implements AccountsRepository {
   Future<Either<Failure, List<AccountOperationModel>>>
       getAllAccountsOperation() {
     return fetchArrayOfDataFromLocalStorage<AccountOperationModel>(
-      // cacheKey: SharedPrefKeys.ACCOUNTOPERAION_KEY,
-      // sharedPreferencesService: sharedPreferencesService,
       fetchFromLocal: accountsLocalDatasource.getAllAccountsOperation,
-      // fetchFromRemote: accountsRemoteDatasource.getAllAccountsOperation,
-      // saveDataToLocal: accountsLocalDatasource.saveAllAccountOperation,
-      // dateTimeSharePrefKey: SharedPrefKeys.DATETIME_ACCOUNTOPERAION_KEY,
       localError: "can't get ref accounts info from local",
-      // remoteError: "can't get ref accounts info from server",
-      // genericError: "server failures to get ref accounts",
     );
   }
 
@@ -187,6 +146,17 @@ class AccountsRepositoryImp implements AccountsRepository {
       return const Right(true);
     } catch (e) {
       return Left(ServerFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AccountsOperationsEntity>>>
+      getAccountOperationForCustomer(int id) async {
+    try {
+      final res = await accountsLocalDatasource.getAccountOperationById(id);
+      return Right(res);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
     }
   }
 }

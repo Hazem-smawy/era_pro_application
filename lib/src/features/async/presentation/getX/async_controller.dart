@@ -39,6 +39,20 @@ class AsyncController extends GetxController {
   final int totalSteps = 4; // Number of tasks
   final errorMessage = ''.obs;
 
+  var isConnect = Rxn<bool>();
+
+  Future<void> testConnect() async {
+    isConnect.value = false;
+
+    try {
+      final bool refreshResult = await authController.refreshLogin();
+
+      isConnect.value = refreshResult;
+    } catch (e) {
+      isConnect.value = false; // Set isConnect to false on error
+    }
+  }
+
   Future<void> getStoreItem() async {
     await storeController.getAllItems();
   }

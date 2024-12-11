@@ -84,8 +84,8 @@ class _AsyncPageState extends State<AsyncPage> {
               ),
             ),
             context.g8,
-            GestureDetector(
-              onTap: () async {
+            AsyncItemWidget(
+              action: () async {
                 setState(() {
                   isLoading = true;
                 });
@@ -95,68 +95,82 @@ class _AsyncPageState extends State<AsyncPage> {
                 });
                 controller.asyncAll(true);
               },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: context.secondaryTextColor.withOpacity(0.2),
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.arrow_upward_outlined,
-                      size: 15,
-                    ),
-                    context.g4,
-                    Text(
-                      '100',
-                      style: context.titleLarge.copyWith(
-                        color: context.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      'مزامنة المواد',
-                      style: context.titleMedium,
-                    ),
-                    context.g8,
-                    const Icon(FontAwesomeIcons.shapes)
-                  ],
-                ),
-              ),
+              label: 'مزامنة المواد',
+              icon: Icons.shopping_bag_outlined,
             ),
             context.g8,
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: context.secondaryTextColor.withOpacity(0.2),
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    '100',
-                    style: context.titleLarge,
-                  ),
-                  const Spacer(),
-                  Text(
-                    'مزامنة السندات',
-                    style: context.titleMedium,
-                  ),
-                  context.g8,
-                  const Icon(Icons.cloud_outlined)
-                ],
-              ),
-            )
+            AsyncItemWidget(
+              action: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                await controller.getStoreItem();
+                setState(() {
+                  isLoading = false;
+                });
+                controller.asyncAll(true);
+              },
+              label: 'مزامنة الحسابات',
+              icon: Icons.person_2_outlined,
+            ),
+            context.g8,
           ],
         ).p(16),
+      ),
+    );
+  }
+}
+
+class AsyncItemWidget extends StatelessWidget {
+  const AsyncItemWidget({
+    super.key,
+    required this.action,
+    required this.icon,
+    required this.label,
+  });
+  final IconData icon;
+  final String label;
+  final Function action;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: context.secondaryTextColor.withOpacity(0.2),
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.arrow_upward_outlined,
+              size: 15,
+            ),
+            context.g4,
+            Text(
+              '100',
+              style: context.titleLarge.copyWith(
+                color: context.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              label,
+              style: context.titleMedium,
+            ),
+            context.g8,
+            Icon(
+              icon,
+              size: 20,
+              color: context.blackColor.withOpacity(0.7),
+            )
+          ],
+        ),
       ),
     );
   }
