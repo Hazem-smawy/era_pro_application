@@ -3,6 +3,8 @@ import 'package:era_pro_application/src/core/services/db/db.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../../core/utils/image_converter.dart';
+
 part 'account_model.g.dart';
 
 @JsonSerializable()
@@ -25,6 +27,7 @@ class AccountModel extends AccountEntity {
     required super.branchId,
     required super.accStoped,
     required super.newData,
+    required super.image,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) =>
@@ -54,6 +57,49 @@ class AccountModel extends AccountEntity {
       branchId: Value(branchId),
       accStoped: Value(accStoped),
       newData: Value(newData),
+      image: Value(image),
+    );
+  }
+}
+
+extension AccountModelCopy on AccountModel {
+  AccountModel copyWith({
+    int? id,
+    int? accNumber,
+    String? accName,
+    int? accParent,
+    int? accType,
+    String? note,
+    int? accCatagory,
+    int? accCatId,
+    String? accPhone,
+    String? address,
+    String? email,
+    int? accLimit,
+    int? paymentType,
+    int? branchId,
+    bool? accStoped,
+    bool? newData,
+    Uint8List? image,
+  }) {
+    return AccountModel(
+      id: id ?? this.id,
+      accNumber: accNumber ?? this.accNumber,
+      accName: accName ?? this.accName,
+      accParent: accParent ?? this.accParent,
+      accType: accType ?? this.accType,
+      note: note ?? this.note,
+      accCatagory: accCatagory ?? this.accCatagory,
+      accCatId: accCatId ?? this.accCatId,
+      accPhone: accPhone ?? this.accPhone,
+      address: address ?? this.address,
+      email: email ?? this.email,
+      accLimit: accLimit ?? this.accLimit,
+      paymentType: paymentType ?? this.paymentType,
+      branchId: branchId ?? this.branchId,
+      accStoped: accStoped ?? this.accStoped,
+      newData: newData ?? this.newData,
+      image: image ?? this.image,
     );
   }
 }

@@ -45,6 +45,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
+import 'dart:typed_data';
 
 import '../../../../core/widgets/custom_appbar_widget.dart';
 
@@ -245,24 +246,7 @@ class ItemDetailsPage extends StatelessWidget {
   Column _buildItemMainInfoWidget(BuildContext context) {
     return Column(children: [
       context.g20,
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: context.secondaryTextColor.withOpacity(0.3),
-          ),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: CustomImage.memoryWithError(
-            storeItemDetailsEntity.item.itemImage,
-            h: 250,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        ),
-      ),
+      ItemStoreImageWidget(storeItemDetailsEntity: storeItemDetailsEntity),
       context.g12,
       Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -350,6 +334,58 @@ class ItemDetailsPage extends StatelessWidget {
         Text(title, style: context.bodySmall),
         Text(value, style: context.titleMedium),
       ],
+    );
+  }
+}
+
+class ItemStoreImageWidget extends StatefulWidget {
+  const ItemStoreImageWidget({
+    super.key,
+    required this.storeItemDetailsEntity,
+  });
+
+  final StoreItemDetailsEntity storeItemDetailsEntity;
+
+  @override
+  State<ItemStoreImageWidget> createState() => _ItemStoreImageWidgetState();
+}
+
+class _ItemStoreImageWidgetState extends State<ItemStoreImageWidget> {
+  Uint8List? imageData;
+
+  StoreController storeController = Get.find();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    storeController.getItemImage(widget.storeItemDetailsEntity.item.id).then(
+      (value) {
+        setState(() {
+          imageData = value;
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: context.secondaryTextColor.withOpacity(0.3),
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: CustomImage.memoryWithError(
+          imageData,
+          h: 250,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/exchange_receipt/domain/entities/exchange_entity.dart';
 import 'package:era_pro_application/src/features/exchange_receipt/presentation/getX/exchange_receipt_controller.dart';
 import 'package:era_pro_application/src/features/exchange_receipt/presentation/pages/exchange_page.dart';
+import 'package:era_pro_application/src/features/exchange_receipt/presentation/widgets/exchange_type_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';

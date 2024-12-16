@@ -105,6 +105,31 @@ class StoreController extends GetxController {
     }
   }
 
+  Future<void> getAllItemsInfo() async {
+    storeStatus.value = RxStatus.loading();
+    try {
+      await getAllUnits();
+
+      await getAllItemGroupsInfo();
+
+      await getAllItemsUnit();
+
+      await getAllItemAlter();
+
+      await getAllItemBarcode();
+
+      await getUserStoreInfo();
+
+      await getStoreOperations();
+
+      await getAllItems();
+
+      storeStatus.value = RxStatus.success();
+    } catch (e) {
+      storeStatus.value = RxStatus.error(e.toString());
+    }
+  }
+
   void updatePriceIndex(int unitHash, int newIndex) {
     selectedPriceIndex[unitHash]?.value = newIndex;
   }

@@ -1,14 +1,13 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/features/bills/domain/entities/bill_entity.dart';
 import 'package:flutter/material.dart';
 
-class BillTypeWidget extends StatelessWidget {
-  const BillTypeWidget({
+class ExchangeTypeWidget extends StatelessWidget {
+  const ExchangeTypeWidget({
     super.key,
-    required this.bill,
+    required this.type,
   });
 
-  final BillEntity bill;
+  final int type;
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +17,14 @@ class BillTypeWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: bill.billType == 8
+          color: type == 2
               ? context.secondary.withOpacity(0.06)
               : const Color.fromARGB(255, 19, 3, 198).withOpacity(0.06),
         ),
         child: Text(
-          bill.billType == 8 ? 'بيع' : 'مرتجع',
+          type == 2 ? 'سند قبض' : 'سند صرف',
           style: context.bodySmall.copyWith(
-            color: bill.billType == 8
+            color: type == 2
                 ? context.secondary
                 : const Color.fromARGB(255, 19, 3, 198),
           ),

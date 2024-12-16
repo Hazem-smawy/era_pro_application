@@ -7,11 +7,17 @@ import 'package:era_pro_application/src/core/types/status_types.dart';
 import 'package:era_pro_application/src/core/widgets/custom_text_filed_widget.dart';
 import 'package:era_pro_application/src/features/auth/presentation/getX/auth_getx.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/constants/colors.dart';
+import '../../../../core/utils/dialogs.dart';
+
 class LoginSheet extends StatefulWidget {
+  final bool isLogin;
   const LoginSheet({
     super.key,
+    required this.isLogin,
   });
 
   @override
@@ -20,6 +26,7 @@ class LoginSheet extends StatefulWidget {
 
 class _LoginSheetState extends State<LoginSheet> {
   final AuthController authController = Get.find();
+
   @override
   void initState() {
     super.initState();
@@ -104,8 +111,35 @@ class _LoginSheetState extends State<LoginSheet> {
                     children: [
                       ElevatedButtonExtension.primary(
                         label: loginSheetTitle,
-                        onPressed: () {
-                          authController.auth();
+                        onPressed: () async {
+                          if (widget.isLogin) {
+                            bool isConnect =
+                                await authController.refreshLogin();
+                            if (isConnect) {
+                              Get.back();
+                              CustomDialog.showDialog(
+                                color: AppColors.primaryColor,
+                                icon: FontAwesomeIcons.circleCheck,
+                                title: 'الإتصال',
+                                description: 'نجح الإتصال ب السرفر',
+                                action: () async {
+                                  Get.back();
+                                },
+                              );
+
+                              await Future.delayed(
+                                const Duration(
+                                  seconds: 2,
+                                ),
+                              );
+                              if (Get.isDialogOpen != null &&
+                                  Get.isDialogOpen == true) {
+                                Get.back();
+                              }
+                            }
+                          } else {
+                            authController.auth();
+                          }
                         },
                       ).status(authController.authState.value.isLoading()),
                       Gaps.g16,

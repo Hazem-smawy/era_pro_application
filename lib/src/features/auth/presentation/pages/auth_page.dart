@@ -44,7 +44,9 @@ class AuthPage extends StatelessWidget {
                 label: intoBtnString,
                 onPressed: () {
                   Get.bottomSheet(
-                    const LoginSheet(),
+                    const LoginSheet(
+                      isLogin: false,
+                    ),
                     isScrollControlled: true,
                   );
                 },

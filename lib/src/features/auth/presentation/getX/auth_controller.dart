@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/core/api/api.dart';
 import 'package:era_pro_application/src/core/types/status_types.dart';
+import 'package:era_pro_application/src/core/utils/dialogs.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
 import 'package:era_pro_application/src/features/auth/domain/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
@@ -62,8 +63,13 @@ class AuthController extends GetxController {
           authState.value = Status.SUCCESS;
           Get.offAllNamed(Routes.LOADING);
         } catch (e) {
-          errorMessage.value = e.toString();
           authState.value = Status.ERROR;
+          errorMessage.value = e.toString();
+          CustomDialog.customSnackBar(
+            'تأكد من اتصالك ب الإنترنت',
+            SnackPosition.TOP,
+            true,
+          );
         }
       });
     }

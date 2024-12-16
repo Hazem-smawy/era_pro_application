@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:era_pro_application/src/core/constants/colors.dart';
 import 'package:era_pro_application/src/core/types/status_types.dart';
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:era_pro_application/src/core/utils/perecent_caculator.dart';
@@ -12,12 +13,14 @@ import 'package:era_pro_application/src/features/bills/domain/usecases/get_recen
 import 'package:era_pro_application/src/features/main_info/domain/entities/main_info_entity.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/store_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/core/routes/app_pages.dart';
 import 'package:era_pro_application/src/features/bills/domain/usecases/get_all_bills_usecase.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
+import 'package:http/http.dart';
 
 import '../../../../core/utils/dialogs.dart';
 import '../../../accounts/presentation/getX/accounts_controller.dart';
@@ -163,6 +166,7 @@ class BillController extends GetxController {
       newBill.value.addedTaxPercent = bill.salesTaxRate;
 
       newBill.value.dueDate = bill.dueDate;
+      print(bill.dueDate);
 
       newBill.value.isOld = true;
       billTypeForTitle.value = 1;
@@ -280,8 +284,7 @@ class BillController extends GetxController {
       if (groupedItems.containsKey(item.id)) {
         // Add unit details and accumulate the total price for each item
         groupedItems[item.id]!.unitDetails.addAll(item.unitDetails);
-        // groupedItems[item.id]!.itemTotalPrice += item.unitDetails
-        //     .fold(0, (sum, unit) => sum + unit.totalPrice); // Sum total prices
+
         groupedItems[item.id]!.clearPrice += item.unitDetails.fold(
           0,
           (sum, unit) => sum + unit.clearPrice,
@@ -352,6 +355,7 @@ class BillController extends GetxController {
       billDiscountPercent.text =
           (bill.addedDiscount / bill.totalPrice * 100).toStringAsFixed(2);
     }
+    print(bill.addedTax);
     if (bill.addedTax > 0) {
       billTaxRate.text = bill.addedTax.toString();
       billTaxPercent.text =
@@ -362,7 +366,7 @@ class BillController extends GetxController {
   void updateTaxWhenAddedDiscountChange() {
     double? taxPercent =
         double.tryParse(billTaxPercent.text.replaceAll('%', ''));
-    print('taxPer: $taxPercent');
+
     if (taxPercent != null && taxPercent > 0) {
       double netBill = newBill.value.totalPrice -
           newBill.value.discount -
@@ -448,17 +452,37 @@ class BillController extends GetxController {
               addDetailsResult.fold(
                 (failure) => errorMessage.value = failure.message,
                 (_) async {
-                  // final isOld = newBill.value.isOld;
+                  final isOld = newBill.value.isOld;
                   resetBillState();
-                  await storeController.getAllStoreInfo();
+                  await storeController.getAllItems();
+                  await storeController.getStoreOperations();
                   await itemController.getItems();
                   await getAllBills();
-                  Get.back();
-                  Get.back();
-                  // if (isOld) {
-                  //   Get.offAllNamed(Routes.BOTTOMNAVIGATIONBAR);
-                  //   Get.toNamed(Routes.ALLBILLS);
-                  // }
+                  Get.until((route) => Get.currentRoute == Routes.SELLINGPAGE);
+
+                  CustomDialog.showDialog(
+                    color: AppColors.primaryColor,
+                    icon: FontAwesomeIcons.circleCheck,
+                    title: 'اضافة فاتورة',
+                    description: 'تم اضافة الفاتورة بنجاح',
+                    action: () async {
+                      Get.back();
+                    },
+                  );
+
+                  await Future.delayed(
+                    const Duration(
+                      seconds: 2,
+                    ),
+                  );
+                  if (Get.isDialogOpen != null && Get.isDialogOpen == true) {
+                    Get.back();
+                  }
+                  if (isOld) {
+                    print(newBill.value);
+                    // Get.until((route) => Get.currentRoute == Routes.ALLBILLS);
+                    Get.back();
+                  }
                 },
               );
             },
@@ -506,8 +530,8 @@ class BillController extends GetxController {
       branchId: branchId,
       billNumber: 0,
       billType: newBill.value.type,
-      billDate: newBill.value.dueDate ?? DateTime.now(),
-      refNumber: '1',
+      billDate: DateTime.now(),
+      refNumber: '0',
       customerNumber: newBill.value.customerNumber,
       currencyId: currencyId,
       currencyValue: currencyValue,
@@ -517,7 +541,7 @@ class BillController extends GetxController {
       storeCurValue: storeCurrencyValue ?? 0,
       billNote: billNoteTextEditingController.text,
       itemCalcMethod: 1,
-      dueDate: DateTime.now(),
+      dueDate: newBill.value.dueDate ?? DateTime.now(),
       salesPerson: userId,
       hasVat: hasSalesTax,
       hasSalesTax: newBill.value.addedTax > 0,

@@ -28,7 +28,10 @@ class ItemWidget extends StatelessWidget {
                   blurRadius: 15,
                 )
               ]),
-              child: StoreItemImageWidget(itemEntity: itemEntity),
+              child: StoreItemImageWidget(
+                key: ValueKey(itemEntity.id),
+                itemEntity: itemEntity,
+              ),
             ),
             const SizedBox(
               height: 10,

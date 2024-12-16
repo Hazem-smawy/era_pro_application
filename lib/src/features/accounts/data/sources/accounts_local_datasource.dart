@@ -124,6 +124,7 @@ class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
         newData: Value(existingAccount.newData),
         note: Value(account.note),
         paymentType: Value(existingAccount.paymentType),
+        image: Value(account.image),
       );
 
       // Perform the update
@@ -298,45 +299,5 @@ class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
     } catch (e) {
       print(e);
     }
-  }
-}
-
-extension AccountModelCopy on AccountModel {
-  AccountModel copyWith({
-    int? id,
-    int? accNumber,
-    String? accName,
-    int? accParent,
-    int? accType,
-    String? note,
-    int? accCatagory,
-    int? accCatId,
-    String? accPhone,
-    String? address,
-    String? email,
-    int? accLimit,
-    int? paymentType,
-    int? branchId,
-    bool? accStoped,
-    bool? newData,
-  }) {
-    return AccountModel(
-      id: id ?? this.id,
-      accNumber: accNumber ?? this.accNumber,
-      accName: accName ?? this.accName,
-      accParent: accParent ?? this.accParent,
-      accType: accType ?? this.accType,
-      note: note ?? this.note,
-      accCatagory: accCatagory ?? this.accCatagory,
-      accCatId: accCatId ?? this.accCatId,
-      accPhone: accPhone ?? this.accPhone,
-      address: address ?? this.address,
-      email: email ?? this.email,
-      accLimit: accLimit ?? this.accLimit,
-      paymentType: paymentType ?? this.paymentType,
-      branchId: branchId ?? this.branchId,
-      accStoped: accStoped ?? this.accStoped,
-      newData: newData ?? this.newData,
-    );
   }
 }

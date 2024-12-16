@@ -9,10 +9,12 @@ import 'package:era_pro_application/src/features/exchange_receipt/domain/usecase
 import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
 import 'package:era_pro_application/src/features/user/presentation/getX/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:era_pro_application/src/features/exchange_receipt/domain/entities/exchange_entity.dart';
 
+import '../../../../core/constants/colors.dart';
 import '../../../main_info/domain/entities/main_info_entity.dart';
 import '../../domain/entities/check_operation_entity.dart';
 import '../../domain/entities/sand_details_entity.dart';
@@ -251,6 +253,24 @@ class ExchangeReceiptController extends GetxController {
       await getAllExChange();
       Get.back();
       Get.back();
+      CustomDialog.showDialog(
+        color: AppColors.primaryColor,
+        icon: FontAwesomeIcons.circleCheck,
+        title: 'اضافة سند',
+        description: 'تم اضافة السند بنجاح',
+        action: () async {
+          Get.back();
+        },
+      );
+
+      await Future.delayed(
+        const Duration(
+          seconds: 2,
+        ),
+      );
+      if (Get.isDialogOpen != null && Get.isDialogOpen == true) {
+        Get.back();
+      }
     }
   }
 

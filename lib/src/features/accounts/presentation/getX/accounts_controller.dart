@@ -1,4 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/accounts_operations_entity.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/add_list_accounts_operations_usecase.dart';
@@ -18,6 +21,7 @@ import 'package:era_pro_application/src/features/accounts/domain/usecases/get_al
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_accounts_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_mid_account_usecase.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/get_all_ref_account_usecase.dart';
+import 'package:image_picker/image_picker.dart';
 
 enum CustomerOperationStatus {
   loading,
@@ -48,6 +52,9 @@ class AccountsController extends GetxController {
   final currencies = Rx<List<CurencyEntity>>([]);
   final errorMessage = ''.obs;
   final selectedOperationType = 0.obs;
+
+  Rx<Uint8List?> image = Rx<Uint8List?>(null);
+  final totalAccount = 0.0.obs;
 
   AccountsController({
     required this.getAccountsUseCase,
@@ -85,13 +92,28 @@ class AccountsController extends GetxController {
       address.clear();
       limit.clear();
       email.clear();
+      image.value = null;
     } else {
       name.value.text = account.accName;
       phone.text = account.accPhone;
       address.text = account.address;
       limit.text = account.accLimit.toString();
       email.text = account.email;
+      image.value = account.image;
     }
+  }
+
+  Future<void> uint8ListToImageFile(
+      Uint8List uint8List, String filePath, Rx<File?> image) async {
+    final file = File(filePath);
+
+    // Write the Uint8List bytes to the file
+    await file.writeAsBytes(uint8List);
+
+    // Assign the created file to the reactive image variable
+    image.value = file;
+
+    print('Image file saved and updated: $filePath');
   }
 
   Future<List<AccountEntity>> getAllAccounts() async {
@@ -130,6 +152,13 @@ class AccountsController extends GetxController {
           accountsOperationForCustomer.value;
       selectedOperationType.value = 0;
     });
+    getTotalMoneyForAccount(filteredAccountsOperationForCustomer.value);
+  }
+
+  void getTotalMoneyForAccount(List<AccountsOperationsEntity> operations) {
+    totalAccount.value = 0;
+    totalAccount.value = operations.fold(
+        0, (pre, op) => pre + (op.operationDebit + op.operationCredit));
   }
 
   Future<void> filterdOperationForCustomer(int id) async {
@@ -152,6 +181,7 @@ class AccountsController extends GetxController {
         filteredAccountsOperationForCustomer.value.isEmpty
             ? CustomerOperationStatus.empty
             : CustomerOperationStatus.success;
+    getTotalMoneyForAccount(filteredAccountsOperationForCustomer.value);
   }
 
   Future<List<RefAccountEntity>> getAllRefAccounts() async {
@@ -201,7 +231,18 @@ class AccountsController extends GetxController {
     }
   }
 
+  Future<Uint8List?> fileToUint8List(File? image) async {
+    if (image == null) return null;
+
+    // Read the file as bytes and convert to Uint8List
+    final bytes = await image.readAsBytes();
+
+    return Uint8List.fromList(bytes);
+  }
+
   Future<void> addAccount(AccountEntity? updatedAccount) async {
+    Uint8List? updatedImage = image.value;
+    print('updatedImage: $updatedImage');
     if (formKey.currentState!.validate()) {
       final account = AccountEntity(
         id: updatedAccount?.id,
@@ -218,6 +259,7 @@ class AccountsController extends GetxController {
         accLimit: int.parse((limit.text.trim().isEmpty) ? '0' : limit.text),
         paymentType: 2,
         branchId: 1,
+        image: updatedImage,
         accStoped: true,
         newData: true,
       );

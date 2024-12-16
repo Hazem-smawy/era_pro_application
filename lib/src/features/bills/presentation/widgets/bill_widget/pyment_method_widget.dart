@@ -18,15 +18,15 @@ class PymentMethodWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: bill.paymentMethed == 0
+          color: bill.paymentMethed != 0
               ? const Color(0xff37BD6D).withOpacity(0.1)
               : Colors.red.withOpacity(0.1),
         ),
         child: Text(
-          bill.paymentMethed == 1 ? 'نقداً' : 'اجل',
+          bill.paymentMethed != 0 ? 'نقداً' : 'اجل',
           style: context.bodySmall.copyWith(
             color:
-                bill.paymentMethed == 0 ? const Color(0xff37BD6D) : Colors.red,
+                bill.paymentMethed != 0 ? const Color(0xff37BD6D) : Colors.red,
           ),
         ),
       ),

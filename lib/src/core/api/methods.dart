@@ -18,14 +18,14 @@ class HttpMethod {
 
   final SharedPreferencesService _sharedPreferencesService = Get.find();
   Future<T> post<T>(Map<String, dynamic> body, String url) async {
-    // print(body);
+    print('body : $body');
     try {
       final token =
           _sharedPreferencesService.getString(SharedPrefKeys.TOKEN_KEY);
 
       final timeoutDuration = url.endsWith("syncdata/items")
           ? const Duration(seconds: 30)
-          : const Duration(seconds: 7);
+          : const Duration(seconds: 10);
       final response = await client
           .post(
             Uri.parse(url),
@@ -40,6 +40,7 @@ class HttpMethod {
             onTimeout: () => throw TimeoutException("Request timed out"),
           );
 
+      print('response : ${response.statusCode}');
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data is List || data is Map) {

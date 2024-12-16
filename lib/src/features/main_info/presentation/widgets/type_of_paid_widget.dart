@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/utils/arabic_date_formater.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/account_entity.dart';
 import 'package:era_pro_application/src/features/main_info/domain/entities/main_info_entity.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/getX/main_info_controller.dart';
@@ -35,6 +36,7 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
   void initState() {
     super.initState();
     selectedDate = widget.selectedDate ?? DateTime.now();
+
     mainInfoController.selecteCurency.value = widget.selectedCurencyId == null
         ? mainInfoController.storCurency
         : mainInfoController.allCurencies.value.firstWhere(
@@ -210,41 +212,45 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
   }
 
   Widget _buildDeferredPayment(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Text(
-          DateFormat.yMd().format(selectedDate ?? DateTime.now()),
-          style: context.bodyLarge,
-        ),
-        const Spacer(),
-        GestureDetector(
-          onTap: () async {
-            selectedDate = await widget.selectDateAction();
-            setState(() {});
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  'تأريخ الإستحقاق',
-                  style: context.bodySmall.copyWith(color: context.primary),
-                ),
-                context.g8,
-                FaIcon(
-                  FontAwesomeIcons.calendar,
-                  size: 20,
-                  color: context.primary,
-                ),
-              ],
+    return SizedBox(
+      height: 50,
+      width: context.width - 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            formatDateToArabic(selectedDate ?? DateTime.now()),
+            style: context.bodyLarge,
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: () async {
+              selectedDate = await widget.selectDateAction();
+              setState(() {});
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'تأريخ الإستحقاق',
+                    style: context.bodySmall.copyWith(color: context.primary),
+                  ),
+                  context.g8,
+                  FaIcon(
+                    FontAwesomeIcons.calendar,
+                    size: 20,
+                    color: context.primary,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -308,49 +314,61 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
         context.g12,
         // const Text("ادخل المبلغ المستلم"),
         // context.g8,
-        Obx(
-          () => Row(
-            children: [
-              if (mainInfoController
-                      .selectedPaymentsMethodDetails.value?.accCatagory ==
-                  2)
-                GestureDetector(
-                  onTap: () => widget.selectDateAction(),
-                  child: Container(
-                    height: 50,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.3),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          'تأريخ الإستحقاق',
-                          style: context.bodySmall,
-                        ),
-                        context.g8,
-                        FaIcon(
-                          FontAwesomeIcons.calendar,
-                          size: 20,
-                          color: context.secondaryTextColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              // context.g8,
-              // Expanded(
-              //   child: CustomTextFieldWidget(
-              //     isNumber: true,
-              //     hint: "المبلغ",
-              //     controller: mainInfoController
-              //         .paymentAmountTextEditingController.value,
-              //   ),
-              // ),
-            ],
+        SizedBox(
+          width: context.width - 20,
+          height: 50,
+          child: Obx(
+            () => Row(
+              children: [
+                if (mainInfoController
+                        .selectedPaymentsMethodDetails.value?.accCatagory ==
+                    2)
+                  _buildDeferredPayment(context)
+                // GestureDetector(
+                //   onTap: () => widget.selectDateAction(),
+                //   child: Container(
+                //     height: 50,
+                //     padding: const EdgeInsets.all(10),
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12),
+                //       // border: Border.all(
+                //       //   color: context.secondaryTextColor.withOpacity(0.3),
+                //       // ),
+                //     ),
+                //     child: Row(
+                //       children: [
+                //         Text(
+                //           formatDateToArabic(
+                //             selectedDate ?? DateTime.now(),
+                //           ),
+                //           style: context.bodySmall,
+                //         ),
+                //         const Spacer(),
+                //         Text(
+                //           'تأريخ الإستحقاق',
+                //           style: context.bodySmall,
+                //         ),
+                //         context.g8,
+                //         FaIcon(
+                //           FontAwesomeIcons.calendar,
+                //           size: 17,
+                //           color: context.secondaryTextColor,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // context.g8,
+                // Expanded(
+                //   child: CustomTextFieldWidget(
+                //     isNumber: true,
+                //     hint: "المبلغ",
+                //     controller: mainInfoController
+                //         .paymentAmountTextEditingController.value,
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ],

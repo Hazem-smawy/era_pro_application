@@ -23,6 +23,8 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       branchId: (json['branchId'] as num).toInt(),
       accStoped: json['accStoped'] as bool,
       newData: json['newData'] as bool,
+      image: _$JsonConverterFromJson<String, Uint8List>(
+          json['image'], const Uint8ListConverter().fromJson),
     );
 
 Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
@@ -42,5 +44,19 @@ Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
       'paymentType': instance.paymentType,
       'branchId': instance.branchId,
       'accStoped': instance.accStoped,
+      'image': _$JsonConverterToJson<String, Uint8List>(
+          instance.image, const Uint8ListConverter().toJson),
       'newData': instance.newData,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

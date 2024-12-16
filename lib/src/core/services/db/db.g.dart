@@ -3873,6 +3873,11 @@ class $AccountTableTable extends AccountTable
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("new_data" IN (0, 1))'));
+  static const VerificationMeta _imageMeta = const VerificationMeta('image');
+  @override
+  late final GeneratedColumn<Uint8List> image = GeneratedColumn<Uint8List>(
+      'image', aliasedName, true,
+      type: DriftSqlType.blob, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -3890,7 +3895,8 @@ class $AccountTableTable extends AccountTable
         paymentType,
         branchId,
         accStoped,
-        newData
+        newData,
+        image
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3999,6 +4005,10 @@ class $AccountTableTable extends AccountTable
     } else if (isInserting) {
       context.missing(_newDataMeta);
     }
+    if (data.containsKey('image')) {
+      context.handle(
+          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
+    }
     return context;
   }
 
@@ -4040,6 +4050,8 @@ class $AccountTableTable extends AccountTable
           .read(DriftSqlType.bool, data['${effectivePrefix}acc_stoped'])!,
       newData: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
+      image: attachedDatabase.typeMapping
+          .read(DriftSqlType.blob, data['${effectivePrefix}image']),
     );
   }
 
@@ -4066,6 +4078,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   final Value<int> branchId;
   final Value<bool> accStoped;
   final Value<bool> newData;
+  final Value<Uint8List?> image;
   const AccountTableCompanion({
     this.id = const Value.absent(),
     this.accNumber = const Value.absent(),
@@ -4083,6 +4096,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     this.branchId = const Value.absent(),
     this.accStoped = const Value.absent(),
     this.newData = const Value.absent(),
+    this.image = const Value.absent(),
   });
   AccountTableCompanion.insert({
     this.id = const Value.absent(),
@@ -4101,6 +4115,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     required int branchId,
     required bool accStoped,
     required bool newData,
+    this.image = const Value.absent(),
   })  : accNumber = Value(accNumber),
         accName = Value(accName),
         accParent = Value(accParent),
@@ -4133,6 +4148,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     Expression<int>? branchId,
     Expression<bool>? accStoped,
     Expression<bool>? newData,
+    Expression<Uint8List>? image,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -4151,6 +4167,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
       if (branchId != null) 'branch_id': branchId,
       if (accStoped != null) 'acc_stoped': accStoped,
       if (newData != null) 'new_data': newData,
+      if (image != null) 'image': image,
     });
   }
 
@@ -4170,7 +4187,8 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
       Value<int>? paymentType,
       Value<int>? branchId,
       Value<bool>? accStoped,
-      Value<bool>? newData}) {
+      Value<bool>? newData,
+      Value<Uint8List?>? image}) {
     return AccountTableCompanion(
       id: id ?? this.id,
       accNumber: accNumber ?? this.accNumber,
@@ -4188,6 +4206,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
       branchId: branchId ?? this.branchId,
       accStoped: accStoped ?? this.accStoped,
       newData: newData ?? this.newData,
+      image: image ?? this.image,
     );
   }
 
@@ -4242,6 +4261,9 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     if (newData.present) {
       map['new_data'] = Variable<bool>(newData.value);
     }
+    if (image.present) {
+      map['image'] = Variable<Uint8List>(image.value);
+    }
     return map;
   }
 
@@ -4263,7 +4285,8 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
           ..write('paymentType: $paymentType, ')
           ..write('branchId: $branchId, ')
           ..write('accStoped: $accStoped, ')
-          ..write('newData: $newData')
+          ..write('newData: $newData, ')
+          ..write('image: $image')
           ..write(')'))
         .toString();
   }
@@ -10427,6 +10450,7 @@ typedef $$AccountTableTableCreateCompanionBuilder = AccountTableCompanion
   required int branchId,
   required bool accStoped,
   required bool newData,
+  Value<Uint8List?> image,
 });
 typedef $$AccountTableTableUpdateCompanionBuilder = AccountTableCompanion
     Function({
@@ -10446,6 +10470,7 @@ typedef $$AccountTableTableUpdateCompanionBuilder = AccountTableCompanion
   Value<int> branchId,
   Value<bool> accStoped,
   Value<bool> newData,
+  Value<Uint8List?> image,
 });
 
 class $$AccountTableTableTableManager extends RootTableManager<
@@ -10481,6 +10506,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
             Value<int> branchId = const Value.absent(),
             Value<bool> accStoped = const Value.absent(),
             Value<bool> newData = const Value.absent(),
+            Value<Uint8List?> image = const Value.absent(),
           }) =>
               AccountTableCompanion(
             id: id,
@@ -10499,6 +10525,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
             branchId: branchId,
             accStoped: accStoped,
             newData: newData,
+            image: image,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -10517,6 +10544,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
             required int branchId,
             required bool accStoped,
             required bool newData,
+            Value<Uint8List?> image = const Value.absent(),
           }) =>
               AccountTableCompanion.insert(
             id: id,
@@ -10535,6 +10563,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
             branchId: branchId,
             accStoped: accStoped,
             newData: newData,
+            image: image,
           ),
         ));
 }
@@ -10621,6 +10650,11 @@ class $$AccountTableTableFilterComposer
       column: $state.table.newData,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<Uint8List> get image => $state.composableBuilder(
+      column: $state.table.image,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
 class $$AccountTableTableOrderingComposer
@@ -10703,6 +10737,11 @@ class $$AccountTableTableOrderingComposer
 
   ColumnOrderings<bool> get newData => $state.composableBuilder(
       column: $state.table.newData,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<Uint8List> get image => $state.composableBuilder(
+      column: $state.table.image,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

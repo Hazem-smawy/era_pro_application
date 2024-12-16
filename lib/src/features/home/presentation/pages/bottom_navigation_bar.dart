@@ -3,7 +3,7 @@ import 'package:era_pro_application/src/features/async/presentation/pages/async_
 import 'package:era_pro_application/src/features/home/presentation/pages/home_page.dart';
 import 'package:era_pro_application/src/features/home/presentation/widgets/navigation_taps_widget.dart';
 import 'package:era_pro_application/src/features/main_info/presentation/pages/main_info_page.dart';
-import 'package:era_pro_application/src/features/setting/presentation/pages/pages.dart';
+import 'package:era_pro_application/src/features/setting/presentation/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   List<Widget> pages = [
     HomePage(),
     const MainInfoPage(),
-    const SettingPage(),
+    SettingPage(),
     const AsyncPage(),
   ];
   late int index;

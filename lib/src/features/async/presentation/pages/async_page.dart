@@ -28,6 +28,7 @@ class _AsyncPageState extends State<AsyncPage> {
           children: [
             context.g8,
             const UserProfileWidget(
+              key: ValueKey('sync_page'),
               fromSync: true,
             ),
             context.g20,

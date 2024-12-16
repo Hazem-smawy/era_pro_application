@@ -53,7 +53,10 @@ class MainInfoItemWidget extends StatelessWidget {
             // width: Get.width / 2 - 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: color.withOpacity(0.09),
+              // color: color.withOpacity(0.1),
+              border: Border.all(
+                color: color.withOpacity(0.5),
+              ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -79,15 +82,11 @@ class MainInfoItemWidget extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: context.titleMedium,
+                  style: context.displayMedium,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  '20',
-                  style: TextStyle(color: color),
-                )
               ],
             ),
           ),

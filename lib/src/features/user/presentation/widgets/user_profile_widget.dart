@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/utils/dialogs.dart';
+
 class UserProfileWidget extends StatefulWidget {
   final bool fromSync;
 
@@ -41,7 +43,19 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
     return Obx(
       () => Row(
         children: [
-          _buildNotificationIcon(context),
+          GestureDetector(
+              onTap: () async {
+                CustomDialog.showDialog(
+                  color: context.primary,
+                  icon: FontAwesomeIcons.circleCheck,
+                  title: 'اضافة فاتورة',
+                  description: 'تم اضافة الفاتورة بنجاح',
+                  action: () async {
+                    Get.back();
+                  },
+                );
+              },
+              child: _buildNotificationIcon(context)),
           const Spacer(),
           _buildUserProfile(context),
         ],
@@ -71,7 +85,9 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
   Widget _buildUserProfile(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.bottomSheet(
-        const LoginSheet(),
+        const LoginSheet(
+          isLogin: true,
+        ),
         isScrollControlled: true,
       ),
       child: Row(

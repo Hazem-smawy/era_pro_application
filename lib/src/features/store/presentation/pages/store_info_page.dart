@@ -151,7 +151,10 @@ class _StoreInfoPageState extends State<StoreInfoPage> {
                                     storeItemDetailsEntity: item,
                                   ),
                                 ),
-                                child: ItemWidget(itemEntity: item),
+                                child: ItemWidget(
+                                  key: ValueKey(item.item.id),
+                                  itemEntity: item,
+                                ),
                               );
                             },
                           ).ph(15),

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/extensions/image_with_error_extension.dart';
 import '../pages/account_add_operation_sheet.dart';
 
 class AccountItemWidget extends StatelessWidget {
@@ -48,15 +49,26 @@ class AccountItemWidget extends StatelessWidget {
                 ),
               ),
               context.g12,
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  'assets/images/avatar1.jpg',
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
+              if (accountEntity.image != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: CustomImage.memoryWithError(
+                    accountEntity.image,
+                    w: 40,
+                    h: 40,
+                  ),
                 ),
-              ),
+              if (accountEntity.image == null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  //backgroundColor: const Color(0xffF7BC56),
+                  child: Image.asset(
+                    'assets/images/avatar1.jpg',
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                ),
             ],
           ),
           Gaps.g8,

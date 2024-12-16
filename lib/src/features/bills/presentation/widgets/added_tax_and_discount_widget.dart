@@ -125,6 +125,9 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
                       billController.newBill.value.addedTax,
                       netBill,
                     );
+                    // billController.newBill.value.addedTaxPercent = double.parse(
+                    //     billController.billTaxPercent.text.replaceAll('%', ''));
+
                     billController.updateBill();
                   },
                 ),
@@ -152,6 +155,7 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
                         (percent * netBill) / 100;
                     billController.billTaxRate.text =
                         (percent * netBill / 100).toString();
+                    billController.newBill.value.addedTaxPercent = percent;
                     billController.updateBill();
                   },
                 ),

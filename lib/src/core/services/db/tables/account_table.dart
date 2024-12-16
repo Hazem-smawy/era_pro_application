@@ -39,6 +39,7 @@ class AccountTable extends Table {
   IntColumn get branchId => integer()();
   BoolColumn get accStoped => boolean()();
   BoolColumn get newData => boolean()();
+  BlobColumn get image => blob().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};

@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/extensions/image_with_error_extension.dart';
+
 class AccountDetailsPage extends StatelessWidget {
   AccountDetailsPage({
     super.key,
@@ -30,133 +32,195 @@ class AccountDetailsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.backgroundColor,
       body: SafeArea(
-        bottom: false,
+        bottom: true,
         child: Obx(() {
           AccountEntity account = accountsController.customers.value.firstWhere(
             (e) => e.accNumber == accountEntity.accNumber,
           );
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                context.g8,
-                const HeaderWidget(
-                  title: '',
-                ).ph(10),
-                Column(
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              SingleChildScrollView(
+                child: Column(
                   children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      //backgroundColor: const Color(0xffF7BC56),
-                      child: Image.asset(
-                        'assets/images/avatar1.jpg',
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
                     context.g8,
-                    Text(
-                      account.accName,
-                      style: context.titleMedium,
-                    ),
-                    context.g8,
-                    GestureDetector(
-                      onTap: () async {
-                        Get.bottomSheet(
-                          AddNewAccountSheet(
-                            account: account,
-                          ),
-                          isScrollControlled: true,
-                        ).then((value) {
-                          // print(value);
-                          account =
-                              accountsController.customers.value.firstWhere(
-                            (e) => e.accNumber == accountEntity.accNumber,
-                          );
-                          print(account.accName);
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          // border: Border.all(
-                          //   color: context.secondaryTextColor.withOpacity(0.4),
-                          // ),
-                          color: context.primary,
+                    const HeaderWidget(
+                      title: '',
+                    ).ph(10),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
                         ),
+                        if (account.image != null)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: CustomImage.memoryWithError(
+                              account.image,
+                              w: 70,
+                              h: 70,
+                            ),
+                          ),
+                        if (account.image == null)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              'assets/images/avatar1.jpg',
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        context.g8,
+                        Text(
+                          account.accName,
+                          style: context.titleMedium,
+                        ),
+                        context.g8,
+                        GestureDetector(
+                          onTap: () async {
+                            Get.bottomSheet(
+                              AddNewAccountSheet(
+                                account: account,
+                              ),
+                              isScrollControlled: true,
+                            ).then((value) {
+                              // print(value);
+                              account =
+                                  accountsController.customers.value.firstWhere(
+                                (e) => e.accNumber == accountEntity.accNumber,
+                              );
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: context.primary,
+                            ),
+                            child: Text(
+                              'تعديل',
+                              style: context.bodyLarge.copyWith(
+                                color: context.whiteColor,
+                              ),
+                            ).phv(
+                              h: 20,
+                              v: 10,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    context.g16,
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: context.secondaryTextColor.withOpacity(0.2),
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
                         child: Text(
-                          'تعديل',
-                          style: context.bodyLarge.copyWith(
-                            color: context.whiteColor,
+                          account.accNumber.toString(),
+                          style: context.titleSmall.copyWith(
+                            color: context.blackColor,
                           ),
-                        ).phv(
-                          h: 20,
-                          v: 10,
                         ),
                       ),
                     ),
+                    context.g8,
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: context.secondaryTextColor.withOpacity(0.2),
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          DetailsAccountsInfoItem(
+                            icon: Icons.phone,
+                            value: account.accPhone,
+                          ),
+                          context.g16,
+                          DetailsAccountsInfoItem(
+                            icon: Icons.location_on_outlined,
+                            value: account.address,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    context.g20,
+                    // details
+                    OperationListWidget(
+                      account: account,
+                    ),
+                    context.g56,
+
+                    // end
                   ],
                 ),
-                context.g16,
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Text(
-                      account.accNumber.toString(),
-                      style: context.titleSmall.copyWith(
-                        color: context.blackColor,
+              ),
+              Positioned(
+                  bottom: 12,
+                  child: Container(
+                    width: context.width - 40,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: context.secondaryTextColor.withOpacity(0.2),
                       ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                ),
-                context.g8,
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        accountsController.totalAccount.value == 0
+                            ? const SizedBox()
+                            : Icon(
+                                accountsController.totalAccount < 0
+                                    ? Icons.trending_down
+                                    : Icons.trending_up,
+                                color: accountsController.totalAccount < 0
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                        const Spacer(),
+                        Text(
+                          'R',
+                          style: context.titleSmall.copyWith(
+                            color: context.blackColor,
+                          ),
+                        ),
+                        context.g4,
+                        Text(
+                          accountsController.totalAccount.toString(),
+                          style: context.titleSmall.copyWith(
+                            color: context.blackColor,
+                          ),
+                        ),
+                        context.g8,
+                        Text(
+                          ':',
+                          style: context.bodySmall,
+                        ),
+                        Text(
+                          accountsController.totalAccount < 0 ? 'لة' : 'علية',
+                          style: context.bodySmall,
+                        ),
+                        const Spacer(),
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DetailsAccountsInfoItem(
-                        icon: Icons.phone,
-                        value: account.accPhone,
-                      ),
-                      context.g16,
-                      DetailsAccountsInfoItem(
-                        icon: Icons.location_on_outlined,
-                        value: account.address,
-                      ),
-                    ],
-                  ),
-                ),
-
-                context.g20,
-                // details
-                OperationListWidget(
-                  account: account,
-                ),
-                context.g20,
-
-                // end
-              ],
-            ),
+                  ))
+            ],
           );
         }),
       ),
@@ -280,7 +344,7 @@ class _OperationListWidgetState extends State<OperationListWidget>
                     height: context.height / 2,
                     child: const EmptyWidget(
                       imageName: Assets.assetsImagesCurencies,
-                      label: 'لاتوجد اي عمليات',
+                      label: '',
                     ),
                   ),
                 );

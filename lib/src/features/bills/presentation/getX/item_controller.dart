@@ -199,7 +199,7 @@ class ItemController extends GetxController {
     }
     items.clear();
     if (storeController.allItems.value.isEmpty || updatedItems != null) {
-      await storeController.getAllStoreInfo();
+      await storeController.getAllItemsInfo();
     }
 
     final storeItems = storeController.allItems;

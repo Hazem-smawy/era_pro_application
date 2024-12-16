@@ -57,12 +57,16 @@ class NavigationTapsWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: context.whiteColor,
                     borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.blackColor.withOpacity(0.07),
-                        offset: const Offset(1, 1),
-                        blurRadius: 10,
-                      )
+                    border: Border.all(
+                        color: context.secondaryTextColor.withOpacity(
+                      0.2,
+                    )),
+                    boxShadow: const [
+                      // BoxShadow(
+                      //   color: context.blackColor.withOpacity(0.07),
+                      //   offset: const Offset(1, 1),
+                      //   blurRadius: 10,
+                      // )
                     ],
                   ),
                   child: Row(

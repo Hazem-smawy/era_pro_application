@@ -14,6 +14,7 @@ import 'package:era_pro_application/src/core/widgets/header_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/utils/perecent_caculator.dart';
 import '../../../../core/utils/pick_data_method.dart';
 import '../../../../core/widgets/custom_text_filed_widget.dart';
 
@@ -32,6 +33,7 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
   @override
   void initState() {
     super.initState();
+
     billController.refreshBillTextEditingControllers();
 
     billController.newBill.value.numberOfItems = widget.card.items.length;
@@ -39,6 +41,14 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
 
     billController.newBill.value.tax = widget.card.tax;
     billController.newBill.value.discount = widget.card.discount;
+
+    double? perTax = double.tryParse(billController.billTaxRate.text);
+    if (perTax != null) {
+      billController.newBill.value.addedTaxPercent = rateToPercent(
+        perTax,
+        billController.newBill.value.netBill,
+      );
+    }
     billController.newBill.value.addedTax =
         (billController.newBill.value.addedTaxPercent *
                 (billController.newBill.value.netBill)) /
@@ -46,6 +56,10 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
 
     billController.billTaxPercent.text =
         billController.newBill.value.addedTaxPercent.toString();
+
+    // print(billController.newBill.value.addedTax);
+    // print('added tax');
+    // print(billController.billTaxRate.value.text);
   }
 
   @override

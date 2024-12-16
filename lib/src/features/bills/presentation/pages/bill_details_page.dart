@@ -1,5 +1,6 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/core/utils/arabic_date_formater.dart';
 import 'package:era_pro_application/src/core/widgets/circle_back_btn_widget.dart';
 import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/bills/domain/entities/bill_entity.dart';
@@ -43,24 +44,30 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
       body: SafeArea(
         child: Column(
           children: [
+            context.g12,
             Row(
               children: [
-                context.g4,
-                IconButton(
-                  onPressed: () {
-                    billController.updateOldBill(
-                        widget.billEntity, widget.billEntity.billType, 'e');
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.penToSquare,
-                    size: 20,
-                    color: context.secondaryTextColor,
+                context.g8,
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: IconButton(
+                    onPressed: () {
+                      billController.updateOldBill(
+                          widget.billEntity, widget.billEntity.billType, 'e');
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.penToSquare,
+                      size: 20,
+                      color: context.secondaryTextColor,
+                    ),
                   ),
                 ),
+                if (widget.billEntity.billType == 8) context.g8,
                 if (widget.billEntity.billType == 8)
                   SizedBox(
-                    width: 30,
-                    height: 30,
+                    width: 40,
+                    height: 40,
                     child: IconButton(
                       onPressed: () async {
                         billController.updateOldBill(widget.billEntity, 9, 'a');
@@ -72,28 +79,17 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                       ),
                     ),
                   ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    FontAwesomeIcons.trashCan,
-                    size: 20,
-                    color: context.secondaryTextColor,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    FontAwesomeIcons.share,
-                    size: 20,
-                    color: context.secondaryTextColor,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    FontAwesomeIcons.print,
-                    size: 20,
-                    color: context.secondaryTextColor,
+                context.g8,
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      FontAwesomeIcons.trashCan,
+                      size: 20,
+                      color: context.secondaryTextColor,
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -171,6 +167,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     ),
                   ),
                   context.g20,
+                  context.g12,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -185,7 +182,8 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                       ),
                     ],
                   ),
-                  const ThinDividerWidget(),
+                  // const ThinDividerWidget(),
+                  context.g16,
                   Expanded(
                     child: Obx(
                       () => ListView.separated(
@@ -242,22 +240,8 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                               style: context.bodyLarge,
                             ),
                           ],
-                        )
-                      ],
-                    ),
-                  ),
-                  context.g4,
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.2),
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
+                        ),
+                        context.g4,
                         Row(
                           children: [
                             Text(
@@ -287,6 +271,30 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     ),
                   ),
 
+                  context.g4,
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: context.secondaryTextColor.withOpacity(0.2),
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          formatDateToArabic(widget.billEntity.dueDate),
+                          style: context.bodySmall,
+                        ),
+                        const Spacer(),
+                        Text(
+                          'تأريخ الإستحقاق',
+                          textDirection: TextDirection.rtl,
+                          style: context.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
                   context.g8,
                   Container(
                     padding: const EdgeInsets.all(12),
