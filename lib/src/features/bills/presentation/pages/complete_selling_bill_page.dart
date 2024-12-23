@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/widgets/search_dropdown_widget.dart';
 import 'package:era_pro_application/src/features/bills/domain/entities/bill_ui_entity.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
@@ -44,22 +45,20 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
 
     double? perTax = double.tryParse(billController.billTaxRate.text);
     if (perTax != null) {
-      billController.newBill.value.addedTaxPercent = rateToPercent(
+      billController.newBill.value.addedTaxPercent = double.parse(rateToPercent(
         perTax,
         billController.newBill.value.netBill,
-      );
+      ).toStringAsFixed(2));
     }
-    billController.newBill.value.addedTax =
-        (billController.newBill.value.addedTaxPercent *
-                (billController.newBill.value.netBill)) /
-            100;
-
+    // billController.newBill.value.addedTax =
+    //     (billController.newBill.value.addedTaxPercent *
+    //             (billController.newBill.value.netBill)) /
+    //         100;
+    billController.newBill.value.addedTax = percentToRate(
+        billController.newBill.value.addedTaxPercent,
+        billController.newBill.value.netBill);
     billController.billTaxPercent.text =
         billController.newBill.value.addedTaxPercent.toString();
-
-    // print(billController.newBill.value.addedTax);
-    // print('added tax');
-    // print(billController.billTaxRate.value.text);
   }
 
   @override
@@ -128,7 +127,8 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
               CompleteSellingBillSummaryItemWidget(
                 isTotal: true,
                 label: 'اجمالي الفاتورة',
-                value: billController.newBill.value.totalPrice.toString(),
+                value: currencyFormat(
+                    number: billController.newBill.value.totalPrice.toString()),
               ),
               const DividerWidget(),
               const AddedTaxAndDiscountWidget(),
@@ -148,9 +148,12 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
                     child: Row(
                       children: [
                         Text(
-                          billController.newBill.value.clearPrice.toString(),
+                          currencyFormat(
+                              number: billController.newBill.value.clearPrice
+                                  .toString()),
                           style: context.displayMedium.copyWith(
-                            fontWeight: FontWeight.bold,
+                            // fontWeight: FontWeight.bold,
+                            color: context.blackColor,
                           ),
                         ),
                         const Spacer(),

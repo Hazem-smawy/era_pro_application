@@ -1,4 +1,5 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/item_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/counter_item_widget.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/price_dialog_widget.dart';
@@ -66,11 +67,12 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   child: Center(
                     child: FittedBox(
                       child: Text(
-                        itemController.items
-                            .firstWhere((e) => e.id == item.id)
-                            .selectedUnit
-                            .selectedPrice
-                            .toString(),
+                        currencyFormat(
+                            number: itemController.items
+                                .firstWhere((e) => e.id == item.id)
+                                .selectedUnit
+                                .selectedPrice
+                                .toString()),
                         style: context.titleMedium,
                       ),
                     ),
@@ -155,7 +157,8 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   child: Center(
                     child: FittedBox(
                       child: Text(
-                        item.selectedUnit.totalPrice.toString(),
+                        currencyFormat(
+                            number: item.selectedUnit.totalPrice.toString()),
                         style: context.titleMedium,
                       ),
                     ),

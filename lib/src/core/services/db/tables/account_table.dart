@@ -25,6 +25,7 @@ import 'package:era_pro_application/src/features/accounts/data/models/account_mo
 class AccountTable extends Table {
   IntColumn get id => integer()();
   IntColumn get accNumber => integer().unique()();
+  IntColumn get refNumber => integer().nullable()();
   TextColumn get accName => text()();
   IntColumn get accParent => integer()();
   IntColumn get accType => integer()();

@@ -21,7 +21,7 @@ class NavigationTapsWidget extends StatelessWidget {
       bottom: 15,
       right: 20,
       child: SizedBox(
-        width: context.width - 50,
+        width: context.width - 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -37,13 +37,18 @@ class NavigationTapsWidget extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: context.containerColor,
+                  border: Border.all(
+                      color: context.secondaryTextColor.withOpacity(
+                    0.2,
+                  )),
+                  color: index == 3 ? context.primary : context.whiteColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(
-                  FontAwesomeIcons.cloud,
-                  color:
-                      index == 3 ? context.primary : context.secondaryTextColor,
+                  Icons.cloud_outlined,
+                  color: index == 3
+                      ? context.whiteColor
+                      : context.secondaryTextColor,
                 ),
               ),
             ),
@@ -51,23 +56,17 @@ class NavigationTapsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  height: 70,
+                  // height: 60,
                   width: 240,
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     color: context.whiteColor,
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(25),
                     border: Border.all(
                         color: context.secondaryTextColor.withOpacity(
                       0.2,
                     )),
-                    boxShadow: const [
-                      // BoxShadow(
-                      //   color: context.blackColor.withOpacity(0.07),
-                      //   offset: const Offset(1, 1),
-                      //   blurRadius: 10,
-                      // )
-                    ],
+                    boxShadow: const [],
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +75,7 @@ class NavigationTapsWidget extends StatelessWidget {
                       NavigationTapWidget(
                         pageController: pageController,
                         index: index,
-                        icon: FontAwesomeIcons.gear,
+                        icon: Icons.settings_outlined,
                         animateToPage: 2,
                       ),
                       const SizedBox(
@@ -85,7 +84,7 @@ class NavigationTapsWidget extends StatelessWidget {
                       NavigationTapWidget(
                         pageController: pageController,
                         index: index,
-                        icon: FontAwesomeIcons.bars,
+                        icon: Icons.menu_outlined,
                         animateToPage: 1,
                       ),
 
@@ -95,7 +94,7 @@ class NavigationTapsWidget extends StatelessWidget {
                       NavigationTapWidget(
                         pageController: pageController,
                         index: index,
-                        icon: FontAwesomeIcons.house,
+                        icon: Icons.home_outlined,
                         animateToPage: 0,
                       ),
                     ],
@@ -135,10 +134,10 @@ class NavigationTapWidget extends StatelessWidget {
         );
       },
       child: Container(
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
           color: index == animateToPage
               ? context.primaryColor
               : context.containerColor.withOpacity(0),
@@ -146,10 +145,10 @@ class NavigationTapWidget extends StatelessWidget {
         child: Center(
           child: FaIcon(
             icon,
-            size: 22,
+            // size: 20,
             color: index == animateToPage
                 ? context.whiteColor
-                : context.blackColor,
+                : context.secondaryTextColor,
           ),
         ),
       ),

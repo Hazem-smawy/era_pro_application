@@ -38,6 +38,10 @@ class AccountsPage extends StatelessWidget {
                         onTap: () {
                           Get.to(
                             () => AccountDetailsPage(
+                              key: ValueKey(
+                                accountsController
+                                    .customers.value[index].accNumber,
+                              ),
                               accountEntity:
                                   accountsController.customers.value[index],
                             ),

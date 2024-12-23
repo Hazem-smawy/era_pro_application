@@ -69,14 +69,14 @@ class _AllBillsPageState extends State<AllBillsPage> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 8});
-      //   },
-      //   child: const Icon(
-      //     FontAwesomeIcons.plus,
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 8});
+        },
+        child: const Icon(
+          FontAwesomeIcons.plus,
+        ),
+      ),
     );
   }
 }

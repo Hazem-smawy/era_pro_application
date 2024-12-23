@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'dart:typed_data';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -86,10 +87,10 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
                               isShowing: widget.item.selectedUnit.discount > 0,
                               color: const Color.fromARGB(202, 255, 19, 7),
                             ),
-                            // ItemInfoDetailsShowBolletsWidget(
-                            //   isShowing: widget.item.selectedUnit.tax > 0,
-                            //   color: Colors.purple,
-                            // ),
+                            ItemInfoDetailsShowBolletsWidget(
+                              isShowing: widget.item.selectedUnit.tax > 0,
+                              color: Colors.purple.withOpacity(0.5),
+                            ),
                             context.g4,
                           ],
                         ),
@@ -104,7 +105,13 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
                       SizedBox(
                         width: 36,
                         height: 36,
-                        child: GlassContainer(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: context.secondaryTextColor.withOpacity(
+                              0.2,
+                            ),
+                          ),
                           child: Center(
                             child: Text(
                               widget.item.unitDetails
@@ -217,12 +224,12 @@ class ItemInfoDetailsShowBolletsWidget extends StatelessWidget {
             children: [
               context.g4,
               Container(
-                width: 20,
+                width: 10,
                 height: 10,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: color,
-                  border: Border.all(color: context.whiteColor),
+                  border: Border.all(color: context.whiteColor, width: 0.3),
                 ),
               ),
             ],
@@ -351,7 +358,9 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  widget.item.selectedUnit.selectedPrice.toString(),
+                  currencyFormat(
+                      number:
+                          widget.item.selectedUnit.selectedPrice.toString()),
                   style: context.titleSmall.copyWith(
                     color: context.blackColor,
                     // fontWeight: FontWeight.bold,
@@ -575,9 +584,6 @@ class _ItemImageWidgetState extends State<ItemImageWidget>
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.2),
-        ),
         color: context.containerColor,
         borderRadius: BorderRadius.circular(10),
       ),
@@ -607,11 +613,13 @@ class _ItemImageWidgetState extends State<ItemImageWidget>
             } else {
               // Generate a more visually appealing random color
               final List<Color> colorPalette = [
-                Colors.teal.shade300,
-                Colors.cyan.shade300,
-                Colors.amber.shade300,
-                Colors.lightBlue.shade300,
-                Colors.indigo.shade300,
+                context.containerColor,
+                context.secondaryTextColor,
+                Colors.teal.shade100,
+                Colors.cyan.shade900,
+                Colors.amber.shade900,
+                Colors.lightBlue.shade500,
+                // Colors.indigo.shade100,
               ];
               final randomColor =
                   colorPalette[Random().nextInt(colorPalette.length)];

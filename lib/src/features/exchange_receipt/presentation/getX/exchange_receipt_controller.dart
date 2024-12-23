@@ -148,6 +148,7 @@ class ExchangeReceiptController extends GetxController {
     detailsTextEditingController.clear();
     newExchange['type'] = 1;
     newExchange['name'] = null;
+    newExchange['date'] = null;
   }
 
   void updateExchange(ExchangeEntity ex) {
@@ -160,6 +161,7 @@ class ExchangeReceiptController extends GetxController {
     detailsTextEditingController.text = ex.sandNote;
     newExchange['type'] = ex.sandType;
     newExchange['name'] = ex.reciepentName;
+    newExchange['date'] = ex.sandDate;
 
     mainInfoController.selecteCurency.value = mainInfoController
         .allCurencies.value
@@ -168,6 +170,7 @@ class ExchangeReceiptController extends GetxController {
   }
 
   Future<void> addNewExchange(ExchangeEntity? ex) async {
+    final String title = ex == null ? 'إضافة' : 'تعديل';
     if (newExchange['type'] == null) {
       return;
     }
@@ -222,7 +225,7 @@ class ExchangeReceiptController extends GetxController {
         isCash: true,
         branchId: branchId!,
         sandNumber: lastId.value,
-        sandDate: dueDate.value ?? DateTime.now(),
+        sandDate: dueDate.value ?? (newExchange['date'] ?? DateTime.now()),
         fundNumber: fundNumber,
         currencyId: mainInfoController.localCurency?.id ?? 0,
         currencyValue: mainInfoController.localCurency?.value ?? 1,
@@ -257,7 +260,7 @@ class ExchangeReceiptController extends GetxController {
         color: AppColors.primaryColor,
         icon: FontAwesomeIcons.circleCheck,
         title: 'اضافة سند',
-        description: 'تم اضافة السند بنجاح',
+        description: 'تم $title السند بنجاح',
         action: () async {
           Get.back();
         },

@@ -40,7 +40,8 @@ class HttpMethod {
             onTimeout: () => throw TimeoutException("Request timed out"),
           );
 
-      print('response : ${response.statusCode}');
+      // print('response : ${response.statusCode}');
+      // print('response : ${response.body}');
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data is List || data is Map) {

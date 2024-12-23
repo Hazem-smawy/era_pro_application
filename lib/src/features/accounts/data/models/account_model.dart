@@ -28,6 +28,7 @@ class AccountModel extends AccountEntity {
     required super.accStoped,
     required super.newData,
     required super.image,
+    required super.refNumber,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) =>
@@ -58,6 +59,7 @@ class AccountModel extends AccountEntity {
       accStoped: Value(accStoped),
       newData: Value(newData),
       image: Value(image),
+      refNumber: Value(refNumber),
     );
   }
 }
@@ -81,6 +83,7 @@ extension AccountModelCopy on AccountModel {
     bool? accStoped,
     bool? newData,
     Uint8List? image,
+    int? refNumber,
   }) {
     return AccountModel(
       id: id ?? this.id,
@@ -100,6 +103,7 @@ extension AccountModelCopy on AccountModel {
       accStoped: accStoped ?? this.accStoped,
       newData: newData ?? this.newData,
       image: image ?? this.image,
+      refNumber: refNumber ?? this.refNumber,
     );
   }
 }

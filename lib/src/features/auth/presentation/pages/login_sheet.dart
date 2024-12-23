@@ -115,6 +115,7 @@ class _LoginSheetState extends State<LoginSheet> {
                           if (widget.isLogin) {
                             bool isConnect =
                                 await authController.refreshLogin();
+
                             if (isConnect) {
                               Get.back();
                               CustomDialog.showDialog(
@@ -136,6 +137,13 @@ class _LoginSheetState extends State<LoginSheet> {
                                   Get.isDialogOpen == true) {
                                 Get.back();
                               }
+                            } else {
+                              Get.back();
+                              CustomDialog.customSnackBar(
+                                'تأكد من ان متصل ب الأنترنت',
+                                SnackPosition.TOP,
+                                true,
+                              );
                             }
                           } else {
                             authController.auth();

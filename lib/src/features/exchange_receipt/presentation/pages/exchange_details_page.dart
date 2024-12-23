@@ -1,5 +1,7 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/core/utils/arabic_date_formater.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/core/widgets/circle_back_btn_widget.dart';
 import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/exchange_receipt/domain/entities/exchange_entity.dart';
@@ -81,8 +83,7 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
                         Row(
                           children: [
                             Text(
-                              date_formater.DateFormat.MEd()
-                                  .format(widget.exchange.sandDate),
+                              formatDateToArabic(widget.exchange.sandDate),
                               style: context.bodySmall,
                             ),
                             const Spacer(),
@@ -177,7 +178,8 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
                       const ThinDividerWidget(),
                       ExchangeDetailsItemWidget(
                         label: 'السعر في العملة المحلية',
-                        value: widget.exchange.totalAmount.toString(),
+                        value: currencyFormat(
+                            number: widget.exchange.totalAmount.toString()),
                       ),
                       const ThinDividerWidget(),
                       if (widget
@@ -211,9 +213,10 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
                     child: Row(
                       children: [
                         Text(
-                          widget.exchange.sandDetails?.first.amount
-                                  .toString() ??
-                              '',
+                          currencyFormat(
+                              number: widget.exchange.sandDetails?.first.amount
+                                      .toString() ??
+                                  ''),
                           style: context.displayLarge.copyWith(
                             color: context.primary,
                             fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/complete_selling_bill_page.dart';
 import 'package:era_pro_application/src/features/bills/presentation/pages/selected_item_page.dart';
 import 'package:flutter/material.dart';
@@ -55,14 +56,16 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                         child: Column(
                           children: [
                             Text(
-                              'السعر الاجمالي',
+                              'الاجمالي',
                               style: context.bodySmall,
                             ),
                             FittedBox(
                               child: Text(
-                                itemController.card.value?.totalPrice
-                                        .toString() ??
-                                    "0",
+                                currencyFormat(
+                                    number: itemController
+                                            .card.value?.totalPrice
+                                            .toString() ??
+                                        "0"),
                                 style: context.titleSmall.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: context.blackColor,
@@ -86,7 +89,7 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                         child: Column(
                           children: [
                             Text(
-                              'عدد المنتجات',
+                              'المنتجات',
                               style: context.bodySmall,
                             ),
                             Text(

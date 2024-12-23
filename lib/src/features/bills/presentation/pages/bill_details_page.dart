@@ -1,6 +1,7 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/utils/arabic_date_formater.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/core/widgets/circle_back_btn_widget.dart';
 import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/bills/domain/entities/bill_entity.dart';
@@ -52,9 +53,15 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () {
-                      billController.updateOldBill(
-                          widget.billEntity, widget.billEntity.billType, 'e');
+                    onPressed: () async {
+                      await billController.updateOldBill(
+                        widget.billEntity,
+                        widget.billEntity.billType,
+                        'e',
+                      );
+                      setState(() {
+                        billController.getBillDetailsUI(widget.billEntity.id);
+                      });
                     },
                     icon: Icon(
                       FontAwesomeIcons.penToSquare,
@@ -307,7 +314,9 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     child: Row(
                       children: [
                         Text(
-                          widget.billEntity.billFinalCost.toString(),
+                          currencyFormat(
+                              number:
+                                  widget.billEntity.billFinalCost.toString()),
                           style: context.displayLarge.copyWith(
                             color: context.primary,
                             fontWeight: FontWeight.bold,
@@ -350,7 +359,9 @@ class BillDetailsItemWidget extends StatelessWidget {
             SizedBox(
               width: Get.width / 6,
               child: Text(
-                billDetailsUI.billDetailsEntity.totalSellPrice.toString(),
+                currencyFormat(
+                    number: billDetailsUI.billDetailsEntity.totalSellPrice
+                        .toString()),
                 style: context.bodyLarge.copyWith(color: context.blackColor),
               ),
             ),
@@ -369,7 +380,9 @@ class BillDetailsItemWidget extends StatelessWidget {
             SizedBox(
               width: Get.width / 6,
               child: Text(
-                billDetailsUI.billDetailsEntity.sellPrice.toString(),
+                currencyFormat(
+                    number:
+                        billDetailsUI.billDetailsEntity.sellPrice.toString()),
                 style: context.bodySmall.copyWith(
                   color: context.blackColor,
                 ),

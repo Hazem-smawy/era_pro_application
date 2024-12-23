@@ -93,9 +93,13 @@ class _ItemInfoDialogTaxAndNotesWidgetState
                         }
                         updatedItem.selectedUnit.taxPercent = percent;
 
-                        updatedItem.selectedUnit.tax =
-                            (widget.item.selectedUnit.totalPrice * percent) /
-                                100;
+                        // updatedItem.selectedUnit.tax =
+
+                        //     (widget.item.selectedUnit.totalPrice * percent) /
+                        //         100;
+                        updatedItem.selectedUnit.tax = percentToRate(
+                            percent, widget.item.selectedUnit.totalPrice);
+
                         itemController.taxRateTextEditing.value.text =
                             updatedItem.selectedUnit.tax.toString();
                         itemController.refreshItemCardInfo(updatedItem);

@@ -364,7 +364,7 @@ class _DailyWeeklyChartState extends State<DailyWeeklyChart> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'ملاحظة: القيم الموجبة تشير إلى الدخل، والقيم السالبة تشير إلى المصروفات.',
+                        'ملاحظة:  القيم السالبة تشير إلى المصروفات.',
                         style: context.bodySmall,
                         textAlign: TextAlign.center,
                       ).ph(20),

@@ -69,9 +69,8 @@ class _AsyncPageState extends State<AsyncPage> {
                     style: context.bodySmall,
                   ).ph(20),
                   context.g12,
-                  ElevatedButtonExtension.secondary(
-                    label: 'مزامنة',
-                    onPressed: () async {
+                  GestureDetector(
+                    onTap: () async {
                       setState(() {
                         isLoading = true;
                       });
@@ -80,6 +79,23 @@ class _AsyncPageState extends State<AsyncPage> {
                         isLoading = false;
                       });
                     },
+                    child: Container(
+                      width: context.width / 2,
+                      // height: 50,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: context.secondary,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'مزامنة',
+                          style: context.titleLarge.copyWith(
+                            color: context.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

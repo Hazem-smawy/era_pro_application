@@ -1,51 +1,54 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
-import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
 import 'package:era_pro_application/src/core/types/services_type.dart';
+import 'package:era_pro_application/src/features/home/presentation/widgets/service_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 
-class ServiceWidget extends StatelessWidget {
-  const ServiceWidget({
-    super.key,
-  });
+class HomeServiceWidget extends StatelessWidget {
+  const HomeServiceWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: context.whiteColor,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            'الخدمات',
-            style: context.displayMedium,
-          ).ph(context.sp20).pt(context.sp16),
-          Align(
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              runAlignment: WrapAlignment.spaceBetween,
-              crossAxisAlignment: WrapCrossAlignment.end,
-              spacing: context.sp12,
-              runSpacing: context.sp16,
-              children: ServicesType.values
-                  .map((service) => ServiceItemWidget(
-                        color: service.color,
-                        label: service.name,
-                        icon: service.icon,
-                        action: () {
-                          service.action();
-                        },
-                      ))
-                  .toList(),
-            ).p(context.sp8),
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "الخدمات",
+            style: context.displayLarge,
           ),
-        ],
-      ),
+        ),
+        context.g12,
+        Align(
+          alignment: Alignment.centerRight,
+          child: Wrap(
+            alignment: WrapAlignment.end,
+            runAlignment: WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.end,
+            spacing: context.sp20,
+            runSpacing: context.sp20,
+            children: [
+              ServiceItemWidget(
+                color: Colors.grey,
+                action: () {
+                  Get.bottomSheet(const ServiceSheet());
+                },
+                label: 'المزيد',
+                icon: Icons.grid_view_rounded,
+              ),
+              ...ServicesType.values.take(3).map((service) => ServiceItemWidget(
+                    color: service.color,
+                    label: service.name,
+                    icon: service.icon,
+                    action: () {
+                      service.action();
+                    },
+                  ))
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

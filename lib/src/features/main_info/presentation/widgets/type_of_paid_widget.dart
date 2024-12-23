@@ -7,7 +7,6 @@ import 'package:era_pro_application/src/features/main_info/presentation/getX/mai
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class TypeOfPaidWidget extends StatefulWidget {
   final double clearPrice;
@@ -255,124 +254,77 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
   }
 
   Widget _buildCurrencySelection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (mainInfoController.selecteCurency.value!.storeCurrency)
-              const Spacer(),
-            if (!mainInfoController.selecteCurency.value!.storeCurrency)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'الإجمالي في العملة الجديد',
-                    style: context.bodySmall,
-                  ),
-                  context.g8,
-                  Text(
-                    (widget.clearPrice /
-                            mainInfoController.selecteCurency.value!.value)
-                        .toStringAsFixed(3),
-                    style: context.titleMedium,
-                  ),
-                ],
-              ),
+    return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (mainInfoController.selecteCurency.value!.storeCurrency)
+            const Spacer(),
+          if (!mainInfoController.selecteCurency.value!.storeCurrency)
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'اختار  العملة',
+                  'الإجمالي في العملة الجديد',
                   style: context.bodySmall,
                 ),
                 context.g8,
-                Container(
-                  height: 40,
-                  width: Get.width / 2.5,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
-                    ),
-                  ),
-                  child: _buildDropdown<CurencyEntity>(
-                    context,
-                    mainInfoController.allCurencies.value,
-                    mainInfoController.selecteCurency.value,
-                    (value) => mainInfoController.selecteCurency.value = value,
-                    mainInfoController.selecteCurency.value?.name ?? '',
-                  ),
+                Text(
+                  (widget.clearPrice /
+                          mainInfoController.selecteCurency.value!.value)
+                      .toStringAsFixed(3),
+                  style: context.titleMedium,
                 ),
               ],
             ),
-          ],
-        ),
-        context.g12,
-        // const Text("ادخل المبلغ المستلم"),
-        // context.g8,
-        SizedBox(
-          width: context.width - 20,
-          height: 50,
-          child: Obx(
-            () => Row(
-              children: [
-                if (mainInfoController
-                        .selectedPaymentsMethodDetails.value?.accCatagory ==
-                    2)
-                  _buildDeferredPayment(context)
-                // GestureDetector(
-                //   onTap: () => widget.selectDateAction(),
-                //   child: Container(
-                //     height: 50,
-                //     padding: const EdgeInsets.all(10),
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(12),
-                //       // border: Border.all(
-                //       //   color: context.secondaryTextColor.withOpacity(0.3),
-                //       // ),
-                //     ),
-                //     child: Row(
-                //       children: [
-                //         Text(
-                //           formatDateToArabic(
-                //             selectedDate ?? DateTime.now(),
-                //           ),
-                //           style: context.bodySmall,
-                //         ),
-                //         const Spacer(),
-                //         Text(
-                //           'تأريخ الإستحقاق',
-                //           style: context.bodySmall,
-                //         ),
-                //         context.g8,
-                //         FaIcon(
-                //           FontAwesomeIcons.calendar,
-                //           size: 17,
-                //           color: context.secondaryTextColor,
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // context.g8,
-                // Expanded(
-                //   child: CustomTextFieldWidget(
-                //     isNumber: true,
-                //     hint: "المبلغ",
-                //     controller: mainInfoController
-                //         .paymentAmountTextEditingController.value,
-                //   ),
-                // ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'اختار  العملة',
+                style: context.bodySmall,
+              ),
+              context.g8,
+              Container(
+                height: 40,
+                width: Get.width / 2.5,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: context.secondaryTextColor.withOpacity(0.2),
+                  ),
+                ),
+                child: _buildDropdown<CurencyEntity>(
+                  context,
+                  mainInfoController.allCurencies.value,
+                  mainInfoController.selecteCurency.value,
+                  (value) => mainInfoController.selecteCurency.value = value,
+                  mainInfoController.selecteCurency.value?.name ?? '',
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
-    );
+        ],
+      ),
+      context.g12,
+      // const Text("ادخل المبلغ المستلم"),
+      // context.g8,
+      Obx(
+        () => (mainInfoController
+                    .selectedPaymentsMethodDetails.value?.accCatagory !=
+                2)
+            ? const SizedBox()
+            : SizedBox(
+                width: context.width - 20,
+                height: 50,
+                child: Row(
+                  children: [_buildDeferredPayment(context)],
+                ),
+              ),
+      )
+    ]);
   }
 
   Widget _buildDropdown<T>(

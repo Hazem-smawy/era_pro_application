@@ -25,37 +25,15 @@ class MainInfoItemWidget extends StatelessWidget {
       },
       child: Stack(
         children: [
-          Positioned(
-            bottom: 10,
-            left: 10,
-            child: FaIcon(
-              icon,
-              size: 70,
-              color: Colors.black.withOpacity(
-                0.08,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 20,
-            left: 10,
-            child: FaIcon(
-              FontAwesomeIcons.star,
-              size: 30,
-              color: color.withOpacity(
-                0.2,
-              ),
-            ),
-          ),
           Container(
             // height: 200,
             width: double.infinity,
             // width: Get.width / 2 - 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              // color: color.withOpacity(0.1),
+              color: context.whiteColor.withOpacity(0.5),
               border: Border.all(
-                color: color.withOpacity(0.5),
+                color: color.withOpacity(0.3),
               ),
             ),
             child: Column(
@@ -88,6 +66,28 @@ class MainInfoItemWidget extends StatelessWidget {
                   height: 10,
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: FaIcon(
+              icon,
+              size: 70,
+              color: Colors.black.withOpacity(
+                0.08,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 20,
+            left: 10,
+            child: FaIcon(
+              FontAwesomeIcons.star,
+              size: 30,
+              color: color.withOpacity(
+                0.2,
+              ),
             ),
           ),
         ],

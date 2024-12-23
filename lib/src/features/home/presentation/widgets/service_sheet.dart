@@ -9,7 +9,7 @@ class ServiceSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -17,34 +17,42 @@ class ServiceSheet extends StatelessWidget {
         ),
         color: context.whiteColor,
       ),
-      child: Column(
-        children: [
-          Text(
-            'كل الخدمات',
-            style: context.titleMedium,
-          ),
-          context.g16,
-          Align(
-            alignment: Alignment.topCenter,
-            child: Wrap(
-              alignment: WrapAlignment.end,
-              runAlignment: WrapAlignment.end,
-              crossAxisAlignment: WrapCrossAlignment.end,
-              spacing: context.sp20,
-              runSpacing: context.sp20,
-              children: [
-                ...ServicesType.values.map((service) => ServiceItemWidget(
-                      color: service.color,
-                      label: service.name,
-                      icon: service.icon,
-                      action: () {
-                        service.action();
-                      },
-                    ))
-              ],
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              ' الخدمات',
+              style: context.displayLarge,
             ),
-          ),
-        ],
+            context.g16,
+            Align(
+              alignment: Alignment.topRight,
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                runAlignment: WrapAlignment.end,
+                crossAxisAlignment: WrapCrossAlignment.end,
+                spacing: context.sp20,
+                runSpacing: context.sp20,
+                children: [
+                  ...ServicesType.values.reversed.take(3).map(
+                        (service) => ServiceItemWidget(
+                          color: service.color,
+                          label: service.name,
+                          icon: service.icon,
+                          action: () {
+                            service.action();
+                          },
+                        ),
+                      )
+                ],
+              ),
+            ),
+            context.g20,
+          ],
+        ),
       ),
     );
   }

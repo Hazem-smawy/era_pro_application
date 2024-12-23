@@ -1,5 +1,6 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/getX/accounts_controller.dart';
+import 'package:era_pro_application/src/features/accounts/presentation/pages/accounts_operation.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/customers_page.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/pages/special_accounts_page.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,9 @@ class _AcountsTabviewPageState extends State<AcountsTabviewPage> {
             title: Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => const AllAccountsOperation());
+                  },
                   icon: Icon(
                     Icons.contacts_outlined,
                     size: 27,

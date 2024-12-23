@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dartz/dartz.dart';
 import 'package:era_pro_application/src/core/usecases/usecases.dart';
 import 'package:era_pro_application/src/features/accounts/domain/entities/accounts_operations_entity.dart';
 import 'package:era_pro_application/src/features/accounts/domain/usecases/add_list_accounts_operations_usecase.dart';
@@ -48,6 +49,9 @@ class AccountsController extends GetxController {
   final accountsOperationForCustomer = Rx<List<AccountsOperationsEntity>>([]);
   final filteredAccountsOperationForCustomer =
       Rx<List<AccountsOperationsEntity>>([]);
+  MainInfoController mainInfoController = Get.find();
+
+  final allAccountsOperation = Rx<List<AccountsOperationsEntity>>([]);
   final customers = Rx<List<AccountEntity>>([]);
   final currencies = Rx<List<CurencyEntity>>([]);
   final errorMessage = ''.obs;
@@ -103,44 +107,18 @@ class AccountsController extends GetxController {
     }
   }
 
-  Future<void> uint8ListToImageFile(
-      Uint8List uint8List, String filePath, Rx<File?> image) async {
-    final file = File(filePath);
-
-    // Write the Uint8List bytes to the file
-    await file.writeAsBytes(uint8List);
-
-    // Assign the created file to the reactive image variable
-    image.value = file;
-
-    print('Image file saved and updated: $filePath');
-  }
-
-  Future<List<AccountEntity>> getAllAccounts() async {
-    try {
-      await handleUsecase(
-        usecase: getAccountsUseCase.call,
-        target: allAccounts,
-      );
-
-      customers.value = allAccounts.value
-          .where((account) => account.accCatagory == 3)
-          .toList();
-      refAllAccounts.value = allAccounts.value;
-
-      return allAccounts.value;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  Future<void> getOperationForCustomer(int id) async {
-    MainInfoController mainInfoController = Get.find();
-
+  Future<void> getOperationForCustomer(int accNumber, int? refNumber) async {
     customerOperationStatus.value = CustomerOperationStatus.loading;
     currencies.value = await mainInfoController.getAllCurenciesInfo();
 
-    final res = await getAccountOperationForCustomerUsecase(Params(id));
+    final res = await getAccountOperationForCustomerUsecase(
+      Params(
+        Tuple2(
+          accNumber,
+          refNumber,
+        ),
+      ),
+    );
     res.fold((f) {
       customerOperationStatus.value = CustomerOperationStatus.empty;
     }, (r) {
@@ -158,7 +136,7 @@ class AccountsController extends GetxController {
   void getTotalMoneyForAccount(List<AccountsOperationsEntity> operations) {
     totalAccount.value = 0;
     totalAccount.value = operations.fold(
-        0, (pre, op) => pre + (op.operationDebit + op.operationCredit));
+        0, (pre, op) => pre + (op.operationDebit - op.operationCredit));
   }
 
   Future<void> filterdOperationForCustomer(int id) async {
@@ -184,6 +162,51 @@ class AccountsController extends GetxController {
     getTotalMoneyForAccount(filteredAccountsOperationForCustomer.value);
   }
 
+  void search(String name) {
+    if (name.trim().isNotEmpty) {
+      allAccounts.value =
+          allAccounts.value.where((e) => e.accName.contains(name)).toList();
+      customers.value = allAccounts.value
+          .where(
+              (account) => account.accCatagory != 1 && account.accCatagory != 2)
+          .toList();
+    } else {
+      getAllAccounts();
+    }
+  }
+
+  Future<Uint8List?> fileToUint8List(File? image) async {
+    if (image == null) return null;
+    final bytes = await image.readAsBytes();
+
+    return Uint8List.fromList(bytes);
+  }
+
+  Future<void> uint8ListToImageFile(
+      Uint8List uint8List, String filePath, Rx<File?> image) async {
+    final file = File(filePath);
+    await file.writeAsBytes(uint8List);
+    image.value = file;
+  }
+
+  Future<List<AccountEntity>> getAllAccounts() async {
+    try {
+      await handleUsecase(
+        usecase: getAccountsUseCase.call,
+        target: allAccounts,
+      );
+
+      customers.value = allAccounts.value
+          .where((account) => account.accCatagory == 3)
+          .toList();
+      refAllAccounts.value = allAccounts.value;
+
+      return allAccounts.value;
+    } catch (e) {
+      return [];
+    }
+  }
+
   Future<List<RefAccountEntity>> getAllRefAccounts() async {
     await handleUsecase(
       usecase: getAllRefAccountUsecase.call,
@@ -194,10 +217,14 @@ class AccountsController extends GetxController {
   }
 
   Future<List<AccountsOperationsEntity>> getAllAccountsOperation() async {
+    currencies.value = await mainInfoController.getAllCurenciesInfo();
+
     await handleUsecase(
       usecase: getAllAccountsOperationUsecase.call,
       target: accountsOperation,
     );
+
+    print(accountsOperation.value.length);
 
     return accountsOperation.value;
   }
@@ -218,43 +245,22 @@ class AccountsController extends GetxController {
         .toList();
   }
 
-  void search(String name) {
-    if (name.trim().isNotEmpty) {
-      allAccounts.value =
-          allAccounts.value.where((e) => e.accName.contains(name)).toList();
-      customers.value = allAccounts.value
-          .where(
-              (account) => account.accCatagory != 1 && account.accCatagory != 2)
-          .toList();
-    } else {
-      getAllAccounts();
-    }
-  }
-
-  Future<Uint8List?> fileToUint8List(File? image) async {
-    if (image == null) return null;
-
-    // Read the file as bytes and convert to Uint8List
-    final bytes = await image.readAsBytes();
-
-    return Uint8List.fromList(bytes);
-  }
-
   Future<void> addAccount(AccountEntity? updatedAccount) async {
     Uint8List? updatedImage = image.value;
-    print('updatedImage: $updatedImage');
+
     if (formKey.currentState!.validate()) {
       final account = AccountEntity(
         id: updatedAccount?.id,
         accNumber: updatedAccount?.accNumber ?? 0,
+        refNumber: updatedAccount?.refNumber,
         accName: name.value.text.trim(),
         accParent: updatedAccount?.accParent ?? 0,
         accType: updatedAccount?.accType ?? 1,
         note: updatedAccount?.note ?? '',
         accCatagory: 3,
         accCatId: updatedAccount?.accCatId ?? 0,
-        accPhone: phone.text.trim(),
-        address: address.text.trim(),
+        accPhone: phone.text.trim() == '' ? 'لايوجد' : phone.text.trim(),
+        address: address.text.trim() == '' ? 'لايوجد' : address.text.trim(),
         email: email.text.trim() == '' ? 'لايوجد' : email.text.trim(),
         accLimit: int.parse((limit.text.trim().isEmpty) ? '0' : limit.text),
         paymentType: 2,
@@ -265,23 +271,14 @@ class AccountsController extends GetxController {
       );
 
       final result = await addAccountUsecase(account);
-      result.fold((f) {
-        print(f.message);
-      }, (r) async {
+      result.fold((f) {}, (r) async {
         await getAllAccounts();
-
-        // if (updatedAccount != null) {
-        // int index = customers.value
-        //     .indexWhere((e) => e.accNumber == updatedAccount.accNumber);
-        // customers.value[index] = allAccounts.value
-        //     .firstWhere((e) => e.accNumber == updatedAccount.accNumber);
 
         allAccounts.refresh();
 
         Get.back();
-        // }
       });
-    } else {}
+    }
   }
 
   Future<void> addExchangeOperation(
@@ -535,12 +532,19 @@ class AccountsController extends GetxController {
         ]);
       }
 
-      await addListAccountsOperationsUsecase.call(Params(operations));
+      final res =
+          await addListAccountsOperationsUsecase.call(Params(operations));
       // print(operations.length);
-      // result.fold(
-      //   (failure) {},
-      //   (_) {},
-      // );
+      res.fold(
+        (failure) {
+          print(failure.message);
+        },
+        (_) {
+          print('success add operation : ${operations.length}');
+          print('account id: ${operations.length}');
+          print('success add operation : ${operations.length}');
+        },
+      );
     } else {}
   }
 

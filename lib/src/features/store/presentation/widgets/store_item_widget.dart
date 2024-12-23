@@ -91,18 +91,23 @@ class ItemWidget extends StatelessWidget {
           right: 5,
           top: 5,
           child: Container(
-            width: 40,
+            // width: 40,
             height: 30,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: context.primary,
+              color: context.containerColor,
+              border: Border.all(
+                color: context.secondaryTextColor.withOpacity(0.2),
+              ),
             ),
+
             child: Center(
               child: Text(
                 itemEntity.totalQuantityInStore.toString(),
-                style: context.bodyLarge.copyWith(
-                  color: context.whiteColor,
-                ),
+                style: context.titleMedium,
               ),
             ),
           ),

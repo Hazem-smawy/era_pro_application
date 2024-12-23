@@ -25,12 +25,14 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       newData: json['newData'] as bool,
       image: _$JsonConverterFromJson<String, Uint8List>(
           json['image'], const Uint8ListConverter().fromJson),
+      refNumber: (json['refNumber'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'accNumber': instance.accNumber,
+      'refNumber': instance.refNumber,
       'accName': instance.accName,
       'accParent': instance.accParent,
       'accType': instance.accType,

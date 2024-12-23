@@ -420,10 +420,14 @@ class ItemController extends GetxController {
     taxPercentTextEditing.value.text =
         updatedItem.selectedUnit.taxPercent.toString();
 
-    taxRateTextEditing.value.text = (updatedItem.selectedUnit.totalPrice *
-            updatedItem.selectedUnit.taxPercent /
-            100)
-        .toStringAsFixed(2);
+    // taxRateTextEditing.value.text = (updatedItem.selectedUnit.totalPrice *
+    //         updatedItem.selectedUnit.taxPercent /
+    //         100)
+    //     .toStringAsFixed(2);
+    taxRateTextEditing.value.text = percentToRate(
+            updatedItem.selectedUnit.taxPercent,
+            updatedItem.selectedUnit.totalPrice)
+        .toString();
     updatedItem.selectedUnit.tax = double.parse(taxRateTextEditing.value.text);
   }
 

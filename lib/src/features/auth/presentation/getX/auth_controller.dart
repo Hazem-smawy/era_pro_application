@@ -56,8 +56,14 @@ class AuthController extends GetxController {
         ),
       );
       result.fold((l) {
-        errorMessage.value = l.message;
+        errorMessage.value =
+            '  تأكد من اتصالك ب الإنترنت و كتابة كل الحقول بطريقة صحيحة';
         authState.value = Status.ERROR;
+        CustomDialog.customSnackBar(
+          '  تأكد من اتصالك ب الإنترنت و كتابة كل الحقول بطريقة صحيحة',
+          SnackPosition.TOP,
+          true,
+        );
       }, (r) async {
         try {
           authState.value = Status.SUCCESS;
@@ -66,7 +72,7 @@ class AuthController extends GetxController {
           authState.value = Status.ERROR;
           errorMessage.value = e.toString();
           CustomDialog.customSnackBar(
-            'تأكد من اتصالك ب الإنترنت',
+            '  تأكد من اتصالك ب الإنترنت و كتابة كل الحقول بطريقة صحيحة',
             SnackPosition.TOP,
             true,
           );
@@ -80,9 +86,7 @@ class AuthController extends GetxController {
       const Tuple2('', ''),
     );
 
-    return res.fold((e) {
-      return false;
-    }, (_) => true);
+    return res.fold((_) => false, (_) => true);
   }
 
   @override

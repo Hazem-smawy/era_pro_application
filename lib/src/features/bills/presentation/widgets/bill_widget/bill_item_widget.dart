@@ -1,5 +1,6 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/utils/arabic_date_formater.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/features/bills/domain/repositories/bill_repository.dart';
 import 'package:era_pro_application/src/features/bills/presentation/getX/bill_controller.dart';
 import 'package:era_pro_application/src/features/bills/presentation/widgets/bill_widget/bill_type_widget.dart';
@@ -56,7 +57,8 @@ class BillSubItemWidget extends StatelessWidget {
               ),
               context.g4,
               Text(
-                billWithDetailsUI.bill.billFinalCost.toString(),
+                currencyFormat(
+                    number: billWithDetailsUI.bill.billFinalCost.toString()),
                 style: context.titleMedium.copyWith(
                   color: context.primary,
                   fontWeight: FontWeight.w700,
@@ -131,20 +133,20 @@ class BillItemWidget extends StatelessWidget {
 
         // All actions are defined in the children parameter.
         children: [
-          // A SlidableAction can have an icon and/or a label.
-          SlidableAction(
-            onPressed: (context) {
-              billController.updateOldBill(
-                billWithDetailsUI.bill,
-                9,
-                'a',
-              );
-            },
-            // backgroundColor: context.containerColor,
-            foregroundColor: Colors.black,
-            icon: FontAwesomeIcons.arrowTurnDown,
-            label: 'مرتجع',
-          ),
+          if (billWithDetailsUI.bill.billType == 8)
+            SlidableAction(
+              onPressed: (context) {
+                billController.updateOldBill(
+                  billWithDetailsUI.bill,
+                  9,
+                  'a',
+                );
+              },
+              // backgroundColor: context.containerColor,
+              foregroundColor: Colors.black,
+              icon: FontAwesomeIcons.arrowTurnDown,
+              label: 'مرتجع',
+            ),
           SlidableAction(
             onPressed: (context) {
               billController.updateOldBill(

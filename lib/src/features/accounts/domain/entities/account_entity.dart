@@ -8,6 +8,7 @@ import '../../../../core/utils/image_converter.dart';
 class AccountEntity extends Equatable with CustomDropdownListFilter {
   int? id;
   final int accNumber;
+  int? refNumber;
   final String accName;
   final int accParent;
   final int accType;
@@ -44,6 +45,7 @@ class AccountEntity extends Equatable with CustomDropdownListFilter {
     required this.accStoped,
     required this.newData,
     this.image,
+    this.refNumber,
   });
 
   @override
@@ -64,6 +66,7 @@ class AccountEntity extends Equatable with CustomDropdownListFilter {
         branchId,
         accStoped,
         newData,
+        refNumber,
       ];
 
   @override

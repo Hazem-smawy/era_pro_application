@@ -136,6 +136,7 @@ class CustomDialog {
       return;
     }
     Get.rawSnackbar(
+      borderColor: AppColors.secondaryColor.withOpacity(0.2),
       backgroundColor: AppColors.whiteColor,
       snackPosition: snackPosition ?? SnackPosition.TOP,
       messageText: Row(

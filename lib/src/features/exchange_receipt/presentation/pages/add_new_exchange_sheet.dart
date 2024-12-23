@@ -1,6 +1,7 @@
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/elvated_btn_extension.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/core/utils/arabic_date_formater.dart';
 import 'package:era_pro_application/src/core/utils/pick_data_method.dart';
 import 'package:era_pro_application/src/core/widgets/thin_divider_widget.dart';
 import 'package:era_pro_application/src/features/accounts/presentation/widgets/search_dropdown_widget.dart';
@@ -121,25 +122,37 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
               context.g12,
               const ThinDividerWidget(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LightBorderRowWidget(
-                      label: 'تاريخ السند',
-                      value: date_formater.DateFormat.yMEd()
-                          .format(DateTime.now()),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            DateTime? date = await pickData(context);
+                            if (date != null) {
+                              exchangeReceiptController.updateValue(
+                                'date',
+                                date,
+                              );
+                            }
+                          },
+                          child: LightBorderRowWidget(
+                            label: 'تاريخ السند',
+                            value: formatDateToArabic(
+                              exchangeReceiptController.newExchange['date'] ??
+                                  DateTime.now(),
+                            ),
+                          ),
+                        ),
+                        LightBorderRowWidget(
+                          label: 'رقم السند',
+                          value: (exchangeReceiptController.lastId.value)
+                              .toString(),
+                        ),
+                      ],
                     ),
-                    Obx(
-                      () => LightBorderRowWidget(
-                        label: 'رقم السند',
-                        value:
-                            (exchangeReceiptController.lastId.value).toString(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  )),
               const SizedBox(
                 height: 20,
               ),

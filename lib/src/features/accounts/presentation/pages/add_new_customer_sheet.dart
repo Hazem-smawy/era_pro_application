@@ -262,23 +262,23 @@ class AddNewAccountSheet extends StatelessWidget {
                   controller: accountsController.phone,
                   hint: 'رقم الهاتف',
                   isNumber: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '  رقم الهاتف مطلوب';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return '  رقم الهاتف مطلوب';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 context.g8,
                 CustomTextFieldWidget(
                   controller: accountsController.address,
                   hint: 'العنوان',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return '  العنوان مطلوب';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return '  العنوان مطلوب';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 context.g8,
                 CustomTextFieldWidget(

@@ -3785,6 +3785,12 @@ class $AccountTableTable extends AccountTable
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+  static const VerificationMeta _refNumberMeta =
+      const VerificationMeta('refNumber');
+  @override
+  late final GeneratedColumn<int> refNumber = GeneratedColumn<int>(
+      'ref_number', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _accNameMeta =
       const VerificationMeta('accName');
   @override
@@ -3882,6 +3888,7 @@ class $AccountTableTable extends AccountTable
   List<GeneratedColumn> get $columns => [
         id,
         accNumber,
+        refNumber,
         accName,
         accParent,
         accType,
@@ -3916,6 +3923,10 @@ class $AccountTableTable extends AccountTable
           accNumber.isAcceptableOrUnknown(data['acc_number']!, _accNumberMeta));
     } else if (isInserting) {
       context.missing(_accNumberMeta);
+    }
+    if (data.containsKey('ref_number')) {
+      context.handle(_refNumberMeta,
+          refNumber.isAcceptableOrUnknown(data['ref_number']!, _refNumberMeta));
     }
     if (data.containsKey('acc_name')) {
       context.handle(_accNameMeta,
@@ -4052,6 +4063,8 @@ class $AccountTableTable extends AccountTable
           .read(DriftSqlType.bool, data['${effectivePrefix}new_data'])!,
       image: attachedDatabase.typeMapping
           .read(DriftSqlType.blob, data['${effectivePrefix}image']),
+      refNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ref_number']),
     );
   }
 
@@ -4064,6 +4077,7 @@ class $AccountTableTable extends AccountTable
 class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   final Value<int> id;
   final Value<int> accNumber;
+  final Value<int?> refNumber;
   final Value<String> accName;
   final Value<int> accParent;
   final Value<int> accType;
@@ -4082,6 +4096,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   const AccountTableCompanion({
     this.id = const Value.absent(),
     this.accNumber = const Value.absent(),
+    this.refNumber = const Value.absent(),
     this.accName = const Value.absent(),
     this.accParent = const Value.absent(),
     this.accType = const Value.absent(),
@@ -4101,6 +4116,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   AccountTableCompanion.insert({
     this.id = const Value.absent(),
     required int accNumber,
+    this.refNumber = const Value.absent(),
     required String accName,
     required int accParent,
     required int accType,
@@ -4134,6 +4150,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   static Insertable<AccountModel> custom({
     Expression<int>? id,
     Expression<int>? accNumber,
+    Expression<int>? refNumber,
     Expression<String>? accName,
     Expression<int>? accParent,
     Expression<int>? accType,
@@ -4153,6 +4170,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (accNumber != null) 'acc_number': accNumber,
+      if (refNumber != null) 'ref_number': refNumber,
       if (accName != null) 'acc_name': accName,
       if (accParent != null) 'acc_parent': accParent,
       if (accType != null) 'acc_type': accType,
@@ -4174,6 +4192,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
   AccountTableCompanion copyWith(
       {Value<int>? id,
       Value<int>? accNumber,
+      Value<int?>? refNumber,
       Value<String>? accName,
       Value<int>? accParent,
       Value<int>? accType,
@@ -4192,6 +4211,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     return AccountTableCompanion(
       id: id ?? this.id,
       accNumber: accNumber ?? this.accNumber,
+      refNumber: refNumber ?? this.refNumber,
       accName: accName ?? this.accName,
       accParent: accParent ?? this.accParent,
       accType: accType ?? this.accType,
@@ -4218,6 +4238,9 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     }
     if (accNumber.present) {
       map['acc_number'] = Variable<int>(accNumber.value);
+    }
+    if (refNumber.present) {
+      map['ref_number'] = Variable<int>(refNumber.value);
     }
     if (accName.present) {
       map['acc_name'] = Variable<String>(accName.value);
@@ -4272,6 +4295,7 @@ class AccountTableCompanion extends UpdateCompanion<AccountModel> {
     return (StringBuffer('AccountTableCompanion(')
           ..write('id: $id, ')
           ..write('accNumber: $accNumber, ')
+          ..write('refNumber: $refNumber, ')
           ..write('accName: $accName, ')
           ..write('accParent: $accParent, ')
           ..write('accType: $accType, ')
@@ -10436,6 +10460,7 @@ typedef $$AccountTableTableCreateCompanionBuilder = AccountTableCompanion
     Function({
   Value<int> id,
   required int accNumber,
+  Value<int?> refNumber,
   required String accName,
   required int accParent,
   required int accType,
@@ -10456,6 +10481,7 @@ typedef $$AccountTableTableUpdateCompanionBuilder = AccountTableCompanion
     Function({
   Value<int> id,
   Value<int> accNumber,
+  Value<int?> refNumber,
   Value<String> accName,
   Value<int> accParent,
   Value<int> accType,
@@ -10492,6 +10518,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> accNumber = const Value.absent(),
+            Value<int?> refNumber = const Value.absent(),
             Value<String> accName = const Value.absent(),
             Value<int> accParent = const Value.absent(),
             Value<int> accType = const Value.absent(),
@@ -10511,6 +10538,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
               AccountTableCompanion(
             id: id,
             accNumber: accNumber,
+            refNumber: refNumber,
             accName: accName,
             accParent: accParent,
             accType: accType,
@@ -10530,6 +10558,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required int accNumber,
+            Value<int?> refNumber = const Value.absent(),
             required String accName,
             required int accParent,
             required int accType,
@@ -10549,6 +10578,7 @@ class $$AccountTableTableTableManager extends RootTableManager<
               AccountTableCompanion.insert(
             id: id,
             accNumber: accNumber,
+            refNumber: refNumber,
             accName: accName,
             accParent: accParent,
             accType: accType,
@@ -10578,6 +10608,11 @@ class $$AccountTableTableFilterComposer
 
   ColumnFilters<int> get accNumber => $state.composableBuilder(
       column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get refNumber => $state.composableBuilder(
+      column: $state.table.refNumber,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -10667,6 +10702,11 @@ class $$AccountTableTableOrderingComposer
 
   ColumnOrderings<int> get accNumber => $state.composableBuilder(
       column: $state.table.accNumber,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get refNumber => $state.composableBuilder(
+      column: $state.table.refNumber,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

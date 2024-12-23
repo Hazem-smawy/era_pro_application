@@ -1,43 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-// class ItemDetails {
-//   final Item item;
-//   final Group group;
-//   final List<ItemUnitDetails> itemsUnitDetail;
-
-// }
-// class ItemUnitDetails {
-//   final String unitName;
-//   final int quantity;
-//   final List<double> pricese;
-// }
-
-// class Item {
-//   final int id;
-//   final String name;
-// }
-// class Unit {
-//   final int id;
-//   final String name;
-// }
-// class ItemUnit {
-//   final int id;
-//   final int itemId;
-//   final int unitId;
-//   final double firstPrice;
-//   final double secondPrice;
-//   final double thridPrice;
-// }
-// class Operation {
-//   final int id;
-//   final int itemUnitId;
-//   final int quantity;
-//   final int positiveOperation; // increase the quantity
-// }
-
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/image_with_error_extension.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/features/store/domain/entities/item_details_entity.dart';
 
 import 'package:era_pro_application/src/features/store/presentation/getX/store_controller.dart';
@@ -48,152 +12,6 @@ import 'package:get/get.dart';
 import 'dart:typed_data';
 
 import '../../../../core/widgets/custom_appbar_widget.dart';
-
-// class ItemDetailsPage extends StatelessWidget {
-//   ItemDetailsPage({super.key, required this.storeItemDetailsEntity});
-//   StoreItemDetailsEntity storeItemDetailsEntity;
-//   StoreController storeController = Get.find();
-//   @override
-//   Widget build(BuildContext context) {
-//     for (var unitDetail in storeItemDetailsEntity.itemUnitsDetails) {
-//       storeController.selectedPriceIndex[unitDetail.hashCode] =
-//           0.obs; // Default to first price (index 0)
-//     }
-
-//     return Scaffold(
-//       backgroundColor: context.wightColor,
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//               context.g8,
-//               const CustomAppBarWidget(title: 'تفاصيل المنتج'),
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 20),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.end,
-//                   children: [
-//                     context.g20,
-//                     ClipRRect(
-//                       borderRadius: BorderRadius.circular(20),
-//                       child: CustomImage.memoryWithError(
-//                         storeItemDetailsEntity.item.itemImage,
-//                         h: 250,
-//                         decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(20),
-//                         ),
-//                       ),
-//                     ),
-//                     context.g12,
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.end,
-//                       children: [
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.end,
-//                           children: [
-//                             Text(
-//                               storeItemDetailsEntity.item.name,
-//                               style: context.displayLarge,
-//                             ),
-//                             context.g4,
-//                             Text(
-//                               storeItemDetailsEntity.item.itemDescription,
-//                               style: context.bodyMeduim,
-//                             )
-//                           ],
-//                         )
-//                       ],
-//                     ),
-//                     context.g20,
-//                     Text(
-//                       '  الوحدات والأسعار',
-//                       style: context.titleLarge,
-//                     ),
-//                     context.g12,
-//                     if (storeItemDetailsEntity.itemUnits != null &&
-//                         storeItemDetailsEntity.itemUnits?.length != null)
-//                       ListView.separated(
-//                         itemCount:
-//                             storeItemDetailsEntity.itemUnits?.length ?? 0,
-//                         shrinkWrap: true,
-//                         physics: const NeverScrollableScrollPhysics(),
-//                         separatorBuilder: (BuildContext context, int index) {
-//                           return context.g8;
-//                         },
-//                         itemBuilder: (BuildContext context, int index) {
-//                           return ItemPriceseWidget(
-//                             itemUnitDetailsEntity:
-//                                 storeItemDetailsEntity.itemUnitsDetails[index],
-//                             isMain: true,
-//                           );
-//                         },
-//                       ),
-//                     context.g20,
-//                     const SizedBox(
-//                       height: 20,
-//                     ),
-//                     Text(
-//                       storeItemDetailsEntity.item.note,
-//                       textDirection: TextDirection.rtl,
-//                       style: context.bodySmall,
-//                     ),
-//                     const SizedBox(
-//                       height: 20,
-//                     ),
-//                     Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.all(15),
-//                       decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20),
-//                         border: Border.all(
-//                           color: context.secondaryTextColor.withOpacity(0.2),
-//                         ),
-//                       ),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.end,
-//                         children: [
-//                           Column(
-//                               crossAxisAlignment: CrossAxisAlignment.end,
-//                               children: [
-//                                 Text(
-//                                   'مجموعة الصنف',
-//                                   style: context.bodySmall,
-//                                 ),
-//                                 Text(
-//                                   storeItemDetailsEntity.group?.name ?? " ",
-//                                   style: context.titleMedium,
-//                                 ),
-//                               ]),
-//                           context.g12,
-//                           Column(
-//                             crossAxisAlignment: CrossAxisAlignment.end,
-//                             children: [
-//                               Text(
-//                                 'الشركة المصنعة',
-//                                 style: context.bodySmall,
-//                               ),
-//                               Text(
-//                                 storeItemDetailsEntity.item.itemCompany,
-//                                 style: context.titleMedium,
-//                               ),
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                     const SizedBox(
-//                       height: 20,
-//                     ),
-//                   ],
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class ItemDetailsPage extends StatelessWidget {
   final StoreItemDetailsEntity storeItemDetailsEntity;
@@ -254,9 +72,22 @@ class ItemDetailsPage extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                storeItemDetailsEntity.item.name,
-                style: context.displayMedium,
+              SizedBox(
+                width: context.width - 40,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        storeItemDetailsEntity.item.name,
+                        textAlign: TextAlign.right,
+                        overflow: TextOverflow.clip,
+                        style: context.displayMedium.copyWith(
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               context.g4,
               Text(
@@ -426,7 +257,7 @@ class ItemUnitsDetailsWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     // color: MyColors.containerColor,
                     border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.9),
+                      color: context.secondaryTextColor.withOpacity(0.2),
                     ),
                   ),
                   child: Center(
@@ -434,15 +265,11 @@ class ItemUnitsDetailsWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'ر.س',
-                          style: context.bodySmall,
-                        ),
-                        context.g4,
-                        Text(
-                          ' ${storeController.getSelectedPrice(
-                                itemUnitDetails.hashCode,
-                                itemUnitDetails.prices,
-                              ).toStringAsFixed(2)}',
+                          currencyFormat(
+                              number: ' ${storeController.getSelectedPrice(
+                                    itemUnitDetails.hashCode,
+                                    itemUnitDetails.prices,
+                                  ).toStringAsFixed(2)}'),
                           style: context.titleSmall
                               .copyWith(color: context.blackColor),
                         ),

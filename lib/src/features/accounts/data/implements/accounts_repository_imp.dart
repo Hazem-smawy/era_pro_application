@@ -151,9 +151,12 @@ class AccountsRepositoryImp implements AccountsRepository {
 
   @override
   Future<Either<Failure, List<AccountsOperationsEntity>>>
-      getAccountOperationForCustomer(int id) async {
+      getAccountOperationForCustomer(int accNumber, int? refNumber) async {
     try {
-      final res = await accountsLocalDatasource.getAccountOperationById(id);
+      final res = await accountsLocalDatasource.getAccountOperationById(
+        accNumber,
+        refNumber,
+      );
       return Right(res);
     } catch (e) {
       return Left(LocalStorageFailures(message: e.toString()));

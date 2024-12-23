@@ -7,6 +7,8 @@ Future<DateTime?> pickData(BuildContext context) async {
     initialDate: initData,
     firstDate: DateTime(1990),
     lastDate: DateTime(2040),
+    // Ensure the date picker uses Arabic
+
     builder: (context, child) => Theme(
       data: ThemeData().copyWith(),
       child: child ?? const Text(""),

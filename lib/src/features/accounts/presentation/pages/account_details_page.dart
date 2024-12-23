@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:era_pro_application/src/core/constants/assets.dart';
 import 'package:era_pro_application/src/core/extensions/context_extensions.dart';
 import 'package:era_pro_application/src/core/extensions/padding_extension.dart';
+import 'package:era_pro_application/src/core/utils/currency_format.dart';
 import 'package:era_pro_application/src/core/widgets/categories_widget.dart';
 import 'package:era_pro_application/src/core/widgets/empty_widget.dart';
 import 'package:era_pro_application/src/core/widgets/header_widget.dart';
@@ -34,7 +33,8 @@ class AccountDetailsPage extends StatelessWidget {
       body: SafeArea(
         bottom: true,
         child: Obx(() {
-          AccountEntity account = accountsController.customers.value.firstWhere(
+          AccountEntity account =
+              accountsController.allAccounts.value.firstWhere(
             (e) => e.accNumber == accountEntity.accNumber,
           );
           return Stack(
@@ -57,8 +57,8 @@ class AccountDetailsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             child: CustomImage.memoryWithError(
                               account.image,
-                              w: 70,
-                              h: 70,
+                              w: 100,
+                              h: 100,
                             ),
                           ),
                         if (account.image == null)
@@ -86,8 +86,8 @@ class AccountDetailsPage extends StatelessWidget {
                               isScrollControlled: true,
                             ).then((value) {
                               // print(value);
-                              account =
-                                  accountsController.customers.value.firstWhere(
+                              account = accountsController.allAccounts.value
+                                  .firstWhere(
                                 (e) => e.accNumber == accountEntity.accNumber,
                               );
                             });
@@ -111,51 +111,87 @@ class AccountDetailsPage extends StatelessWidget {
                       ],
                     ),
                     context.g16,
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.2),
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                          account.accNumber.toString(),
-                          style: context.titleSmall.copyWith(
-                            color: context.blackColor,
+                    Row(
+                      children: [
+                        if (account.refNumber != null)
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: context.secondaryTextColor
+                                      .withOpacity(0.2),
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    account.refNumber.toString(),
+                                    style: context.titleSmall.copyWith(
+                                      color: context.blackColor,
+                                    ),
+                                  ),
+                                  context.g12,
+                                  const FaIcon(
+                                    Icons.cloud_outlined,
+                                    size: 18,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        if (account.refNumber != null) context.g8,
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color:
+                                    context.secondaryTextColor.withOpacity(0.2),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Text(
+                                account.accNumber.toString(),
+                                style: context.titleSmall.copyWith(
+                                  color: context.blackColor,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    context.g8,
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.2),
+                      ],
+                    ).ph(20),
+                    if (account.accCatId == 3) context.g8,
+                    if (account.accCatId == 3)
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: context.secondaryTextColor.withOpacity(0.2),
+                          ),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            DetailsAccountsInfoItem(
+                              icon: Icons.phone,
+                              value: account.accPhone,
+                            ),
+                            context.g16,
+                            DetailsAccountsInfoItem(
+                              icon: Icons.location_on_outlined,
+                              value: account.address,
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          DetailsAccountsInfoItem(
-                            icon: Icons.phone,
-                            value: account.accPhone,
-                          ),
-                          context.g16,
-                          DetailsAccountsInfoItem(
-                            icon: Icons.location_on_outlined,
-                            value: account.address,
-                          ),
-                        ],
-                      ),
-                    ),
 
                     context.g20,
                     // details
@@ -178,6 +214,7 @@ class AccountDetailsPage extends StatelessWidget {
                       border: Border.all(
                         color: context.secondaryTextColor.withOpacity(0.2),
                       ),
+                      color: context.backgroundColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -186,23 +223,29 @@ class AccountDetailsPage extends StatelessWidget {
                         accountsController.totalAccount.value == 0
                             ? const SizedBox()
                             : Icon(
-                                accountsController.totalAccount < 0
+                                accountsController.totalAccount > 0
                                     ? Icons.trending_down
                                     : Icons.trending_up,
-                                color: accountsController.totalAccount < 0
-                                    ? Colors.green
-                                    : Colors.red,
+                                color: accountsController.totalAccount > 0
+                                    ? Colors.red
+                                    : Colors.green,
                               ),
                         const Spacer(),
                         Text(
-                          'R',
+                          accountsController.currencies.value
+                                  .firstWhereOrNull(
+                                      (e) => e.storeCurrency == true)
+                                  ?.symbol ??
+                              '',
                           style: context.titleSmall.copyWith(
                             color: context.blackColor,
                           ),
                         ),
                         context.g4,
                         Text(
-                          accountsController.totalAccount.toString(),
+                          currencyFormat(
+                              number: accountsController.totalAccount
+                                  .toStringAsFixed(2)),
                           style: context.titleSmall.copyWith(
                             color: context.blackColor,
                           ),
@@ -248,7 +291,10 @@ class _OperationListWidgetState extends State<OperationListWidget>
   @override
   void initState() {
     super.initState();
-    accountsController.getOperationForCustomer(widget.account.accNumber);
+    accountsController.getOperationForCustomer(
+      widget.account.accNumber,
+      widget.account.refNumber,
+    );
 
     // Initialize animation controller
     _animationController = AnimationController(
@@ -285,18 +331,19 @@ class _OperationListWidgetState extends State<OperationListWidget>
             height: 40,
             child: Row(
               children: [
-                context.g16,
-                CircleIconBtnWidget(
-                  icon: FontAwesomeIcons.plus,
-                  action: () {
-                    Get.bottomSheet(
-                      AccountAddOperationSheet(
-                        account: widget.account,
-                      ),
-                      elevation: 0,
-                    );
-                  },
-                ),
+                if (widget.account.accCatagory == 3) context.g16,
+                if (widget.account.accCatagory == 3)
+                  CircleIconBtnWidget(
+                    icon: FontAwesomeIcons.plus,
+                    action: () {
+                      Get.bottomSheet(
+                        AccountAddOperationSheet(
+                          account: widget.account,
+                        ),
+                        elevation: 0,
+                      );
+                    },
+                  ),
                 context.g8,
                 Obx(
                   () => Expanded(
@@ -341,7 +388,7 @@ class _OperationListWidgetState extends State<OperationListWidget>
                 return FadeTransition(
                   opacity: _fadeAnimation,
                   child: SizedBox(
-                    height: context.height / 2,
+                    height: context.height / 2.2,
                     child: const EmptyWidget(
                       imageName: Assets.assetsImagesCurencies,
                       label: '',
@@ -365,8 +412,8 @@ class _OperationListWidgetState extends State<OperationListWidget>
                           .filteredAccountsOperationForCustomer.value[index];
                       return DetailsOperationItemWidget(
                         type: operation.operationType,
-                        price: operation.operationCredit -
-                            operation.operationDebit,
+                        price: operation.operationDebit -
+                            operation.operationCredit,
                         date: operation.operationDate,
                         currencySymbole: accountsController.currencies.value
                             .firstWhere((e) => e.id == operation.currencyId)

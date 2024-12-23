@@ -155,7 +155,7 @@ class BillController extends GetxController {
   Future<void> updateOldBill(BillEntity bill, int type, String tag) async {
     final items = await getItemsInOldBill(bill);
 
-    //update newBill var
+    //update selling bill or back bill
     if (tag == 'e') {
       newBill.value.billId = bill.id;
       newBill.value.billNumber = bill.billNumber;
@@ -166,7 +166,6 @@ class BillController extends GetxController {
       newBill.value.addedTaxPercent = bill.salesTaxRate;
 
       newBill.value.dueDate = bill.dueDate;
-      print(bill.dueDate);
 
       newBill.value.isOld = true;
       billTypeForTitle.value = 1;
@@ -183,6 +182,8 @@ class BillController extends GetxController {
           mainInfoController.allAccount.value.firstWhereOrNull(
         (e) => e.id == bill.fundNumber,
       );
+
+      // for new back bill
     } else if (tag == 'a') {
       newBill.value.customerNumber = bill.customerNumber;
       newBill.value.addedDiscount = bill.billDiscount;
@@ -190,7 +191,7 @@ class BillController extends GetxController {
       billTypeForTitle.value = 0;
     }
 
-    Get.toNamed(
+    await Get.toNamed(
       Routes.SELLINGPAGE,
       arguments: {
         "updatedItems": items,
@@ -228,10 +229,6 @@ class BillController extends GetxController {
         id: itemUnitsEntity.id,
         name: details.unitName,
         quantityRemaining: quantity,
-        // quantityRemaining: (quantity +
-        //         details.billDetailsEntity.quantity +
-        //         details.billDetailsEntity.freeQty) *
-        // details.billDetailsEntity.unitFactor,
         intialCost: itemUnitsEntity.intialCost,
         backQuantity: (details.billDetailsEntity.quantity +
             details.billDetailsEntity.freeQty),
@@ -282,15 +279,12 @@ class BillController extends GetxController {
 
     for (var item in itemsWithOneUnit) {
       if (groupedItems.containsKey(item.id)) {
-        // Add unit details and accumulate the total price for each item
         groupedItems[item.id]!.unitDetails.addAll(item.unitDetails);
-
         groupedItems[item.id]!.clearPrice += item.unitDetails.fold(
           0,
           (sum, unit) => sum + unit.clearPrice,
         );
       } else {
-        // Create new item with the initial total price
         double clearPrice = item.unitDetails.fold(
           0,
           (sum, unit) => sum + unit.clearPrice,
@@ -352,14 +346,19 @@ class BillController extends GetxController {
     final bill = newBill.value;
     if (bill.addedDiscount > 0) {
       billDiscountRate.text = bill.addedDiscount.toString();
+      // billDiscountPercent.text =
+      //     (bill.addedDiscount / bill.totalPrice * 100).toStringAsFixed(2);
       billDiscountPercent.text =
-          (bill.addedDiscount / bill.totalPrice * 100).toStringAsFixed(2);
+          rateToPercent(bill.addedDiscount, bill.totalPrice).toString();
     }
-    print(bill.addedTax);
+
     if (bill.addedTax > 0) {
       billTaxRate.text = bill.addedTax.toString();
+      // billTaxPercent.text =
+      //     (bill.addedTax / bill.netBill * 100).toStringAsFixed(2);
+
       billTaxPercent.text =
-          (bill.addedTax / bill.netBill * 100).toStringAsFixed(2);
+          rateToPercent(bill.addedTax, bill.netBill).toString();
     }
   }
 
@@ -435,9 +434,10 @@ class BillController extends GetxController {
                       detail.copyWith(billID: newBill.value.billId ?? billId))
                   .toList();
 
-              final storeOperationList =
-                  createStoreOperations(updatedBillDetails);
-              storeController.saveStoreOperations(
+              final storeOperationList = createStoreOperations(
+                updatedBillDetails,
+              );
+              await storeController.saveStoreOperations(
                 storeOperationList,
                 newBill.value.billId,
                 OperationType(
@@ -447,11 +447,19 @@ class BillController extends GetxController {
               );
 
               final addDetailsResult =
-                  await addBillDetailsUsecase.call(updatedBillDetails);
+                  await addBillDetailsUsecase(updatedBillDetails);
 
               addDetailsResult.fold(
                 (failure) => errorMessage.value = failure.message,
                 (_) async {
+                  final String title = itemController.billType.value == 8
+                      ? billTypeForTitle.value == 0
+                          ? 'فاتورة بيع'
+                          : 'تعديل فاتورة بيع'
+                      : billTypeForTitle.value == 0
+                          ? 'فاتورة مرتجع'
+                          : 'تعديل فاتورة مرتجع';
+
                   final isOld = newBill.value.isOld;
                   resetBillState();
                   await storeController.getAllItems();
@@ -463,8 +471,8 @@ class BillController extends GetxController {
                   CustomDialog.showDialog(
                     color: AppColors.primaryColor,
                     icon: FontAwesomeIcons.circleCheck,
-                    title: 'اضافة فاتورة',
-                    description: 'تم اضافة الفاتورة بنجاح',
+                    title: title,
+                    description: 'تم $title بنجاح',
                     action: () async {
                       Get.back();
                     },
@@ -479,8 +487,8 @@ class BillController extends GetxController {
                     Get.back();
                   }
                   if (isOld) {
-                    print(newBill.value);
-                    // Get.until((route) => Get.currentRoute == Routes.ALLBILLS);
+                    Get.until(
+                        (route) => Get.currentRoute == Routes.SELLINGPAGE);
                     Get.back();
                   }
                 },
@@ -545,21 +553,18 @@ class BillController extends GetxController {
       salesPerson: userId,
       hasVat: hasSalesTax,
       hasSalesTax: newBill.value.addedTax > 0,
-      salesTaxRate: (newBill.value.addedTax / netBill) * 100,
+      // salesTaxRate: (newBill.value.addedTax / netBill) * 100,
+      salesTaxRate: rateToPercent(newBill.value.addedTax, netBill),
       numOfitems: billDetails.length,
       totalBill: totalPrice,
       itemsDiscount: newBill.value.discount,
       billDiscount: newBill.value.addedDiscount,
-      netBill:
-          totalPrice - newBill.value.addedDiscount - newBill.value.discount,
+      netBill: netBill,
       totalVat: newBill.value.tax,
       billFinalCost: newBill.value.clearPrice,
       freeQtyCost: freeQuantityCost,
       totalAvragCost: averagePrice,
-      paidAmount: double.tryParse(
-            mainInfoController.paymentAmountTextEditingController.value.text,
-          ) ??
-          0,
+      paidAmount: 0,
     );
   }
 
@@ -590,8 +595,11 @@ class BillController extends GetxController {
   // account operations for new bill
   Future<void> addAccountOperations(
       BillEntity newSellingBill, int billId, bool isOld) async {
+    // final salesTaxValue =
+    //     newSellingBill.salesTaxRate * newSellingBill.netBill / 100;
     final salesTaxValue =
-        newSellingBill.salesTaxRate * newSellingBill.netBill / 100;
+        percentToRate(newSellingBill.salesTaxRate, newSellingBill.netBill);
+
     final amount =
         (newSellingBill.netBill + newSellingBill.totalVat + salesTaxValue) *
             mainInfoController.storCurency!.value /
@@ -646,7 +654,7 @@ class BillController extends GetxController {
         operationId: element.billID,
         operationType: newBill.value.type,
         operationDate: DateTime.now(),
-        operationIn: false,
+        operationIn: newBill.value.type == 8 ? false : true,
         storeId: storeId,
         itemId: element.itemId,
         unitId: unitId,
@@ -669,27 +677,10 @@ class BillController extends GetxController {
   // reset when bill added success
 
   void resetBillState() {
-    // itemController.items.clear();
     itemController.card.value?.items.clear();
-
-    // newBill.value
-    //   ?..addedDiscount = 0
-    //   ..addedTax = 0
-    //   ..customerNumber = 0
-    //   ..type = 0
-    //   ..note = ''
-    //   ..numberOfItems = 0
-    //   ..totalPrice = 0
-    //   ..isOld = false
-    //   ..billId = null
-    //   ..dueDate = null
-    //   ..billNumber = null
-    //   ..selectedCurencyId = null
-    //   ;
     newBill.value = BillUI();
-    // itemController.billType.value = 0;
-    // billTypeForTitle.value = 0;
-
+    itemController.billType.value = 0;
+    billTypeForTitle.value = 0;
     billDiscountPercent.clear();
     billDiscountRate.clear();
     billTaxPercent.clear();

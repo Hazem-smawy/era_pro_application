@@ -26,7 +26,7 @@ class SettingPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(125),
                   border: Border.all(
-                    color: context.primary.withOpacity(0.5),
+                    color: context.secondary.withOpacity(0.5),
                     width: 2,
                   ),
                 ),
@@ -111,11 +111,8 @@ class SettingPage extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        // border: Border.all(
-        //   color: context.secondaryTextColor.withOpacity(0.2),
-        // ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
